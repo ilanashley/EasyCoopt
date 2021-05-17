@@ -7,6 +7,11 @@ import AddCoopte from './components/AddCoopte';
 import ViewOffer from './components/ViewOffer';
 import JobsAvailable from './components/JobsAvailable';
 import ReferralsList from './components/ReferralsList';
+import Login from './components/Login';
+
+
+
+
 
 function App() {
   return (
@@ -19,6 +24,7 @@ function App() {
           <Route component={ViewOffer} path="/viewoffer" exact />
           <Route component={JobsAvailable} path="/JobsAvailable" exact />
           <Route component={ReferralsList} path="/ReferralsList" exact />
+          <Route component={Login} path="/login" exact />
         </Switch>
       </Router>
     

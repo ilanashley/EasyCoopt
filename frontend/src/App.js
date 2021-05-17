@@ -1,24 +1,31 @@
-import logo from './logo.svg';
+import React from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './App.css';
+
+
+
+import AddOffer from './AddOffer';
+import AddCoopte from './AddCoopte';
+import ViewOffer from './ViewOffer';
+
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    
+      <Router>
+        <Switch>
+          <Route component={AddOffer} path="/" exact />
+          <Route component={AddCoopte} path="/addcoopte" exact />
+          <Route component={ViewOffer} path="/viewoffer" exact />
+        </Switch>
+      </Router>
+    
+    
+
   );
 }
 

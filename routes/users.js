@@ -6,4 +6,80 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+/*
+  Sign-up
+  Body: email (string), password (string)
+  Response: result(true), isLogin(true), message(string), user(object)
+*/
+
+router.post('/sign-up', (req, res, next) => {
+  let confirmPassword = req.body.confirmPassword
+  let password = req.body.password
+  let email = req.body.email
+  if(!password || !confirmPassword || !email) {
+    res.json({ result: false, message: 'error' });
+  } else if (password !== confirmPassword) {
+    res.json({ result: false, message: 'error' });
+  } else {
+    res.json({ result: true, isLogin: true, message:'success', user: {email, password, token: 'dgaiuhdoazhdoaz'} });
+  }
+})
+
+/*
+  Sign-in
+  Body: email (string), password (string)
+  Response: result(true), isLogin(true), message(string), user(object)
+*/
+
+router.post('/sign-in', (req, res, next) => {
+  let password = req.body.password
+  let email = req.body.email
+  if(!password || !email) {
+    res.json({ result: false, message: 'error' });
+  } else {
+    res.json({ result: true, isLogin: true, message:'success', user: {email, password, token: 'dgaiuhdoazhdoaz'} });
+  }
+
+})
+
+/*
+  Account
+  Body: firstName(string), lastName(string), avatarUrl(string), email(string), type(string), oldPassword(string), newPassword(string), confirmPassword(string)
+  Response: result(true), message(string), user(object)
+*/
+
+router.post('/account', (req, res, next) => {
+  let firstName = req.body.firstName
+  let lastName = req.body.lastName
+  let avatarUrl = req.body.avatarUrl
+  let email = req.body.email
+  let type = req.body.type
+  let oldPassword = req.body.oldPassword
+  let newPassword = req.body.newPassword
+  let confirmPassword = req.body.confirmPassword
+  if(!email || !type ) {
+    res.json({ result: false, message: 'error'})
+  } else {
+    if (oldPassword) {
+      if(oldPassword === 'azerty') {
+        if ( !newPassword && !confirmPassword ) {
+          res.json({ result: false, message: 'error' });
+        } else if (!newPassword || !confirmPassword) {
+          res.json({ result: false, message: 'error' });
+        } else {
+          if (newPassword !== confirmPassword) {
+            res.json({ result: false, message: 'error' });
+          } else {
+            res.json({ result: true, isLogin: true, message:'success', user: {firstName, lastName, avatarUrl, email, type, newPassword} });
+          }
+        }
+      } else {
+        res.json({ result: false, message: 'error' });
+      }
+    } else {
+      res.json({ result: true, isLogin: true, message:'success', user: {firstName, lastName, avatarUrl, email, type, oldPassword: 'azerty'} });
+    }    
+  }
+})
+
 module.exports = router;

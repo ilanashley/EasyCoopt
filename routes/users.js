@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var userModel = require("../models/users");
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -12,16 +14,30 @@ router.get('/', function(req, res, next) {
   Response: result(true), isLogin(true), message(string), user(object)
 */
 
-router.post('/sign-up', (req, res, next) => {
+router.post('/sign-up', async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword
   let password = req.body.password
   let email = req.body.email
+
   if(!password || !confirmPassword || !email) {
     res.json({ result: false, message: 'error' });
   } else if (password !== confirmPassword) {
     res.json({ result: false, message: 'error' });
   } else {
-    res.json({ result: true, isLogin: true, message:'success', user: {email, password, token: 'dgaiuhdoazhdoaz'} });
+    
+    let result = false;
+    var newUser = new userModel({
+      email: email,
+      password: confirmPassword,
+    });
+  
+    saveUser = await newUser.save();
+
+  if (saveUser) {
+      result = true;
+  }
+
+    res.json({ isLogin: true, message:'success'});
   }
 })
 

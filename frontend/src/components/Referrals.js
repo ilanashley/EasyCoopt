@@ -3,18 +3,20 @@ import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 
 function Referrals(props) {
 
+    console.log(props.currentReferrals)
+
     if (props.loading) {
         return <h2>Loading...</h2>
     }
 
-    const referralsList = props.referrals.map((referral, i) => {
+    const referralsList = props.currentReferrals.map((referral, i) => {
 
         let selectStyle
-        if (referral.status === 1 || props.referralStatus === 1) {
+        if (referral.status === '1') {
             selectStyle = { border: 'solid 1px blue' }
-        } else if (referral.status === 2 || props.referralStatus === 2) {
+        } else if (referral.status === '2') {
             selectStyle = { border: 'solid 1px green' }
-        } else if (referral.status === 3 || props.referralStatus === 3) {
+        } else if (referral.status === '3') {
             selectStyle = { border: 'solid 1px red' }
         }
 
@@ -27,9 +29,9 @@ function Referrals(props) {
                 <td>{referral.name}</td>
                 <td>{referral.recommandation}</td>
                 <td>{referral.offer}</td>
-                <td><a href="#" style={{cursor: 'pointer'}}><AssignmentOutlinedIcon /></a></td>
+                <td><AssignmentOutlinedIcon style={{cursor: 'pointer'}}/></td>
                 <td>
-                    <select defaultValue={referral.status} key={i} className="form-select" onChange={props.handleSelectStatusChange} aria-label="Default select example" style={selectStyle}>
+                    <select value={referral.status} className="form-select" onChange={(e) => props.handleSelectStatusChange(e, i)} aria-label="Default select example" style={selectStyle}>
                         <option value="1">En attente</option>
                         <option value="2">Approuvé</option>
                         <option value="3">Refusé</option>
@@ -40,7 +42,8 @@ function Referrals(props) {
     })
 
     return (
-        <table className='table table-light table-bordered table-hover custom-table-style'>
+        
+        <table className='table table-light table-hover'>
             <thead>
                 <tr>
                     <th></th>
@@ -58,6 +61,8 @@ function Referrals(props) {
                 {referralsList}
             </tbody>
         </table>
+        
+        
     )
 }
 

@@ -31,7 +31,7 @@ const Login = (props) => {
 
   var handleSubmitSignin = async () => {
 
-    const data = await fetch('/sign-in', {
+    const data = await fetch('users/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `email=${signInEmail}&password=${signInPassword}`
@@ -50,7 +50,7 @@ const Login = (props) => {
 
   var handleSubmitSignup = async () => {
 
-    const data = await fetch('/sign-up', {
+    const data = await fetch('users/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `email=${signUpEmail}&password=${signUpPassword}&confirmPassword=${signUpConfirmationPassword}`

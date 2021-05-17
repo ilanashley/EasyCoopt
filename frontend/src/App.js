@@ -6,6 +6,7 @@ import AddOffer from './components/AddOffer';
 import AddCoopte from './components/AddCoopte';
 import ViewOffer from './components/ViewOffer';
 import JobsAvailable from './components/JobsAvailable';
+import ReferralsList from './components/ReferralsList';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route component={AddCoopte} path="/addcoopte" exact />
           <Route component={ViewOffer} path="/viewoffer" exact />
           <Route component={JobsAvailable} path="/JobsAvailable" exact />
+          <Route component={ReferralsList} path="/ReferralsList" exact />
         </Switch>
       </Router>
     

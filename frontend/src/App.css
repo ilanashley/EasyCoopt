@@ -99,6 +99,7 @@ span {
   color:         #ffffff;
 }
 
+
 #referralButton{
   background:    #2FD395;
   border-radius: 15px;
@@ -122,6 +123,8 @@ span {
 }
 
 #enlargeButton{
+  height: 40px;
+width: 47px;
 border-radius: 15px;
 background: #254383;
 color:         #ffffff;
@@ -133,6 +136,63 @@ color:         #ffffff;
 #enlargeButton:focus {
   outline:0;
 }
+
+.searchBar{
+background-color: #F9FAFD;
+height: 48px;
+width: 245px;
+left: 0px;
+top: 4px;
+border-radius: 15px;
+border: none;
+margin-right: 10px;
+}
+.searchBar::placeholder {
+  text-align: center;
+  font-family: Poppins;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 18px;
+letter-spacing: 0em;
+}
+.searchBar:hover {
+  filter: brightness(110%);
+}
+
+.searchBar:focus {
+  outline:0;
+  padding: 5px;
+  
+}
+
+.onclickButton{
+    background-color: #F9FAFD;
+    height: 48px;
+    width: 150px;
+    left: 0px;
+    top: 4px;
+    border-radius: 15px;
+    border: none;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #254383;
+    margin-right: 10px;
+}
+.onclickButton:hover {
+  filter: brightness(110%);
+}
+
+
+
+
+
+
 #mediumButton {
 height: 70px;
 width: 163px;

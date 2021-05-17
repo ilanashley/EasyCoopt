@@ -46,7 +46,7 @@ const AddOffer = (props) => {
         <Form>
           <FormGroup>
             <Label for="title">Job Title</Label>
-            <Input onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Tilte" />
+            <Input onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
           </FormGroup>
           <FormGroup>
             <Label for="city">City</Label>

@@ -7,6 +7,7 @@ import './App.css';
 import AddOffer from './AddOffer';
 import AddCoopte from './AddCoopte';
 import ViewOffer from './ViewOffer';
+import Login from './Login';
 
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route component={AddOffer} path="/" exact />
           <Route component={AddCoopte} path="/addcoopte" exact />
           <Route component={ViewOffer} path="/viewoffer" exact />
+          <Route component={Login} path="/login" exact />
         </Switch>
       </Router>
     

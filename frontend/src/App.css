@@ -87,6 +87,15 @@ span {
   display: flex;
   justify-content: flex-end;
 }
+
+/* Style des boutons sign up avec Linkedin et Facebook */
+
+.btnEnd1{
+  display: flex;
+  justify-content: center;
+}
+
+
 .navbarContainer {
   /* border-bottom: solid 1px black; */
   margin-bottom: 10px;

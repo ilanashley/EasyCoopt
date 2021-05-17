@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+var uid2 = require("uid2");
+var bcrypt = require("bcrypt");
+
 var userModel = require("../models/users");
 
 /* GET users listing. */
@@ -18,17 +21,33 @@ router.post('/sign-up', async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword
   let password = req.body.password
   let email = req.body.email
+  var error = [];
+  var result = false;
+  var saveUser = null;
+  var token = null;
+
+  const data = await userModel.findOne({
+    email: req.body.email,
+  });
+
+  if (data != null) {
+    error.push("utilisateur déjà présent");
+  }
 
   if(!password || !confirmPassword || !email) {
-    res.json({ result: false, message: 'error' });
-  } else if (password !== confirmPassword) {
-    res.json({ result: false, message: 'error' });
-  } else {
-    
-    let result = false;
+    error.push("Champs vides");
+    res.json({ result, error});
+  } 
+  
+  if (password !== confirmPassword) {
+    error.push("Mot de passe et confirmation différents");
+    res.json({ result, error});
+  } 
+  
+if ((error.length == 0)){
     var newUser = new userModel({
       email: email,
-      password: confirmPassword,
+      password: password,
     });
   
     saveUser = await newUser.save();
@@ -37,7 +56,7 @@ router.post('/sign-up', async (req, res, next) => {
       result = true;
   }
 
-    res.json({ isLogin: true, message:'success'});
+    res.json({ isLogin: true, message:'success', confirmPassword, email});
   }
 })
 

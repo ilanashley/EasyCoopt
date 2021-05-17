@@ -1,16 +1,19 @@
 import React from 'react';
-import { Container, Col, Form, FormGroup, Input,  Row, Button } from "reactstrap";
+import { Container, Col, Row, Button } from "reactstrap";
+import NavBar from './NavBar'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlaceIcon from '@material-ui/icons/Place';
+
 import '../App.css';
 
 
 function JobsAvailable() {
   return (
   <div className="section">
+        <NavBar />
   <Container style={{marginTop: '100px'}}>
   <Container>
     <Row className="mb-4 d.flex">

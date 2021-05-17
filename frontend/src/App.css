@@ -124,6 +124,49 @@ box-shadow: 4px 4px 10px 2px #C9C9C9;
 
 
 /* *********** */
+
+.btnEnd{
+  display: flex;
+  justify-content: flex-end;
+}
+.navbarContainer {
+  /* border-bottom: solid 1px black; */
+  margin-bottom: 10px;
+  -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
+  box-shadow: 4px 4px 10px 2px #C9C9C9;
+}
+
+.linkContainer {
+  display: flex;
+  align-items: center;
+}
+
+#largeButton{
+  border-radius: 50%;
+  background: #254383;
+  color:         #ffffff;
+}
+
+#mediumButton {
+height: 70px;
+width: 163px;
+border-radius: 15px;
+background: #254383;
+color:         #ffffff;
+}
+#badge{
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  width: 267px;
+height: 47px;
+left: 236px;
+top: 1424px;
+color: #000;
+text-align:center;
+background: #F3F2F1;
+border-radius: 15px;
+}
+
+/* CSS de Mathieu */ 
 .section {
   background-color: #F3F2F1;
   font-family: 'Poppins', sans-serif;
@@ -195,7 +238,6 @@ span {
 }
 
 
-
 .cardInfoIcons{
   color: #7785A2;
   font-family: Poppins;
@@ -208,6 +250,7 @@ span {
   padding-right: 10px;
 
 }
+<<<<<<< HEAD
 .btnEnd{
   display: flex;
   justify-content: flex-end;
@@ -240,6 +283,8 @@ span {
 }
 
 
+=======
+>>>>>>> f55d983acaba851cfd240a61ee35b697e5bbee5b
 #referralButton{
   background:    #2FD395;
   border-radius: 15px;
@@ -326,28 +371,4 @@ letter-spacing: 0em;
 }
 .onclickButton:hover {
   filter: brightness(110%);
-}
-
-
-
-
-
-
-#mediumButton {
-height: 70px;
-width: 163px;
-border-radius: 15px;
-background: #254383;
-color:         #ffffff;
-}
-#badge{
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  width: 267px;
-height: 47px;
-left: 236px;
-top: 1424px;
-color: #000;
-text-align:center;
-background: #F3F2F1;
-border-radius: 15px;
 }

@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+var uid2 = require("uid2");
+var bcrypt = require("bcrypt");
+
 var userModel = require("../models/users");
 
 /* GET users listing. */
@@ -15,29 +18,50 @@ router.get('/', function(req, res, next) {
 */
 
 router.post('/sign-up', async (req, res, next) => {
-  let confirmPassword = req.body.confirmPassword
-  let password = req.body.password
-  let email = req.body.email
+  let confirmPassword = req.body.confirmPassword;
+  let password = req.body.password;
+  let email = req.body.email;
+  var error = [];
+  var result = false;
+  var saveUser = null;
+  var token = null;
+
+  const data = await userModel.findOne({
+    email: email,
+  });
+
+  if (data != null) {
+    error.push("utilisateur déjà présent");
+    res.json({ result, error});
+  }
 
   if(!password || !confirmPassword || !email) {
-    res.json({ result: false, message: 'error' });
-  } else if (password !== confirmPassword) {
-    res.json({ result: false, message: 'error' });
-  } else {
-    
-    let result = false;
+    error.push("Champs vides");
+    res.json({ result, error});
+  } 
+  
+  if (password !== confirmPassword) {
+    error.push("Mot de passe et confirmation différents");
+    res.json({ result, error});
+  } 
+  
+if ((error.length == 0)){
+  var hash = bcrypt.hashSync(password, 10);
     var newUser = new userModel({
       email: email,
-      password: confirmPassword,
+      password: password,
+      password: hash,
+      token: uid2(32),
     });
   
     saveUser = await newUser.save();
 
   if (saveUser) {
       result = true;
+      token = saveUser.token;
   }
 
-    res.json({ isLogin: true, message:'success'});
+    res.json({ isLogin: true, result, user: saveUser, error, token });
   }
 })
 
@@ -47,15 +71,34 @@ router.post('/sign-up', async (req, res, next) => {
   Response: result(true), isLogin(true), message(string), user(object)
 */
 
-router.post('/sign-in', (req, res, next) => {
-  let password = req.body.password
-  let email = req.body.email
-  if(!password || !email) {
-    res.json({ result: false, message: 'error' });
-  } else {
-    res.json({ result: true, isLogin: true, message:'success', user: {email, password, token: 'dgaiuhdoazhdoaz'} });
+router.post('/sign-in', async (req, res, next) => {
+  let email = req.body.email;
+  var error = [];
+  let result = false;
+  let user = null;
+
+  if(!req.body.password || !email) {
+    error.push("Champs vides");
+  } 
+  if(error.length == 0) {
+    user = await userModel.findOne({
+      email: email,
+    });
+
+    if (user) {
+      if (bcrypt.compareSync(req.body.password, user.password)) {
+        result = true;
+        token = user.token;
+      } else {
+        result = false;
+        error.push("mot de passe incorrect");
+      }
+    } else {
+      error.push("email incorrect");
+    }
   }
 
+  res.json({ result, user, error, token });
 })
 
 /*

@@ -31,26 +31,26 @@ const Login = (props) => {
 
   var handleSubmitSignin = async () => {
 
-    const data = await fetch('/sign-in', {
+    const data = await fetch('/users/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `email=${signInEmail}&password=${signInPassword}`
     })
 
-    const body = await data.json()
+    const body = await data.json();
 
-    if (body.result == true) {
-      props.addToken(body.token)
-      setUserExists(true)
+    // if (body.result == true) {
+    //   props.addToken(body.token)
+    //   setUserExists(true)
 
-    } else {
-      setErrorsSignin(body.error)
-    }
+    // } else {
+    //   setErrorsSignin(body.error)
+    // }
   }
 
   var handleSubmitSignup = async () => {
 
-    const data = await fetch('/sign-up', {
+    const data = await fetch('/users/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `email=${signUpEmail}&password=${signUpPassword}&confirmPassword=${signUpConfirmationPassword}`
@@ -58,13 +58,13 @@ const Login = (props) => {
 
     const body = await data.json()
 
-    if (body.result == true) {
-      props.addToken(body.token)
-      setUserExists(true)
+    // if (body.result == true) {
+    //   props.addToken(body.token)
+    //   setUserExists(true)
 
-    } else {
-      setErrorsSignup(body.error)
-    }
+    // } else {
+    //   setErrorsSignup(body.error)
+    // }
   }
 
   if (userExists) {

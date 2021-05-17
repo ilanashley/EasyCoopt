@@ -5,7 +5,7 @@ import './App.css';
 import AddOffer from './components/AddOffer';
 import AddCoopte from './components/AddCoopte';
 import ViewOffer from './components/ViewOffer';
-import JobsAvailable from './JobsAvailable';
+import JobsAvailable from './components/JobsAvailable';
 
 function App() {
   return (

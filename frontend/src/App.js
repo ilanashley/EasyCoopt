@@ -7,7 +7,7 @@ import './App.css';
 import AddOffer from './AddOffer';
 import AddCoopte from './AddCoopte';
 import ViewOffer from './ViewOffer';
-
+import JobsAvailable from './JobsAvailable';
 
 
 
@@ -21,6 +21,7 @@ function App() {
           <Route component={AddOffer} path="/" exact />
           <Route component={AddCoopte} path="/addcoopte" exact />
           <Route component={ViewOffer} path="/viewoffer" exact />
+          <Route component={JobsAvailable} path="/JobsAvailable" exact />
         </Switch>
       </Router>
     

@@ -93,6 +93,12 @@ span {
   -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
   box-shadow: 4px 4px 10px 2px #C9C9C9;
 }
+
+.linkContainer {
+  display: flex;
+  align-items: center;
+}
+
 #largeButton{
   border-radius: 50%;
   background: #254383;

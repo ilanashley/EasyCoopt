@@ -6,7 +6,7 @@ var offerModel = require("../models/offers");
 var referralModel = require('../models/referrals');
 
 /* Add Referrals */
-router.post('/add-referral', async (req, res, next) => {
+router.post('/add', async (req, res, next) => {
   const newReferral = new referralModel({
     creationDate : req.body.creationDate,
     firstName : req.body.firstName,
@@ -29,30 +29,36 @@ router.post('/add-referral', async (req, res, next) => {
 
 
 /* Get Referrals*/
-router.get('/get-referrals', async (req, res, next) => {
-
-  var users = await userModel.find().populate({ path: 'offersId', populate: { path: 'referralsId' }}).exec();
+router.get('/get', async (req, res, next) => {
+  let error
   let usersInfo = []
-  for(let k=0; k<users.length; k++) {
-    for(let i=0; i<users[k].offersId.length; i++) {
-      for(let j=0; j<users[k].offersId[i].referralsId.length; j++) {
-        usersInfo.push({
-          recipientFirstName: users[k].firstName,
-          recipientLastName: users[k].lastName,
-          offerTitle: users[k].offersId[i].title,
-          offerContent: users[k].offersId[i].content,
-          offerBonusAmount: users[k].offersId[i].bonusAmount,
-          referralCreationDate: users[k].offersId[i].referralsId[j].creationDate,
-          referralFirstName: users[k].offersId[i].referralsId[j].firstName,
-          referralLastName: users[k].offersId[i].referralsId[j].lastName,
-          referralReason: users[k].offersId[i].referralsId[j].reason,
-          referralStatus: users[k].offersId[i].referralsId[j].status
-        })
+  var users = await userModel.find().populate({ path: 'offersId', populate: { path: 'referralsId' }}).exec();
+  if(!users) {
+    error = "Il manque des données"
+    res.json({result: false, error, usersInfo});
+  }  else {
+   
+    for(let k=0; k<users.length; k++) {
+      for(let i=0; i<users[k].offersId.length; i++) {
+        for(let j=0; j<users[k].offersId[i].referralsId.length; j++) {
+          usersInfo.push({
+            recipientFirstName: users[k].firstName,
+            recipientLastName: users[k].lastName,
+            offerTitle: users[k].offersId[i].title,
+            offerContent: users[k].offersId[i].content,
+            offerBonusAmount: users[k].offersId[i].bonusAmount,
+            referralCreationDate: users[k].offersId[i].referralsId[j].creationDate,
+            referralFirstName: users[k].offersId[i].referralsId[j].firstName,
+            referralLastName: users[k].offersId[i].referralsId[j].lastName,
+            referralReason: users[k].offersId[i].referralsId[j].reason,
+            referralStatus: users[k].offersId[i].referralsId[j].status
+          })
+        }
       }
     }
+    res.json({result: true, usersInfo});
   }
-
-  res.json({result: true, usersInfo});
+  
 });
 
 

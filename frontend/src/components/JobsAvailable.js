@@ -18,18 +18,17 @@ function JobsAvailable() {
     useEffect(() => {
         const fetchOffers = async () => {
             setLoading(true)
-            var rawResponse = await fetch('/jobs/get')
+            var rawResponse = await fetch('/offers/get')
             var response = await rawResponse.json()
-            console.log('reponse du fetch --->', response)
             setOffers(response.offers)
             setLoading(false)
         }
         fetchOffers()
     }, [])
 
-    const offersList = offers.map(offer => {
+    const offersList = offers.map((offer, i) => {
         return (
-            <div className=" col-md-12 cardBackground mb-2">
+            <div key={i} className=" col-md-12 cardBackground mb-2">
                 <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                     <h2>{offer.title}</h2>
                     <div className="cardInfoBg">
@@ -63,70 +62,16 @@ function JobsAvailable() {
             <NavBar />
             <Container style={{ marginTop: '100px' }}>
                 <Container>
+
                     <Row className="mb-4 d.flex">
-                        <Col className="flex-row mr-1">
+                        <Col className="flex-row">
                             <input className="searchBar" type="search" placeholder="Rechercher un poste.." />
                             <button className="onclickButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tri par date <ExpandMoreIcon /></button>
                             <button className="onclickButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tri par bonus <ExpandMoreIcon /></button>
                         </Col>
                     </Row>
                     <Row>
-
                         {offersList}
-
-                        <div className=" col-md-12 cardBackground mb-2">
-                            <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
-                                <h2>Développeur Fullstack JS.</h2>
-                                <div className="cardInfoBg">
-                                    <span className="d-flex justify-content-center">
-                                        <div className="cardInfoIcons">
-                                            <CalendarTodayIcon fontSize="large" />
-                                            <p>Il y a 12 jours...</p>
-                                        </div>
-                                        <div className="cardInfoIcons">
-                                            <BusinessCenterIcon fontSize="large" />
-                                            <p>CDI</p>
-                                        </div>
-                                        <div className="cardInfoIcons">
-                                            <PlaceIcon fontSize="large" />
-                                            <p>Paris</p>
-                                        </div>
-                                    </span>
-                                </div>
-                                <h3>150€</h3>
-                                <Button id="referralButton">Recommander</Button>
-                                <Button id="enlargeButton">
-                                    <OpenInNewIcon />
-                                </Button>
-                            </li>
-                        </div>
-
-                        <div className=" col-md-12 cardBackground mb-2">
-                            <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
-                                <h2>Commercial itinérant.</h2>
-                                <div className="cardInfoBg">
-                                    <span className="d-flex justify-content-center">
-                                        <div className="cardInfoIcons">
-                                            <CalendarTodayIcon fontSize="large" />
-                                            <p>Il y a 3 jours...</p>
-                                        </div>
-                                        <div className="cardInfoIcons">
-                                            <BusinessCenterIcon fontSize="large" />
-                                            <p>CDD</p>
-                                        </div>
-                                        <div className="cardInfoIcons">
-                                            <PlaceIcon fontSize="large" />
-                                            <p>Paris</p>
-                                        </div>
-                                    </span>
-                                </div>
-                                <h3>150€</h3>
-                                <Button id="referralButton">Recommander</Button>
-                                <Button id="enlargeButton">
-                                    <OpenInNewIcon />
-                                </Button>
-                            </li>
-                        </div>
                     </Row>
 
                 </Container>

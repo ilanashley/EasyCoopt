@@ -127,6 +127,10 @@ console.log('le user-->', user)
   let newPassword = req.body.newPassword
   let confirmPassword = req.body.confirmPassword
 
+
+// vérifier si il y a du contenu en frontend, si il n'y a pas de contenu en frontend le contenu est égal à ce qu'il y avait en BD
+
+
   console.log('le token-->', token)
   console.log('le password -->', newPassword)
 

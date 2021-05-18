@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import "../App.css";
@@ -19,7 +19,7 @@ function MyAccount(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState(props.type);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -45,11 +45,16 @@ function MyAccount(props) {
 
   let tabErrorsAccount = listErrorsAccount.map((error, i) => {
     return <p>{error}</p>;
-  });
+  });   
 
   // redirige le user si son changement de profil est bien enregistré
   if (userExists) {
     return <Redirect to="/jobsavailable" />;
+  }
+
+  // uniquement pendant le test, redirect si le  token est null
+  if (!props.token) {
+    return <Redirect to="/login" />;
   }
 
   // pour gérer le  changement de type de user
@@ -118,7 +123,7 @@ function MyAccount(props) {
                 id="inputGroupSelect01"
                 onChange={(e) => props.handleTypeChange(e)}
                 aria-label="Default select example"
-              >
+                >
                 <option selected>Sélectionner...</option>
                 <option value="Coopteur">Coopteur</option>
                 <option value="Recruteur">Recruteur</option>
@@ -169,8 +174,18 @@ function MyAccount(props) {
   );
 };
 
+/* recuperation du token depuis redux */
 function mapStateToProps(state) {
   return { token: state.token };
 }
 
-export default connect(mapStateToProps, null)(MyAccount);
+/* envoi du type de user a redux */
+function mapDispatchToProps(dispatch) {
+    return {
+        addProfileType: function(type) {
+        dispatch({type: 'addProfileType', type : type})
+      }
+    }
+  }  
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyAccount);

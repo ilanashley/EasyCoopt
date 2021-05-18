@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import '../App.css';
 import {
   Form,
@@ -18,12 +21,13 @@ import NavBar from './NavBar'
 function AddOffer (props) {
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
-  const [date, setDate] = useState('');
-  const [bonus, setBonus] = useState('');
+  const [creationDate, setCreationDate] = useState('');
+  const [bonusAmount, setBonusAmount] = useState('');
   const [contract, setContract] = useState('');
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
+<<<<<<< HEAD
   // var saveOffer = async offer => {
   //   props.addToAnounces(offer)
 
@@ -33,6 +37,19 @@ function AddOffer (props) {
   //     body: `name=${article.title}&content=${article.content}&desc=${article.description}&lang=${props.selectedLang}&img=${article.urlToImage}&token=${props.token}`
   //   })
   // }
+=======
+
+
+  var saveOffer = async () => {
+
+    const saveReq = await fetch('/jobs/add', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&token=${props.token}`
+    })
+    const body = await saveReq.json()
+  }
+>>>>>>> 7ff2da5fdf9cba2fcfeec7b40cfa6efc3022cbaa
 
 
   return (
@@ -46,19 +63,19 @@ function AddOffer (props) {
             <Form>
               <FormGroup>
                 <Label for="title">Job Title</Label>
-                <Input onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Tilte" />
+                <Input onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
               </FormGroup>
               <FormGroup>
                 <Label for="city">City</Label>
                 <Input onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
               </FormGroup>
               <FormGroup>
-                <Label for="date">Date</Label>
-                <Input onChange={(e) => setDate(e.target.value)} type="text" name="date" placeholder="../../...." />
+                <Label for="creationDate">Date</Label>
+                <Input onChange={(e) => setCreationDate(e.target.value)} type="text" name="creationDate" placeholder="../../...." />
               </FormGroup>
               <FormGroup>
-                <Label for="bonus">Bonus</Label>
-                <Input onChange={(e) => setBonus(e.target.value)} type="text" name="bonus" placeholder="400€" />
+                <Label for="bonusAmount">Bonus</Label>
+                <Input onChange={(e) => setBonusAmount(e.target.value)} type="text" name="bonusAmount" placeholder="400€" />
               </FormGroup>
               <FormGroup>
                 <Label for="contract">Type of contract</Label>
@@ -74,7 +91,7 @@ function AddOffer (props) {
               </FormGroup>
 
               <div class="btnEnd">
-                <Button style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
+                <Button onClick={()=> {saveOffer()}} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
               </div>
 
             </Form>
@@ -88,4 +105,19 @@ function AddOffer (props) {
   );
 }
 
-export default AddOffer;
+function mapDispatchToProps(dispatch){
+  return {
+    addOffer: function(offer){
+      dispatch({ type: 'addOffer', addOffer: offer })
+    }
+  }
+}
+
+function mapStateToProps(state){
+  return {token: state.token}
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddOffer)

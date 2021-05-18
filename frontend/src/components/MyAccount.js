@@ -27,6 +27,13 @@ function MyAccount(props) {
   const [listErrorsAccount, setlistErrorsAccount] = useState([]);
 
 
+
+  // Gère le  changement de type de user
+  const handleTypeChange = (event, i) => {
+    setType(event.target.value);
+  };
+
+
   var handleSubmitAccount = async () => {
     const data = await fetch("/users/account", {
       method: "POST",
@@ -57,12 +64,6 @@ function MyAccount(props) {
     return <Redirect to="/login" />;
   }
 
-  // pour gérer le  changement de type de user
-  const handleTypeChange = (event, i) => {
-    console.log(event.target.value);
-    // newReferrals[index].status = event.target.value
-    setType(event.target.value);
-  };
 
   return (
     <div className="section">
@@ -121,7 +122,7 @@ function MyAccount(props) {
               <select
                 class="custom-select"
                 id="inputGroupSelect01"
-                onChange={(e) => props.handleTypeChange(e)}
+                onChange={(e) => handleTypeChange(e)}
                 aria-label="Default select example"
                 >
                 <option selected>Sélectionner...</option>

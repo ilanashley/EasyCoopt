@@ -4,6 +4,13 @@ var router = express.Router();
 var offerModel = require("../models/offers");
 var userModel = require("../models/users");
 
+
+router.get('/get', async (req, res, next) => {
+  var offers = await offerModel.find()
+  res.json({result: true, offers})
+})
+
+
 router.post('/add', async function (req, res, next) {
   // let token = req.body.token;
   var user = await userModel.findOne({token: req.body.token})

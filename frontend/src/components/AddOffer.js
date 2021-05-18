@@ -27,17 +27,6 @@ function AddOffer (props) {
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
-<<<<<<< HEAD
-  // var saveOffer = async offer => {
-  //   props.addToAnounces(offer)
-
-  //   const saveReq = await fetch('/wishlist-article', {
-  //     method: 'POST',
-  //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  //     body: `name=${article.title}&content=${article.content}&desc=${article.description}&lang=${props.selectedLang}&img=${article.urlToImage}&token=${props.token}`
-  //   })
-  // }
-=======
 
 
   var saveOffer = async () => {
@@ -49,7 +38,6 @@ function AddOffer (props) {
     })
     const body = await saveReq.json()
   }
->>>>>>> 7ff2da5fdf9cba2fcfeec7b40cfa6efc3022cbaa
 
 
   return (

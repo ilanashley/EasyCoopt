@@ -31,7 +31,7 @@ function AddOffer (props) {
 
   var saveOffer = async () => {
 
-    const saveReq = await fetch('/jobs/add', {
+    const saveReq = await fetch('/offers/add', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&token=${props.token}`

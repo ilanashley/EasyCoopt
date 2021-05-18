@@ -6,8 +6,14 @@ var userModel = require("../models/users");
 
 
 router.get('/get', async (req, res, next) => {
+  let error
   var offers = await offerModel.find()
-  res.json({result: true, offers})
+  if(!offers) {
+    error = "Il n'y a pas d'offre à afficher"
+    res.json({result: false, error})
+  } else {
+    res.json({result: true, offers})
+  }
 })
 
 

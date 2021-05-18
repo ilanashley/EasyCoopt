@@ -63,7 +63,7 @@ export default function ReferralsList(props) {
     const fetchReferrals = async() => {
       setLoading(true)
       // Requete au backend a placer ici
-      var rawResponse = await fetch('/referrals/get-referrals')
+      var rawResponse = await fetch('/referrals/get')
       var response = await rawResponse.json()
       // console.log('reponse du fetch --->', response)
       setReferrals(response.usersInfo)

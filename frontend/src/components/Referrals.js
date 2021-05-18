@@ -10,26 +10,26 @@ function Referrals(props) {
     const referralsList = props.currentReferrals.map((referral, i) => {
 
         let selectStyle
-        if (referral.status === '1') {
+        if (referral.referralStatus === '1') {
             selectStyle = { border: 'solid 1px blue' }
-        } else if (referral.status === '2') {
+        } else if (referral.referralStatus === '2') {
             selectStyle = { border: 'solid 1px green' }
-        } else if (referral.status === '3') {
+        } else if (referral.referralStatus === '3') {
             selectStyle = { border: 'solid 1px red' }
         }
 
         return (
             <tr>
                 <th scope="row">{i + 1}</th>
-                <td>{referral.addDate}</td>
-                <td>{referral.recipientName}</td>
-                <td>{referral.reward}€</td>
-                <td>{referral.referralName}</td>
-                <td>{referral.recommandation}</td>
-                <td>{referral.offer}</td>
+                <td>{referral.referralCreationDate}</td>
+                <td>{referral.recipientLastName}</td>
+                <td>{referral.offerBonusAmount}€</td>
+                <td>{referral.referralLastName}</td>
+                <td>{referral.referralReason}</td>
+                <td>{referral.offerTitle}</td>
                 <td><AssignmentOutlinedIcon style={{cursor: 'pointer'}}/></td>
                 <td>
-                    <select value={referral.status} className="form-select" onChange={(e) => props.handleSelectStatusChange(e, i)} aria-label="Default select example" style={selectStyle}>
+                    <select value={referral.referralStatus} className="form-select" onChange={(e) => props.handleSelectStatusChange(e, i)} aria-label="Default select example" style={selectStyle}>
                         <option value="1">En attente</option>
                         <option value="2">Approuvé</option>
                         <option value="3">Refusé</option>

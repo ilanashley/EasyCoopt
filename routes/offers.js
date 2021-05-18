@@ -4,6 +4,19 @@ var router = express.Router();
 var offerModel = require("../models/offers");
 var userModel = require("../models/users");
 
+
+router.get('/get', async (req, res, next) => {
+  let error
+  var offers = await offerModel.find()
+  if(!offers) {
+    error = "Il n'y a pas d'offre à afficher"
+    res.json({result: false, error})
+  } else {
+    res.json({result: true, offers})
+  }
+})
+
+
 router.post('/add', async function (req, res, next) {
   // let token = req.body.token;
   var user = await userModel.findOne({token: req.body.token})
@@ -50,14 +63,17 @@ router.post('/add', async function (req, res, next) {
 
     saveOffer = await newOffer.save();
 
-    var n = await offerModel.updateOne(
+    var n = await userModel.updateOne(
       {token: req.body.token},
       {
-        $push: { offerId: saveOffer._id }
+        $push: { offersId: saveOffer._id }
       }
     );
 
-    console
+    console.log(n);
+    console.log(req.body.token);
+    console.log('id', saveOffer._id);
+
 
     if (saveOffer) {
       result = true;

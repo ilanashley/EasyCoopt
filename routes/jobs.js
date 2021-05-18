@@ -50,14 +50,17 @@ router.post('/add', async function (req, res, next) {
 
     saveOffer = await newOffer.save();
 
-    var n = await offerModel.updateOne(
+    var n = await userModel.updateOne(
       {token: req.body.token},
       {
-        $push: { offerId: saveOffer._id }
+        $push: { offersId: saveOffer._id }
       }
     );
 
-    console
+    console.log(n);
+    console.log(req.body.token);
+    console.log('id', saveOffer._id);
+
 
     if (saveOffer) {
       result = true;

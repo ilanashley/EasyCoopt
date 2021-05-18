@@ -26,6 +26,8 @@ function JobsAvailable() {
         fetchOffers()
     }, [])
 
+
+    // Card component
     const offersList = offers.map((offer, i) => {
         return (
             <div key={i} className=" col-md-12 cardBackground mb-2">

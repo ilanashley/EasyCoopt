@@ -13,6 +13,8 @@ import ViewOffer from './components/ViewOffer';
 import JobsAvailable from './components/JobsAvailable';
 import ReferralsList from './components/ReferralsList';
 import Login from './components/Login';
+import MyAccount from './components/MyAccount';
+
 
 
 const store = createStore(combineReducers({ token }))
@@ -30,6 +32,7 @@ function App() {
           <Route component={JobsAvailable} path="/JobsAvailable" exact />
           <Route component={ReferralsList} path="/ReferralsList" exact />
           <Route component={Login} path="/login" exact />
+          <Route component={MyAccount} path="/MyAccount" exact />
         </Switch>
       </Router>
     </Provider>

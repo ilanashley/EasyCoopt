@@ -24,7 +24,7 @@ function JobsAvailable() {
     </Col>
     </Row>
     <Row>
-            <div className=" col-md-11 cardBackground mb-2">
+            <div className=" col-md-12 cardBackground mb-2">
             <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                 <h2>Développeur Fullstack JS.</h2>
                 <div className="cardInfoBg">
@@ -53,7 +53,7 @@ function JobsAvailable() {
     </Row>
 
     <Row>
-            <div className=" col-md-11 cardBackground mb-2">
+            <div className=" col-md-12 cardBackground mb-2">
             <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                 <h2>Commercial itinérant.</h2>
                 <div className="cardInfoBg">

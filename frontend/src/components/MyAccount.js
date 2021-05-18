@@ -13,6 +13,7 @@ import {
   Col,
 } from "reactstrap";
 import NavBar from "./NavBar";
+import createPalette from "@material-ui/core/styles/createPalette";
 
 function MyAccount(props) {
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -50,6 +51,14 @@ function MyAccount(props) {
 
 
   var handleSubmitAccount = async () => {
+
+    let errorList = [];
+    if(!email || !type ) {
+      errorList.push("Champs vides");
+      setlistErrorsAccount(errorList)
+    }
+
+    if (errorList.length == 0){
     const data = await fetch("/users/account", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -57,11 +66,12 @@ function MyAccount(props) {
     });
 
     const body = await data.json();
-    if (body.result == true) {
+    setlistErrorsAccount(body.error);
+
+    if (body.result == true && listErrorsAccount.length == 0) {
       setUserExists(true);
-    } else {
-      setlistErrorsAccount(body.error);
-    }
+    } 
+  }
   };
 
   let tabErrorsAccount = listErrorsAccount.map((error, i) => {
@@ -178,8 +188,9 @@ function MyAccount(props) {
                 placeholder="Confirmer nouveau mot de passe"
               />
             </FormGroup>
-            {tabErrorsAccount}
+           
           </Col>
+          {tabErrorsAccount}
           <div class="btnEnd1">
             <Button
               onClick={() => handleSubmitAccount()}

@@ -253,6 +253,7 @@ span {
 .btnEnd{
   display: flex;
   justify-content: flex-end;
+  color: #569df4;
 }
 
 /* Style des boutons sign up avec Linkedin et Facebook */

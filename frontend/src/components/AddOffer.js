@@ -15,13 +15,24 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar'
 
 
-const AddOffer = (props) => {
+function AddOffer (props) {
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
+  const [date, setDate] = useState('');
   const [bonus, setBonus] = useState('');
   const [contract, setContract] = useState('');
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
+
+  var saveOffer = async offer => {
+    props.addToAnounces(offer)
+
+    const saveReq = await fetch('/wishlist-article', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `name=${article.title}&content=${article.content}&desc=${article.description}&lang=${props.selectedLang}&img=${article.urlToImage}&token=${props.token}`
+    })
+  }
 
 
   return (
@@ -42,6 +53,10 @@ const AddOffer = (props) => {
                 <Input onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
               </FormGroup>
               <FormGroup>
+                <Label for="date">Date</Label>
+                <Input onChange={(e) => setDate(e.target.value)} type="text" name="date" placeholder="../../...." />
+              </FormGroup>
+              <FormGroup>
                 <Label for="bonus">Bonus</Label>
                 <Input onChange={(e) => setBonus(e.target.value)} type="text" name="bonus" placeholder="400€" />
               </FormGroup>
@@ -53,7 +68,6 @@ const AddOffer = (props) => {
                 <Label for="link">Link offer</Label>
                 <Input onChange={(e) => setLink(e.target.value)} type="link" name="link" placeholder="https://" />
               </FormGroup>
-
               <FormGroup>
                 <Label for="resume">Resume</Label>
                 <Input onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />

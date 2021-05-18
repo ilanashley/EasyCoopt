@@ -16,6 +16,7 @@ import {
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import NavBar from './NavBar'
 
 function Login(props) {
 

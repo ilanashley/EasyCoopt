@@ -9,9 +9,7 @@ const userSchema = mongoose.Schema({
     avatarUrl: String,
     // groupsId: [{type: mongoose.Schema.Types.ObjectId, ref: 'groups'}],
     groupsId: String,
-    offersId: [{type: mongoose.Schema.Types.ObjectId, ref: 'offers'}],
-    // [{type: mongoose.Schema.Types.ObjectId, ref: 'groups'}],
-    // offersId: [{type: mongoose.Schema.Types.ObjectId, ref: 'offers'}]
+    offersId: [{type: mongoose.Schema.Types.ObjectId, ref: 'offers'}]
 })
 
 const userModel = mongoose.model('users', userSchema)

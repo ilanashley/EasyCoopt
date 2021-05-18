@@ -109,6 +109,7 @@ router.post('/sign-in', async (req, res, next) => {
 
 router.get('/account', async function(req,res,next){
   var user = await userModel.findOne({token: req.query.token})
+
   if(user != null){
     password= user.password,
     avatarUrl = user.avatarUrl,
@@ -117,7 +118,7 @@ router.get('/account', async function(req,res,next){
     lastName = user.lastName,
     type = user.groupsId
   }
-  res.json({password, avatarUrl, email, firstName, lastName, type})
+  res.json({password, avatarUrl, email, firstName, lastName, type});
 })
 
 router.post('/account', async(req, res, next) => {
@@ -136,45 +137,47 @@ if(user){
   let email = req.body.email
   let type = req.body.type
   let oldPassword = req.body.oldPassword
-  let newPassword = req.body.newPassword
   let confirmPassword = req.body.confirmPassword
+
+  if (req.body.newPassword){
+  let password = req.body.newPassword
+  }
 
 
 // vérifier si il y a du contenu en frontend, si il n'y a pas de contenu en frontend le contenu est égal à ce qu'il y avait en BD
 
-/* si le champ email ou type est vide */
-if(!email || !type ) {
-  error.push("Champs vides");
-  res.json({ result, error});
-} 
-/* si le champ email ou type est vide */
-// if (oldPassword !== user.password){
-//   error.push("Ancien mot de passe erroné");
+// /* si le champ email ou type est vide */
+// if(!email || !type ) {
+//   error.push("Champs vides");
 //   res.json({ result, error});
 // } 
-if (oldPassword) {
-  if ( !newPassword && !confirmPassword ) {
-    error.push("Champs vides");
-    res.json({ result, error});
-    error.push("Champs vides");
-  } else if (!newPassword || !confirmPassword) {
-    res.json({ result, error});
-  } else {
-    if (newPassword !== confirmPassword) {
-      error.push("Ancien et nouveau mots de passe différents ");
-      res.json({ result, error});
-    } else {
-      result = true;
-      /* enregistrement de toutes les nouvelles infos en base de donnée */ 
+// /* si le champ email ou type est vide */
+// // if (oldPassword !== user.password){
+// //   error.push("Ancien mot de passe erroné");
+// //   res.json({ result, error});
+// // } 
+// if (oldPassword) {
+//   if ( !newPassword && !confirmPassword ) {
+//     error.push("Champs vides");
+//     res.json({ result, error});
+//     error.push("Champs vides");
+//   } else if (!newPassword || !confirmPassword) {
+//     res.json({ result, error});
+//   } else {
+//     if (newPassword !== confirmPassword) {
+//       error.push("Ancien et nouveau mots de passe différents ");
+//       res.json({ result, error});
+//     } else {
+//       result = true;
+//       /* enregistrement de toutes les nouvelles infos en base de donnée */ 
 
 
-  // console.log('le token-->', token)
-  // console.log('le password -->', newPassword)
+//   // console.log('le password -->', newPassword)
 
-
-  var updatedUser =  await userModel.updateOne({token: token}, {password: newPassword, avatarUrl: avatarUrl, email: email, firstName: firstName, lastName: lastName, groupsId: type});
+// password: newPassword,
+  var updatedUser =  await userModel.updateOne({token: token}, {avatarUrl: avatarUrl, email: email, firstName: firstName, lastName: lastName, groupsId: type});
   res.json({result: true});
-    }}
-}})
+  
+})
 
 module.exports = router;

@@ -28,12 +28,12 @@ function App() {
       <Router>
         <Switch>
           <Route component={AddOffer} path="/" exact />
-          <Route component={AddCoopte} path="/addcoopte" exact />
-          <Route component={ViewOffer} path="/viewoffer" exact />
-          <Route component={JobsAvailable} path="/JobsAvailable" exact />
-          <Route component={ReferralsList} path="/ReferralsList" exact />
+          <Route component={AddCoopte} path="/addCoopte" exact />
+          <Route component={ViewOffer} path="/viewOffer" exact />
+          <Route component={JobsAvailable} path="/jobsAvailable" exact />
+          <Route component={ReferralsList} path="/referralsList" exact />
           <Route component={Login} path="/login" exact />
-          <Route component={MyAccount} path="/MyAccount" exact />
+          <Route component={MyAccount} path="/myAccount" exact />
         </Switch>
       </Router>
     </Provider>

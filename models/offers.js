@@ -8,7 +8,7 @@ const offerSchema = mongoose.Schema({
     link: String,
     status: String,
     city: String,
-    // referralsId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'referrals' }],
+    referralsId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'referrals' }],
     });
     
     const offerModel = mongoose.model('offers', offerSchema);

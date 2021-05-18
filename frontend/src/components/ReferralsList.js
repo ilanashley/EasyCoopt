@@ -32,6 +32,17 @@ export default function ReferralsList(props) {
     { addDate: '21/03/2021', recipientName: 'ilana', reward: 300, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: '1' }
   ]
 
+  // recipientFirstName: users[k].firstName,
+  // recipientLastName: users[k].lastName,
+  // offerTitle: users[k].offersId[i].title,
+  // offerContent: users[k].offersId[i].content,
+  // offerBonusAmount: users[k].offersId[i].bonusAmount,
+  // referralCreationDate: users[k].offersId[i].referralsId[j].creationDate,
+  // referralFirstName: users[k].offersId[i].referralsId[j].firstName,
+  // referralLastName: users[k].offersId[i].referralsId[j].lastName,
+  // referralReason: users[k].offersId[i].referralsId[j].reason,
+  // referralStatus: users[k].offersId[i].referralsId[j].status
+
   const [referrals, setReferrals] = useState([]);
 
   // Pagination states
@@ -49,10 +60,13 @@ export default function ReferralsList(props) {
 
   // Fetch backend to get referrals
   useEffect(() => { 
-    function fetchReferrals() {
+    const fetchReferrals = async() => {
       setLoading(true)
       // Requete au backend a placer ici
-      setReferrals(referralsArray)
+      var rawResponse = await fetch('/referrals/get-referrals')
+      var response = await rawResponse.json()
+      // console.log('reponse du fetch --->', response)
+      setReferrals(response.usersInfo)
       setLoading(false)
     } 
     fetchReferrals()
@@ -84,15 +98,14 @@ export default function ReferralsList(props) {
 
   // Status choice per refferal
   const handleSelectStatusChange = (event, i) => {
-    console.log(event.target.value)
     let newReferrals = [...referrals]
     let index = i + indexOfFirstReferral
-    newReferrals[index].status = event.target.value   
+    newReferrals[index].referralStatus = event.target.value   
     setReferrals(newReferrals)
   } 
 
   // Filter per date
-  const addDateArray = referrals.map((referral) => {return referral.addDate})
+  const addDateArray = referrals.map((referral) => {return referral.referralCreationDate})
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
     return addDateArray.indexOf(date) === pos;
   })
@@ -101,12 +114,12 @@ export default function ReferralsList(props) {
   })
 
   const handleSelectFilteredDate = (event) => {
-    const referralsPerDate = referrals.filter(referral => referral.addDate === event.target.value)
+    const referralsPerDate = referrals.filter(referral => referral.referralCreationDate === event.target.value)
     setReferrals(referralsPerDate)
   }
 
   // Filter per recipient
-  const recipientArray = referrals.map((referral) => {return referral.recipientName})
+  const recipientArray = referrals.map((referral) => {return referral.recipientLastName})
   const recipientFilteredArray = recipientArray.filter((recipient, pos) => {
     return recipientArray.indexOf(recipient) === pos;
   }).sort()
@@ -115,12 +128,12 @@ export default function ReferralsList(props) {
   })
 
   const handleSelectFilteredRecipient = (event) => {
-    const referralsPerRecipient = referrals.filter(referral => referral.recipientName === event.target.value)
+    const referralsPerRecipient = referrals.filter(referral => referral.userLastName === event.target.value)
     setReferrals(referralsPerRecipient)
   }
 
   // Fiter per referral
-  const referralArray = referrals.map((referral) => {return referral.referralName})
+  const referralArray = referrals.map((referral) => {return referral.referralLastName})
   const referralFilteredArray = referralArray.filter((referral, pos) => {
     return referralArray.indexOf(referral) === pos;
   }).sort()
@@ -129,22 +142,22 @@ export default function ReferralsList(props) {
   })
 
   const handleSelectFilteredReferral = (event) => {
-    const referralsPerReferral = referrals.filter(referral => referral.referralName === event.target.value)
+    const referralsPerReferral = referrals.filter(referral => referral.referralLastName === event.target.value)
     setReferrals(referralsPerReferral)
   }
 
   // Filter per status
-  const statusArray = referrals.map((referral) => {return referral.status})
+  const statusArray = referrals.map((referral) => {return referral.referralStatus})
   const statusFilteredArray = statusArray.filter((status, pos) => {
     return statusArray.indexOf(status) === pos;
   }).sort()
   const statusFilteredList = statusFilteredArray.map((status) => {
-    let statusDescription = status === '1' ? 'En cours' : (status === '2' ? 'Accepté' : 'Refusé')
+    let statusDescription = status === '1' ? 'En attente' : (status === '2' ? 'Approuvé' : 'Refusé')
     return( <option value={status}>{statusDescription}</option> )
   })
 
   const handleSelectFilteredStatus = (event) => {
-    const referralsPerStatus = referrals.filter(referral => referral.status === event.target.value)
+    const referralsPerStatus = referrals.filter(referral => referral.referralStatus === event.target.value)
     setReferrals(referralsPerStatus)
   }
 

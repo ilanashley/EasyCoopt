@@ -24,15 +24,15 @@ function AddOffer (props) {
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
-  var saveOffer = async offer => {
-    props.addToAnounces(offer)
+  // var saveOffer = async offer => {
+  //   props.addToAnounces(offer)
 
-    const saveReq = await fetch('/wishlist-article', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `name=${article.title}&content=${article.content}&desc=${article.description}&lang=${props.selectedLang}&img=${article.urlToImage}&token=${props.token}`
-    })
-  }
+  //   const saveReq = await fetch('/wishlist-article', {
+  //     method: 'POST',
+  //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+  //     body: `name=${article.title}&content=${article.content}&desc=${article.description}&lang=${props.selectedLang}&img=${article.urlToImage}&token=${props.token}`
+  //   })
+  // }
 
 
   return (

@@ -46,7 +46,7 @@ const AddCoopte = (props) => {
               </FormGroup>
               <FormGroup>
                 <Label for="cv">Curriculum Vitae</Label>
-                <Input type="text" name="cv" placeholder="upload cv" />
+                <Input type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
               <FormGroup>

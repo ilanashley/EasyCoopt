@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import NavBar from './NavBar'
 
 const Login = (props) => {
 
@@ -83,19 +84,8 @@ const Login = (props) => {
 
   return (
     <div className="section">
-      <div className='navbarContainer'>
-        <nav className="navbar navbar-light bg-white">
-          <div className="container-fluid">
-            <a className="navbar-brand" href="#"><img src='./logo.png' height="40px" /></a>
-            <div className="d-flex">
-              <a className="navbar-brand" href="#">Announces</a>
-              <a className="navbar-brand" href="#">History</a>
-              <Button id="largeButton" style={{ margin: "10px" }}>  <PersonOutlineIcon fontSize="medium" /></Button>
-              <Button id="largeButton" style={{ margin: "10px" }}>  <ExitToAppIcon fontSize="medium" /></Button>
-            </div>
-          </div>
-        </nav>
-      </div>
+      
+      <NavBar/>
 
       <Container >
 

@@ -3,8 +3,6 @@ import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 
 function Referrals(props) {
 
-    console.log(props.currentReferrals)
-
     if (props.loading) {
         return <h2>Loading...</h2>
     }
@@ -24,9 +22,9 @@ function Referrals(props) {
             <tr>
                 <th scope="row">{i + 1}</th>
                 <td>{referral.addDate}</td>
-                <td>{referral.recipient}</td>
+                <td>{referral.recipientName}</td>
                 <td>{referral.reward}€</td>
-                <td>{referral.name}</td>
+                <td>{referral.referralName}</td>
                 <td>{referral.recommandation}</td>
                 <td>{referral.offer}</td>
                 <td><AssignmentOutlinedIcon style={{cursor: 'pointer'}}/></td>

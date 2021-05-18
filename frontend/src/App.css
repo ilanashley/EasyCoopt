@@ -1,4 +1,4 @@
-/* CSS Alex */
+/* CSS ReferralsList */
 .mainContainer {
   background-color: #E5E5E5;
   min-height: 100vh;
@@ -62,14 +62,16 @@
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
-  color: #212529;
+  color: #fff;
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  background-color: #FFFFFF;
+  /* margin: 10px; */
+  background-color: #254383;
+  /* background-color: #FFFFFF; */
   border: 1px solid transparent;
   padding: .375rem .75rem;
   font-size: 1rem;
@@ -80,7 +82,8 @@
 }
 
 .custom-btn-style:hover{
-  background-color: #EEEEEE;
+  color: black;
+  background-color: #569DF4;
 }
 
 table {
@@ -89,7 +92,6 @@ table {
   overflow: hidden;
   -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
   box-shadow: 4px 4px 10px 2px #C9C9C9
-
 }
 
 .table thead th {
@@ -114,7 +116,7 @@ table {
 .pagination-shadow {
   display: flex;
   -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
-box-shadow: 4px 4px 10px 2px #C9C9C9;
+  box-shadow: 4px 4px 10px 2px #C9C9C9;
 }
 
 .perPageContainer {
@@ -123,7 +125,6 @@ box-shadow: 4px 4px 10px 2px #C9C9C9;
   align-items: space-between;
   margin-bottom: 10px;
   width: 100%;
-  /* background-color: aqua; */
   padding: 10px;
 }
 
@@ -152,12 +153,12 @@ box-shadow: 4px 4px 10px 2px #C9C9C9;
 
 /* *********** */
 
-.btnEnd{
+.btnEnd {
   display: flex;
   justify-content: flex-end;
 }
 
-#largeButton{
+#largeButton {
   border-radius: 50%;
   background: #254383;
   color:         #ffffff;
@@ -170,16 +171,16 @@ border-radius: 15px;
 background: #254383;
 color:         #ffffff;
 }
-#badge{
+#badge {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   width: 267px;
-height: 47px;
-left: 236px;
-top: 1424px;
-color: #000;
-text-align:center;
-background: #F3F2F1;
-border-radius: 15px;
+  height: 47px;
+  left: 236px;
+  top: 1424px;
+  color: #000;
+  text-align:center;
+  background: #F3F2F1;
+  border-radius: 15px;
 }
 
 /* CSS de Mathieu */ 
@@ -189,44 +190,55 @@ border-radius: 15px;
  
 }
 
-h2{
-font-family: Poppins;
-color: #254383;
-font-style: bold;
-font-size: 18px;
-line-height: 20px;
-letter-spacing: -1.5%;
+h1 {
+  font-family: Poppins;
+  color: #254383;
+  font-style: bold;
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: -1.5%;
 }
 
-h3{
-color: #254383;
-font-family: Poppins;
-font-style: normal;
-font-weight: bold;
-font-size: 18px;
-line-height: 36px;
+h2 {
+  font-family: Poppins;
+  color: #254383;
+  font-style: bold;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -1.5%;
 }
-label{
-    font-family: Poppins;
-    font-style: normal;
-    font-size: 18px;
-    line-height: 36px;
-    
+
+h3 {
+  color: #254383;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 36px;
 }
-h5{
-color: #254383;
-font-family: Poppins;
-font-style: normal;
-font-weight: bold;
-font-size: 1px;
-line-height: 36px;
+
+label {
+  font-family: Poppins;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 36px;    
 }
-p{
+
+h5 {
+  color: #254383;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1px;
+  line-height: 36px;
+}
+
+p {
   font-family: Poppins;
   font-style: normal;
   font-size: 18px;
   line-height: 36px;
-  }
+}
 span {
   font-weight: bold;
   font-family: Poppins;
@@ -240,7 +252,7 @@ span {
   color: #7785A2;
 }
 
-.cardBackground{
+.cardBackground {
   background-color:#ffffff;
   border-radius: 15px;
   padding: 23px;
@@ -252,7 +264,6 @@ span {
   padding: 15px;
   height: 95px;
 }
-
 
 .cardInfoIcons{
   color: #7785A2;

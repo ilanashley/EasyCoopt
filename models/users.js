@@ -7,9 +7,9 @@ const userSchema = mongoose.Schema({
     password: String,
     token: String,
     avatarUrl: String,
-    groupsId: String
-    // [{type: mongoose.Schema.Types.ObjectId, ref: 'groups'}],
-    // offersId: [{type: mongoose.Schema.Types.ObjectId, ref: 'offers'}]
+    // groupsId: [{type: mongoose.Schema.Types.ObjectId, ref: 'groups'}],
+    groupsId: String,
+    offersId: [{type: mongoose.Schema.Types.ObjectId, ref: 'offers'}]
 })
 
 const userModel = mongoose.model('users', userSchema)

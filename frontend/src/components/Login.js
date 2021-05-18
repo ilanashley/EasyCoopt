@@ -71,7 +71,11 @@ function Login(props) {
   }
 
   if (userExists) {
+<<<<<<< HEAD
     return <Redirect to='/' />
+=======
+    return <Redirect to='/myaccount' />
+>>>>>>> 47611d04355644940ba59072c5f5dd8cd16cdfae
   }
 
   var tabErrorsSignin = listErrorsSignin.map((error, i) => {

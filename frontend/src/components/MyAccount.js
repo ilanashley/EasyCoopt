@@ -27,6 +27,19 @@ function MyAccount(props) {
   const [listErrorsAccount, setlistErrorsAccount] = useState([]);
 
 
+  useEffect(() => {
+    async function loadUser(){
+      var rawResponse = await fetch(`/users/account/?token=${props.token}`);
+      var response = await rawResponse.json();
+      setAvatarUrl(response.avatarUrl);
+      setFirstName(response.firstName);
+      setLastName(response.lastName);
+      setEmail(response.email);
+      setType(response.type);
+    };
+      loadUser();
+  },[]);
+
 
   // Gère le  changement de type de user
   const handleTypeChange = (event, i) => {
@@ -81,6 +94,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="firstname">Prénom</Label>
                 <Input
+                  defaultValue ={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   type="text"
                   name="prenom"

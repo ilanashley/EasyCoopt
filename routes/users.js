@@ -107,6 +107,19 @@ router.post('/sign-in', async (req, res, next) => {
   Response: result(true), message(string), user(object)
 */
 
+router.get('/account', async function(req,res,next){
+  var user = await userModel.findOne({token: req.query.token})
+  if(user != null){
+    password= user.password,
+    avatarUrl = user.avatarUrl,
+    email = user.email,
+    firstName = user.firstName,
+    lastName = user.lastName,
+    type = user.groupsId
+  }
+  res.json({password, avatarUrl, email, firstName, lastName, type})
+})
+
 router.post('/account', async(req, res, next) => {
   let result = false;
   let error = [];
@@ -115,7 +128,6 @@ router.post('/account', async(req, res, next) => {
 if(user){
   token = user.token;
 }
-console.log('le user-->', user)
 
 /* renommage de tout du frontend */
   let avatarUrl = req.body.avatarUrl
@@ -130,14 +142,39 @@ console.log('le user-->', user)
 
 // vérifier si il y a du contenu en frontend, si il n'y a pas de contenu en frontend le contenu est égal à ce qu'il y avait en BD
 
+/* si le champ email ou type est vide */
+if(!email || !type ) {
+  error.push("Champs vides");
+  res.json({ result, error});
+} 
+/* si le champ email ou type est vide */
+// if (oldPassword !== user.password){
+//   error.push("Ancien mot de passe erroné");
+//   res.json({ result, error});
+// } 
+if (oldPassword) {
+  if ( !newPassword && !confirmPassword ) {
+    error.push("Champs vides");
+    res.json({ result, error});
+    error.push("Champs vides");
+  } else if (!newPassword || !confirmPassword) {
+    res.json({ result, error});
+  } else {
+    if (newPassword !== confirmPassword) {
+      error.push("Ancien et nouveau mots de passe différents ");
+      res.json({ result, error});
+    } else {
+      result = true;
+      /* enregistrement de toutes les nouvelles infos en base de donnée */ 
 
-  console.log('le token-->', token)
-  console.log('le password -->', newPassword)
+
+  // console.log('le token-->', token)
+  // console.log('le password -->', newPassword)
 
 
   var updatedUser =  await userModel.updateOne({token: token}, {password: newPassword, avatarUrl: avatarUrl, email: email, firstName: firstName, lastName: lastName, groupsId: type});
   res.json({result: true});
-
-})
+    }}
+}})
 
 module.exports = router;

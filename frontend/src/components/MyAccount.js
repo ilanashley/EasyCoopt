@@ -41,6 +41,8 @@ function MyAccount(props) {
   },[]);
 
 
+
+
   // Gère le  changement de type de user
   const handleTypeChange = (event, i) => {
     setType(event.target.value);
@@ -55,7 +57,6 @@ function MyAccount(props) {
     });
 
     const body = await data.json();
-
     if (body.result == true) {
       setUserExists(true);
     } else {
@@ -94,7 +95,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="firstname">Prénom</Label>
                 <Input
-                  defaultValue ={firstName}
+                  value ={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   type="text"
                   name="prenom"
@@ -104,6 +105,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="lastname">Nom</Label>
                 <Input
+                value ={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   type="text"
                   name="nom"
@@ -113,6 +115,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="avatar">Avatar</Label>
                 <Input
+                  value ={avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
                   type="text"
                   name="avater"
@@ -122,6 +125,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
+                  value ={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="text"
                   name="email"
@@ -134,12 +138,13 @@ function MyAccount(props) {
             <FormGroup>
               <Label for="profil">Votre profil</Label>
               <select
+                value ={type}
+                defaultValue="Sélectionner..."
                 class="custom-select"
                 id="inputGroupSelect01"
                 onChange={(e) => handleTypeChange(e)}
                 aria-label="Default select example"
                 >
-                <option selected>Sélectionner...</option>
                 <option value="Coopteur">Coopteur</option>
                 <option value="Recruteur">Recruteur</option>
               </select>

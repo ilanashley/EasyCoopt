@@ -6,8 +6,9 @@ const offerSchema = mongoose.Schema({
     creationDate : Date,
     bonusAmount: Number,
     link: String,
-    status: String,
+    contract: String,
     city: String,
+    resume: String,
     // referralsId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'referrals' }],
     });
     

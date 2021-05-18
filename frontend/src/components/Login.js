@@ -70,7 +70,7 @@ function Login(props) {
   }
 
   if (userExists) {
-    return <Redirect to='/addcoopte' />
+    return <Redirect to='/' />
   }
 
   var tabErrorsSignin = listErrorsSignin.map((error, i) => {

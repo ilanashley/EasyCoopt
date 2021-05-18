@@ -35,6 +35,10 @@ const MyAccount = (props) => {
             setlistErrorsAccount(body.error)
          }
       }
+
+      let tabErrorsAccount = listErrorsAccount.map((error, i) => {
+        return (<p>{error}</p>)
+      })
     
       if (userExists) {
         return <Redirect to='/jobsavailable' />
@@ -89,6 +93,7 @@ const MyAccount = (props) => {
                             <Label for="ancien mot de passe">Confirmer nouveau mot de passe</Label>
                             <Input onChange={(e) => setConfirmPassword(e.target.value)} type="text" name="confirmer nouveau mot de passe" placeholder="Confirmer nouveau mot de passe" />
                         </FormGroup>
+                        {tabErrorsAccount}
                 </Col>
                 <div class="btnEnd1">
                 <Button onClick={() => handleSubmitAccount()} style={{ margin: "10px", backgroundColor: '#254383' }}>Enregistrer</Button>

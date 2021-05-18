@@ -107,38 +107,28 @@ router.post('/sign-in', async (req, res, next) => {
   Response: result(true), message(string), user(object)
 */
 
-router.post('/account', (req, res, next) => {
+router.post('/account', async(req, res, next) => {
+  var result = false
+  var error = [];
+  var user = await userModel.findOne({token: req.body.token});
+
+// if(user){
+//   token = user.token;
+// }
+// renommage de tout du frontend
+
+  let avatarUrl = req.body.avatarUrl
   let firstName = req.body.firstName
   let lastName = req.body.lastName
-  let avatarUrl = req.body.avatarUrl
   let email = req.body.email
   let type = req.body.type
   let oldPassword = req.body.oldPassword
   let newPassword = req.body.newPassword
   let confirmPassword = req.body.confirmPassword
-  if(!email || !type ) {
-    res.json({ result: false, message: 'error'})
-  } else {
-    if (oldPassword) {
-      if(oldPassword === 'azerty') {
-        if ( !newPassword && !confirmPassword ) {
-          res.json({ result: false, message: 'error' });
-        } else if (!newPassword || !confirmPassword) {
-          res.json({ result: false, message: 'error' });
-        } else {
-          if (newPassword !== confirmPassword) {
-            res.json({ result: false, message: 'error' });
-          } else {
-            res.json({ result: true, isLogin: true, message:'success', user: {firstName, lastName, avatarUrl, email, type, newPassword} });
-          }
-        }
-      } else {
-        res.json({ result: false, message: 'error' });
-      }
-    } else {
-      res.json({ result: true, isLogin: true, message:'success', user: {firstName, lastName, avatarUrl, email, type, oldPassword: 'azerty'} });
-    }    
-  }
+
+  var updatedUser =  await userModel.updateOne({token: req.body.token}, {password: newPassword, avatarUrl: avatarUrl, email: email, firstName: firstName, lastName: lastName, groupsId: type, password: newPassword});
+  res.json({result: true});
+
 })
 
 module.exports = router;

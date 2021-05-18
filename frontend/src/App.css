@@ -277,6 +277,13 @@ span {
   padding-right: 10px;
 
 }
+<<<<<<< HEAD
+=======
+.btnEnd{
+  display: flex;
+  justify-content: flex-end;
+}
+>>>>>>> 775210f4b34a48fb172be42e5989bbb3467f8991
 
 /* Style des boutons sign up avec Linkedin et Facebook */
 
@@ -291,6 +298,10 @@ span {
   color:         #ffffff;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 775210f4b34a48fb172be42e5989bbb3467f8991
 #referralButton{
   background:    #2FD395;
   border-radius: 15px;

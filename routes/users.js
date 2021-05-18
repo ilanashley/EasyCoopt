@@ -108,15 +108,16 @@ router.post('/sign-in', async (req, res, next) => {
 */
 
 router.post('/account', async(req, res, next) => {
-  var result = false
-  var error = [];
-  var user = await userModel.findOne({token: req.body.token});
+  let result = false;
+  let error = [];
+  let user = await userModel.findOne({token: req.body.token});
 
-// if(user){
-//   token = user.token;
-// }
-// renommage de tout du frontend
+if(user){
+  token = user.token;
+}
+console.log('le user-->', user)
 
+/* renommage de tout du frontend */
   let avatarUrl = req.body.avatarUrl
   let firstName = req.body.firstName
   let lastName = req.body.lastName
@@ -126,7 +127,15 @@ router.post('/account', async(req, res, next) => {
   let newPassword = req.body.newPassword
   let confirmPassword = req.body.confirmPassword
 
-  var updatedUser =  await userModel.updateOne({token: req.body.token}, {password: newPassword, avatarUrl: avatarUrl, email: email, firstName: firstName, lastName: lastName, groupsId: type, password: newPassword});
+
+// vérifier si il y a du contenu en frontend, si il n'y a pas de contenu en frontend le contenu est égal à ce qu'il y avait en BD
+
+
+  console.log('le token-->', token)
+  console.log('le password -->', newPassword)
+
+
+  var updatedUser =  await userModel.updateOne({token: token}, {password: newPassword, avatarUrl: avatarUrl, email: email, firstName: firstName, lastName: lastName, groupsId: type});
   res.json({result: true});
 
 })

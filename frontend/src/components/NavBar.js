@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function NavBar() {
     return (

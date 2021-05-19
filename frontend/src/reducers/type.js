@@ -1,7 +1,8 @@
-export default function(type = '', action){
+export default function(typeID = '', action){
     if(action.type == 'addProfileType'){
-        return action.type
+        console.log('type dans le reducer -->',action.typeID)
+        return action.typeID
     } else {
-        return type
+        return typeID
     }
 }

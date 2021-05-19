@@ -16,6 +16,7 @@ import NavBar from "./NavBar";
 import createPalette from "@material-ui/core/styles/createPalette";
 
 function MyAccount(props) {
+  
   const [avatarUrl, setAvatarUrl] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -58,7 +59,9 @@ function MyAccount(props) {
       setlistErrorsAccount(errorList)
     }
 
+
     if (errorList.length == 0){
+      props.addProfileType(type)
     const data = await fetch("/users/account", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -67,6 +70,8 @@ function MyAccount(props) {
 
     const body = await data.json();
     setlistErrorsAccount(body.error);
+ 
+
 
     if (body.result == true && listErrorsAccount.length == 0) {
       setUserExists(true);
@@ -213,8 +218,8 @@ function mapStateToProps(state) {
 /* envoi du type de user a redux */
 function mapDispatchToProps(dispatch) {
     return {
-        addProfileType: function(type) {
-        dispatch({type: 'addProfileType', type : type})
+        addProfileType: function(typeID) {
+        dispatch({type: 'addProfileType', typeID : typeID})
       }
     }
   }  

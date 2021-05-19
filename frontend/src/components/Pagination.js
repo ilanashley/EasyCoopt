@@ -4,7 +4,7 @@ function MyPagination(props) {
 
     const pageNumbers = [];
 
-    for (let i = 1; i <= Math.ceil(props.totalReferrals / props.referralsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(props.totalItems / props.ItemsPerPage); i++) {
         pageNumbers.push(i)
     }
 

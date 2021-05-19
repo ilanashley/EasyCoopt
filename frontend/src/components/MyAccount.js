@@ -20,7 +20,7 @@ function MyAccount(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [type, setType] = useState(props.typeId);
+  const [type, setType] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -41,53 +41,35 @@ function MyAccount(props) {
       loadUser();
   },[]);
 
+//   useEffect(() => {
+//     async function loadPicture(){
+//        var data = new FormData();
+//          data.append('avatar', { 
+//              uri: data.uri, 
+//              type: 'image/jpeg', 
+//              name: 'avatar.jpg',
+//              });
 
-  useEffect(() => {
-    async function loadPicture(){
-       var data = new FormData();
-         data.append('avatar', { 
-             uri: data.uri, 
-             type: 'image/jpeg', 
-             name: 'avatar.jpg',
-             });
-
-           var rawResponse = await fetch("http://192.168.43.85:3000/users/upload", {
-             method: 'POST',
-             body: data
-           });
-           var newPicture = await rawResponse.json();
-           if (newPicture){
-             console.log('new picture OK')
-           }
-    }
+//            var rawResponse = await fetch("http://192.168.43.85:3000/users/upload", {
+//              method: 'POST',
+//              body: data
+//            });
+//            var newPicture = await rawResponse.json();
+//            if (newPicture){
+//              console.log('new picture OK')
+//            }
+//     }
       
- },[avatarUrl]);
+//  },[avatarUrl]);
 
-  // Gère le  changement de type de user
-  const handleTypeChange = (event, i) => {
-    setType(event.target.value);
+  // Gère le  changement de type de profil du user
+  const handleTypeChange = (event) => {
+    console.log('le type sélectionné-->', event)
+    setType(event);
   };
 
 
   var handleSubmitAccount = async () => {
-
-    let errorList = [];
-    if(!email) {
-      errorList.push("Champ email vide");
-      setlistErrorsAccount(errorList)
-    }
-    if(!firstName) {
-      errorList.push("Champ prénom vide");
-      setlistErrorsAccount(errorList)
-    }
-    if(!lastName) {
-      errorList.push("Champ nom vide");
-      setlistErrorsAccount(errorList)
-    }
-
-
-    if (errorList.length == 0){
-      props.addProfileType(type)
     const data = await fetch("/users/account", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -96,13 +78,16 @@ function MyAccount(props) {
 
     const body = await data.json();
     setlistErrorsAccount(body.error);
+    props.addProfileType(body.user.groupsId)
+
+    // console.log(body.user.groupsId)
  
 
 
     if (body.result == true && listErrorsAccount.length == 0) {
       setUserExists(true);
     } 
-  }
+  
   };
 
   let tabErrorsAccount = listErrorsAccount.map((error, i) => {
@@ -111,7 +96,7 @@ function MyAccount(props) {
 
   // redirige le user si son changement de profil est bien enregistré
   if (userExists) {
-    return <Redirect to="/referralsList" />;
+    return <Redirect to="/offersList" />;
   }
 
   // uniquement pendant le test, redirect si le  token est null
@@ -201,11 +186,11 @@ function MyAccount(props) {
             <FormGroup>
               <Label for="profil">Mon profil d'utilisateur</Label>
               <select
-                value ={type}
-                defaultValue="Sélectionner..."
+                // defaultValue ={type}
                 class="custom-select"
-                id="inputGroupSelect01"
-                onChange={(e) => handleTypeChange(e)}
+                defaultValue={props.typeId}
+                onChange={(e) => handleTypeChange(e.target.value)}
+                // onChange={handleTypeChange}
                 aria-label="Default select example"
                 >
                 <option value="Coopteur">Coopteur</option>
@@ -258,8 +243,9 @@ function MyAccount(props) {
   );
 };
 
-/* recuperation du token depuis redux */
+/* recuperation du token et du typeID depuis redux */
 function mapStateToProps(state) {
+  console.log('le type qui revient du reducer-->',state.typeId)
   return { token: state.token, typeId: state.typeId };
 }
 

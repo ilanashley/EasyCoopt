@@ -1,7 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import TransitionModal from './TransitionModal'
+
 
 function Referrals(props) {
+
+    // Pagination state
+    const [modalShow, setModalShow] = useState(false);
 
     if (props.loading) {
         return <h2>Loading...</h2>
@@ -25,16 +31,17 @@ function Referrals(props) {
                 <td>{referral.recipientLastName}</td>
                 <td>{referral.offerBonusAmount}€</td>
                 <td>{referral.referralLastName}</td>
-                <td>{referral.referralReason}</td>
+                <td><div className='d-flex'><TransitionModal modalTitle={'Recommandation'} modalDescription={referral.referralReason} modalIcon={'VisibilityOutlinedIcon'}/></div></td>
                 <td>{referral.offerTitle}</td>
-                <td><AssignmentOutlinedIcon style={{cursor: 'pointer'}}/></td>
+                <td><div className='d-flex'><TransitionModal modalTitle={'Curriculum vitae'} modalDescription={'Le cv a aller chercher sur cloudinary !!!'} modalIcon={'AssignmentOutlinedIcon'}/></div></td>
                 <td>
-                    <select value={referral.referralStatus} className="form-select" onChange={(e) => props.handleSelectStatusChange(e, i)} aria-label="Default select example" style={selectStyle}>
+                    <select value={referral.referralStatus} className="form-select" onChange={(e) => props.handleSelectStatusChange(e, i, referral.referralId)} aria-label="Default select example" style={selectStyle}>
                         <option value="1">En attente</option>
                         <option value="2">Approuvé</option>
                         <option value="3">Refusé</option>
                     </select>
                 </td>
+                
             </tr>
         )
     })
@@ -59,8 +66,7 @@ function Referrals(props) {
                 {referralsList}
             </tbody>
         </table>
-        
-        
+                         
     )
 }
 

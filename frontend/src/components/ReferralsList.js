@@ -4,6 +4,14 @@ import Referrals from './Referrals';
 import Pagination from './Pagination';
 import NavBar from './NavBar'
 
+// import { makeStyles } from '@material-ui/core/styles';
+// import Modal from '@material-ui/core/Modal';
+// import Backdrop from '@material-ui/core/Backdrop';
+// import Fade from '@material-ui/core/Fade';
+
+// import TransitionModal from './TransitionModal'
+
+
 export default function ReferralsList(props) {
 
   const referralsArray = [
@@ -32,16 +40,16 @@ export default function ReferralsList(props) {
     { addDate: '21/03/2021', recipientName: 'ilana', reward: 300, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: '1' }
   ]
 
-  // recipientFirstName: users[k].firstName,
-  // recipientLastName: users[k].lastName,
-  // offerTitle: users[k].offersId[i].title,
-  // offerContent: users[k].offersId[i].content,
-  // offerBonusAmount: users[k].offersId[i].bonusAmount,
-  // referralCreationDate: users[k].offersId[i].referralsId[j].creationDate,
-  // referralFirstName: users[k].offersId[i].referralsId[j].firstName,
-  // referralLastName: users[k].offersId[i].referralsId[j].lastName,
-  // referralReason: users[k].offersId[i].referralsId[j].reason,
-  // referralStatus: users[k].offersId[i].referralsId[j].status
+  // // Modal state
+  // const [open, setOpen] = useState(false)
+
+  // const handleOpen = () => {
+  //   setOpen(true)
+  // }
+
+  // const handleClose = () => {
+  //   setOpen(false)
+  // }
 
   const [referrals, setReferrals] = useState([]);
 
@@ -59,16 +67,15 @@ export default function ReferralsList(props) {
   const currentReferrals = referrals.slice(indexOfFirstReferral, indexOfLastReferral);
 
   // Fetch backend to get referrals
-  useEffect(() => { 
-    const fetchReferrals = async() => {
-      setLoading(true)
-      // Requete au backend a placer ici
-      var rawResponse = await fetch('/referrals/get')
-      var response = await rawResponse.json()
-      // console.log('reponse du fetch --->', response)
-      setReferrals(response.usersInfo)
-      setLoading(false)
-    } 
+  const fetchReferrals = async () => {
+    setLoading(true)
+    var rawResponse = await fetch('/referrals/get')
+    var response = await rawResponse.json()
+    setReferrals(response.usersInfo)
+    setLoading(false)
+  }
+
+  useEffect(() => {
     fetchReferrals()
   }, [])
 
@@ -96,21 +103,27 @@ export default function ReferralsList(props) {
     setReferralsPerPage(event.target.value)
   }
 
-  // Status choice per refferal
-  const handleSelectStatusChange = (event, i) => {
+  // Status choice per referral
+  const handleSelectStatusChange = async (event, i, referralId) => {
     let newReferrals = [...referrals]
     let index = i + indexOfFirstReferral
-    newReferrals[index].referralStatus = event.target.value   
+    newReferrals[index].referralStatus = event.target.value
     setReferrals(newReferrals)
-  } 
+    var rawResponse = await fetch('/referrals/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `referralStatus=${event.target.value}&referralId=${referralId}`
+    })
+    var response = await rawResponse.json()
+  }
 
   // Filter per date
-  const addDateArray = referrals.map((referral) => {return referral.referralCreationDate})
+  const addDateArray = referrals.map((referral) => { return referral.referralCreationDate })
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
     return addDateArray.indexOf(date) === pos;
   })
   const addDateFilteredList = addDateFilteredArray.map((date) => {
-    return( <option value={date}>{date}</option> )
+    return (<option value={date}>{date}</option>)
   })
 
   const handleSelectFilteredDate = (event) => {
@@ -119,12 +132,12 @@ export default function ReferralsList(props) {
   }
 
   // Filter per recipient
-  const recipientArray = referrals.map((referral) => {return referral.recipientLastName})
+  const recipientArray = referrals.map((referral) => { return referral.recipientLastName })
   const recipientFilteredArray = recipientArray.filter((recipient, pos) => {
     return recipientArray.indexOf(recipient) === pos;
   }).sort()
   const recipientFilteredList = recipientFilteredArray.map((recipient) => {
-    return( <option value={recipient}>{recipient}</option> )
+    return (<option value={recipient}>{recipient}</option>)
   })
 
   const handleSelectFilteredRecipient = (event) => {
@@ -133,12 +146,12 @@ export default function ReferralsList(props) {
   }
 
   // Fiter per referral
-  const referralArray = referrals.map((referral) => {return referral.referralLastName})
+  const referralArray = referrals.map((referral) => { return referral.referralLastName })
   const referralFilteredArray = referralArray.filter((referral, pos) => {
     return referralArray.indexOf(referral) === pos;
   }).sort()
   const referralFilteredList = referralFilteredArray.map((referral) => {
-    return( <option value={referral}>{referral}</option> )
+    return (<option value={referral}>{referral}</option>)
   })
 
   const handleSelectFilteredReferral = (event) => {
@@ -147,13 +160,13 @@ export default function ReferralsList(props) {
   }
 
   // Filter per status
-  const statusArray = referrals.map((referral) => {return referral.referralStatus})
+  const statusArray = referrals.map((referral) => { return referral.referralStatus })
   const statusFilteredArray = statusArray.filter((status, pos) => {
     return statusArray.indexOf(status) === pos;
   }).sort()
   const statusFilteredList = statusFilteredArray.map((status) => {
     let statusDescription = status === '1' ? 'En attente' : (status === '2' ? 'Approuvé' : 'Refusé')
-    return( <option value={status}>{statusDescription}</option> )
+    return (<option value={status}>{statusDescription}</option>)
   })
 
   const handleSelectFilteredStatus = (event) => {
@@ -162,19 +175,15 @@ export default function ReferralsList(props) {
   }
 
   // Reset Filters
-  const handleSelectResetFilters = async () => {
-    setLoading(true)
-    var rawResponse = await fetch('/referrals/get')
-    var response = await rawResponse.json()
-    setReferrals(response.usersInfo)
-    setLoading(false)
+  const handleSelectResetFilters = () => {
+    fetchReferrals()
   }
 
   return (
 
     <div className='mainContainer'>
-      
-      <NavBar/>
+
+      <NavBar />
 
       <div className='container-lg'>
 
@@ -220,8 +229,21 @@ export default function ReferralsList(props) {
           <Pagination referralsPerPage={referralsPerPage} totalReferrals={referrals.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} referrals={referrals} />
         </div>
 
-      </div>
+        {/* <div><TransitionModal /></div> */}
 
+        {/* <button type="button" onClick={handleOpen}>
+          Open Modal
+        </button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div>blablabla</div>
+        </Modal> */}
+
+      </div>
     </div>
   );
 }

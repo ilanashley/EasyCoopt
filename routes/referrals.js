@@ -40,8 +40,6 @@ router.post('/add', async (req, res, next) => {
   res.json({result: true})
 })
 
-
-
 /* Get Referrals*/
 router.get('/get', async (req, res, next) => {
   let error
@@ -58,9 +56,11 @@ router.get('/get', async (req, res, next) => {
           usersInfo.push({
             recipientFirstName: users[k].firstName,
             recipientLastName: users[k].lastName,
+            offerId: users[k].offersId[i]._id,
             offerTitle: users[k].offersId[i].title,
             offerContent: users[k].offersId[i].content,
             offerBonusAmount: users[k].offersId[i].bonusAmount,
+            referralId: users[k].offersId[i].referralsId[j]._id,
             referralCreationDate: users[k].offersId[i].referralsId[j].creationDate,
             referralFirstName: users[k].offersId[i].referralsId[j].firstName,
             referralLastName: users[k].offersId[i].referralsId[j].lastName,
@@ -71,9 +71,19 @@ router.get('/get', async (req, res, next) => {
       }
     }
     res.json({result: true, usersInfo});
-  }
-  
+  }  
 });
+
+router.post('/update', async (req, res, next) => {
+  await referralModel.updateOne({_id: req.body.referralId}, { status: req.body.referralStatus });
+  res.json({result: true})
+})
+
+router.delete('/delete/:referralId', async (req, res, next) => {
+  // console.log(req.params.referralId)
+  await referralModel.deleteOne({_id: req.params.referralId})
+  res.json({result: true})
+})
 
 
 module.exports = router;

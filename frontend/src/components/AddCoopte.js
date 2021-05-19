@@ -27,7 +27,7 @@ const AddCoopte = (props) => {
     const saveReq = await fetch('/referrals/add', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `firstname=${firstName}&lastname=${lastname}&email=${email}&reason=${reason}`
+      body: `firstname=${firstName}&lastname=${lastName}&email=${email}&reason=${reason}`
     })
     const body = await saveReq.json()
   }

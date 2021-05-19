@@ -28,6 +28,7 @@ function App() {
       <Router>
         <Switch>
           <Route component={JobsAvailable} path="/" exact />
+          <Route component={JobsAvailable} path="/JobsAvailable" exact />
           <Route component={AddOffer} path="/addOffer" exact />
           <Route component={AddCoopte} path="/addCoopte" exact />
           <Route component={ViewOffer} path="/viewOffer" exact />

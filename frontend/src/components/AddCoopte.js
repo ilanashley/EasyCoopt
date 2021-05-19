@@ -22,6 +22,16 @@ const AddCoopte = (props) => {
   const [email, setEmail] = useState('');
   const [reason, setReason] = useState('');
 
+  var saveCoopte = async () => {
+
+    const saveReq = await fetch('/referrals/add', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `firstname=${firstName}&lastname=${lastname}&email=${email}&reason=${reason}`
+    })
+    const body = await saveReq.json()
+  }
+
   return (
     <div className="section">
       <NavBar />
@@ -54,7 +64,7 @@ const AddCoopte = (props) => {
                 <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
               </FormGroup>
               <div class="btnEnd">
-                <Button style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
+                <Button onClick={()=> {saveCoopte()}} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
               </div>
             </Form>
           </Col>

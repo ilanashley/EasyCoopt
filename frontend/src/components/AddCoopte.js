@@ -56,7 +56,10 @@ const AddCoopte = (props) => {
     const saveReq = await fetch('http://192.168.1.54:3000/referrals/add', {
      method: 'post',
      body: data
-    })
+    })  
+    var response = await saveReq.json();
+  
+
     setModal(!modal)
   }
   const toggle = () => setModal(!modal);
@@ -105,7 +108,7 @@ const AddCoopte = (props) => {
             <Modal isOpen={modal} >
               <ModalBody>
                 Votre cooptation a bien été prise en compte!
-        </ModalBody>
+            </ModalBody>
               <ModalFooter>
                 <Button color="primary" onClick={toggle}>Close</Button>
               </ModalFooter>

@@ -168,6 +168,17 @@ router.post("/account", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
   let newPassword = req.body.newPassword
 
+  if(!email) {
+    error.push("Champ email vide");
+  }
+  if(!firstName) {
+    error.push("Champ prénom vide");
+  }
+  if(!lastName) {
+    error.push("Champ nom vide");
+  }
+
+
 console.log('oldpassword-->',oldPassword)
 /* Si l'utilisateur a entré un ancien mot de passe: */  
 if (oldPassword){
@@ -192,7 +203,7 @@ if (oldPassword){
     error.push("Ancien et nouveau mots de passe différents ");
   }}
   
-  else {
+  if (error.length == 0){
           result = true;
     /* enregistrement de toutes les nouvelles infos en base de donnée */
     var updatedUser = await userModel.updateOne(
@@ -203,10 +214,15 @@ if (oldPassword){
         firstName: firstName,
         lastName: lastName,
         groupsId: type,
-      }
-    );
-        }
-    res.json({ result, error });
+      });
+ 
+  if (updatedUser != null){
+    let newUserdata = await userModel.findOne({ token: token });
+    console.log('user mis a jour -->',newUserdata)
+
+    res.json({ result, error, user: newUserdata });
+  } }
+  res.json({ result, error })
 });
 
 module.exports = router;

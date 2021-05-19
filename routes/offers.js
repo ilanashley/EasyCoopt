@@ -19,7 +19,6 @@ router.get('/get', async (req, res, next) => {
 
 router.post('/add', async function (req, res, next) {
   // let token = req.body.token;
-  var user = await userModel.findOne({token: req.body.token})
 
   let title = req.body.title;
   let city = req.body.city;
@@ -28,6 +27,7 @@ router.post('/add', async function (req, res, next) {
   let contract = req.body.contract;
   let link = req.body.link;
   let resume = req.body.resume;
+  let status = req.body.status;
   var error = [];
   let result = false;
   let saveOffer = null;
@@ -56,10 +56,11 @@ router.post('/add', async function (req, res, next) {
       bonusAmount: bonusAmount,
       contract: contract,
       link: link,
-      resume: resume
+      resume: resume,
+      status: true,
     });
-
-    console.log ('blabla', title, city, creationDate, bonusAmount, contract, link, resume )
+    console.log('bbb')
+    console.log ('blabla', title, city, creationDate, bonusAmount, contract, link, resume, status )
 
     saveOffer = await newOffer.save();
 
@@ -83,6 +84,21 @@ router.post('/add', async function (req, res, next) {
 
     // res.json({ result, offer: saveOffer, error, token });
   }
+})
+
+router.delete('/delete', async function(req,res,next){
+  var result = false
+  var user = await userModel.findOne({token: req.body.token})
+
+  if(user != null){
+    var returnDb = await orderModel.deleteOne({title: req.body.title, referralId: referral._id})
+
+    if(returnDb.deletedCount == 1){
+      result = true
+    }
+  }
+
+  res.json({result})
 })
 
 module.exports = router;

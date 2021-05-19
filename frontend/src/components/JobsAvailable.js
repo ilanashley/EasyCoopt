@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Container, Col, Row, Button } from "reactstrap";
 import NavBar from './NavBar'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
@@ -10,7 +11,7 @@ import PlaceIcon from '@material-ui/icons/Place';
 import '../App.css';
 
 
-function JobsAvailable() {
+function JobsAvailable(props) {
 
     const [offers, setOffers] = useState([])
     const [loading, setLoading] = useState(false);
@@ -25,6 +26,17 @@ function JobsAvailable() {
         }
         fetchOffers()
     }, [])
+
+    var deleteOffer = async (title) => {
+        props.deleteToOffers(title)
+
+        const deleteReq = await fetch('/wishlist-article', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `title=${title}&token=${props.token}`
+        })
+    }
+
 
     const offersList = offers.map((offer, i) => {
         return (
@@ -83,4 +95,24 @@ function JobsAvailable() {
     );
 }
 
-export default JobsAvailable;
+function mapStateToProps(state) {
+    return { myArticles: state.wishList, token: state.token }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        deleteToOffers: function (offerTitle) {
+            dispatch({
+                type: 'deleteOffer',
+                title: offerTitle
+            })
+        }
+
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(JobsAvailable);
+

@@ -9,11 +9,19 @@ import {
   Button,
   Container,
   Row,
-  Col
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar'
+import { set } from 'mongoose';
+
+
+
 
 
 const AddCoopte = (props) => {
@@ -21,16 +29,25 @@ const AddCoopte = (props) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [reason, setReason] = useState('');
+  const [creationDate, setCreationDate] = useState('');
+  const [cv, setCv] = useState('');
+  const [modal, setModal] = useState(false);
+
 
   var saveCoopte = async () => {
 
     const saveReq = await fetch('/referrals/add', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `firstname=${firstName}&lastname=${lastName}&email=${email}&reason=${reason}`
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `firstName=${firstName}&lastName=${lastName}&email=${email}&reason=${reason}&creationDate=${creationDate}`
     })
     const body = await saveReq.json()
+    console.log("response", body)
+    setModal(!modal)
+
   }
+  const toggle = () => setModal(!modal);
+
 
   return (
     <div className="section">
@@ -55,18 +72,31 @@ const AddCoopte = (props) => {
                 <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
               </FormGroup>
               <FormGroup>
+                <Label for="creationDate">Date</Label>
+                <Input onChange={(e) => setCreationDate(e.target.value)} type="text" name="creationDate" placeholder="../../...." />
+              </FormGroup>
+              <FormGroup>
                 <Label for="cv">Curriculum Vitae</Label>
-                <Input type="file" name="cv" placeholder="upload cv" />
+                <Input onChange={(e) => setCv(e.target.files[0])} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
               <FormGroup>
                 <Label for="reason">Reason of cooptation</Label>
                 <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
               </FormGroup>
+
               <div class="btnEnd">
-                <Button onClick={()=> {saveCoopte()}} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
+                <Button onClick={() => {saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
               </div>
             </Form>
+            <Modal isOpen={modal} >
+        <ModalBody>
+          Votre cooptation a bien été prise en compte!
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>Close</Button>
+        </ModalFooter>
+      </Modal>
           </Col>
         </Row>
 

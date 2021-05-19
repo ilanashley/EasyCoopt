@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Container, Col, Row, Button } from "reactstrap";
 import NavBar from './NavBar'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
@@ -11,10 +12,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import '../App.css';
 
 
-function JobsAvailable() {
+function JobsAvailable(props) {
 
-    const [offers, setOffers] = useState([])
+    const [offers, setOffers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [ajoutId, setAjoutId] = useState([]);
 
     useEffect(() => {
         const fetchOffers = async () => {
@@ -27,11 +29,37 @@ function JobsAvailable() {
         fetchOffers()
     }, [])
 
+    var archiveOffer = async (id) => {
+        console.log('Id', id)
+
+        const archiveReq = await fetch('/offers/archive', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `status=${false}&id=${id}`
+        })
+        const body = await archiveReq.json()
+
+        console.log(body)
+
+        if (body.result === true) {
+
+            setAjoutId([...ajoutId, body.offerCurrent._id])
+            console.log('Je suis la')
+        }
+
+    }
+
+
+
 
     // Card component
     const offersList = offers.map((offer, i) => {
+        var display ={};
+        if(ajoutId.includes(offer._id)){
+            display = {display: 'none'}
+        }
         return (
-            <div key={i} className="cardBackground mb-2">
+            <div key={i} className="cardBackground mb-2" style={display}>
                 <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                     <h2>{offer.title}</h2>
                     <div className="cardInfoBg">
@@ -53,7 +81,7 @@ function JobsAvailable() {
                     <h3>{offer.bonusAmount}€</h3>
                     <Button id="referralButton">Recommander</Button>
                     <Button>
-                    <DeleteIcon />
+                        <DeleteIcon onClick={() => { console.log(offer._id); archiveOffer(offer._id) }} />
                     </Button>
                     <Button id="enlargeButton">
                         <OpenInNewIcon />
@@ -77,9 +105,9 @@ function JobsAvailable() {
                         </Col>
                     </Row>
                     <Row>
-                    <Col>
-                        {offersList}
-                    </Col>
+                        <Col>
+                            {offersList}
+                        </Col>
                     </Row>
 
                 </Container>
@@ -91,4 +119,24 @@ function JobsAvailable() {
     );
 }
 
-export default JobsAvailable;
+function mapStateToProps(state) {
+    return { token: state.token }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        deleteToOffers: function (offerTitle) {
+            dispatch({
+                type: 'deleteOffer',
+                title: offerTitle
+            })
+        }
+
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(JobsAvailable);
+

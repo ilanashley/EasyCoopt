@@ -20,7 +20,7 @@ function MyAccount(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [type, setType] = useState(props.typeID);
+  const [type, setType] = useState(props.typeId);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -42,7 +42,26 @@ function MyAccount(props) {
   },[]);
 
 
+  useEffect(() => {
+    async function loadPicture(){
+       var data = new FormData();
+         data.append('avatar', { 
+             uri: data.uri, 
+             type: 'image/jpeg', 
+             name: 'avatar.jpg',
+             });
 
+           var rawResponse = await fetch("http://192.168.43.85:3000/users/upload", {
+             method: 'POST',
+             body: data
+           });
+           var newPicture = await rawResponse.json();
+           if (newPicture){
+             console.log('new picture OK')
+           }
+    }
+      
+ },[avatarUrl]);
 
   // Gère le  changement de type de user
   const handleTypeChange = (event, i) => {
@@ -53,11 +72,18 @@ function MyAccount(props) {
   var handleSubmitAccount = async () => {
 
     let errorList = [];
-    if(!email || !type ) {
-      errorList.push("Champs vides");
+    if(!email) {
+      errorList.push("Champ email vide");
       setlistErrorsAccount(errorList)
     }
-
+    if(!firstName) {
+      errorList.push("Champ prénom vide");
+      setlistErrorsAccount(errorList)
+    }
+    if(!lastName) {
+      errorList.push("Champ nom vide");
+      setlistErrorsAccount(errorList)
+    }
 
 
     if (errorList.length == 0){
@@ -85,7 +111,7 @@ function MyAccount(props) {
 
   // redirige le user si son changement de profil est bien enregistré
   if (userExists) {
-    return <Redirect to="/jobsavailable" />;
+    return <Redirect to="/referralsList" />;
   }
 
   // uniquement pendant le test, redirect si le  token est null
@@ -115,6 +141,7 @@ function MyAccount(props) {
               <div class="btn btn-mdb-color btn-rounded float-left">
                 <Input
                 type="file"
+                onChange={(e) => setAvatarUrl(e.target.files[0])}
                   // value ={avatarUrl}
                   // onChange={(e) => setAvatarUrl(e.target.value)}
                   
@@ -233,14 +260,14 @@ function MyAccount(props) {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-  return { token: state.token, typeID: state.typeID };
+  return { token: state.token, typeId: state.typeId };
 }
 
 /* envoi du type de user a redux */
 function mapDispatchToProps(dispatch) {
     return {
-        addProfileType: function(typeID) {
-        dispatch({type: 'addProfileType', typeID : typeID})
+        addProfileType: function(typeId) {
+        dispatch({type: 'addProfileType', typeId : typeId})
       }
     }
   }  

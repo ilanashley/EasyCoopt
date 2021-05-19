@@ -18,7 +18,6 @@ router.get('/get', async (req, res, next) => {
 
 
 router.post('/add', async function (req, res, next) {
-  // let token = req.body.token;
 
   let title = req.body.title;
   let city = req.body.city;
@@ -80,26 +79,24 @@ router.post('/add', async function (req, res, next) {
       result = true;
     }
 
-    res.json({ result, offer: saveOffer, error });
-
-    // res.json({ result, offer: saveOffer, error, token });
+    res.json({ result, offer: saveOffer, error, token });
   }
 })
 
-router.delete('/delete', async function (req, res, next) {
-  var result = false
-  var user = await userModel.findOne({ token: req.body.token })
+// router.delete('/delete', async function (req, res, next) {
+//   var result = false
+//   var user = await userModel.findOne({ token: req.body.token })
 
-  if (user != null) {
-    var returnDb = await orderModel.deleteOne({ title: req.body.title, referralId: referral._id })
+//   if (user != null) {
+//     var returnDb = await orderModel.deleteOne({ title: req.body.title, referralId: referral._id })
 
-    if (returnDb.deletedCount == 1) {
-      result = true
-    }
-  }
+//     if (returnDb.deletedCount == 1) {
+//       result = true
+//     }
+//   }
 
-  res.json({ result })
-})
+//   res.json({ result })
+// })
 
 
 router.put('/archive', async function (req, res, next) {
@@ -121,5 +118,20 @@ router.put('/archive', async function (req, res, next) {
 
   res.json({ result, offerCurrent })
 })
+
+router.get("/offer", async function (req, res, next) {
+  var user = await userModel.findOne({ id: req.query.token });
+
+  if (user != null) {
+    (password = user.password),
+      (avatarUrl = user.avatarUrl),
+      (email = user.email),
+      (firstName = user.firstName),
+      (lastName = user.lastName),
+      (type = user.groupsId);
+  }
+  res.json({ password, avatarUrl, email, firstName, lastName, type });
+});
+
 
 module.exports = router;

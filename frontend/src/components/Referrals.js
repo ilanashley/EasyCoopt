@@ -7,8 +7,8 @@ import { connect } from 'react-redux'
 
 const Referrals = (props) => {
 
-    // Pagination state
-    const [modalShow, setModalShow] = useState(false);
+    // // Pagination state
+    // const [modalShow, setModalShow] = useState(false);
 
     if (props.loading) {
         return <h2>Loading...</h2>

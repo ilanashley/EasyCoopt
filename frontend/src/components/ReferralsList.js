@@ -217,7 +217,7 @@ const ReferralsList = (props) => {
         </div>
 
         <div className='paginationContainer'>
-          <Pagination referralsPerPage={referralsPerPage} totalReferrals={referrals.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} referrals={referrals} />
+          <Pagination ItemsPerPage={referralsPerPage} totalItems={referrals.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} items={referrals} />
         </div>
 
       </div>

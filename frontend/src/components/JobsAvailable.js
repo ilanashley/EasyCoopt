@@ -43,7 +43,7 @@ function JobsAvailable(props) {
 
         if (body.result === true) {
 
-            setAjoutId([...ajoutId, body.f._id])
+            setAjoutId([...ajoutId, body.offerCurrent._id])
             console.log('Je suis la')
         }
 

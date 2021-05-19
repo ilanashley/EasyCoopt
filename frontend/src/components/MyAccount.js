@@ -16,6 +16,7 @@ import NavBar from "./NavBar";
 import createPalette from "@material-ui/core/styles/createPalette";
 
 function MyAccount(props) {
+  
   const [avatarUrl, setAvatarUrl] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -58,7 +59,9 @@ function MyAccount(props) {
       setlistErrorsAccount(errorList)
     }
 
+
     if (errorList.length == 0){
+      props.addProfileType(type)
     const data = await fetch("/users/account", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -67,6 +70,8 @@ function MyAccount(props) {
 
     const body = await data.json();
     setlistErrorsAccount(body.error);
+ 
+
 
     if (body.result == true && listErrorsAccount.length == 0) {
       setUserExists(true);
@@ -100,6 +105,27 @@ function MyAccount(props) {
           <div class="col-12 text-center get_started">
             <h3>Mon compte</h3>
           </div>
+          <form class="md-form">
+          <div class="file-field">
+            <div class=" d-flex justify-content-center mb-4">
+              <img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
+                class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar" height="130px"/>
+            </div>
+            <div class="d-flex justify-content-center">
+              <div class="btn btn-mdb-color btn-rounded float-left">
+                <Input
+                type="file"
+                  // value ={avatarUrl}
+                  // onChange={(e) => setAvatarUrl(e.target.value)}
+                  
+                  name="avater"
+                  placeholder="Avatar"
+                />
+              </div>
+            </div>
+          </div>
+          
+        </form>
           <Col sm="12" md="6">
             <Form>
               <FormGroup>
@@ -213,8 +239,8 @@ function mapStateToProps(state) {
 /* envoi du type de user a redux */
 function mapDispatchToProps(dispatch) {
     return {
-        addProfileType: function(type) {
-        dispatch({type: 'addProfileType', type : type})
+        addProfileType: function(typeID) {
+        dispatch({type: 'addProfileType', typeID : typeID})
       }
     }
   }  

@@ -31,6 +31,7 @@ function App() {
           <Route component={AddCoopte} path="/addCoopte" exact />
           <Route component={ViewOffer} path="/viewOffer" exact />
           <Route component={JobsAvailable} path="/" exact />
+          <Route component={JobsAvailable} path="/jobsAvailable" exact />
           <Route component={ReferralsList} path="/referralsList" exact />
           <Route component={Login} path="/login" exact />
           <Route component={MyAccount} path="/myAccount" exact />

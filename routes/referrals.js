@@ -65,5 +65,11 @@ router.post('/update', async (req, res, next) => {
   res.json({result: true})
 })
 
+router.delete('/delete/:referralId', async (req, res, next) => {
+  // console.log(req.params.referralId)
+  await referralModel.deleteOne({_id: req.params.referralId})
+  res.json({result: true})
+})
+
 
 module.exports = router;

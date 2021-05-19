@@ -3,53 +3,35 @@ import '../App.css';
 import Referrals from './Referrals';
 import Pagination from './Pagination';
 import NavBar from './NavBar'
+import { connect } from 'react-redux'
 
-// import { makeStyles } from '@material-ui/core/styles';
-// import Modal from '@material-ui/core/Modal';
-// import Backdrop from '@material-ui/core/Backdrop';
-// import Fade from '@material-ui/core/Fade';
+const ReferralsList = (props) => {
 
-// import TransitionModal from './TransitionModal'
-
-
-export default function ReferralsList(props) {
-
-  const referralsArray = [
-    { addDate: '12/03/2021', recipientName: 'alex', reward: 500, referralName: 'Dupont', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '05/12/2020', recipientName: 'joseph', reward: 400, referralName: 'Duchemin', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '09/11/2020', recipientName: 'ilana', reward: 500, referralName: 'Duprès', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
-    { addDate: '21/09/2020', recipientName: 'mathieu', reward: 600, referralName: 'Dumont', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '25/08/2020', recipientName: 'ilana', reward: 500, referralName: 'Deloin', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "2" },
-    { addDate: '12/03/2021', recipientName: 'mathieu', reward: 300, referralName: 'Leboucher', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '09/11/2020', recipientName: 'joseph', reward: 200, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
-    { addDate: '07/06/2020', recipientName: 'joseph', reward: 800, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "2" },
-    { addDate: '25/08/2020', recipientName: 'mathieu', reward: 250, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '25/08/2020', recipientName: 'mathieu', reward: 400, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "2" },
-    { addDate: '21/09/2020', recipientName: 'ilana', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
-    { addDate: '27/11/2020', recipientName: 'joseph', reward: 350, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '05/12/2020', recipientName: 'alex', reward: 700, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "3" },
-    { addDate: '11/12/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "3" },
-    { addDate: '01/04/2020', recipientName: 'ilana', reward: 200, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '03/02/2021', recipientName: 'alex', reward: 520, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '01/01/2021', recipientName: 'mathieu', reward: 890, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "3" },
-    { addDate: '21/03/2021', recipientName: 'alex', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '03/07/2020', recipientName: 'joseph', reward: 400, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '26/05/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
-    { addDate: '31/10/2020', recipientName: 'alex', reward: 600, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-    { addDate: '25/04/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: '2' },
-    { addDate: '21/03/2021', recipientName: 'ilana', reward: 300, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: '1' }
-  ]
-
-  // // Modal state
-  // const [open, setOpen] = useState(false)
-
-  // const handleOpen = () => {
-  //   setOpen(true)
-  // }
-
-  // const handleClose = () => {
-  //   setOpen(false)
-  // }
+  // const referralsArray = [
+  //   { addDate: '12/03/2021', recipientName: 'alex', reward: 500, referralName: 'Dupont', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '05/12/2020', recipientName: 'joseph', reward: 400, referralName: 'Duchemin', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '09/11/2020', recipientName: 'ilana', reward: 500, referralName: 'Duprès', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
+  //   { addDate: '21/09/2020', recipientName: 'mathieu', reward: 600, referralName: 'Dumont', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '25/08/2020', recipientName: 'ilana', reward: 500, referralName: 'Deloin', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "2" },
+  //   { addDate: '12/03/2021', recipientName: 'mathieu', reward: 300, referralName: 'Leboucher', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '09/11/2020', recipientName: 'joseph', reward: 200, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
+  //   { addDate: '07/06/2020', recipientName: 'joseph', reward: 800, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "2" },
+  //   { addDate: '25/08/2020', recipientName: 'mathieu', reward: 250, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '25/08/2020', recipientName: 'mathieu', reward: 400, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "2" },
+  //   { addDate: '21/09/2020', recipientName: 'ilana', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
+  //   { addDate: '27/11/2020', recipientName: 'joseph', reward: 350, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '05/12/2020', recipientName: 'alex', reward: 700, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "3" },
+  //   { addDate: '11/12/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "3" },
+  //   { addDate: '01/04/2020', recipientName: 'ilana', reward: 200, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '03/02/2021', recipientName: 'alex', reward: 520, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '01/01/2021', recipientName: 'mathieu', reward: 890, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "3" },
+  //   { addDate: '21/03/2021', recipientName: 'alex', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '03/07/2020', recipientName: 'joseph', reward: 400, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '26/05/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
+  //   { addDate: '31/10/2020', recipientName: 'alex', reward: 600, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
+  //   { addDate: '25/04/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: '2' },
+  //   { addDate: '21/03/2021', recipientName: 'ilana', reward: 300, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: '1' }
+  // ]
 
   const [referrals, setReferrals] = useState([]);
 
@@ -75,6 +57,16 @@ export default function ReferralsList(props) {
     setLoading(false)
   }
 
+  // Fetch backend to delete referral by id
+  const handleDeleteReferral = async (referralId) => {
+    var rawResponse =  await fetch(`/referrals/delete/${referralId}`, {
+      method: 'DELETE'
+    })
+    await rawResponse.json()
+    fetchReferrals()
+  }
+
+  // A l'execution de l'app...
   useEffect(() => {
     fetchReferrals()
   }, [])
@@ -212,7 +204,7 @@ export default function ReferralsList(props) {
         </div>
 
         <div className='tableContainer'>
-          <Referrals currentReferrals={currentReferrals} loading={loading} handleSelectStatusChange={handleSelectStatusChange} />
+          <Referrals currentReferrals={currentReferrals} loading={loading} handleSelectStatusChange={handleSelectStatusChange} handleDeleteReferral={handleDeleteReferral} />
         </div>
 
         <div className='perPageContainer'>
@@ -222,30 +214,29 @@ export default function ReferralsList(props) {
             <option value="30">30 par page</option>
             <option value="40">40 par page</option>
           </select>
-
         </div>
 
         <div className='paginationContainer'>
           <Pagination referralsPerPage={referralsPerPage} totalReferrals={referrals.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} referrals={referrals} />
         </div>
 
-        {/* <div><TransitionModal /></div> */}
-
-        {/* <button type="button" onClick={handleOpen}>
-          Open Modal
-        </button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <div>blablabla</div>
-        </Modal> */}
-
       </div>
     </div>
   );
 }
+
+/* recuperation du token depuis redux */
+function mapStateToProps(state) {
+  console.log(state)
+  return { 
+    token: state.token,
+    type: state.type 
+  };
+}
+
+export default connect(
+  mapStateToProps, 
+  null
+)(ReferralsList);
 
 

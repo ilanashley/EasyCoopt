@@ -14,8 +14,9 @@ import '../App.css';
 
 function JobsAvailable(props) {
 
-    const [offers, setOffers] = useState([])
+    const [offers, setOffers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [ajoutId, setAjoutId] = useState([]);
 
     useEffect(() => {
         const fetchOffers = async () => {
@@ -28,11 +29,37 @@ function JobsAvailable(props) {
         fetchOffers()
     }, [])
 
+    var archiveOffer = async (id) => {
+        console.log('Id', id)
+
+        const archiveReq = await fetch('/offers/archive', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `status=${false}&id=${id}`
+        })
+        const body = await archiveReq.json()
+
+        console.log(body)
+
+        if (body.result === true) {
+
+            setAjoutId([...ajoutId, body.f._id])
+            console.log('Je suis la')
+        }
+
+    }
+
+
+
 
     // Card component
     const offersList = offers.map((offer, i) => {
+        var display ={};
+        if(ajoutId.includes(offer._id)){
+            display = {display: 'none'}
+        }
         return (
-            <div key={i} className="cardBackground mb-2">
+            <div key={i} className="cardBackground mb-2" style={display}>
                 <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                     <h2>{offer.title}</h2>
                     <div className="cardInfoBg">
@@ -54,7 +81,7 @@ function JobsAvailable(props) {
                     <h3>{offer.bonusAmount}€</h3>
                     <Button id="referralButton">Recommander</Button>
                     <Button>
-                    <DeleteIcon />
+                        <DeleteIcon onClick={() => { console.log(offer._id); archiveOffer(offer._id) }} />
                     </Button>
                     <Button id="enlargeButton">
                         <OpenInNewIcon />
@@ -78,9 +105,9 @@ function JobsAvailable(props) {
                         </Col>
                     </Row>
                     <Row>
-                    <Col>
-                        {offersList}
-                    </Col>
+                        <Col>
+                            {offersList}
+                        </Col>
                     </Row>
 
                 </Container>
@@ -93,7 +120,7 @@ function JobsAvailable(props) {
 }
 
 function mapStateToProps(state) {
-    return { myArticles: state.wishList, token: state.token }
+    return { token: state.token }
 }
 
 function mapDispatchToProps(dispatch) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Container, Col, Row, Button } from "reactstrap";
+import { Link } from 'react-router-dom'
 import NavBar from './NavBar'
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -50,13 +51,28 @@ function JobsAvailable(props) {
     }
 
 
+    if (props.token) {
+        var securite = <Link to="/addoffer"> <Button id="modifyButton">
+            Rajouter Offre
+        </Button>
+        </Link>
+    }
+    else {
+
+        var securite = <Link to="/login"> <Button id="modifyButton">
+            Se Connecter
+        </Button>
+        </Link>
+    }
+
+
 
 
     // Card component
     const offersList = offers.map((offer, i) => {
-        var display ={};
-        if(ajoutId.includes(offer._id)){
-            display = {display: 'none'}
+        var display = {};
+        if (ajoutId.includes(offer._id)) {
+            display = { display: 'none' }
         }
         return (
             <div key={i} className="cardBackground mb-2" style={display}>
@@ -80,11 +96,12 @@ function JobsAvailable(props) {
                     </div>
                     <h3>{offer.bonusAmount}€</h3>
                     <Button id="referralButton">Recommander</Button>
-                    <Button>
-                        <DeleteIcon onClick={() => { console.log(offer._id); archiveOffer(offer._id) }} />
-                    </Button>
+                    <Button id="modifyButton">Modifier</Button>
                     <Button id="enlargeButton">
                         <OpenInNewIcon />
+                    </Button>
+                    <Button>
+                        <DeleteIcon onClick={() => { console.log(offer._id); archiveOffer(offer._id) }} />
                     </Button>
                 </li>
             </div>
@@ -99,6 +116,7 @@ function JobsAvailable(props) {
 
                     <Row className="mb-4 d.flex">
                         <Col className="flex-row">
+                            {securite}
                             <input className="searchBar" type="search" placeholder="Rechercher un poste.." />
                             <button className="onclickButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tri par date <ExpandMoreIcon /></button>
                             <button className="onclickButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tri par bonus <ExpandMoreIcon /></button>
@@ -123,20 +141,8 @@ function mapStateToProps(state) {
     return { token: state.token }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        deleteToOffers: function (offerTitle) {
-            dispatch({
-                type: 'deleteOffer',
-                title: offerTitle
-            })
-        }
-
-    }
-}
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(JobsAvailable);
 

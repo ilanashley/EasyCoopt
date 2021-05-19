@@ -18,7 +18,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar'
 
 
-function AddOffer (props) {
+function AddOffer(props) {
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
   const [creationDate, setCreationDate] = useState('');
@@ -28,19 +28,24 @@ function AddOffer (props) {
   const [resume, setResume] = useState('');
 
 
+console.log('TEST', props.token)
 
   var saveOffer = async () => {
 
     const saveReq = await fetch('/offers/add', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
     })
     const body = await saveReq.json()
   }
 
+  if (!props.token) {
+    return <Redirect to="/login" />;
+  }
 
   return (
+
     <div className="section">
       <NavBar />
 
@@ -79,7 +84,7 @@ function AddOffer (props) {
               </FormGroup>
 
               <div class="btnEnd">
-                <Button onClick={()=> {saveOffer()}} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
+                <Button onClick={() => { saveOffer() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
               </div>
 
             </Form>
@@ -93,16 +98,17 @@ function AddOffer (props) {
   );
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return {
-    addOffer: function(offer){
+    addOffer: function (offer) {
       dispatch({ type: 'addOffer', addOffer: offer })
     }
   }
 }
 
-function mapStateToProps(state){
-  return {token: state.token}
+function mapStateToProps(state) {
+  console.log('STATE', state)
+  return { token: state.token }
 }
 
 export default connect(

@@ -36,13 +36,23 @@ const AddCoopte = (props) => {
 
   var saveCoopte = async () => {
 
+    var data = new FormData();
+
+    data.append('firstName', 'John');
+    data.append('lastName', 'Doe');
+    
     const saveReq = await fetch('/referrals/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `firstName=${firstName}&lastName=${lastName}&email=${email}&reason=${reason}&creationDate=${creationDate}`
+     method: 'post',
+     body: data
     })
-    const body = await saveReq.json()
-    console.log("response", body)
+
+    // const saveReq = await fetch('/referrals/add', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    //   body: `firstName=${firstName}&lastName=${lastName}&email=${email}&reason=${reason}&creationDate=${creationDate}`
+    // })
+    // const body = await saveReq.json()
+    // console.log("response", body)
     setModal(!modal)
 
   }
@@ -73,7 +83,7 @@ const AddCoopte = (props) => {
               </FormGroup>
               <FormGroup>
                 <Label for="creationDate">Date</Label>
-                <Input onChange={(e) => setCreationDate(e.target.value)} type="text" name="creationDate" placeholder="../../...." />
+                <Input onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
               </FormGroup>
               <FormGroup>
                 <Label for="cv">Curriculum Vitae</Label>
@@ -86,17 +96,17 @@ const AddCoopte = (props) => {
               </FormGroup>
 
               <div class="btnEnd">
-                <Button onClick={() => {saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
+                <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
               </div>
             </Form>
             <Modal isOpen={modal} >
-        <ModalBody>
-          Votre cooptation a bien été prise en compte!
+              <ModalBody>
+                Votre cooptation a bien été prise en compte!
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>Close</Button>
-        </ModalFooter>
-      </Modal>
+              <ModalFooter>
+                <Button color="primary" onClick={toggle}>Close</Button>
+              </ModalFooter>
+            </Modal>
           </Col>
         </Row>
 

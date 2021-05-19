@@ -115,11 +115,11 @@ router.put('/archive', async function (req, res, next) {
     }
   );
 
-  var f = await offerModel.findOne({ _id: req.body.id })
-  if (f.status === false) { result = true }
-  console.log('F',f)
+  var offerCurrent = await offerModel.findOne({ _id: req.body.id })
+  if (offerCurrent.status === false) { result = true }
+  console.log('F', offerCurrent)
 
-  res.json({ result, f })
+  res.json({ result, offerCurrent })
 })
 
 module.exports = router;

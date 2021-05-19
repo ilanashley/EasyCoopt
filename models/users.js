@@ -8,7 +8,6 @@ const userSchema = mongoose.Schema({
     token: String,
     avatarUrl: String,
     groupsId: String,
-    // [{type: mongoose.Schema.Types.ObjectId, ref: 'groups'}]
     offersId: [{type: mongoose.Schema.Types.ObjectId, ref: 'offers'}]
 })
 

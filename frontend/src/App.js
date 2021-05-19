@@ -27,13 +27,14 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route component={AddOffer} path="/addoffer" exact />
-          <Route component={AddCoopte} path="/addcoopte" exact />
-          <Route component={ViewOffer} path="/viewoffer" exact />
+          <Route component={JobsAvailable} path="/" exact />
           <Route component={JobsAvailable} path="/JobsAvailable" exact />
-          <Route component={ReferralsList} path="/ReferralsList" exact />
+          <Route component={AddOffer} path="/addOffer" exact />
+          <Route component={AddCoopte} path="/addCoopte" exact />
+          <Route component={ViewOffer} path="/viewOffer" exact />
+          <Route component={ReferralsList} path="/referralsList" exact />
           <Route component={Login} path="/login" exact />
-          <Route component={MyAccount} path="/MyAccount" exact />
+          <Route component={MyAccount} path="/myAccount" exact />
         </Switch>
       </Router>
     </Provider>

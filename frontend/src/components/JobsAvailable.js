@@ -7,6 +7,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlaceIcon from '@material-ui/icons/Place';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import '../App.css';
 
@@ -27,20 +28,11 @@ function JobsAvailable(props) {
         fetchOffers()
     }, [])
 
-    var deleteOffer = async (title) => {
-        props.deleteToOffers(title)
 
-        const deleteReq = await fetch('/wishlist-article', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `title=${title}&token=${props.token}`
-        })
-    }
-
-
+    // Card component
     const offersList = offers.map((offer, i) => {
         return (
-            <div key={i} className=" col-md-12 cardBackground mb-2">
+            <div key={i} className="cardBackground mb-2">
                 <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                     <h2>{offer.title}</h2>
                     <div className="cardInfoBg">
@@ -61,6 +53,9 @@ function JobsAvailable(props) {
                     </div>
                     <h3>{offer.bonusAmount}€</h3>
                     <Button id="referralButton">Recommander</Button>
+                    <Button>
+                    <DeleteIcon />
+                    </Button>
                     <Button id="enlargeButton">
                         <OpenInNewIcon />
                     </Button>
@@ -83,7 +78,9 @@ function JobsAvailable(props) {
                         </Col>
                     </Row>
                     <Row>
+                    <Col>
                         {offersList}
+                    </Col>
                     </Row>
 
                 </Container>

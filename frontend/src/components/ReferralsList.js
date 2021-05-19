@@ -128,7 +128,7 @@ export default function ReferralsList(props) {
   })
 
   const handleSelectFilteredRecipient = (event) => {
-    const referralsPerRecipient = referrals.filter(referral => referral.userLastName === event.target.value)
+    const referralsPerRecipient = referrals.filter(referral => referral.recipientLastName === event.target.value)
     setReferrals(referralsPerRecipient)
   }
 
@@ -162,8 +162,12 @@ export default function ReferralsList(props) {
   }
 
   // Reset Filters
-  const handleSelectResetFilters = () => {
-    setReferrals(referralsArray)
+  const handleSelectResetFilters = async () => {
+    setLoading(true)
+    var rawResponse = await fetch('/referrals/get')
+    var response = await rawResponse.json()
+    setReferrals(response.usersInfo)
+    setLoading(false)
   }
 
   return (

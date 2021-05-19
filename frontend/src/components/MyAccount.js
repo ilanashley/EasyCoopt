@@ -13,7 +13,6 @@ import {
   Col,
 } from "reactstrap";
 import NavBar from "./NavBar";
-import createPalette from "@material-ui/core/styles/createPalette";
 
 function MyAccount(props) {
   
@@ -21,7 +20,7 @@ function MyAccount(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [type, setType] = useState(props.type);
+  const [type, setType] = useState(props.typeID);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -58,6 +57,7 @@ function MyAccount(props) {
       errorList.push("Champs vides");
       setlistErrorsAccount(errorList)
     }
+
 
 
     if (errorList.length == 0){
@@ -172,7 +172,7 @@ function MyAccount(props) {
           </Col>
           <Col sm="12" md="6">
             <FormGroup>
-              <Label for="profil">Votre profil</Label>
+              <Label for="profil">Mon profil d'utilisateur</Label>
               <select
                 value ={type}
                 defaultValue="Sélectionner..."
@@ -233,7 +233,7 @@ function MyAccount(props) {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-  return { token: state.token };
+  return { token: state.token, typeID: state.typeID };
 }
 
 /* envoi du type de user a redux */

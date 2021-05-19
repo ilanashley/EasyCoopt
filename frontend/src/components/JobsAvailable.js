@@ -6,6 +6,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlaceIcon from '@material-ui/icons/Place';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import '../App.css';
 
@@ -51,6 +52,9 @@ function JobsAvailable() {
                     </div>
                     <h3>{offer.bonusAmount}€</h3>
                     <Button id="referralButton">Recommander</Button>
+                    <Button>
+                    <DeleteIcon />
+                    </Button>
                     <Button id="enlargeButton">
                         <OpenInNewIcon />
                     </Button>

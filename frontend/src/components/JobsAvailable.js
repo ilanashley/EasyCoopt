@@ -6,6 +6,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlaceIcon from '@material-ui/icons/Place';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import '../App.css';
 
@@ -30,7 +31,7 @@ function JobsAvailable() {
     // Card component
     const offersList = offers.map((offer, i) => {
         return (
-            <div key={i} className=" col-md-12 cardBackground mb-2">
+            <div key={i} className="cardBackground mb-2">
                 <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                     <h2>{offer.title}</h2>
                     <div className="cardInfoBg">
@@ -51,6 +52,9 @@ function JobsAvailable() {
                     </div>
                     <h3>{offer.bonusAmount}€</h3>
                     <Button id="referralButton">Recommander</Button>
+                    <Button>
+                    <DeleteIcon />
+                    </Button>
                     <Button id="enlargeButton">
                         <OpenInNewIcon />
                     </Button>
@@ -73,7 +77,9 @@ function JobsAvailable() {
                         </Col>
                     </Row>
                     <Row>
+                    <Col>
                         {offersList}
+                    </Col>
                     </Row>
 
                 </Container>

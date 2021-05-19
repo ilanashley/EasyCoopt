@@ -13,6 +13,7 @@ import {
   Col,
 } from "reactstrap";
 import NavBar from "./NavBar";
+import createPalette from "@material-ui/core/styles/createPalette";
 
 function MyAccount(props) {
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -27,6 +28,21 @@ function MyAccount(props) {
   const [listErrorsAccount, setlistErrorsAccount] = useState([]);
 
 
+  useEffect(() => {
+    async function loadUser(){
+      var rawResponse = await fetch(`/users/account/?token=${props.token}`);
+      var response = await rawResponse.json();
+      setAvatarUrl(response.avatarUrl);
+      setFirstName(response.firstName);
+      setLastName(response.lastName);
+      setEmail(response.email);
+      setType(response.type);
+    };
+      loadUser();
+  },[]);
+
+
+
 
   // Gère le  changement de type de user
   const handleTypeChange = (event, i) => {
@@ -35,6 +51,14 @@ function MyAccount(props) {
 
 
   var handleSubmitAccount = async () => {
+
+    let errorList = [];
+    if(!email || !type ) {
+      errorList.push("Champs vides");
+      setlistErrorsAccount(errorList)
+    }
+
+    if (errorList.length == 0){
     const data = await fetch("/users/account", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -42,12 +66,12 @@ function MyAccount(props) {
     });
 
     const body = await data.json();
+    setlistErrorsAccount(body.error);
 
-    if (body.result == true) {
+    if (body.result == true && listErrorsAccount.length == 0) {
       setUserExists(true);
-    } else {
-      setlistErrorsAccount(body.error);
-    }
+    } 
+  }
   };
 
   let tabErrorsAccount = listErrorsAccount.map((error, i) => {
@@ -81,6 +105,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="firstname">Prénom</Label>
                 <Input
+                  value ={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   type="text"
                   name="prenom"
@@ -90,6 +115,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="lastname">Nom</Label>
                 <Input
+                value ={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   type="text"
                   name="nom"
@@ -99,6 +125,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="avatar">Avatar</Label>
                 <Input
+                  value ={avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
                   type="text"
                   name="avater"
@@ -108,6 +135,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
+                  value ={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="text"
                   name="email"
@@ -120,12 +148,13 @@ function MyAccount(props) {
             <FormGroup>
               <Label for="profil">Votre profil</Label>
               <select
+                value ={type}
+                defaultValue="Sélectionner..."
                 class="custom-select"
                 id="inputGroupSelect01"
                 onChange={(e) => handleTypeChange(e)}
                 aria-label="Default select example"
                 >
-                <option selected>Sélectionner...</option>
                 <option value="Coopteur">Coopteur</option>
                 <option value="Recruteur">Recruteur</option>
               </select>
@@ -159,8 +188,9 @@ function MyAccount(props) {
                 placeholder="Confirmer nouveau mot de passe"
               />
             </FormGroup>
-            {tabErrorsAccount}
+           
           </Col>
+          {tabErrorsAccount}
           <div class="btnEnd1">
             <Button
               onClick={() => handleSubmitAccount()}

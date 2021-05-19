@@ -71,7 +71,7 @@ function Login(props) {
   }
 
   if (userExists) {
-    return <Redirect to='/myaccount' />
+    return <Redirect to='/addoffer' />
   }
 
   var tabErrorsSignin = listErrorsSignin.map((error, i) => {

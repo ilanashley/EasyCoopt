@@ -9,6 +9,7 @@ const offerSchema = mongoose.Schema({
     contract: String,
     city: String,
     resume: String,
+    status: Boolean,
     referralsId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'referrals' }],
     });
     

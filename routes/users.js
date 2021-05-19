@@ -5,7 +5,7 @@ var uid2 = require("uid2");
 var bcrypt = require("bcrypt");
 
 var userModel = require("../models/users");
-var groupsModel = require("../models/groups");
+const { findOne } = require("../models/users");
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -122,6 +122,7 @@ router.get("/account", async function (req, res, next) {
   res.json({ password, avatarUrl, email, firstName, lastName, type });
 });
 
+
 router.post("/account", async (req, res, next) => {
   let result = false;
   let error = [];
@@ -141,19 +142,6 @@ router.post("/account", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
   let newPassword = req.body.newPassword
 
-  // Ajout du type dans la Base de Données
-  // await groupsModel.updateOne(
-  //   {
-  //     $push: { groupsID: type }
-  //   }
-  // );
-
-  // var newGroups = new groupsModel({
-  //     $push: { groupsId: type }
-    
-  // });
-
-  // savegroups = await newGroups.save();
 
 /* Si l'utilisateur a entré un ancien mot de passe: */  
 if (oldPassword){

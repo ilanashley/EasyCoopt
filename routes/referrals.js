@@ -21,6 +21,21 @@ cloudinary.config({
 
 /* Add Referrals */
 router.post('/add', async (req, res, next) => {
+
+//   var resultCopy = await req.files.avatar.mv('./tmp/avatar.jpg');
+
+//   if(!resultCopy) {
+//     res.json({result: true, message: 'File uploaded!'} );      
+//   } else {
+//     res.json({result: false, message: resultCopy} );
+//   }
+//  });
+//   /*______cloudinary_______*/
+//   var cvPath = './tmp/'+uniqid()+'.jpg';
+//   var resultCloudinary = await cloudinary.uploader.upload(cvPath);
+
+//   fs.unlinkSync(cvPath);
+  
   const newReferral = new referralModel({
     firstName : req.body.firstName,
     lastName: req.body.lastName,
@@ -30,6 +45,11 @@ router.post('/add', async (req, res, next) => {
     creationDate : req.body.creationDate,
     status: '1'
   });
+
+
+ 
+
+
   var referral = await newReferral.save();
   await offerModel.updateOne(
     {_id: req.body.offerId},
@@ -37,8 +57,9 @@ router.post('/add', async (req, res, next) => {
       $push: { referraslId: referral._id }
     }
   );
-  res.json({result: true})
+  res.json({result: true, resultCloudinary})
 })
+
 
 /* Get Referrals*/
 router.get('/get', async (req, res, next) => {

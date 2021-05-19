@@ -64,7 +64,7 @@ console.log('TEST', props.token)
               </FormGroup>
               <FormGroup>
                 <Label for="creationDate">Date</Label>
-                <Input onChange={(e) => setCreationDate(e.target.value)} type="text" name="creationDate" placeholder="../../...." />
+                <Input onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
               </FormGroup>
               <FormGroup>
                 <Label for="bonusAmount">Bonus</Label>

@@ -7,6 +7,19 @@ var bcrypt = require("bcrypt");
 var userModel = require("../models/users");
 const { findOne } = require("../models/users");
 
+var uniqid = require('uniqid');
+
+var cloudinary = require('cloudinary').v2;
+
+let APkey = process.env.API_K;
+let APsecret = process.env.API_S;
+
+cloudinary.config({
+  cloud_name: 'dyx38qkbh',
+  api_key: APkey,
+  api_secret: APsecret 
+ });
+
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   res.send("respond with a resource");
@@ -17,6 +30,19 @@ router.get("/", function (req, res, next) {
   Body: email (string), password (string)
   Response: result(true), isLogin(true), message(string), user(object)
 */
+
+router.post('/upload', async function(req, res, next) {
+  
+  var pictureName = './tmp/'+uniqid()+'.jpg';
+  var resultCopy = await req.files.avatar.mv(pictureName);
+  if(!resultCopy) {
+    var resultCloudinary = await cloudinary.uploader.upload(pictureName);
+    res.json(resultCloudinary);
+  } else {
+    res.json({error: resultCopy});
+  }
+ 
+ });
 
 router.post("/sign-up", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
@@ -142,7 +168,7 @@ router.post("/account", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
   let newPassword = req.body.newPassword
 
-
+console.log('oldpassword-->',oldPassword)
 /* Si l'utilisateur a entré un ancien mot de passe: */  
 if (oldPassword){
   var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
@@ -154,11 +180,11 @@ if (oldPassword){
 
 
 /* Vérification la presence de contenu sur les nouveau mot de passe */
-  if ( !newPassword && !confirmPassword ) {
-  error.push("Champs vides");
+  if ( !newPassword) {
+  error.push("Champ nouveau mot de passe vide");
   } 
-  if (!newPassword || !confirmPassword) {
-    error.push("Champs vides");
+  if (!confirmPassword) {
+    error.push("Champ ancien mot de passe vide");
   }
       /* Vérification du contenu des nouveaux mot de passe*/
 

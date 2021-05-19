@@ -318,6 +318,28 @@ span {
   outline:0;
 }
 
+#modifyButton{
+  background:    #2FD395;
+  border-radius: 15px;
+  color: #ffffff;
+  border: none;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  height: 55px;
+  width: 100px;
+
+}
+
+#modifyButton:hover {
+  filter: brightness(110%);
+}
+
+#modifyButton:focus {
+  outline:0;
+}
+
 #enlargeButton{
   height: 40px;
 width: 47px;

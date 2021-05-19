@@ -14,6 +14,8 @@ import {
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar'
+import { set } from 'mongoose';
+
 
 
 const AddCoopte = (props) => {
@@ -21,15 +23,18 @@ const AddCoopte = (props) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [reason, setReason] = useState('');
+  const [creationDate, setCreationDate] = useState('');
+  const [cv, setCv] = useState('');
 
   var saveCoopte = async () => {
 
     const saveReq = await fetch('/referrals/add', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `firstname=${firstName}&lastname=${lastname}&email=${email}&reason=${reason}`
+      body: `firstName=${firstName}&lastName=${lastName}&email=${email}&reason=${reason}`
     })
     const body = await saveReq.json()
+    console.log("response", body)
   }
 
   return (
@@ -55,14 +60,19 @@ const AddCoopte = (props) => {
                 <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
               </FormGroup>
               <FormGroup>
+                <Label for="creationDate">Date</Label>
+                <Input onChange={(e) => setCreationDate(e.target.value)} type="text" name="creationDate" placeholder="../../...." />
+              </FormGroup>
+              <FormGroup>
                 <Label for="cv">Curriculum Vitae</Label>
-                <Input type="file" name="cv" placeholder="upload cv" />
+                <Input onChange={(e) => setCv(e.target.value)} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
               <FormGroup>
                 <Label for="reason">Reason of cooptation</Label>
                 <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
               </FormGroup>
+              
               <div class="btnEnd">
                 <Button onClick={()=> {saveCoopte()}} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
               </div>

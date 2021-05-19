@@ -44,7 +44,6 @@ const AddCoopte = (props) => {
     const body = await saveReq.json()
     console.log("response", body)
     setModal(!modal)
-    console.log(modal)
 
   }
   const toggle = () => setModal(!modal);

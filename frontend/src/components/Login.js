@@ -12,10 +12,12 @@ import {
   Button,
   Container,
   Row,
-  Col
+  Col,
+  Alert
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ErrorIcon from '@material-ui/icons/Error';
 import NavBar from './NavBar'
 
 import { makeStyles } from '@material-ui/core/styles';

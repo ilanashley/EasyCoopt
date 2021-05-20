@@ -46,6 +46,9 @@ router.post('/add', async (req, res, next) => {
 
     var referral = await newReferral.save();
 
+console.log("req", req.body.offerId)
+console.log("ref", referral._id)
+
     await offerModel.updateOne(
       { _id: req.body.offerId },
       {

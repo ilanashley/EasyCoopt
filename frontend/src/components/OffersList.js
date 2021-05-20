@@ -14,7 +14,7 @@ const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
   const [ajoutId, setAjoutId] = useState([]);
-  const [offerId, setOfferId] = useState();
+  const [offerId, setOfferId] = useState('');
 
 
 
@@ -88,11 +88,14 @@ const OffersList = (props) => {
     }
   }
   /* function pour recommander*/
-  const recommend = (saveId) => {
-    setOfferId(saveId)
-
+  const recommend = (offerId) => {
+    console.log("offeridInRecommend", offerId);
+    setOfferId(offerId)
   }
+
+  console.log("offeridInExterior", offerId)
   if (offerId) {
+    console.log("offeridInInCondition", offerId)
     return <Redirect to={`/addCoopte/${offerId}`} />
   }
 
@@ -177,7 +180,7 @@ const OffersList = (props) => {
         </div>
 
         <div className='tableContainer'>
-          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} />
+          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend}/>
         </div>
 
         <div className='perPageContainer'>

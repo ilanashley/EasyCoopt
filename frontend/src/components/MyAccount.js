@@ -85,7 +85,7 @@ function MyAccount(props) {
 
   // redirige le user si son changement de profil est bien enregistré
   if (userExists) {
-    return <Redirect to="/jobsavailable" />;
+    return <Redirect to="/offerslist" />;
   }
 
   // uniquement pendant le test, redirect si le  token est null

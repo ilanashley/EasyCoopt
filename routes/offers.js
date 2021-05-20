@@ -120,7 +120,7 @@ router.put('/archive', async function (req, res, next) {
 })
 
 router.get("/offer", async function (req, res, next) {
-  var user = await userModel.findOne({ id: req.query.token });
+  var user = await offerModel.findOne({ id: req.query.token });
 
   if (user != null) {
     (password = user.password),

@@ -184,26 +184,27 @@ router.post("/account", async (req, res, next) => {
 
 /* Si l'utilisateur a entré un ancien mot de passe: */  
 if (oldPassword){
-  var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
-  let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
+        var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
+        let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
 
-  if (checkPassword == false) {
-         error.push("Ancien mot de passe erroné");
-  }
+        if (checkPassword == false) {
+              error.push("Ancien mot de passe erroné");
+        }
 
-/* Vérification la presence de contenu sur les nouveau mot de passe */
-  else if ( !newPassword) {
-  error.push("Champ nouveau mot de passe vide");
-  } 
-  else if (!confirmPassword) {
-    error.push("Champ ancien mot de passe vide");
-  }
-      /* Vérification du contenu des nouveaux mot de passe*/
+      /* Vérification la presence de contenu sur les nouveau mot de passe */
+        else if ( !newPassword) {
+        error.push("Champ nouveau mot de passe vide");
+        } 
+        else if (!confirmPassword) {
+          error.push("Champ ancien mot de passe vide");
+        }
+            /* Vérification du contenu des nouveaux mot de passe*/
 
-  else if (newPassword !== confirmPassword) {
-    error.push("Ancien et nouveau mots de passe différents ");
-  }}
+        else if (newPassword !== confirmPassword) {
+          error.push("Ancien et nouveau mots de passe différents ");
+        }}
   
+
   if (error.length == 0){
           result = true;
     /* enregistrement de toutes les nouvelles infos en base de donnée */

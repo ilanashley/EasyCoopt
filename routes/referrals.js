@@ -21,16 +21,17 @@ cloudinary.config({
 
 
 /* Add Referrals */
+
 router.post('/add', async (req, res, next) => {
   
-
+/* send cv in cloudinary */
   var cvPath = './tmp/' + uniqid() + '.jpg';
   var resultCopy = await req.files.cv.mv(cvPath);
 
   if (!resultCopy) {
     var resultCloudinary = await cloudinary.uploader.upload(cvPath);
     
-    
+  
 
     const newReferral = new referralModel({
       firstName: req.body.firstName,
@@ -50,7 +51,6 @@ router.post('/add', async (req, res, next) => {
       {
         $push: { referralsId: referral._id }
       }
-      
     );
     res.json({ result: true });
   } else {

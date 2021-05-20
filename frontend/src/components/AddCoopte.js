@@ -69,7 +69,7 @@ const AddCoopte = (props) => {
   }
   const toggleRedirect = () => {
     setModal(!modal)
-    if(modal == false) {
+    if(!modal) {
       return <Redirect to={'/referralsList'}/>
     }
   };

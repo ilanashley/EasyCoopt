@@ -48,6 +48,9 @@ router.post('/upload', async function(req, res, next) {
 
  });
 
+
+/* ------POST for Sign-Up-------*/
+
 router.post("/sign-up", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
   let password = req.body.password;

@@ -20,7 +20,7 @@ const Offers = (props) => {
             display = { display: 'none' }
         }
         return (
-            <div key={i} className="cardBackground mb-2" style={display}>
+            <div key={offer._id} className="cardBackground mb-2" style={display}>
                 <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                     <h4>{offer.title}</h4>
                     <div className="cardInfoBg">
@@ -64,7 +64,7 @@ const Offers = (props) => {
 function mapStateToProps(state) {
     return {
         token: state.token,
-        type: state.type
+        typeId: state.typeId
     };
 }
 

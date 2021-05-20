@@ -8,6 +8,7 @@ var userModel = require("../models/users");
 const { findOne } = require("../models/users");
 
 var uniqid = require('uniqid');
+var fs = require('fs');
 
 var cloudinary = require('cloudinary').v2;
 
@@ -79,6 +80,7 @@ router.post("/sign-up", async (req, res, next) => {
       password: password,
       password: hash,
       token: uid2(32),
+      groupsId: "Coopteur",
     });
 
     saveUser = await newUser.save();
@@ -168,41 +170,41 @@ router.post("/account", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
   let newPassword = req.body.newPassword
 
-  if(!email) {
+  // On vérifie la saisie dans les champs indispensables email firstname lastname
+  if(!email || email == 'undefined') {
     error.push("Champ email vide");
   }
-  if(!firstName) {
+  if(!firstName || firstName == 'undefined') {
     error.push("Champ prénom vide");
   }
-  if(!lastName) {
+  if(!lastName || lastName == 'undefined') {
     error.push("Champ nom vide");
   }
 
 
-console.log('oldpassword-->',oldPassword)
 /* Si l'utilisateur a entré un ancien mot de passe: */  
 if (oldPassword){
-  var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
-  let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
+        var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
+        let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
 
-  if (checkPassword == false) {
-         error.push("Ancien mot de passe erroné");
-  }
+        if (checkPassword == false) {
+              error.push("Ancien mot de passe erroné");
+        }
 
+      /* Vérification la presence de contenu sur les nouveau mot de passe */
+        else if ( !newPassword) {
+        error.push("Champ nouveau mot de passe vide");
+        } 
+        else if (!confirmPassword) {
+          error.push("Champ ancien mot de passe vide");
+        }
+            /* Vérification du contenu des nouveaux mot de passe*/
 
-/* Vérification la presence de contenu sur les nouveau mot de passe */
-  if ( !newPassword) {
-  error.push("Champ nouveau mot de passe vide");
-  } 
-  if (!confirmPassword) {
-    error.push("Champ ancien mot de passe vide");
-  }
-      /* Vérification du contenu des nouveaux mot de passe*/
-
-  else if (newPassword !== confirmPassword) {
-    error.push("Ancien et nouveau mots de passe différents ");
-  }}
+        else if (newPassword !== confirmPassword) {
+          error.push("Ancien et nouveau mots de passe différents ");
+        }}
   
+
   if (error.length == 0){
           result = true;
     /* enregistrement de toutes les nouvelles infos en base de donnée */
@@ -218,11 +220,12 @@ if (oldPassword){
  
   if (updatedUser != null){
     let newUserdata = await userModel.findOne({ token: token });
-    console.log('user mis a jour -->',newUserdata)
-
     res.json({ result, error, user: newUserdata });
   } }
+
+else {
   res.json({ result, error })
+}
 });
 
 module.exports = router;

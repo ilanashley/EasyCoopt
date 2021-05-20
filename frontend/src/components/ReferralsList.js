@@ -230,7 +230,7 @@ function mapStateToProps(state) {
   console.log(state)
   return { 
     token: state.token,
-    type: state.type 
+    typeId: state.typeId 
   };
 }
 

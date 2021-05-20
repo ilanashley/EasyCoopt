@@ -80,6 +80,7 @@ router.post("/sign-up", async (req, res, next) => {
       password: password,
       password: hash,
       token: uid2(32),
+      groupsId: "Coopteur",
     });
 
     saveUser = await newUser.save();
@@ -169,6 +170,7 @@ router.post("/account", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
   let newPassword = req.body.newPassword
 
+  // On vérifie la saisie dans les champs indispensables email firstname lastname
   if(!email) {
     error.push("Champ email vide");
   }
@@ -189,12 +191,11 @@ if (oldPassword){
          error.push("Ancien mot de passe erroné");
   }
 
-
 /* Vérification la presence de contenu sur les nouveau mot de passe */
-  if ( !newPassword) {
+  else if ( !newPassword) {
   error.push("Champ nouveau mot de passe vide");
   } 
-  if (!confirmPassword) {
+  else if (!confirmPassword) {
     error.push("Champ ancien mot de passe vide");
   }
       /* Vérification du contenu des nouveaux mot de passe*/
@@ -222,7 +223,10 @@ if (oldPassword){
 
     res.json({ result, error, user: newUserdata });
   } }
+
+else {
   res.json({ result, error })
+}
 });
 
 module.exports = router;

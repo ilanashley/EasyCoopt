@@ -1,11 +1,11 @@
-export default function(offers = [], action){
+export default function (offers = [], action) {
 
-    if(action.type == 'addOffer'){
-        var addOfferCopy = [...offers]
-        addOfferCopy.push(action.addOffer)
-        
-        return addOfferCopy
-    // }
+    if (action.type == 'addAnOffer') {
+        var saveOfferCopy = [...offers]
+        saveOfferCopy.push(action.offerAdded)
+
+        return saveOfferCopy
+    }
     // else if(action.type == 'deleteOffer'){
     //     var addOfferCopy = [...offers]
     //     var position = null
@@ -21,7 +21,7 @@ export default function(offers = [], action){
 
     //     return addOfferCopy
     // }
-    // else {
+    else {
         return offers
     }
 }

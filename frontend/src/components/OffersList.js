@@ -97,17 +97,21 @@ const OffersList = (props) => {
 
   // Rajout offre ou connexion
   if (props.token) {
-    var securite = <Link to="/addoffer"> <Button id="modifyButton">
-      Rajouter Offre
+    var securite =
+      <Link to={"/addoffer/"}>
+        <Button id="modifyButton">
+          Rajouter Offre
       </Button>
-    </Link>
+      </Link>
   }
   else {
 
-    var securite = <Link to="/login"> <Button id="modifyButton">
-      Se Connecter
-      </Button>
-    </Link>
+    var securite =
+      <Link to="/login">
+        <Button id="modifyButton">
+          Se Connecter
+        </Button>
+      </Link>
   }
 
 

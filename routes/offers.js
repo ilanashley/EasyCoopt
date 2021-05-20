@@ -83,6 +83,61 @@ router.post('/add', async function (req, res, next) {
   }
 })
 
+router.put('/add', async function (req, res, next) {
+
+  let title = req.body.title;
+  let city = req.body.city;
+  let creationDate = req.body.creationDate;
+  let bonusAmount = req.body.bonusAmount;
+  let contract = req.body.contract;
+  let link = req.body.link;
+  let resume = req.body.resume;
+  let status = req.body.status;
+  var error = [];
+  let result = false;
+  let saveOffer = null;
+
+  var user = await userModel.findOne({ token: req.body.token })
+
+  // if (title.length < 3){
+  //     res.json({ result: false });
+  //   } 
+  // else if (location.length < 3){
+  //     res.json({ result: false });
+  //   }
+
+  // Si un des champs est vide, afficher un message d'erreur
+  console.log(title, city, creationDate, bonusAmount, contract, link, resume)
+  if (!title || !city || !creationDate || !bonusAmount || !contract || !link || !resume) {
+    error.push("Champs vides");
+    res.json({ result, error });
+  }
+
+  if ((user != null && error.length == 0)) {
+    var modifiedOffer = await offerModel.updateOne({
+      title: title,
+      city: city,
+      creationDate: creationDate,
+      bonusAmount: bonusAmount,
+      contract: contract,
+      link: link,
+      resume: resume,
+      status: true,
+    });
+    console.log('bbb')
+    console.log('blabla', title, city, creationDate, bonusAmount, contract, link, resume, status)
+
+    newModifiedOffer = await modifiedOffer.save();
+
+
+    if (newModifiedOffer) {
+      result = true;
+    }
+
+    res.json({ result, offer: newModifiedOffer, error, token });
+  }
+})
+
 // router.delete('/delete', async function (req, res, next) {
 //   var result = false
 //   var user = await userModel.findOne({ token: req.body.token })

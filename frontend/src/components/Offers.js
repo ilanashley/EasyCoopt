@@ -17,10 +17,9 @@ const Offers = (props) => {
     }
 
     const handleOnClickFaitChier = (id) => {
-        console.log('VUU', id)
         setOfferId(id)
     }
-    if (offerId) {
+    if (offerId !='') {
         return <Redirect to={`/addoffer/${offerId}`}></Redirect>
     }
 

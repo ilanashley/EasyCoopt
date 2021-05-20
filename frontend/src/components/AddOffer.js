@@ -30,6 +30,8 @@ function AddOffer(props) {
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
+  const [offerModifiee, setOfferModifiee] = useState(false);
+
   var { id } = useParams();
 
   console.log('IIII', id)
@@ -40,34 +42,65 @@ function AddOffer(props) {
       var response = await rawResponse.json();
       const offer = response.offers.filter(offer => offer._id == id)
       console.log('Offer', offer)
-      setTitle(offer[0].title);
-      setCity(offer[0].city);
-      setCreationDate(offer[0].creationDate);
-      setBonusAmount(offer[0].bonusAmount);
-      setContract(offer[0].contract);
-      setLink(offer[0].link);
-      setResume(offer[0].resume);
-      setOfferList(response.offers)
-
+      if (offer.length > 0) {
+        setTitle(offer[0].title);
+        setCity(offer[0].city);
+        setCreationDate(offer[0].creationDate);
+        setBonusAmount(offer[0].bonusAmount);
+        setContract(offer[0].contract);
+        setLink(offer[0].link);
+        setResume(offer[0].resume);
+        setOfferList(response.offers)
+      }
     };
     loadOffer();
   }, []);
 
-  var saveOffer = async () => {
+ // if (offer) {
 
-    const saveReq = await fetch('/offers/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
-    })
-    const body = await saveReq.json()
+    var saveOffer = async () => {
 
-    props.addToOfferList(body.offer)
+      const saveReq = await fetch('/offers/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
+      })
+      const body = await saveReq.json()
+
+      setOfferModifiee(true)
+
+      props.addToOfferList(body.offer)
+    }
+  // }
+
+  // else {
+
+  //   var saveOffer = async () => {
+
+  //     const saveReq = await fetch('/offers/add', {
+  //       method: 'PUT',
+  //       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  //       body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
+  //     })
+  //     const body = await saveReq.json()
+
+  //     setOfferModifiee(true)
+
+  //     props.addToOfferList(body.offer)
+  //   }
+  // }
+
+
+
+  // }
+
+  if (offerModifiee) {
+    return <Redirect to='/offerslist' />
   }
 
-  // if (!props.token) {
-  //   return <Redirect to="/login" />;
-  // }
+  if (!props.token) {
+    return <Redirect to="/login" />;
+  }
 
   return (
 

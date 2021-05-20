@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import '../App.css';
@@ -19,6 +19,9 @@ import NavBar from './NavBar'
 
 
 function AddOffer(props) {
+
+  const [offerList, setOfferList] = useState([])
+
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
   const [creationDate, setCreationDate] = useState('');
@@ -27,17 +30,72 @@ function AddOffer(props) {
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
+  const [offerModifiee, setOfferModifiee] = useState(false);
 
-console.log('TEST', props.token)
+  var { id } = useParams();
 
-  var saveOffer = async () => {
+  console.log('IIII', id)
 
-    const saveReq = await fetch('/offers/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
-    })
-    const body = await saveReq.json()
+  useEffect(() => {
+    async function loadOffer() {
+      var rawResponse = await fetch(`/offers/get`);
+      var response = await rawResponse.json();
+      const offer = response.offers.filter(offer => offer._id == id)
+      console.log('Offer', offer)
+      if (offer.length > 0) {
+        setTitle(offer[0].title);
+        setCity(offer[0].city);
+        setCreationDate(offer[0].creationDate);
+        setBonusAmount(offer[0].bonusAmount);
+        setContract(offer[0].contract);
+        setLink(offer[0].link);
+        setResume(offer[0].resume);
+        setOfferList(response.offers)
+      }
+    };
+    loadOffer();
+  }, []);
+
+ // if (offer) {
+
+    var saveOffer = async () => {
+
+      const saveReq = await fetch('/offers/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
+      })
+      const body = await saveReq.json()
+
+      setOfferModifiee(true)
+
+      props.addToOfferList(body.offer)
+    }
+  // }
+
+  // else {
+
+  //   var saveOffer = async () => {
+
+  //     const saveReq = await fetch('/offers/add', {
+  //       method: 'PUT',
+  //       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  //       body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
+  //     })
+  //     const body = await saveReq.json()
+
+  //     setOfferModifiee(true)
+
+  //     props.addToOfferList(body.offer)
+  //   }
+  // }
+
+
+
+  // }
+
+  if (offerModifiee) {
+    return <Redirect to='/offerslist' />
   }
 
   if (!props.token) {
@@ -56,31 +114,31 @@ console.log('TEST', props.token)
             <Form>
               <FormGroup>
                 <Label for="title">Job Title</Label>
-                <Input onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
+                <Input value={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
               </FormGroup>
               <FormGroup>
                 <Label for="city">City</Label>
-                <Input onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
+                <Input value={city} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
               </FormGroup>
               <FormGroup>
                 <Label for="creationDate">Date</Label>
-                <Input onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
+                <Input value={creationDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
               </FormGroup>
               <FormGroup>
                 <Label for="bonusAmount">Bonus</Label>
-                <Input onChange={(e) => setBonusAmount(e.target.value)} type="text" name="bonusAmount" placeholder="400€" />
+                <Input value={bonusAmount} onChange={(e) => setBonusAmount(e.target.value)} type="text" name="bonusAmount" placeholder="400€" />
               </FormGroup>
               <FormGroup>
                 <Label for="contract">Type of contract</Label>
-                <Input onChange={(e) => setContract(e.target.value)} type="text" name="contract" placeholder="CDI" />
+                <Input value={contract} onChange={(e) => setContract(e.target.value)} type="text" name="contract" placeholder="CDI" />
               </FormGroup>
               <FormGroup>
                 <Label for="link">Link offer</Label>
-                <Input onChange={(e) => setLink(e.target.value)} type="link" name="link" placeholder="https://" />
+                <Input value={link} onChange={(e) => setLink(e.target.value)} type="link" name="link" placeholder="https://" />
               </FormGroup>
               <FormGroup>
                 <Label for="resume">Resume</Label>
-                <Input onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
+                <Input value={resume} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
 
               <div class="btnEnd">
@@ -100,14 +158,13 @@ console.log('TEST', props.token)
 
 function mapDispatchToProps(dispatch) {
   return {
-    addOffer: function (offer) {
-      dispatch({ type: 'addOffer', addOffer: offer })
+    addToOfferList: function (offer) {
+      dispatch({ type: 'addAnOffer', OfferAdded: offer })
     }
   }
 }
 
 function mapStateToProps(state) {
-  console.log('STATE', state)
   return { token: state.token }
 }
 

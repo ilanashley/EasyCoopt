@@ -20,9 +20,10 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar'
 import { set } from 'mongoose';
+import { useParams } from "react-router-dom";
 
 
-
+const {saveId} = useParams;
 
 
 const AddCoopte = (props) => {
@@ -34,31 +35,33 @@ const AddCoopte = (props) => {
   const [cv, setCv] = useState('');
   const [modal, setModal] = useState(false);
 
-
   var saveCoopte = async () => {
 
     var data = new FormData();
 
     data.append('firstName', firstName);
-    data.append('lastName',lastName);
-    data.append('email',email);
-    data.append('reason',reason);
-    data.append('creationDate',creationDate);
-   
+    data.append('lastName', lastName);
+    data.append('email', email);
+    data.append('reason', reason);
+    data.append('creationDate', creationDate);
+    data.append('saveId', saveId);
+
+
     data.append(
       "cv",
       cv,
       cv.name
+
+
     );
-    console.log('cv', cv.name);
-    
-    
-    const saveReq = await fetch('http://192.168.1.54:3000/referrals/add', {
-     method: 'post',
-     body: data
-    })  
+    console.log('cv', cv);
+
+
+    const saveReq = await fetch('http://172.17.1.139:3000/referrals/add', {
+      method: 'post',
+      body: data
+    })
     var response = await saveReq.json();
-  
 
     setModal(!modal)
   }
@@ -68,9 +71,7 @@ const AddCoopte = (props) => {
   return (
     <div className="section">
       <NavBar />
-
       <Container >
-
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <h3 style={{ margin: "40px" }}>You co-opt for the "job title"</h3>
@@ -93,7 +94,7 @@ const AddCoopte = (props) => {
               </FormGroup>
               <FormGroup>
                 <Label for="cv">Curriculum Vitae</Label>
-                <Input onChange={(e) => {console.log(e.target.files); setCv(e.target.files[0])}} type="file" name="cv" placeholder="upload cv" />
+                <Input onChange={(e) => { console.log(e.target.files); setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
               <FormGroup>
@@ -122,8 +123,11 @@ const AddCoopte = (props) => {
   );
 }
 
-function mapStateToProps(state){
-  return {token: state.token}
+function mapStateToProps(state) {
+  console.log("state", state)
+  return {
+    token: state.token,
+  }
 }
 
 export default connect(

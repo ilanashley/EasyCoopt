@@ -4,7 +4,8 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import PlaceIcon from '@material-ui/icons/Place';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const Offers = (props) => {
 
@@ -39,7 +40,7 @@ const Offers = (props) => {
                         </span>
                     </div>
                     <h3>{offer.bonusAmount}€</h3>
-                    <button id="referralButton">Recommander</button>
+                    <button  onClick={() => { props.recommend(offer._id)}}  id="referralButton">Recommander</button>
                     <button>
                         <DeleteIcon onClick={() => { console.log(offer._id); props.archiveOffer(offer._id) }} />
                     </button>
@@ -61,7 +62,6 @@ const Offers = (props) => {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         token: state.token,
         type: state.type

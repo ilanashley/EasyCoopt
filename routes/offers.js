@@ -99,6 +99,8 @@ router.put('/add', async function (req, res, next) {
 
   var user = await userModel.findOne({ token: req.body.token })
 
+  // var offer = await offerModel.findOne({ _id: req.body.id })
+
   // if (title.length < 3){
   //     res.json({ result: false });
   //   } 
@@ -114,27 +116,27 @@ router.put('/add', async function (req, res, next) {
   }
 
   if ((user != null && error.length == 0)) {
-    var modifiedOffer = await offerModel.updateOne({
-      title: title,
-      city: city,
-      creationDate: creationDate,
-      bonusAmount: bonusAmount,
-      contract: contract,
-      link: link,
-      resume: resume,
-      status: true,
-    });
+    var modifiedOffer = await offerModel.updateOne(
+      { _id: req.body.id },
+      {
+        title: title,
+        city: city,
+        creationDate: creationDate,
+        bonusAmount: bonusAmount,
+        contract: contract,
+        link: link,
+        resume: resume,
+        status: true,
+      });
     console.log('bbb')
     console.log('blabla', title, city, creationDate, bonusAmount, contract, link, resume, status)
 
-    newModifiedOffer = await modifiedOffer.save();
 
-
-    if (newModifiedOffer) {
+    if (modifiedOffer) {
       result = true;
     }
 
-    res.json({ result, offer: newModifiedOffer, error, token });
+    res.json({ result, offer: modifiedOffer, error, token });
   }
 })
 

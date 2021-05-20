@@ -31,6 +31,7 @@ function AddOffer(props) {
   const [resume, setResume] = useState('');
 
   const [offerModifiee, setOfferModifiee] = useState(false);
+  const [offerExist, setOfferExist] = useState(false);
 
   var { id } = useParams();
 
@@ -56,7 +57,7 @@ function AddOffer(props) {
     loadOffer();
   }, []);
 
- // if (offer) {
+  if (!offerExist) {
 
     var saveOffer = async () => {
 
@@ -71,28 +72,25 @@ function AddOffer(props) {
 
       props.addToOfferList(body.offer)
     }
-  // }
+  }
 
-  // else {
+  else {
 
-  //   var saveOffer = async () => {
+    var saveOffer = async () => {
 
-  //     const saveReq = await fetch('/offers/add', {
-  //       method: 'PUT',
-  //       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  //       body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
-  //     })
-  //     const body = await saveReq.json()
+      const saveReq = await fetch('/offers/add', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&id=${id}&token=${props.token}`
+      })
+      const body = await saveReq.json()
 
-  //     setOfferModifiee(true)
+      setOfferModifiee(true)
 
-  //     props.addToOfferList(body.offer)
-  //   }
-  // }
+      props.addToOfferList(body.offer)
+    }
+  }
 
-
-
-  // }
 
   if (offerModifiee) {
     return <Redirect to='/offerslist' />

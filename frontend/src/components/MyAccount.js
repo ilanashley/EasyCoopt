@@ -41,30 +41,28 @@ function MyAccount(props) {
       loadUser();
   },[]);
 
-//   useEffect(() => {
-//     async function loadPicture(){
-//        var data = new FormData();
-//          data.append('avatar', { 
-//              uri: data.uri, 
-//              type: 'image/jpeg', 
-//              name: 'avatar.jpg',
-//              });
+let loadPicture = async () => {
+  console.log(avatarUrl)
+       var data = new FormData();
+         data.append('avatar', { 
+             uri: avatarUrl, 
+             type: 'image/jpeg', 
+             name: 'avatar.jpg',
+             });
 
-//            var rawResponse = await fetch("http://192.168.43.85:3000/users/upload", {
-//              method: 'POST',
-//              body: data
-//            });
-//            var newPicture = await rawResponse.json();
-//            if (newPicture){
-//              console.log('new picture OK')
-//            }
-//     }
-      
-//  },[avatarUrl]);
+           var rawResponse = await fetch("http://192.168.43.85:3000/users/upload", {
+             method: 'POST',
+             body: data
+           });
+           var newPicture = await rawResponse.json();
+           if (newPicture){
+             console.log('new picture OK')
+           }
+    }
+  
 
   // Gère le  changement de type de profil du user
   const handleTypeChange = (event) => {
-    console.log('le type sélectionné-->', event)
     setType(event);
   };
 
@@ -126,13 +124,19 @@ function MyAccount(props) {
               <div class="btn btn-mdb-color btn-rounded float-left">
                 <Input
                 type="file"
-                onChange={(e) => setAvatarUrl(e.target.files[0])}
+                onChange={(e) => setAvatarUrl(e.target.value)}
                   // value ={avatarUrl}
                   // onChange={(e) => setAvatarUrl(e.target.value)}
-                  
-                  name="avater"
+                  accept="image/png, image/jpeg"
+                  name="avatar"
                   placeholder="Avatar"
                 />
+                <Button
+              onClick={() => loadPicture()}
+              style={{ margin: "10px" }}
+            >
+              Sauvegarder votre portrait
+            </Button>
               </div>
             </div>
           </div>
@@ -160,7 +164,7 @@ function MyAccount(props) {
                   placeholder="Nom"
                 />
               </FormGroup>
-              <FormGroup>
+              {/* <FormGroup>
                 <Label for="avatar">Avatar</Label>
                 <Input
                   value ={avatarUrl}
@@ -169,7 +173,7 @@ function MyAccount(props) {
                   name="avater"
                   placeholder="Avatar"
                 />
-              </FormGroup>
+              </FormGroup> */}
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
@@ -245,7 +249,6 @@ function MyAccount(props) {
 
 /* recuperation du token et du typeID depuis redux */
 function mapStateToProps(state) {
-  console.log('le type qui revient du reducer-->',state.typeId)
   return { token: state.token, typeId: state.typeId };
 }
 

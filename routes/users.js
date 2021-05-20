@@ -8,6 +8,7 @@ var userModel = require("../models/users");
 const { findOne } = require("../models/users");
 
 var uniqid = require('uniqid');
+var fs = require('fs');
 
 var cloudinary = require('cloudinary').v2;
 
@@ -179,7 +180,6 @@ router.post("/account", async (req, res, next) => {
   }
 
 
-console.log('oldpassword-->',oldPassword)
 /* Si l'utilisateur a entré un ancien mot de passe: */  
 if (oldPassword){
   var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);

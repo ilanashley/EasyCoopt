@@ -18,8 +18,8 @@ let APsecret = process.env.API_S;
 cloudinary.config({
   cloud_name: 'dyx38qkbh',
   api_key: APkey,
-  api_secret: APsecret 
- });
+  api_secret: APsecret
+});
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -32,18 +32,18 @@ router.get("/", function (req, res, next) {
   Response: result(true), isLogin(true), message(string), user(object)
 */
 
-router.post('/upload', async function(req, res, next) {
-  
-  var pictureName = './tmp/'+uniqid()+'.jpg';
+router.post('/upload', async function (req, res, next) {
+
+  var pictureName = './tmp/' + uniqid() + '.jpg';
   var resultCopy = await req.files.avatar.mv(pictureName);
-  if(!resultCopy) {
+  if (!resultCopy) {
     var resultCloudinary = await cloudinary.uploader.upload(pictureName);
     res.json(resultCloudinary);
   } else {
-    res.json({error: resultCopy});
+    res.json({ error: resultCopy });
   }
- 
- });
+
+});
 
 router.post("/sign-up", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
@@ -171,42 +171,43 @@ router.post("/account", async (req, res, next) => {
   let newPassword = req.body.newPassword
 
   // On vérifie la saisie dans les champs indispensables email firstname lastname
-  if(!email) {
+  if (!email) {
     error.push("Champ email vide");
   }
-  if(!firstName) {
+  if (!firstName) {
     error.push("Champ prénom vide");
   }
-  if(!lastName) {
+  if (!lastName) {
     error.push("Champ nom vide");
   }
 
 
-/* Si l'utilisateur a entré un ancien mot de passe: */  
-if (oldPassword){
-        var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
-        let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
+  /* Si l'utilisateur a entré un ancien mot de passe: */
+  if (oldPassword) {
+    var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
+    let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
 
-        if (checkPassword == false) {
-              error.push("Ancien mot de passe erroné");
-        }
+    if (checkPassword == false) {
+      error.push("Ancien mot de passe erroné");
+    }
 
-      /* Vérification la presence de contenu sur les nouveau mot de passe */
-        else if ( !newPassword) {
-        error.push("Champ nouveau mot de passe vide");
-        } 
-        else if (!confirmPassword) {
-          error.push("Champ ancien mot de passe vide");
-        }
-            /* Vérification du contenu des nouveaux mot de passe*/
+    /* Vérification la presence de contenu sur les nouveau mot de passe */
+    else if (!newPassword) {
+      error.push("Champ nouveau mot de passe vide");
+    }
+    else if (!confirmPassword) {
+      error.push("Champ ancien mot de passe vide");
+    }
+    /* Vérification du contenu des nouveaux mot de passe*/
 
-        else if (newPassword !== confirmPassword) {
-          error.push("Ancien et nouveau mots de passe différents ");
-        }}
-  
+    else if (newPassword !== confirmPassword) {
+      error.push("Ancien et nouveau mots de passe différents ");
+    }
+  }
 
-  if (error.length == 0){
-          result = true;
+
+  if (error.length == 0) {
+    result = true;
     /* enregistrement de toutes les nouvelles infos en base de donnée */
     var updatedUser = await userModel.updateOne(
       { token: token },
@@ -217,17 +218,18 @@ if (oldPassword){
         lastName: lastName,
         groupsId: type,
       });
- 
-  if (updatedUser != null){
-    let newUserdata = await userModel.findOne({ token: token });
-    console.log('user mis a jour -->',newUserdata)
 
-    res.json({ result, error, user: newUserdata });
-  } }
+    if (updatedUser != null) {
+      let newUserdata = await userModel.findOne({ token: token });
+      console.log('user mis a jour -->', newUserdata)
 
-else {
-  res.json({ result, error })
-}
+      res.json({ result, error, user: newUserdata });
+    }
+  }
+
+  else {
+    res.json({ result, error })
+  }
 });
 
 module.exports = router;

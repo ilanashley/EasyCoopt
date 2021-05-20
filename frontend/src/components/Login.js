@@ -44,6 +44,7 @@ function Login(props) {
 
     if (body.result == true) {
       props.addToken(body.token)
+      props.addProfileType(body.user.groupsId)
       setUserExists(true)
 
     } else {
@@ -149,6 +150,9 @@ function mapDispatchToProps(dispatch) {
   return {
     addToken: function (token) {
       dispatch({ type: 'addToken', token: token })
+    },
+    addProfileType: function(typeId) {
+      dispatch({ type: 'addProfileType', typeId: typeId })
     }
   }
 }

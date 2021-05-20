@@ -24,7 +24,7 @@ function AddOffer(props) {
 
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
-  const [creationDate, setCreationDate] = useState('');
+  const [creationDate, setCreationDate] = useState(new Date());
   const [bonusAmount, setBonusAmount] = useState('');
   const [contract, setContract] = useState('');
   const [link, setLink] = useState('');
@@ -34,8 +34,6 @@ function AddOffer(props) {
   const [offerExist, setOfferExist] = useState(false);
 
   var { id } = useParams();
-
-  console.log('IIII', id)
 
   useEffect(() => {
     async function loadOffer() {

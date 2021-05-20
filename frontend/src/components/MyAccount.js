@@ -77,7 +77,6 @@ let loadPicture = async () => {
     const body = await data.json();
     setlistErrorsAccount(body.error);
     props.addProfileType(type)
-    console.log(type)
  
     if (body.result == true && listErrorsAccount.length == 0) {
       setUserExists(true);

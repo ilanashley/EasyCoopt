@@ -19,6 +19,7 @@ import NavBar from './NavBar'
 
 
 function AddOffer (props) {
+  
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
   const [creationDate, setCreationDate] = useState('');

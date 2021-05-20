@@ -15,12 +15,12 @@ import {
 import NavBar from "./NavBar";
 
 function MyAccount(props) {
-  
+
   const [avatarUrl, setAvatarUrl] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [type, setType] = useState(props.typeID);
+  const [type, setType] = useState(props.typeId);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -29,7 +29,7 @@ function MyAccount(props) {
 
 
   useEffect(() => {
-    async function loadUser(){
+    async function loadUser() {
       var rawResponse = await fetch(`/users/account/?token=${props.token}`);
       var response = await rawResponse.json();
       setAvatarUrl(response.avatarUrl);
@@ -38,14 +38,15 @@ function MyAccount(props) {
       setEmail(response.email);
       setType(response.type);
     };
-      loadUser();
-  },[]);
+    loadUser();
+  }, []);
 
 
 
 
   // Gère le  changement de type de user
   const handleTypeChange = (event, i) => {
+    console.log('handleTypeChange ---->', event.target.value)
     setType(event.target.value);
   };
 
@@ -53,39 +54,37 @@ function MyAccount(props) {
   var handleSubmitAccount = async () => {
 
     let errorList = [];
-    if(!email || !type ) {
+    if (!email || !type) {
       errorList.push("Champs vides");
       setlistErrorsAccount(errorList)
     }
 
-
-
-    if (errorList.length == 0){
+    if (errorList.length == 0) {
       props.addProfileType(type)
-    const data = await fetch("/users/account", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${props.token}&avatarUrl=${avatarUrl}&firstName=${firstName}&lastName=${lastName}&email=${email}&type=${type}&oldPassword=${oldPassword}&newPassword=${newPassword}&confirmPassword=${confirmPassword}`,
-    });
+      const data = await fetch("/users/account", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `token=${props.token}&avatarUrl=${avatarUrl}&firstName=${firstName}&lastName=${lastName}&email=${email}&type=${type}&oldPassword=${oldPassword}&newPassword=${newPassword}&confirmPassword=${confirmPassword}`,
+      });
 
-    const body = await data.json();
-    setlistErrorsAccount(body.error);
- 
+      const body = await data.json();
+      setlistErrorsAccount(body.error);
 
 
-    if (body.result == true && listErrorsAccount.length == 0) {
-      setUserExists(true);
-    } 
-  }
+
+      if (body.result == true && listErrorsAccount.length == 0) {
+        setUserExists(true);
+      }
+    }
   };
 
   let tabErrorsAccount = listErrorsAccount.map((error, i) => {
     return <p>{error}</p>;
-  });   
+  });
 
   // redirige le user si son changement de profil est bien enregistré
   if (userExists) {
-    return <Redirect to="/jobsavailable" />;
+    return <Redirect to="/offersList" />;
   }
 
   // uniquement pendant le test, redirect si le  token est null
@@ -106,32 +105,32 @@ function MyAccount(props) {
             <h3>Mon compte</h3>
           </div>
           <form class="md-form">
-          <div class="file-field">
-            <div class=" d-flex justify-content-center mb-4">
-              <img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
-                class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar" height="130px"/>
-            </div>
-            <div class="d-flex justify-content-center">
-              <div class="btn btn-mdb-color btn-rounded float-left">
-                <Input
-                type="file"
-                  // value ={avatarUrl}
-                  // onChange={(e) => setAvatarUrl(e.target.value)}
-                  
-                  name="avater"
-                  placeholder="Avatar"
-                />
+            <div class="file-field">
+              <div class=" d-flex justify-content-center mb-4">
+                <img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
+                  class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar" height="130px" />
+              </div>
+              <div class="d-flex justify-content-center">
+                <div class="btn btn-mdb-color btn-rounded float-left">
+                  <Input
+                    type="file"
+                    // value ={avatarUrl}
+                    // onChange={(e) => setAvatarUrl(e.target.value)}
+
+                    name="avater"
+                    placeholder="Avatar"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          
-        </form>
+
+          </form>
           <Col sm="12" md="6">
             <Form>
               <FormGroup>
                 <Label for="firstname">Prénom</Label>
                 <Input
-                  value ={firstName}
+                  value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   type="text"
                   name="prenom"
@@ -141,7 +140,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="lastname">Nom</Label>
                 <Input
-                value ={lastName}
+                  value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   type="text"
                   name="nom"
@@ -151,7 +150,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="avatar">Avatar</Label>
                 <Input
-                  value ={avatarUrl}
+                  value={avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
                   type="text"
                   name="avater"
@@ -161,7 +160,7 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
-                  value ={email}
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="text"
                   name="email"
@@ -174,13 +173,13 @@ function MyAccount(props) {
             <FormGroup>
               <Label for="profil">Mon profil d'utilisateur</Label>
               <select
-                value ={type}
+                value={type}
                 defaultValue="Sélectionner..."
                 class="custom-select"
                 id="inputGroupSelect01"
                 onChange={(e) => handleTypeChange(e)}
                 aria-label="Default select example"
-                >
+              >
                 <option value="Coopteur">Coopteur</option>
                 <option value="Recruteur">Recruteur</option>
               </select>
@@ -214,7 +213,7 @@ function MyAccount(props) {
                 placeholder="Confirmer nouveau mot de passe"
               />
             </FormGroup>
-           
+
           </Col>
           {tabErrorsAccount}
           <div class="btnEnd1">
@@ -233,16 +232,17 @@ function MyAccount(props) {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-  return { token: state.token, typeID: state.typeID };
+  console.log('mapStateToProps dans myAccount ---->', state)
+  return { token: state.token, typeId: state.typeID };
 }
 
 /* envoi du type de user a redux */
 function mapDispatchToProps(dispatch) {
-    return {
-        addProfileType: function(typeID) {
-        dispatch({type: 'addProfileType', typeID : typeID})
-      }
+  return {
+    addProfileType: function (typeId) {
+      dispatch({ type: 'addProfileType', typeId: typeId })
     }
-  }  
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyAccount);

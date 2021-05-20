@@ -18,8 +18,8 @@ let APsecret = process.env.API_S;
 cloudinary.config({
   cloud_name: 'dyx38qkbh',
   api_key: APkey,
-  api_secret: APsecret 
- });
+  api_secret: APsecret
+});
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -57,6 +57,7 @@ router.post("/sign-up", async (req, res, next) => {
   var result = false;
   var saveUser = null;
   var token = null;
+  let isLogin = false;
 
   const data = await userModel.findOne({
     email: email,
@@ -93,9 +94,10 @@ router.post("/sign-up", async (req, res, next) => {
     if (saveUser) {
       result = true;
       token = saveUser.token;
+      isLogin = true
     }
 
-    res.json({ isLogin: true, result, user: saveUser, error, token });
+    res.json({ isLogin, result, user: saveUser, error, token });
   }
 });
 
@@ -110,6 +112,7 @@ router.post("/sign-in", async (req, res, next) => {
   var error = [];
   let result = false;
   let user = null;
+  let isLogin = false
 
   if (!req.body.password) {
     error.push(`Champ "Password" vide`);
@@ -127,6 +130,7 @@ router.post("/sign-in", async (req, res, next) => {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         result = true;
         token = user.token;
+        isLogin = true
       } else {
         result = false;
         error.push("mot de passe incorrect");
@@ -136,7 +140,7 @@ router.post("/sign-in", async (req, res, next) => {
     }
   }
 
-  res.json({ result, user, error, token });
+  res.json({ result, user, error, token, isLogin });
 });
 
 /*
@@ -191,10 +195,10 @@ router.post("/account", async (req, res, next) => {
   }
 
 
-/* Si l'utilisateur a entré un ancien mot de passe: */  
-if (oldPassword){
-        var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
-        let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
+  /* Si l'utilisateur a entré un ancien mot de passe: */
+  if (oldPassword) {
+    var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
+    let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
 
         if (checkPassword == false) {
               error.push(`"Ancien mot de passe" erroné`);
@@ -214,8 +218,9 @@ if (oldPassword){
         }}
   
 
-  if (error.length == 0){
-          result = true;
+
+  if (error.length == 0) {
+    result = true;
     /* enregistrement de toutes les nouvelles infos en base de donnée */
     var updatedUser = await userModel.updateOne(
       { token: token },
@@ -230,11 +235,10 @@ if (oldPassword){
   if (updatedUser != null){
     let newUserdata = await userModel.findOne({ token: token });
     res.json({ result, error, user: newUserdata });
-  } }
-
-else {
-  res.json({ result, error })
-}
+    }
+  }  else {
+    res.json({ result, error })
+  }
 });
 
 module.exports = router;

@@ -22,7 +22,6 @@ import MyAccount from './components/MyAccount';
 
 const store = createStore(combineReducers({ token, typeId, offer }))
 
-
 function App() {
   return (
 
@@ -31,7 +30,6 @@ function App() {
         <Switch>
           <Route component={AddOffer} path="/addOffer/:id" exact />
           <Route component={AddOffer} path="/addOffer" exact />
-          <Route component={AddCoopte} path="/addCoopte/:saveId" exact />
           <Route component={AddCoopte} path="/addCoopte/:offerId" exact />
           <Route component={ViewOffer} path="/viewOffer" exact />
           <Route component={OffersList} path="/" exact />

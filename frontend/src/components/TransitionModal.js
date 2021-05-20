@@ -5,6 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
+import CardMedia from '@material-ui/core/CardMedia';
 
 
 
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-  },
+  }
 }));
 
 export default function TransitionsModal(props) {
@@ -35,11 +36,34 @@ export default function TransitionsModal(props) {
     setOpen(false);
   };
 
+  // const handleDownloadResume = () => {
+
+  // }
+
   let modalIcon 
   if(props.modalIcon === 'VisibilityOutlinedIcon') {
     modalIcon = <div><VisibilityOutlinedIcon style={{cursor: 'pointer'}} onClick={handleOpen} /> {props.modalDescription.substring(0,15)}... </div>
   } else if (props.modalIcon === 'AssignmentOutlinedIcon') {
     modalIcon = <div><AssignmentOutlinedIcon style={{cursor: 'pointer'}} onClick={handleOpen} /></div>
+  }
+
+  let modalTitle
+  if(props.modalTitle) {
+    modalTitle = <h2 id="transition-modal-title">{props.modalTitle}</h2>
+  }
+
+  let modalDescription
+  if(props.modalDescription) {
+    modalDescription = <p id="transition-modal-description">{props.modalDescription}</p>
+  }
+
+  let resumeImage
+  if(props.referralResumeUrl) {
+     resumeImage = <div className='d-flex flex-column'>
+                      <img src={props.referralResumeUrl} height={400} width={400} alt='Resume'></img>
+                      {/* <a href={props.referralResumeUrl} download> Download CV</a>
+                      <button onclick={handleDownloadResume}>Télécharger</button> */}
+                    </div>                  
   }
 
   return (
@@ -59,8 +83,9 @@ export default function TransitionsModal(props) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">{props.modalTitle}</h2>
-            <p id="transition-modal-description">{props.modalDescription}</p>
+            {modalTitle}
+            {modalDescription}
+            {resumeImage}
           </div>
         </Fade>
       </Modal>

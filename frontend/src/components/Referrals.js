@@ -40,7 +40,7 @@ const Referrals = (props) => {
         let deleteReferralButton
         if(!props.typeId){
             return <Redirect to="/myaccount" />;
-        } else if (props.type.toLowerCase() === 'recruteur') {
+        } else if (props.typeId.toLowerCase() === 'recruteur') {
             referralStatus = <select value={referral.referralStatus} className="form-select" onChange={(e) => props.handleSelectStatusChange(e, i, referral.referralId)} aria-label="Default select example" style={selectStyle}>
                                     <option value="1">En cours</option>
                                     <option value="2">Approuvé</option>

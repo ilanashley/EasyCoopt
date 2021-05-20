@@ -18,47 +18,45 @@ cloudinary.config({
   api_key: APkey,
   api_secret: APsecret 
  });
+ 
 
 /* Add Referrals */
 router.post('/add', async (req, res, next) => {
+  console.log(req.files.cv.name);
+ 
+ var cvPath = './tmp/'+uniqid()+'.pdf';
+ var resultCopy = await req.files.cv.mv(cvPath);
 
-//   var resultCopy = await req.files.avatar.mv('./tmp/avatar.jpg');
-
-//   if(!resultCopy) {
-//     res.json({result: true, message: 'File uploaded!'} );      
-//   } else {
-//     res.json({result: false, message: resultCopy} );
-//   }
-//  });
-//   /*______cloudinary_______*/
-//   var cvPath = './tmp/'+uniqid()+'.jpg';
-//   var resultCloudinary = await cloudinary.uploader.upload(cvPath);
-
-//   fs.unlinkSync(cvPath);
-  
-  const newReferral = new referralModel({
-    firstName : req.body.firstName,
-    lastName: req.body.lastName,
-    reason: req.body.reason,
-    email: req.body.email,
-    resumeUrl: req.body.resumeUrl,
-    creationDate : req.body.creationDate,
-    status: '1'
+  if(!resultCopy) {
+    var resultCloudinary = await cloudinary.uploader.upload(cvPath);
+    res.json(resultCloudinary);      
+  } else {
+    res.json({result: false, message: resultCopy} );
+  }
+  fs.unlinkSync(cvPath);
   });
 
+  
+  // const newReferral = new referralModel({
+  //   firstName : req.body.firstName,
+  //   lastName: req.body.lastName,
+  //   reason: req.body.reason,
+  //   email: req.body.email,
+  //   resumeUrl: result,
+  //   creationDate : req.body.creationDate,
+  //   status: '1'
+  // });
 
- 
 
-
-  var referral = await newReferral.save();
-  await offerModel.updateOne(
-    {_id: req.body.offerId},
-    {
-      $push: { referraslId: referral._id }
-    }
-  );
-  res.json({result: true, resultCloudinary})
-})
+  // var referral = await newReferral.save();
+  // await offerModel.updateOne(
+  //   {_id: req.body.offerId},
+  //   {
+  //     $push: { referraslId: referral._id }
+  //   }
+  // );
+//   res.json({result: true})
+// })
 
 
 /* Get Referrals*/

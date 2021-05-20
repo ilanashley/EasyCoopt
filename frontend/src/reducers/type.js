@@ -1,4 +1,4 @@
-export default function(typeId = '', action){
+export default function(typeId = null, action){
     if(action.type == 'addProfileType'){
         return action.typeId
     } else {

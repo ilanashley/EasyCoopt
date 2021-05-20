@@ -297,7 +297,7 @@ span {
 }
 
 #referralButton{
-  background:    #2FD395;
+  background:    #78CFCE;
   border-radius: 15px;
   color: #ffffff;
   border: none;
@@ -315,6 +315,28 @@ span {
 }
 
 #referralButton:focus {
+  outline:0;
+}
+
+#modifyButton{
+  background:    #78CFCE;
+  border-radius: 15px;
+  color: #ffffff;
+  border: none;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  height: 55px;
+  width: 100px;
+
+}
+
+#modifyButton:hover {
+  filter: brightness(110%);
+}
+
+#modifyButton:focus {
   outline:0;
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
+import { connect } from 'react-redux';
 import {
   Form,
   FormGroup,
@@ -38,23 +39,28 @@ const AddCoopte = (props) => {
 
     var data = new FormData();
 
-    data.append('firstName', 'John');
-    data.append('lastName', 'Doe');
+    data.append('firstName', firstName);
+    data.append('lastName',lastName);
+    data.append('email',email);
+    data.append('reason',reason);
+    data.append('creationDate',creationDate);
+   
+    data.append(
+      "cv",
+      cv,
+      cv.name
+    );
+    console.log('cv', cv.name);
     
-    const saveReq = await fetch('/referrals/add', {
+    
+    const saveReq = await fetch('http://192.168.1.54:3000/referrals/add', {
      method: 'post',
      body: data
-    })
+    })  
+    var response = await saveReq.json();
+  
 
-    // const saveReq = await fetch('/referrals/add', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    //   body: `firstName=${firstName}&lastName=${lastName}&email=${email}&reason=${reason}&creationDate=${creationDate}`
-    // })
-    // const body = await saveReq.json()
-    // console.log("response", body)
     setModal(!modal)
-
   }
   const toggle = () => setModal(!modal);
 
@@ -87,7 +93,7 @@ const AddCoopte = (props) => {
               </FormGroup>
               <FormGroup>
                 <Label for="cv">Curriculum Vitae</Label>
-                <Input onChange={(e) => setCv(e.target.files[0])} type="file" name="cv" placeholder="upload cv" />
+                <Input onChange={(e) => {console.log(e.target.files); setCv(e.target.files[0])}} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
               <FormGroup>
@@ -102,7 +108,7 @@ const AddCoopte = (props) => {
             <Modal isOpen={modal} >
               <ModalBody>
                 Votre cooptation a bien été prise en compte!
-        </ModalBody>
+            </ModalBody>
               <ModalFooter>
                 <Button color="primary" onClick={toggle}>Close</Button>
               </ModalFooter>
@@ -116,4 +122,10 @@ const AddCoopte = (props) => {
   );
 }
 
-export default AddCoopte;
+function mapStateToProps(state){
+  return {token: state.token}
+}
+
+export default connect(
+  mapStateToProps, null
+)(AddCoopte)

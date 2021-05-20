@@ -74,8 +74,8 @@ const OffersList = (props) => {
 
         if (body.result === true) {
 
-            setAjoutId([...ajoutId, body.f._id])
-            // console.log('Je suis la')
+            setAjoutId([...ajoutId, body.offerCurrent._id])
+            console.log('Je suis la')
         }
 
     }

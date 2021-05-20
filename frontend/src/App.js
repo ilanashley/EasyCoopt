@@ -29,7 +29,7 @@ function App() {
       <Router>
         <Switch>
           <Route component={AddOffer} path="/addOffer" exact />
-          <Route component={AddCoopte} path="/addCoopte/:saveId" exact />
+          <Route component={AddCoopte} path="/addCoopte/:offerId" exact />
           <Route component={ViewOffer} path="/viewOffer" exact />
           <Route component={OffersList} path="/" exact />
           <Route component={OffersList} path="/offersList" exact />

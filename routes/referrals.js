@@ -29,7 +29,7 @@ router.post('/add', async (req, res, next) => {
 
   if (!resultCopy) {
     var resultCloudinary = await cloudinary.uploader.upload(cvPath);
-    res.json(resultCloudinary);
+    
     
 
     const newReferral = new referralModel({
@@ -44,19 +44,15 @@ router.post('/add', async (req, res, next) => {
 
 
     var referral = await newReferral.save();
-    console.log("referralId", referral._id)
-    console.log("reqOfferid", req.body.offerId);
-
-    var offer = await offerModel.findOne({ id: req.body.offerId });
-    console.log("offer",offer)
 
     await offerModel.updateOne(
-      { id: req.body.offerId },
+      { _id: req.body.offerId },
       {
-        $push: { referraslId: referral._id }
+        $push: { referralsId: referral._id }
       }
+      
     );
-
+    res.json({ result: true });
   } else {
     res.json({ result: false, message: resultCopy });
   }

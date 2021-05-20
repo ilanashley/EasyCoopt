@@ -4,34 +4,9 @@ import Referrals from './Referrals';
 import Pagination from './Pagination';
 import NavBar from './NavBar'
 import { connect } from 'react-redux'
+import { Redirect } from "react-router-dom";
 
 const ReferralsList = (props) => {
-
-  // const referralsArray = [
-  //   { addDate: '12/03/2021', recipientName: 'alex', reward: 500, referralName: 'Dupont', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '05/12/2020', recipientName: 'joseph', reward: 400, referralName: 'Duchemin', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '09/11/2020', recipientName: 'ilana', reward: 500, referralName: 'Duprès', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
-  //   { addDate: '21/09/2020', recipientName: 'mathieu', reward: 600, referralName: 'Dumont', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '25/08/2020', recipientName: 'ilana', reward: 500, referralName: 'Deloin', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "2" },
-  //   { addDate: '12/03/2021', recipientName: 'mathieu', reward: 300, referralName: 'Leboucher', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '09/11/2020', recipientName: 'joseph', reward: 200, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
-  //   { addDate: '07/06/2020', recipientName: 'joseph', reward: 800, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "2" },
-  //   { addDate: '25/08/2020', recipientName: 'mathieu', reward: 250, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '25/08/2020', recipientName: 'mathieu', reward: 400, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "2" },
-  //   { addDate: '21/09/2020', recipientName: 'ilana', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
-  //   { addDate: '27/11/2020', recipientName: 'joseph', reward: 350, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '05/12/2020', recipientName: 'alex', reward: 700, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "3" },
-  //   { addDate: '11/12/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "3" },
-  //   { addDate: '01/04/2020', recipientName: 'ilana', reward: 200, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '03/02/2021', recipientName: 'alex', reward: 520, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '01/01/2021', recipientName: 'mathieu', reward: 890, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Junior', resumeUrl: 'CvUrl', status: "3" },
-  //   { addDate: '21/03/2021', recipientName: 'alex', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '03/07/2020', recipientName: 'joseph', reward: 400, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Frontend', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '26/05/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: "3" },
-  //   { addDate: '31/10/2020', recipientName: 'alex', reward: 600, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: "1" },
-  //   { addDate: '25/04/2020', recipientName: 'mathieu', reward: 500, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Backend', resumeUrl: 'CvUrl', status: '2' },
-  //   { addDate: '21/03/2021', recipientName: 'ilana', reward: 300, referralName: 'nom du coopté', recommandation: 'il est super génial', offer: 'Web Developper Senior', resumeUrl: 'CvUrl', status: '1' }
-  // ]
 
   const [referrals, setReferrals] = useState([]);
 
@@ -171,6 +146,10 @@ const ReferralsList = (props) => {
     fetchReferrals()
   }
 
+  if(!props.token) {
+    return <Redirect to="/login" />;
+  }
+
   return (
 
     <div className='mainContainer'>
@@ -227,10 +206,8 @@ const ReferralsList = (props) => {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-  console.log(state)
   return { 
-    token: state.token,
-    typeId: state.typeId 
+    token: state.token
   };
 }
 

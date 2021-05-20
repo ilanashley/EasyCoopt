@@ -14,6 +14,13 @@ const Offers = (props) => {
 
     // Map pour l'affichage des offres
     const offersList = props.currentOffers.map((offer, i) => {
+
+        // Days since offer's creation date
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        const firstDate = new Date(offer.creationDate);
+        const secondDate = new Date();
+        const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+
         var display = {};
         if (props.ajoutId.includes(offer._id)) {
             display = { display: 'none' }
@@ -26,7 +33,7 @@ const Offers = (props) => {
                         <span className="d-flex justify-content-center">
                             <div className="cardInfoIcons">
                                 <CalendarTodayIcon fontSize="large" />
-                                <p>{offer.creationDate}</p>
+                                <p>Il y a {diffDays} jours</p>
                             </div>
                             <div className="cardInfoIcons">
                                 <BusinessCenterIcon fontSize="large" />
@@ -41,7 +48,7 @@ const Offers = (props) => {
                     <h3>{offer.bonusAmount}€</h3>
                     <button id="referralButton">Recommander</button>
                     <button>
-                        <DeleteIcon onClick={() => { console.log(offer._id); props.archiveOffer(offer._id) }} />
+                        <DeleteIcon onClick={() => { props.archiveOffer(offer._id) }} />
                     </button>
                     <button id="enlargeButton">
                         <OpenInNewIcon />
@@ -61,7 +68,6 @@ const Offers = (props) => {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         token: state.token,
         typeId: state.typeId

@@ -16,11 +16,7 @@ import ReferralsList from './components/ReferralsList';
 import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 
-
-
-
 const store = createStore(combineReducers({ token, typeId }))
-
 
 function App() {
   return (

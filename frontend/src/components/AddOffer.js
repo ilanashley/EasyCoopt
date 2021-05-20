@@ -27,11 +27,7 @@ function AddOffer(props) {
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
-
-console.log('TEST', props.token)
-
   var saveOffer = async () => {
-
     const saveReq = await fetch('/offers/add', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -107,8 +103,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log('STATE', state)
-  return { token: state.token }
+  return {
+    token: state.token
+  }
 }
 
 export default connect(

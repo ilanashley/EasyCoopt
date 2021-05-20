@@ -53,6 +53,7 @@ router.post("/sign-up", async (req, res, next) => {
   var result = false;
   var saveUser = null;
   var token = null;
+  let isLogin = false;
 
   const data = await userModel.findOne({
     email: email,
@@ -88,9 +89,10 @@ router.post("/sign-up", async (req, res, next) => {
     if (saveUser) {
       result = true;
       token = saveUser.token;
+      isLogin = true
     }
 
-    res.json({ isLogin: true, result, user: saveUser, error, token });
+    res.json({ isLogin, result, user: saveUser, error, token });
   }
 });
 
@@ -105,6 +107,7 @@ router.post("/sign-in", async (req, res, next) => {
   var error = [];
   let result = false;
   let user = null;
+  let isLogin = false
 
   if (!req.body.password || !email) {
     error.push("Champs vides");
@@ -118,6 +121,7 @@ router.post("/sign-in", async (req, res, next) => {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         result = true;
         token = user.token;
+        isLogin = true
       } else {
         result = false;
         error.push("mot de passe incorrect");
@@ -127,7 +131,7 @@ router.post("/sign-in", async (req, res, next) => {
     }
   }
 
-  res.json({ result, user, error, token });
+  res.json({ result, user, error, token, isLogin });
 });
 
 /*
@@ -218,24 +222,12 @@ router.post("/account", async (req, res, next) => {
         lastName: lastName,
         groupsId: type,
       });
-<<<<<<< HEAD
-
-    if (updatedUser != null) {
-      let newUserdata = await userModel.findOne({ token: token });
-      console.log('user mis a jour -->', newUserdata)
-=======
  
   if (updatedUser != null){
     let newUserdata = await userModel.findOne({ token: token });
     res.json({ result, error, user: newUserdata });
-  } }
->>>>>>> ca0502c34bda3c45291ea26b9bb98414ed6551d0
-
-      res.json({ result, error, user: newUserdata });
     }
-  }
-
-  else {
+  }  else {
     res.json({ result, error })
   }
 });

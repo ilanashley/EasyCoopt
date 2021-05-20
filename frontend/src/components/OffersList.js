@@ -13,37 +13,6 @@ const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
   const [ajoutId, setAjoutId] = useState([]);
-<<<<<<< HEAD
-
-  // Pagination states
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [offersPerPage, setOffersPerPage] = useState(10);
-  const [pageNumberLimit, setPageNumberLimit] = useState(5);
-  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
-  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
-
-  // Get current referrals
-  const indexOfLastOffer = currentPage * offersPerPage;
-  const indexOfFirstOffer = indexOfLastOffer - offersPerPage;
-  const currentOffers = offers.slice(indexOfFirstOffer, indexOfLastOffer);
-
-  const fetchOffers = async () => {
-    setLoading(true)
-    var rawResponse = await fetch('/offers/get')
-    var response = await rawResponse.json()
-    setOffers(response.offers)
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    fetchOffers()
-  }, [])
-
-  // Pagination functions
-  const paginate = pageNumber => setCurrentPage(pageNumber)
-
-=======
   const [offerId, setOfferId] = useState();
 
 
@@ -77,7 +46,6 @@ const OffersList = (props) => {
   // Pagination functions
   const paginate = pageNumber => setCurrentPage(pageNumber)
 
->>>>>>> a582794ca19224d031b861c408b8e7d9b1084925
   const handlePrevBtn = () => {
     setCurrentPage(currentPage - 1)
     if ((currentPage - 1) % pageNumberLimit === 0) {
@@ -99,24 +67,6 @@ const OffersList = (props) => {
     setOffersPerPage(event.target.value)
   }
 
-<<<<<<< HEAD
-  var archiveOffer = async (id) => {
-    // console.log('Id', id)
-
-    const archiveReq = await fetch('/offers/archive', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `status=${false}&id=${id}`
-    })
-    const body = await archiveReq.json()
-
-    // console.log(body)
-
-    if (body.result === true) {
-
-      setAjoutId([...ajoutId, body.offerCurrent._id])
-      console.log('Je suis la')
-=======
   // Enlever offre
 
   var archiveOffer = async (id) => {
@@ -134,7 +84,6 @@ const OffersList = (props) => {
 
       setAjoutId([...ajoutId, body.offerCurrent._id])
       console.log('Je suis là')
->>>>>>> a582794ca19224d031b861c408b8e7d9b1084925
     }
   }
   /* function pour recommander*/
@@ -142,8 +91,6 @@ const OffersList = (props) => {
     setOfferId(saveId)
 
   }
-<<<<<<< HEAD
-=======
   if (offerId) {
     return <Redirect to={`/addCoopte/${offerId}`} />
   }
@@ -167,7 +114,6 @@ const OffersList = (props) => {
       </Link>
   }
 
->>>>>>> a582794ca19224d031b861c408b8e7d9b1084925
 
   // Filter per date
   const addDateArray = offers.map((offer) => { return offer.creationDate })
@@ -222,14 +168,6 @@ const OffersList = (props) => {
 
       <NavBar />
 
-<<<<<<< HEAD
-      <div className='container-lg'>
-
-        <div className='titleContainer'>
-          <h1>Offres en cours</h1>
-        </div>
-
-=======
       {securite}
 
       <div className='container-lg'>
@@ -238,7 +176,6 @@ const OffersList = (props) => {
           <h1>Offres en cours</h1>
         </div>
 
->>>>>>> a582794ca19224d031b861c408b8e7d9b1084925
         <div className='selectContainer'>
           <select onChange={handleSelectFilteredPerDate} className="custom-form-select mr-2" aria-label="Default select example">
             <option selected>Filtrer par date</option>
@@ -279,10 +216,7 @@ const OffersList = (props) => {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-<<<<<<< HEAD
-=======
   console.log('Etat du store dans offersList ----> ', state)
->>>>>>> a582794ca19224d031b861c408b8e7d9b1084925
   return {
     token: state.token
   };

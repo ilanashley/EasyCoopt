@@ -58,8 +58,6 @@ router.post('/add', async function (req, res, next) {
       resume: resume,
       status: true,
     });
-    console.log('bbb')
-    console.log('blabla', title, city, creationDate, bonusAmount, contract, link, resume, status)
 
     saveOffer = await newOffer.save();
 
@@ -69,11 +67,6 @@ router.post('/add', async function (req, res, next) {
         $push: { offersId: saveOffer._id }
       }
     );
-
-    console.log(n);
-    console.log(req.body.token);
-    console.log('id', saveOffer._id);
-
 
     if (saveOffer) {
       result = true;
@@ -109,7 +102,6 @@ router.put('/add', async function (req, res, next) {
   //   }
 
   // Si un des champs est vide, afficher un message d'erreur
-  console.log(title, city, creationDate, bonusAmount, contract, link, resume)
   if (!title || !city || !creationDate || !bonusAmount || !contract || !link || !resume) {
     error.push("Champs vides");
     res.json({ result, error });
@@ -128,9 +120,6 @@ router.put('/add', async function (req, res, next) {
         resume: resume,
         status: true,
       });
-    console.log('bbb')
-    console.log('blabla', title, city, creationDate, bonusAmount, contract, link, resume, status)
-
 
     if (modifiedOffer) {
       result = true;
@@ -139,22 +128,6 @@ router.put('/add', async function (req, res, next) {
     res.json({ result, offer: modifiedOffer, error, token });
   }
 })
-
-// router.delete('/delete', async function (req, res, next) {
-//   var result = false
-//   var user = await userModel.findOne({ token: req.body.token })
-
-//   if (user != null) {
-//     var returnDb = await orderModel.deleteOne({ title: req.body.title, referralId: referral._id })
-
-//     if (returnDb.deletedCount == 1) {
-//       result = true
-//     }
-//   }
-
-//   res.json({ result })
-// })
-
 
 router.put('/archive', async function (req, res, next) {
   var result = false

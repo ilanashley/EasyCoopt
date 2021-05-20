@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import NavBar from './NavBar'
 import Pagination from './Pagination';
 import Offers from './Offers';
+import { Redirect } from 'react-router';
 
 
 const OffersList = (props) => {
@@ -12,6 +13,9 @@ const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
   const [ajoutId, setAjoutId] = useState([]);
+  const [offerId, setOfferId] = useState();
+
+
 
   // Pagination states
   const [loading, setLoading] = useState(false);
@@ -26,7 +30,6 @@ const OffersList = (props) => {
   const indexOfFirstOffer = indexOfLastOffer - offersPerPage;
   const currentOffers = offers.slice(indexOfFirstOffer, indexOfLastOffer);
 
-
   const fetchOffers = async () => {
     setLoading(true)
     var rawResponse = await fetch('/offers/get')
@@ -34,6 +37,7 @@ const OffersList = (props) => {
     setOffers(response.offers)
     setLoading(false)
   }
+
 
   useEffect(() => {
     fetchOffers()
@@ -76,14 +80,21 @@ const OffersList = (props) => {
     const body = await archiveReq.json()
 
     console.log(body)
-
-    if (body.result === true) {
+    if (body.result == true) {
 
       setAjoutId([...ajoutId, body.offerCurrent._id])
-      console.log('Je suis la')
+      console.log('Je suis là')
     }
+  }
+  /* function pour recommander*/
+  const recommend = (saveId) => {
+    setOfferId(saveId)
 
   }
+  if (offerId) {
+    return <Redirect to={`/addCoopte/${offerId}`} />
+  }
+
   // Rajout offre ou connexion
   if (props.token) {
     var securite = <Link to="/addoffer"> <Button id="modifyButton">
@@ -201,10 +212,9 @@ const OffersList = (props) => {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-  console.log(state)
+  console.log('Etat du store dans offersList ----> ', state)
   return {
-    token: state.token,
-    type: state.type
+    token: state.token
   };
 }
 

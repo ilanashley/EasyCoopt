@@ -7,6 +7,20 @@ var bcrypt = require("bcrypt");
 var userModel = require("../models/users");
 const { findOne } = require("../models/users");
 
+var uniqid = require('uniqid');
+var fs = require('fs');
+
+var cloudinary = require('cloudinary').v2;
+
+let APkey = process.env.API_K;
+let APsecret = process.env.API_S;
+
+cloudinary.config({
+  cloud_name: 'dyx38qkbh',
+  api_key: APkey,
+  api_secret: APsecret 
+ });
+
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   res.send("respond with a resource");
@@ -17,6 +31,19 @@ router.get("/", function (req, res, next) {
   Body: email (string), password (string)
   Response: result(true), isLogin(true), message(string), user(object)
 */
+
+router.post('/upload', async function(req, res, next) {
+  
+  var pictureName = './tmp/'+uniqid()+'.jpg';
+  var resultCopy = await req.files.avatar.mv(pictureName);
+  if(!resultCopy) {
+    var resultCloudinary = await cloudinary.uploader.upload(pictureName);
+    res.json(resultCloudinary);
+  } else {
+    res.json({error: resultCopy});
+  }
+ 
+ });
 
 router.post("/sign-up", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
@@ -53,6 +80,7 @@ router.post("/sign-up", async (req, res, next) => {
       password: password,
       password: hash,
       token: uid2(32),
+      groupsId: "Coopteur",
     });
 
     saveUser = await newUser.save();
@@ -142,31 +170,42 @@ router.post("/account", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
   let newPassword = req.body.newPassword
 
+  // On vérifie la saisie dans les champs indispensables email firstname lastname
+  if(!email || email == 'undefined') {
+    error.push(`Champ "Email" vide`);
+  }
+  if(!firstName || firstName == 'undefined') {
+    error.push(`Champ "Prénom" vide`);
+  }
+  if(!lastName || lastName == 'undefined') {
+    error.push(`Champ "Nom" vide`);
+  }
+
 
 /* Si l'utilisateur a entré un ancien mot de passe: */  
 if (oldPassword){
-  var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
-  let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
+        var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
+        let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
 
-  if (checkPassword == false) {
-         error.push("Ancien mot de passe erroné");
-  }
+        if (checkPassword == false) {
+              error.push(`"Ancien mot de passe" erroné`);
+        }
 
+      /* Vérification la presence de contenu sur les nouveau mot de passe */
+        else if ( !newPassword) {
+        error.push(`Champ "Nouveau mot de passe" vide`);
+        } 
+        else if (!confirmPassword) {
+          error.push(`Champ "Ancien mot de passe" vide`);
+        }
+            /* Vérification du contenu des nouveaux mot de passe*/
 
-/* Vérification la presence de contenu sur les nouveau mot de passe */
-  if ( !newPassword && !confirmPassword ) {
-  error.push("Champs vides");
-  } 
-  if (!newPassword || !confirmPassword) {
-    error.push("Champs vides");
-  }
-      /* Vérification du contenu des nouveaux mot de passe*/
-
-  else if (newPassword !== confirmPassword) {
-    error.push("Ancien et nouveau mots de passe différents ");
-  }}
+        else if (newPassword !== confirmPassword) {
+          error.push("Les ancien et nouveau mot de passe sont différents ");
+        }}
   
-  else {
+
+  if (error.length == 0){
           result = true;
     /* enregistrement de toutes les nouvelles infos en base de donnée */
     var updatedUser = await userModel.updateOne(
@@ -177,10 +216,16 @@ if (oldPassword){
         firstName: firstName,
         lastName: lastName,
         groupsId: type,
-      }
-    );
-        }
-    res.json({ result, error });
+      });
+ 
+  if (updatedUser != null){
+    let newUserdata = await userModel.findOne({ token: token });
+    res.json({ result, error, user: newUserdata });
+  } }
+
+else {
+  res.json({ result, error })
+}
 });
 
 module.exports = router;

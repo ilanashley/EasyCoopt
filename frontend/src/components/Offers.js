@@ -32,7 +32,7 @@ const Offers = (props) => {
             display = { display: 'none' }
         }
         return (
-            <div key={i} className="cardBackground mb-2" style={display}>
+            <div key={offer._id} className="cardBackground mb-2" style={display}>
                 <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
                     <h4>{offer.title}</h4>
                     <div className="cardInfoBg">
@@ -52,7 +52,7 @@ const Offers = (props) => {
                         </span>
                     </div>
                     <h3>{offer.bonusAmount}€</h3>
-                    <button id="referralButton">Recommander</button>
+                    <button  onClick={() => { props.recommend(offer._id)}}  id="referralButton">Recommander</button>
                     <button>
                         <DeleteIcon onClick={() => { console.log(offer._id); props.archiveOffer(offer._id) }} />
                     </button>
@@ -78,10 +78,9 @@ const Offers = (props) => {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         token: state.token,
-        type: state.type
+        typeId: state.typeId
     };
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
+import { connect } from 'react-redux';
 import {
   Form,
   FormGroup,
@@ -19,9 +20,10 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar'
 import { set } from 'mongoose';
+import { useParams } from "react-router-dom";
 
 
-
+const {saveId} = useParams;
 
 
 const AddCoopte = (props) => {
@@ -33,28 +35,35 @@ const AddCoopte = (props) => {
   const [cv, setCv] = useState('');
   const [modal, setModal] = useState(false);
 
-
   var saveCoopte = async () => {
 
     var data = new FormData();
 
-    data.append('firstName', 'John');
-    data.append('lastName', 'Doe');
-    
-    const saveReq = await fetch('/referrals/add', {
-     method: 'post',
-     body: data
+    data.append('firstName', firstName);
+    data.append('lastName', lastName);
+    data.append('email', email);
+    data.append('reason', reason);
+    data.append('creationDate', creationDate);
+    data.append('saveId', saveId);
+
+
+    data.append(
+      "cv",
+      cv,
+      cv.name
+
+
+    );
+    console.log('cv', cv);
+
+
+    const saveReq = await fetch('http://172.17.1.139:3000/referrals/add', {
+      method: 'post',
+      body: data
     })
+    var response = await saveReq.json();
 
-    // const saveReq = await fetch('/referrals/add', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    //   body: `firstName=${firstName}&lastName=${lastName}&email=${email}&reason=${reason}&creationDate=${creationDate}`
-    // })
-    // const body = await saveReq.json()
-    // console.log("response", body)
     setModal(!modal)
-
   }
   const toggle = () => setModal(!modal);
 
@@ -62,9 +71,7 @@ const AddCoopte = (props) => {
   return (
     <div className="section">
       <NavBar />
-
       <Container >
-
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <h3 style={{ margin: "40px" }}>You co-opt for the "job title"</h3>
@@ -87,7 +94,7 @@ const AddCoopte = (props) => {
               </FormGroup>
               <FormGroup>
                 <Label for="cv">Curriculum Vitae</Label>
-                <Input onChange={(e) => setCv(e.target.files[0])} type="file" name="cv" placeholder="upload cv" />
+                <Input onChange={(e) => { console.log(e.target.files); setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
               <FormGroup>
@@ -102,7 +109,7 @@ const AddCoopte = (props) => {
             <Modal isOpen={modal} >
               <ModalBody>
                 Votre cooptation a bien été prise en compte!
-        </ModalBody>
+            </ModalBody>
               <ModalFooter>
                 <Button color="primary" onClick={toggle}>Close</Button>
               </ModalFooter>
@@ -116,4 +123,13 @@ const AddCoopte = (props) => {
   );
 }
 
-export default AddCoopte;
+function mapStateToProps(state) {
+  console.log("state", state)
+  return {
+    token: state.token,
+  }
+}
+
+export default connect(
+  mapStateToProps, null
+)(AddCoopte)

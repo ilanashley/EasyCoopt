@@ -1,7 +1,7 @@
-export default function(typeID = '', action){
+export default function(typeId = null, action){
     if(action.type == 'addProfileType'){
-        return action.typeID
+        return action.typeId
     } else {
-        return typeID
+        return typeId
     }
 }

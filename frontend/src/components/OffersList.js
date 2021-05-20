@@ -61,7 +61,7 @@ const OffersList = (props) => {
     }
 
     var archiveOffer = async (id) => {
-        console.log('Id', id)
+        // console.log('Id', id)
 
         const archiveReq = await fetch('/offers/archive', {
             method: 'PUT',
@@ -70,7 +70,7 @@ const OffersList = (props) => {
         })
         const body = await archiveReq.json()
 
-        console.log(body)
+        // console.log(body)
 
         if (body.result === true) {
 
@@ -179,10 +179,9 @@ const OffersList = (props) => {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-    console.log(state)
+    console.log('Etat du store dans offersList ----> ',state)
     return {
-        token: state.token,
-        type: state.type
+        token: state.token
     };
 }
 

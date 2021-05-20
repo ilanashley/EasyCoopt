@@ -1,14 +1,12 @@
 import React, {useState} from 'react'
-// import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
-// import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import TransitionModal from './TransitionModal'
 import { connect } from 'react-redux'
+import { Redirect } from "react-router-dom";
 
 const Referrals = (props) => {
 
-    // // Pagination state
-    // const [modalShow, setModalShow] = useState(false);
+    console.log(props.token)
 
     if (props.loading) {
         return <h2>Loading...</h2>
@@ -38,16 +36,17 @@ const Referrals = (props) => {
         }
 
         // Conditions sur l'affichage du status de la cooptation en fonction du type de l'utilisateur
-        let type = true
         let referralStatus
         let deleteReferralButton
-        if (type === true) {
+        if(!props.typeId){
+            return <Redirect to="/myaccount" />;
+        } else if (props.typeId.toLowerCase() === 'recruteur') {
             referralStatus = <select value={referral.referralStatus} className="form-select" onChange={(e) => props.handleSelectStatusChange(e, i, referral.referralId)} aria-label="Default select example" style={selectStyle}>
                                     <option value="1">En cours</option>
                                     <option value="2">Approuvé</option>
                                     <option value="3">Refusé</option>
                                 </select>
-        } else if (type === false) {
+        } else if (props.typeId.toLowerCase() === 'coopteur') {
             referralStatus = <div style ={statusStyle}>{status}</div>
             deleteReferralTitle = <th>Supp</th>
             deleteReferralButton = <td><DeleteOutlineIcon style={{cursor: 'pointer'}} onClick={() => props.handleDeleteReferral(referral.referralId)}/></td>
@@ -70,6 +69,10 @@ const Referrals = (props) => {
             </tr>
         )
     })
+
+    if(!props.token) {
+        return <Redirect to="/login" />;
+    }
 
     return (
         
@@ -97,10 +100,10 @@ const Referrals = (props) => {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
+    console.log(state.typeId)
     return { 
       token: state.token,
-      type: state.type 
+      typeId: state.typeId 
     };
   }
   

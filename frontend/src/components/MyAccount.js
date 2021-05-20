@@ -247,7 +247,11 @@ function MyAccount(props) {
 
 /* recuperation du token et du typeID depuis redux */
 function mapStateToProps(state) {
-  return { token: state.token, typeId: state.typeId };
+  return { 
+    token: state.token, 
+    typeId: state.typeId,
+    isLogin: state.isLogin 
+  };
 }
 
 /* envoi du type de user a redux */

@@ -1,12 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import TransitionModal from './TransitionModal'
 import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
 
 const Referrals = (props) => {
-
-    console.log(props.token)
 
     if (props.loading) {
         return <h2>Loading...</h2>
@@ -16,6 +14,13 @@ const Referrals = (props) => {
 
     // Map pour l'affichage des cooptations
     const referralsList = props.currentReferrals.map((referral, i) => {
+
+        // Manipulation date
+        var myDate = new Date(referral.referralCreationDate)
+        var myDateString = ('0' + myDate.getDate()).slice(-2) + '/'
+        + ('0' + (myDate.getMonth()+1)).slice(-2) + '/'
+        + myDate.getFullYear();
+
 
         let selectStyle
         let status
@@ -55,13 +60,13 @@ const Referrals = (props) => {
         return (
             <tr>
                 <th scope="row">{i + 1}</th>
-                <td>{referral.referralCreationDate}</td>
+                <td>{myDateString}</td>
                 <td>{referral.recipientLastName}</td>
                 <td>{referral.offerBonusAmount}€</td>
                 <td>{referral.referralLastName}</td>
                 <td><div className='d-flex'><TransitionModal modalTitle={'Recommandation'} modalDescription={referral.referralReason} modalIcon={'VisibilityOutlinedIcon'}/></div></td>
                 <td>{referral.offerTitle}</td>
-                <td><div className='d-flex'><TransitionModal modalTitle={'Curriculum vitae'} modalDescription={'Le cv a aller chercher sur cloudinary !!!'} modalIcon={'AssignmentOutlinedIcon'}/></div></td>
+                <td><div className='d-flex'><TransitionModal modalTitle={'Curriculum vitae'} modalDescription={'Le cv a aller chercher sur cloudinary !!!'} referralResumeUrl={referral.referralResumeUrl} modalIcon={'AssignmentOutlinedIcon'}/></div></td>
                 <td>
                     {referralStatus}
                 </td> 
@@ -69,10 +74,6 @@ const Referrals = (props) => {
             </tr>
         )
     })
-
-    if(!props.token) {
-        return <Redirect to="/login" />;
-    }
 
     return (
         
@@ -100,9 +101,7 @@ const Referrals = (props) => {
 }
 
 function mapStateToProps(state) {
-    console.log(state.typeId)
     return { 
-      token: state.token,
       typeId: state.typeId 
     };
   }

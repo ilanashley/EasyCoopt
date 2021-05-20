@@ -22,7 +22,6 @@ import MyAccount from './components/MyAccount';
 
 const store = createStore(combineReducers({ token, typeId, offer }))
 
-
 function App() {
   return (
 

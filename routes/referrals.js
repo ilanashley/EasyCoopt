@@ -91,7 +91,8 @@ router.get('/get', async (req, res, next) => {
             referralFirstName: users[k].offersId[i].referralsId[j].firstName,
             referralLastName: users[k].offersId[i].referralsId[j].lastName,
             referralReason: users[k].offersId[i].referralsId[j].reason,
-            referralStatus: users[k].offersId[i].referralsId[j].status
+            referralStatus: users[k].offersId[i].referralsId[j].status,
+            referralResumeUrl: users[k].offersId[i].referralsId[j].resumeUrl
           })
         }
       }

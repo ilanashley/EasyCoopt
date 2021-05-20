@@ -52,6 +52,7 @@ function AddOffer(props) {
         setLink(offer[0].link);
         setResume(offer[0].resume);
         setOfferList(response.offers)
+        setOfferExist(true)
       }
     };
     loadOffer();
@@ -74,7 +75,7 @@ function AddOffer(props) {
     }
   }
 
-  else {
+  else if (offerExist) {
 
     var saveOffer = async () => {
 

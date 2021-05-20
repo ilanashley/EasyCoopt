@@ -172,13 +172,13 @@ router.post("/account", async (req, res, next) => {
 
   // On vérifie la saisie dans les champs indispensables email firstname lastname
   if(!email || email == 'undefined') {
-    error.push("Champ email vide");
+    error.push(`Champ "Email" vide`);
   }
   if(!firstName || firstName == 'undefined') {
-    error.push("Champ prénom vide");
+    error.push(`Champ "Prénom" vide`);
   }
   if(!lastName || lastName == 'undefined') {
-    error.push("Champ nom vide");
+    error.push(`Champ "Nom" vide`);
   }
 
 
@@ -188,20 +188,20 @@ if (oldPassword){
         let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
 
         if (checkPassword == false) {
-              error.push("Ancien mot de passe erroné");
+              error.push(`"Ancien mot de passe" erroné`);
         }
 
       /* Vérification la presence de contenu sur les nouveau mot de passe */
         else if ( !newPassword) {
-        error.push("Champ nouveau mot de passe vide");
+        error.push(`Champ "Nouveau mot de passe" vide`);
         } 
         else if (!confirmPassword) {
-          error.push("Champ ancien mot de passe vide");
+          error.push(`Champ "Ancien mot de passe" vide`);
         }
             /* Vérification du contenu des nouveaux mot de passe*/
 
         else if (newPassword !== confirmPassword) {
-          error.push("Ancien et nouveau mots de passe différents ");
+          error.push("Les ancien et nouveau mot de passe sont différents ");
         }}
   
 

@@ -11,8 +11,10 @@ import {
   Container,
   Row,
   Col,
+  Alert
 } from "reactstrap";
 import NavBar from "./NavBar";
+import ErrorIcon from '@material-ui/icons/Error';
 
 function MyAccount(props) {
 
@@ -86,7 +88,8 @@ function MyAccount(props) {
   };
 
   let tabErrorsAccount = listErrorsAccount.map((error, i) => {
-    return <p>{error}</p>;
+    return <Alert color="warning"><ErrorIcon style={{color: "#f78400"}} fontSize="medium" />{error}</Alert>;   
+    // <Alert color="warning"></Alert>
   });
 
   // redirige le user si son changement de profil est bien enregistré
@@ -98,7 +101,6 @@ function MyAccount(props) {
   if (!props.token) {
     return <Redirect to="/login" />;
   }
-
 
   return (
     <div className="section">
@@ -134,6 +136,7 @@ function MyAccount(props) {
                   >
                     Sauvegarder votre portrait
                   </Button>
+                  {tabErrorsAccount}
                 </div>
               </div>
             </div>
@@ -228,7 +231,6 @@ function MyAccount(props) {
               </FormGroup>
 
             </Col>
-            {tabErrorsAccount}
             <div class="btnEnd1">
               <Button
                 onClick={() => handleSubmitAccount()}

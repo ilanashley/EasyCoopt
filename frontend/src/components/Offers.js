@@ -51,7 +51,7 @@ const Offers = (props) => {
                         </span>
                     </div>
                     <h3>{offer.bonusAmount}€</h3>
-                    <button  onClick={() => { props.recommend(offer._id)}}  id="referralButton">Recommander</button>
+                    <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
                     <button>
                         <DeleteIcon onClick={() => { console.log(offer._id); props.archiveOffer(offer._id) }} />
                     </button>

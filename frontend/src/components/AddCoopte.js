@@ -32,8 +32,10 @@ const AddCoopte = (props) => {
   const [creationDate, setCreationDate] = useState('');
   const [cv, setCv] = useState('');
   const [modal, setModal] = useState(false);
+  const [offerCompleted, setOfferCompleted] = useState('');
 
   const {offerId} = useParams();
+  console.log("offeridInAddCoopte", offerId)
 
 
 
@@ -45,8 +47,9 @@ const AddCoopte = (props) => {
     data.append('lastName', lastName);
     data.append('email', email);
     data.append('reason', reason);
-    data.append('creationDate', creationDate);
+    data.append('creationDate', new Date());
     data.append('offerId', offerId);
+
 
 
     data.append(
@@ -56,7 +59,6 @@ const AddCoopte = (props) => {
 
 
     );
-    console.log('cv', cv);
 
   
     const saveReq = await fetch('/referrals/add', {
@@ -68,7 +70,12 @@ const AddCoopte = (props) => {
   }
   const toggleRedirect = () => {
     setModal(!modal)
+    setOfferCompleted(!offerCompleted)
   };
+  if (offerCompleted) {
+    return <Redirect to='/offerslist' />
+  }
+
 
  if(!props.token){
             return <Redirect to="/myaccount" />;
@@ -92,10 +99,10 @@ const AddCoopte = (props) => {
                       <Label for="email">Email</Label>
                       <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
                     </FormGroup>
-                    <FormGroup>
+                    {/* <FormGroup>
                       <Label for="creationDate">Date</Label>
-                      <Input onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
-                    </FormGroup>
+                      <Input value={new Date()} type="text" name="creationDate" placeholder="../../...." />
+                    </FormGroup> */}
                     <FormGroup>
                       <Label for="cv">Curriculum Vitae</Label>
                       <Input onChange={(e) => { console.log(e.target.files); setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />

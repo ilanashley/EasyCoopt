@@ -33,16 +33,19 @@ router.get("/", function (req, res, next) {
 */
 
 router.post('/upload', async function(req, res, next) {
-  
+  var result = false;
+
   var pictureName = './tmp/'+uniqid()+'.jpg';
   var resultCopy = await req.files.avatar.mv(pictureName);
-  if(!resultCopy) {
+
+  if(resultCopy == undefined) {
+    var result = true;
     var resultCloudinary = await cloudinary.uploader.upload(pictureName);
     res.json(resultCloudinary);
   } else {
-    res.json({error: resultCopy});
+    res.json({result});
   }
- 
+
  });
 
 router.post("/sign-up", async (req, res, next) => {
@@ -81,6 +84,7 @@ router.post("/sign-up", async (req, res, next) => {
       password: hash,
       token: uid2(32),
       groupsId: "Coopteur",
+      avatarUrl : "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg",
     });
 
     saveUser = await newUser.save();

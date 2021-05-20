@@ -67,7 +67,12 @@ const AddCoopte = (props) => {
    console.log("modal", modal)
     setModal(!modal)
   }
-  const toggle = () => setModal(!modal);
+  const toggleRedirect = () => {
+    setModal(!modal)
+    if(modal == false) {
+      return <Redirect to={'/referralsList'}/>
+    }
+  };
 
  if(!props.token){
             return <Redirect to="/myaccount" />;
@@ -114,7 +119,7 @@ const AddCoopte = (props) => {
                       Votre cooptation a bien été prise en compte!
                   </ModalBody>
                     <ModalFooter>
-                      <Button color="primary" onClick={toggle}>Close</Button>
+                      <Button color="primary" onClick={() => {toggleRedirect()}}>Close</Button>
                     </ModalFooter>
                   </Modal>
                 </Col>

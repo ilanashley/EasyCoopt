@@ -171,13 +171,13 @@ router.post("/account", async (req, res, next) => {
   let newPassword = req.body.newPassword
 
   // On vérifie la saisie dans les champs indispensables email firstname lastname
-  if(!email) {
+  if(!email || email == 'undefined') {
     error.push("Champ email vide");
   }
-  if(!firstName) {
+  if(!firstName || firstName == 'undefined') {
     error.push("Champ prénom vide");
   }
-  if(!lastName) {
+  if(!lastName || lastName == 'undefined') {
     error.push("Champ nom vide");
   }
 
@@ -220,8 +220,6 @@ if (oldPassword){
  
   if (updatedUser != null){
     let newUserdata = await userModel.findOne({ token: token });
-    console.log('user mis a jour -->',newUserdata)
-
     res.json({ result, error, user: newUserdata });
   } }
 

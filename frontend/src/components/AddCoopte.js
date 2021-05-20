@@ -58,20 +58,16 @@ const AddCoopte = (props) => {
     );
     console.log('cv', cv);
 
-
+  
     const saveReq = await fetch('/referrals/add', {
       method: 'post',
       body: data
     })
     var response = await saveReq.json();
-   console.log("modal", modal)
     setModal(!modal)
   }
   const toggleRedirect = () => {
     setModal(!modal)
-    if(!modal) {
-      return <Redirect to={'/referralsList'}/>
-    }
   };
 
  if(!props.token){

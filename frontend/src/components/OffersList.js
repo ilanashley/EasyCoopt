@@ -193,7 +193,7 @@ const OffersList = (props) => {
         </div>
 
         <div className='tableContainer'>
-          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} />
+          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend}/>
         </div>
 
         <div className='perPageContainer'>

@@ -118,15 +118,14 @@ function MyAccount(props) {
             <div class="file-field">
               <div class=" d-flex justify-content-center mb-4">
                 <img src={avatarUrl}
-                  class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar" height="130px" />
+                  class="rounded-circle z-depth-1-half avatar-pic" alt="Chargement de l'avatar en cours" height="130px" width="130px" />
               </div>
               <div class="d-flex justify-content-center">
                 <div class="btn btn-mdb-color btn-rounded float-left">
                   <Input
                     type="file"
                     onChange={(e) => { console.log('Le fichier est bien envoye tout contenu-->',e.target.files[0]); setAvatarUrl(e.target.files[0])}}
-                    // value ={avatarUrl}
-                    // onChange={(e) => setAvatarUrl(e.target.value)}
+
                     accept="image/png, image/jpeg"
                     name="avatar"
                     placeholder="Avatar"

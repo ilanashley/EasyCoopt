@@ -41,15 +41,13 @@ router.post('/upload', async function(req, res, next) {
   if(resultCopy == undefined) {
     var result = true;
     var resultCloudinary = await cloudinary.uploader.upload(pictureName);
+    fs.unlinkSync(pictureName)
     res.json(resultCloudinary);
   } else {
     res.json({result});
   }
 
  });
-
-
-/* ------POST for Sign-Up-------*/
 
 router.post("/sign-up", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;

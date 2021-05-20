@@ -7,6 +7,7 @@ import {createStore, combineReducers} from 'redux'
 
 import token from './reducers/token'
 import typeId from './reducers/type'
+import offer from './reducers/offers'
 
 import AddOffer from './components/AddOffer';
 import AddCoopte from './components/AddCoopte';
@@ -16,7 +17,10 @@ import ReferralsList from './components/ReferralsList';
 import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 
-const store = createStore(combineReducers({ token, typeId }))
+
+
+
+const store = createStore(combineReducers({ token, typeId, offer }))
 
 function App() {
   return (
@@ -24,8 +28,10 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
+          <Route component={AddOffer} path="/addOffer/:id" exact />
           <Route component={AddOffer} path="/addOffer" exact />
-          <Route component={AddCoopte} path="/addCoopte" exact />
+          <Route component={AddCoopte} path="/addCoopte/:saveId" exact />
+          <Route component={AddCoopte} path="/addCoopte/:offerId" exact />
           <Route component={ViewOffer} path="/viewOffer" exact />
           <Route component={OffersList} path="/" exact />
           <Route component={OffersList} path="/offersList" exact />

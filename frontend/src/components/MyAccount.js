@@ -11,12 +11,14 @@ import {
   Container,
   Row,
   Col,
+  Alert
 } from "reactstrap";
 import NavBar from "./NavBar";
+import ErrorIcon from '@material-ui/icons/Error';
 
 function MyAccount(props) {
 
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState('https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg ');
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,7 +34,9 @@ function MyAccount(props) {
     async function loadUser() {
       var rawResponse = await fetch(`/users/account/?token=${props.token}`);
       var response = await rawResponse.json();
+      if (response.avatarUrl){
       setAvatarUrl(response.avatarUrl);
+      }
       setFirstName(response.firstName);
       setLastName(response.lastName);
       setEmail(response.email);
@@ -42,30 +46,30 @@ function MyAccount(props) {
   }, []);
 
   let loadPicture = async () => {
-    console.log(avatarUrl)
+    console.log('le fichier arrive dans loadPicture-->', avatarUrl)
     var data = new FormData();
-    data.append('avatar', {
-      uri: avatarUrl,
-      type: 'image/jpeg',
-      name: 'avatar.jpg',
-    });
 
-    var rawResponse = await fetch("http://192.168.43.85:3000/users/upload", {
+    data.append(
+      'avatar',
+      avatarUrl,
+    );
+
+    var rawResponse = await fetch("/users/upload", {
       method: 'POST',
       body: data
     });
     var newPicture = await rawResponse.json();
     if (newPicture) {
-      console.log('new picture OK')
+      console.log('new picture OK', newPicture.secure_url)
+     setAvatarUrl(newPicture.secure_url)
     }
   }
-
+  
 
   // Gère le  changement de type de profil du user
   const handleTypeChange = (event) => {
     setType(event);
   };
-
 
   var handleSubmitAccount = async () => {
     const data = await fetch("/users/account", {
@@ -86,7 +90,7 @@ function MyAccount(props) {
   };
 
   let tabErrorsAccount = listErrorsAccount.map((error, i) => {
-    return <p>{error}</p>;
+    return <Alert color="warning"><ErrorIcon style={{color: "#f78400"}} fontSize="medium" />{error}</Alert>;   
   });
 
   // redirige le user si son changement de profil est bien enregistré
@@ -94,11 +98,10 @@ function MyAccount(props) {
     return <Redirect to="/offersList" />;
   }
 
-  // uniquement pendant le test, redirect si le  token est null
+  // redirect si le  token est null
   if (!props.token) {
     return <Redirect to="/login" />;
   }
-
 
   return (
     <div className="section">
@@ -114,26 +117,26 @@ function MyAccount(props) {
           <form class="md-form">
             <div class="file-field">
               <div class=" d-flex justify-content-center mb-4">
-                <img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
-                  class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar" height="130px" />
+                <img src={avatarUrl}
+                  class="rounded-circle z-depth-1-half avatar-pic" alt="Chargement de l'avatar en cours" height="130px" width="130px" />
               </div>
               <div class="d-flex justify-content-center">
                 <div class="btn btn-mdb-color btn-rounded float-left">
                   <Input
                     type="file"
-                    onChange={(e) => setAvatarUrl(e.target.value)}
-                    // value ={avatarUrl}
-                    // onChange={(e) => setAvatarUrl(e.target.value)}
+                    onChange={(e) => { console.log('Le fichier est bien envoye tout contenu-->',e.target.files[0]); setAvatarUrl(e.target.files[0])}}
+
                     accept="image/png, image/jpeg"
                     name="avatar"
                     placeholder="Avatar"
                   />
                   <Button
-                    onClick={() => loadPicture()}
+                    onClick={() => {console.log('L avatar url arrive bien dans ce bouton-->',avatarUrl);loadPicture()}}
                     style={{ margin: "10px" }}
                   >
                     Sauvegarder votre portrait
                   </Button>
+                  {tabErrorsAccount}
                 </div>
               </div>
             </div>
@@ -228,7 +231,6 @@ function MyAccount(props) {
               </FormGroup>
 
             </Col>
-            {tabErrorsAccount}
             <div class="btnEnd1">
               <Button
                 onClick={() => handleSubmitAccount()}

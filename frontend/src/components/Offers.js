@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import PlaceIcon from '@material-ui/icons/Place';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux'
+import { Container, Col, Row, Button } from "reactstrap";
+import { Link, useParams, Redirect } from 'react-router-dom'
 
 const Offers = (props) => {
+
+    const [offerId, setOfferId] = useState('');
 
     if (props.loading) {
         return <h2>Loading...</h2>
     }
+
+    const handleOnClickFaitChier = (id) => {
+        setOfferId(id)
+    }
+    if (offerId !='') {
+        return <Redirect to={`/addoffer/${offerId}`}></Redirect>
+    }
+
 
     // Map pour l'affichage des offres
     const offersList = props.currentOffers.map((offer, i) => {
@@ -46,10 +58,14 @@ const Offers = (props) => {
                         </span>
                     </div>
                     <h3>{offer.bonusAmount}€</h3>
-                    <button id="referralButton">Recommander</button>
+                    <button  onClick={() => { props.recommend(offer._id)}}  id="referralButton">Recommander</button>
                     <button>
                         <DeleteIcon onClick={() => { props.archiveOffer(offer._id) }} />
                     </button>
+
+                    <Button onClick={() => handleOnClickFaitChier(offer._id)} id="modifyButton">
+                        Modifier
+                    </Button>
                     <button id="enlargeButton">
                         <OpenInNewIcon />
                     </button>

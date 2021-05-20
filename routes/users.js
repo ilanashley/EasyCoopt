@@ -32,18 +32,22 @@ router.get("/", function (req, res, next) {
   Response: result(true), isLogin(true), message(string), user(object)
 */
 
-router.post('/upload', async function (req, res, next) {
+router.post('/upload', async function(req, res, next) {
+  var result = false;
 
-  var pictureName = './tmp/' + uniqid() + '.jpg';
+  var pictureName = './tmp/'+uniqid()+'.jpg';
   var resultCopy = await req.files.avatar.mv(pictureName);
-  if (!resultCopy) {
+
+  if(resultCopy == undefined) {
+    var result = true;
     var resultCloudinary = await cloudinary.uploader.upload(pictureName);
+    fs.unlinkSync(pictureName)
     res.json(resultCloudinary);
   } else {
-    res.json({ error: resultCopy });
+    res.json({result});
   }
 
-});
+ });
 
 router.post("/sign-up", async (req, res, next) => {
   let confirmPassword = req.body.confirmPassword;
@@ -82,6 +86,7 @@ router.post("/sign-up", async (req, res, next) => {
       password: hash,
       token: uid2(32),
       groupsId: "Coopteur",
+      avatarUrl : "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg",
     });
 
     saveUser = await newUser.save();
@@ -176,13 +181,13 @@ router.post("/account", async (req, res, next) => {
 
   // On vérifie la saisie dans les champs indispensables email firstname lastname
   if(!email || email == 'undefined') {
-    error.push("Champ email vide");
+    error.push(`Champ "Email" vide`);
   }
   if(!firstName || firstName == 'undefined') {
-    error.push("Champ prénom vide");
+    error.push(`Champ "Prénom" vide`);
   }
   if(!lastName || lastName == 'undefined') {
-    error.push("Champ nom vide");
+    error.push(`Champ "Nom" vide`);
   }
 
 
@@ -191,23 +196,23 @@ router.post("/account", async (req, res, next) => {
     var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
     let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
 
-    if (checkPassword == false) {
-      error.push("Ancien mot de passe erroné");
-    }
+        if (checkPassword == false) {
+              error.push(`"Ancien mot de passe" erroné`);
+        }
 
-    /* Vérification la presence de contenu sur les nouveau mot de passe */
-    else if (!newPassword) {
-      error.push("Champ nouveau mot de passe vide");
-    }
-    else if (!confirmPassword) {
-      error.push("Champ ancien mot de passe vide");
-    }
-    /* Vérification du contenu des nouveaux mot de passe*/
+      /* Vérification la presence de contenu sur les nouveau mot de passe */
+        else if ( !newPassword) {
+        error.push(`Champ "Nouveau mot de passe" vide`);
+        } 
+        else if (!confirmPassword) {
+          error.push(`Champ "Ancien mot de passe" vide`);
+        }
+            /* Vérification du contenu des nouveaux mot de passe*/
 
-    else if (newPassword !== confirmPassword) {
-      error.push("Ancien et nouveau mots de passe différents ");
-    }
-  }
+        else if (newPassword !== confirmPassword) {
+          error.push("Les ancien et nouveau mot de passe sont différents ");
+        }}
+  
 
 
   if (error.length == 0) {

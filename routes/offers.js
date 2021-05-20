@@ -58,8 +58,6 @@ router.post('/add', async function (req, res, next) {
       resume: resume,
       status: true,
     });
-    console.log('bbb')
-    console.log('blabla', title, city, creationDate, bonusAmount, contract, link, resume, status)
 
     saveOffer = await newOffer.save();
 
@@ -70,11 +68,6 @@ router.post('/add', async function (req, res, next) {
       }
     );
 
-    console.log(n);
-    console.log(req.body.token);
-    console.log('id', saveOffer._id);
-
-
     if (saveOffer) {
       result = true;
     }
@@ -83,21 +76,58 @@ router.post('/add', async function (req, res, next) {
   }
 })
 
-// router.delete('/delete', async function (req, res, next) {
-//   var result = false
-//   var user = await userModel.findOne({ token: req.body.token })
+router.put('/add', async function (req, res, next) {
 
-//   if (user != null) {
-//     var returnDb = await orderModel.deleteOne({ title: req.body.title, referralId: referral._id })
+  let title = req.body.title;
+  let city = req.body.city;
+  let creationDate = req.body.creationDate;
+  let bonusAmount = req.body.bonusAmount;
+  let contract = req.body.contract;
+  let link = req.body.link;
+  let resume = req.body.resume;
+  let status = req.body.status;
+  var error = [];
+  let result = false;
+  let saveOffer = null;
 
-//     if (returnDb.deletedCount == 1) {
-//       result = true
-//     }
-//   }
+  var user = await userModel.findOne({ token: req.body.token })
 
-//   res.json({ result })
-// })
+  // var offer = await offerModel.findOne({ _id: req.body.id })
 
+  // if (title.length < 3){
+  //     res.json({ result: false });
+  //   } 
+  // else if (location.length < 3){
+  //     res.json({ result: false });
+  //   }
+
+  // Si un des champs est vide, afficher un message d'erreur
+  if (!title || !city || !creationDate || !bonusAmount || !contract || !link || !resume) {
+    error.push("Champs vides");
+    res.json({ result, error });
+  }
+
+  if ((user != null && error.length == 0)) {
+    var modifiedOffer = await offerModel.updateOne(
+      { _id: req.body.id },
+      {
+        title: title,
+        city: city,
+        creationDate: creationDate,
+        bonusAmount: bonusAmount,
+        contract: contract,
+        link: link,
+        resume: resume,
+        status: true,
+      });
+
+    if (modifiedOffer) {
+      result = true;
+    }
+
+    res.json({ result, offer: modifiedOffer, error, token });
+  }
+})
 
 router.put('/archive', async function (req, res, next) {
   var result = false
@@ -120,7 +150,7 @@ router.put('/archive', async function (req, res, next) {
 })
 
 router.get("/offer", async function (req, res, next) {
-  var user = await userModel.findOne({ id: req.query.token });
+  var user = await offerModel.findOne({ id: req.query.token });
 
   if (user != null) {
     (password = user.password),

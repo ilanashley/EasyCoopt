@@ -32,6 +32,9 @@ function Login(props) {
   const [listErrorsSignin, setErrorsSignin] = useState([])
   const [listErrorsSignup, setErrorsSignup] = useState([])
 
+  const [signIn, setSignIn] = useState(false)
+  const [signUp, setSignUp] = useState(false)
+
   var handleSubmitSignin = async () => {
 
     const data = await fetch('/users/sign-in', {
@@ -46,6 +49,7 @@ function Login(props) {
       props.addToken(body.token)
       props.addProfileType(body.user.groupsId)
       setUserExists(true)
+      setSignIn(true)
 
     } else {
       setErrorsSignin(body.error)
@@ -65,14 +69,19 @@ function Login(props) {
     if (body.result == true) {
       props.addToken(body.token)
       setUserExists(true)
+      setSignUp(true)
 
     } else {
       setErrorsSignup(body.error)
     }
   }
 
-  if (userExists) {
-    return <Redirect to='/offersList' />
+  if (signIn) {
+    return <Redirect to='/offerslist' />
+  }
+
+  if (signUp) {
+    return <Redirect to='/myAccount' />
   }
 
   var tabErrorsSignin = listErrorsSignin.map((error, i) => {

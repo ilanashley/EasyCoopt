@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import NavBar from './NavBar'
 import Pagination from './Pagination';
 import Offers from './Offers';
+import { Redirect} from 'react-router';
 
 
 const OffersList = (props) => {
@@ -10,6 +11,9 @@ const OffersList = (props) => {
     
     const [offers, setOffers] = useState([]);
     const [ajoutId, setAjoutId] = useState([]);
+    const [offerId, setOfferId] = useState();
+
+
 
     // Pagination states
     const [loading, setLoading] = useState(false);
@@ -72,12 +76,21 @@ const OffersList = (props) => {
 
         // console.log(body)
 
+
+
         if (body.result === true) {
 
             setAjoutId([...ajoutId, body.offerCurrent._id])
-            console.log('Je suis la')
+            console.log('Je suis là')
         }
-
+    }
+    /* function pour recommander*/ 
+    const recommend = (saveId) => {  
+      setOfferId(saveId)
+      
+    }
+    if(offerId) {
+      return <Redirect to={`/addCoopte/${offerId}`}/>
     }
 
     // Filter per date
@@ -156,7 +169,7 @@ const OffersList = (props) => {
         </div>
 
                 <div className='tableContainer'>
-                    <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} />
+                    <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} />
                 </div>
 
                 <div className='perPageContainer'>

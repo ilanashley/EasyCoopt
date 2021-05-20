@@ -12,10 +12,12 @@ import {
   Button,
   Container,
   Row,
-  Col
+  Col,
+  Alert
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ErrorIcon from '@material-ui/icons/Error';
 import NavBar from './NavBar'
 
 function Login(props) {
@@ -84,11 +86,11 @@ function Login(props) {
   }
 
   var tabErrorsSignin = listErrorsSignin.map((error, i) => {
-    return (<p>{error}</p>)
+    return <Alert color="warning"><ErrorIcon style={{color: "#f78400"}} fontSize="medium" />{error}</Alert>;
   })
 
   var tabErrorsSignup = listErrorsSignup.map((error, i) => {
-    return (<p>{error}</p>)
+    return <Alert color="warning"><ErrorIcon style={{color: "#f78400"}} fontSize="medium" />{error}</Alert>;
   })
 
 
@@ -101,7 +103,10 @@ function Login(props) {
         <div class="col-12 text-center get_started">
           <h3>Welcome !</h3>
         </div>
-
+        <div class="btn float-left">
+        {tabErrorsSignin}
+        {tabErrorsSignup}
+        </div>
         <Col sm="12" md="6">
           <Form>
             <FormGroup>
@@ -112,7 +117,6 @@ function Login(props) {
               <Label for="password">Password</Label>
               <Input onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password" />
             </FormGroup>
-            {tabErrorsSignin}
             <div class="btnEnd">
               <Button onClick={() => handleSubmitSignin()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign In </Button>
             </div>
@@ -133,7 +137,7 @@ function Login(props) {
               <Label for="email">Confirm password</Label>
               <Input onChange={(e) => setSignUpConfirmationPassword(e.target.value)} type="password" name="password" placeholder="password" />
             </FormGroup>
-            {tabErrorsSignup}
+
             <div class="btnEnd">
               <Button onClick={() => handleSubmitSignup()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign Up </Button>
             </div>

@@ -111,9 +111,13 @@ router.post("/sign-in", async (req, res, next) => {
   let result = false;
   let user = null;
 
-  if (!req.body.password || !email) {
-    error.push("Champs vides");
+  if (!req.body.password) {
+    error.push(`Champ "Password" vide`);
   }
+  if(!email) {
+    error.push(`Champ "Email" vide`);
+  }
+
   if (error.length == 0) {
     user = await userModel.findOne({
       email: email,

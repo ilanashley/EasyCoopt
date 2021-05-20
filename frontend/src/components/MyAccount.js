@@ -163,16 +163,6 @@ function MyAccount(props) {
                     placeholder="Nom"
                   />
                 </FormGroup>
-                {/* <FormGroup>
-                <Label for="avatar">Avatar</Label>
-                <Input
-                  value={avatarUrl}
-                  onChange={(e) => setAvatarUrl(e.target.value)}
-                  type="text"
-                  name="avater"
-                  placeholder="Avatar"
-                />
-              </FormGroup> */}
                 <FormGroup>
                   <Label for="email">Email</Label>
                   <Input
@@ -189,11 +179,9 @@ function MyAccount(props) {
               <FormGroup>
                 <Label for="profil">Mon profil d'utilisateur</Label>
                 <select
-                  // defaultValue ={type}
                   class="custom-select"
                   defaultValue={props.typeId}
                   onChange={(e) => handleTypeChange(e.target.value)}
-                  // onChange={handleTypeChange}
                   aria-label="Default select example"
                 >
                   <option value="Coopteur">Coopteur</option>

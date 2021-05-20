@@ -171,13 +171,13 @@ router.post("/account", async (req, res, next) => {
   let newPassword = req.body.newPassword
 
   // On vérifie la saisie dans les champs indispensables email firstname lastname
-  if (!email) {
+  if(!email || email == 'undefined') {
     error.push("Champ email vide");
   }
-  if (!firstName) {
+  if(!firstName || firstName == 'undefined') {
     error.push("Champ prénom vide");
   }
-  if (!lastName) {
+  if(!lastName || lastName == 'undefined') {
     error.push("Champ nom vide");
   }
 
@@ -218,10 +218,18 @@ router.post("/account", async (req, res, next) => {
         lastName: lastName,
         groupsId: type,
       });
+<<<<<<< HEAD
 
     if (updatedUser != null) {
       let newUserdata = await userModel.findOne({ token: token });
       console.log('user mis a jour -->', newUserdata)
+=======
+ 
+  if (updatedUser != null){
+    let newUserdata = await userModel.findOne({ token: token });
+    res.json({ result, error, user: newUserdata });
+  } }
+>>>>>>> ca0502c34bda3c45291ea26b9bb98414ed6551d0
 
       res.json({ result, error, user: newUserdata });
     }

@@ -43,30 +43,29 @@ const AddCoopte = (props) => {
     setModal(!modal)
     setLoading(true)
 
+    var date = new Date()
+    date.setHours(0,0,0,0)
+
     var data = new FormData();
 
     data.append('firstName', firstName);
     data.append('lastName', lastName);
     data.append('email', email);
     data.append('reason', reason);
-    data.append('creationDate', new Date());
+    data.append('creationDate', date);
     data.append('offerId', offerId);
-
-
 
     data.append(
       "cv",
       cv,
       cv.name
-
-
     );
   
     const saveReq = await fetch('/referrals/add', {
       method: 'post',
       body: data
     })
-    var response = await saveReq.json();
+    await saveReq.json();
     setLoading(false)
     
   }
@@ -106,10 +105,6 @@ const AddCoopte = (props) => {
                       <Label for="email">Email</Label>
                       <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
                     </FormGroup>
-                    {/* <FormGroup>
-                      <Label for="creationDate">Date</Label>
-                      <Input value={new Date()} type="text" name="creationDate" placeholder="../../...." />
-                    </FormGroup> */}
                     <FormGroup>
                       <Label for="cv">Curriculum Vitae</Label>
                       <Input onChange={(e) => { console.log(e.target.files); setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />

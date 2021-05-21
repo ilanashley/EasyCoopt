@@ -74,7 +74,7 @@ router.post('/sign-up', async (req, res, next) => {
         avatarUrl: "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg",
       });
 
-      user = await newUser.save();
+      saveUser = await newUser.save();
       if(!saveUser) {
         res.json({ result: false, error: "L'utilisateur n'a pas pu être enregistré" });
       } else {

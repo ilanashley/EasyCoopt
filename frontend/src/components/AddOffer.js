@@ -11,7 +11,11 @@ import {
   Button,
   Container,
   Row,
-  Col
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -32,6 +36,8 @@ function AddOffer(props) {
 
   const [offerModifiee, setOfferModifiee] = useState(false);
   const [offerExist, setOfferExist] = useState(false);
+
+  const [modal, setModal] = useState(false);
 
   var { id } = useParams();
 
@@ -68,6 +74,7 @@ function AddOffer(props) {
       const body = await saveReq.json()
 
       setOfferModifiee(true)
+      setModal(!modal)
 
       props.addToOfferList(body.offer)
     }
@@ -85,10 +92,15 @@ function AddOffer(props) {
       const body = await saveReq.json()
 
       setOfferModifiee(true)
+      setModal(!modal)
 
       props.addToOfferList(body.offer)
     }
   }
+
+  const toggleRedirect = () => {
+    setModal(!modal)
+  };
 
 
   if (offerModifiee) {
@@ -137,13 +149,18 @@ function AddOffer(props) {
                 <Label for="resume">Resume</Label>
                 <Input value={resume} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
-
               <div class="btnEnd">
                 <Button onClick={() => { saveOffer() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
               </div>
-
             </Form>
-
+            <Modal isOpen={modal} >
+              <ModalBody>
+                Votre offre a bien été prise en compte!
+                  </ModalBody>
+              <ModalFooter>
+                <Button color="primary" onClick={() => { toggleRedirect() }}>Close</Button>
+              </ModalFooter>
+            </Modal>
           </Col>
         </Row>
 

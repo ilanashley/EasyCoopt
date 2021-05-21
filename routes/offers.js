@@ -16,7 +16,6 @@ router.get('/get', async (req, res, next) => {
   }
 })
 
-
 router.post('/add', async function (req, res, next) {
 
   let title = req.body.title;
@@ -33,22 +32,13 @@ router.post('/add', async function (req, res, next) {
 
   var user = await userModel.findOne({ token: req.body.token })
 
-  // if (title.length < 3){
-  //     res.json({ result: false });
-  //   } 
-  // else if (location.length < 3){
-  //     res.json({ result: false });
-  //   }
-
   // Si un des champs est vide, afficher un message d'erreur
-  console.log(title, city, creationDate, bonusAmount, contract, link, resume)
   if (!title || !city || !creationDate || !bonusAmount || !contract || !link || !resume) {
     error.push("Champs vides");
     res.json({ result, error });
   }
 
   if ((user != null && error.length == 0)) {
-    console.log('TEST', title, city, creationDate, bonusAmount, contract, link, resume)
     var newOffer = new offerModel({
       title: title,
       city: city,
@@ -93,15 +83,6 @@ router.put('/add', async function (req, res, next) {
 
   var user = await userModel.findOne({ token: req.body.token })
 
-  // var offer = await offerModel.findOne({ _id: req.body.id })
-
-  // if (title.length < 3){
-  //     res.json({ result: false });
-  //   } 
-  // else if (location.length < 3){
-  //     res.json({ result: false });
-  //   }
-
   // Si un des champs est vide, afficher un message d'erreur
   if (!title || !city || !creationDate || !bonusAmount || !contract || !link || !resume) {
     error.push("Champs vides");
@@ -134,8 +115,6 @@ router.put('/archive', async function (req, res, next) {
   var result = false
   var status = req.body.status
 
-  console.log(req.body.id)
-
   var archiveOffer = await offerModel.updateOne(
     { _id: req.body.id },
     {
@@ -145,7 +124,6 @@ router.put('/archive', async function (req, res, next) {
 
   var offerCurrent = await offerModel.findOne({ _id: req.body.id })
   if (offerCurrent.status === false) { result = true }
-  console.log('F', offerCurrent)
 
   res.json({ result, offerCurrent })
 })
@@ -167,6 +145,7 @@ router.get("/offer", async function (req, res, next) {
 
 /* Get Offer By Id */
 router.get('/findById/:offerId', async (req, res, next )=> {
+  console.log('id du back ---> ', req.params.id)
   var offer = await offerModel.findById({ _id: req.params.offerId}) 
   res.json({result: true, offerTitle: offer.title})
 })

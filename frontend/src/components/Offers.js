@@ -5,10 +5,9 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import PlaceIcon from '@material-ui/icons/Place';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux'
-import { Button,
-Col,
-Row } from "reactstrap";
+import { Button, Row, Col } from "reactstrap";
 import { Redirect } from 'react-router-dom'
+import ViewOffer from './ViewOffer';
 
 const Offers = (props) => {
 
@@ -52,7 +51,7 @@ const Offers = (props) => {
                         <Col >
                             <div className="cardInfoIcons mt-3">
                                 <CalendarTodayIcon fontSize="medium"/>
-                                <p className="cardIconsText mt-1">Il y a {diffDays} jours</p>
+                                <p className="cardIconsText mt-1">Il y a {diffDays} jour{diffDays>1 ? 's': ''}</p>
                             </div>
                         </Col>
                         <Col>
@@ -71,21 +70,21 @@ const Offers = (props) => {
                     </Row>
                 </Col>
                 <Col>
-                <Row md="auto" className="d-flex">
+                <Row >
                     <Col >
-                    <h5 className="mt-3">{offer.bonusAmount}€</h5>
+                    <h5 className="mt-3 ml-4">{offer.bonusAmount}€</h5>
                     </Col>
                     <Col>
                     <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
                     </Col>
                 </Row>
                 </Col>
-                <Col  md="auto" className="d-flex justify-content-around">    
+                <Col className="d-flex justify-content-around">    
                     <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
                         Modifier
                     </Button>
                     <DeleteIcon  className="mt-3 deleteIcon"  fontSize="medium"  onClick={() => { props.archiveOffer(offer._id) }}/>
-                    <Button  className="mt-2"  id="enlargeButton">
+                    <Button  className="mt-2"  id="enlargeButton" onClick={() => props.viewOffer(offer._id)}>
                         <OpenInNewIcon />
                     </Button>
                 </Col>

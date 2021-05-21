@@ -14,6 +14,7 @@ const OffersList = (props) => {
   const [offers, setOffers] = useState([]);
   const [ajoutId, setAjoutId] = useState([]);
   const [offerId, setOfferId] = useState('');
+  const [offerIdView, setOfferIdView] = useState('')
   
 
   // Pagination states
@@ -90,8 +91,15 @@ const OffersList = (props) => {
     setOfferId(offerId)
   }
 
+  // Function pour voir l'offre
+  const viewOffer = (offerId) => {
+    setOfferIdView(offerId)
+  }
+
   if (offerId) {
     return <Redirect to={`/addCoopte/${offerId}`} />
+  } else if (offerIdView) {
+    return <Redirect to={`/viewOffer/${offerIdView}`} />
   }
 
   // Filter per date
@@ -179,7 +187,7 @@ const OffersList = (props) => {
         </div>
 
         <div className='tableContainer'>
-          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend}/>
+          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer}/>
         </div>
 
         <div className='perPageContainer'>

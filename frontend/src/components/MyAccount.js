@@ -104,9 +104,9 @@ function MyAccount(props) {
   }
 
   return (
-    <div className="section">
+    <div className="main-container">
       <NavBar />
-      <Container>
+      <Container className='pb-5'>
         <Row
           className="cardBackground"
           style={{ padding: "10px", marginTop: "50px" }}

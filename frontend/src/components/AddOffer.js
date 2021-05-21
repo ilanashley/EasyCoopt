@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Text } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -11,7 +11,11 @@ import {
   Button,
   Container,
   Row,
-  Col
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -69,7 +73,7 @@ function AddOffer(props) {
       })
       const body = await saveReq.json()
 
-      setOfferModifiee(true)
+      console.log("Je suis la")
 
       props.addToOfferList(body.offer)
     }
@@ -86,11 +90,34 @@ function AddOffer(props) {
       })
       const body = await saveReq.json()
 
-      setOfferModifiee(true)
+      console.log("LALA")
+
 
       props.addToOfferList(body.offer)
     }
   }
+
+  const toggle = () => {
+    setModal(!modal);
+  };
+  const toggleBack = () => {
+    setModal(!modal);
+    setOfferModifiee(true)
+  };
+
+
+  const affichageTexteModal = () => {
+  if (offerExist) {
+    console.log('ICI');
+
+    <Text>Votre offre a bien ete modifie !</Text>
+  }
+  else if (!offerExist) {
+    console.log('LABAS');
+
+    <Text> Votre offre a bien ete ajoute !</Text>
+  }
+}
 
 
   if (offerModifiee) {
@@ -108,6 +135,8 @@ function AddOffer(props) {
 
       <Container>
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
+
+
           <Col sm="12" md={{ size: 6, offset: 3 }} >
             <h3 style={{ margin: "40px" }}>Add Offer</h3>
             <Form>
@@ -141,11 +170,18 @@ function AddOffer(props) {
               </FormGroup>
 
               <div class="btnEnd">
-                <Button onClick={() => { saveOffer() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
+                <Button onClick={() => { {toggle()} {saveOffer() }}} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
+                <Modal isOpen={modal} toggle={toggle}>
+                  <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                  <ModalBody>
+                  Votre offre a bien été prise en compte!
+                    </ModalBody>
+                  <ModalFooter>
+                    <Button color="secondary" onClick={toggleBack}>Page des offres</Button>
+                  </ModalFooter>
+                </Modal>
               </div>
-
             </Form>
-
           </Col>
         </Row>
 

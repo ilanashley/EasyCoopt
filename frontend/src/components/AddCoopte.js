@@ -77,6 +77,7 @@ const AddCoopte = (props) => {
     printTitle();
   },
     []);
+    
   /* function to redirect to offersList */
   const toggleRedirect = () => {
     setModal(!modal)

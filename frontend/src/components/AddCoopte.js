@@ -40,13 +40,16 @@ const AddCoopte = (props) => {
     setModal(!modal)
     setLoading(true)
 
+    var date = new Date()
+    date.setHours(0,0,0,0)
+
     var data = new FormData();
 
     data.append('firstName', firstName);
     data.append('lastName', lastName);
     data.append('email', email);
     data.append('reason', reason);
-    data.append('creationDate', new Date());
+    data.append('creationDate', date);
     data.append('offerId', offerId);
 
     data.append(

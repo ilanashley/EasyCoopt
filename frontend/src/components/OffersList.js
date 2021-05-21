@@ -98,9 +98,13 @@ const OffersList = (props) => {
   const addDateArray = offers.map((offer) => { return offer.creationDate })
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
     return addDateArray.indexOf(date) === pos;
-  })
+  }).sort()
   const addDateFilteredList = addDateFilteredArray.map((date) => {
-    return (<option value={date}>{date}</option>)
+    var myDate = new Date(date)
+    var myDateString = ('0' + myDate.getDate()).slice(-2) + '/'
+        + ('0' + (myDate.getMonth()+1)).slice(-2) + '/'
+        + myDate.getFullYear();
+    return (<option value={date}>{myDateString}</option>)
   })
 
   const handleSelectFilteredPerDate = (event) => {

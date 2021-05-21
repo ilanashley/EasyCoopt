@@ -48,6 +48,7 @@ router.post('/add', async function (req, res, next) {
   }
 
   if ((user != null && error.length == 0)) {
+    console.log('TEST', title, city, creationDate, bonusAmount, contract, link, resume)
     var newOffer = new offerModel({
       title: title,
       city: city,

@@ -21,6 +21,7 @@ const Offers = (props) => {
     const handleOnClick = (id) => {
         setOfferId(id)
     }
+    
     if (offerId !=='') {
         return <Redirect to={`/addoffer/${offerId}`}></Redirect>
     }

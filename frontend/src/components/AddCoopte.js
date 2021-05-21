@@ -77,7 +77,7 @@ const AddCoopte = (props) => {
     printTitle();
   },
     []);
-    
+
   /* function to redirect to offersList */
   const toggleRedirect = () => {
     setModal(!modal)
@@ -96,7 +96,7 @@ const AddCoopte = (props) => {
 
   if (!props.token) {
     return <Redirect to="/myaccount" />;
-  } else {
+  }
     return (
       <div className="section">
         <NavBar />
@@ -146,7 +146,7 @@ const AddCoopte = (props) => {
     );
   }
 
-}
+
 
 function mapStateToProps(state) {
   console.log("state", state)

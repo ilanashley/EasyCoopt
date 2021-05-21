@@ -17,8 +17,6 @@ const OffersList = (props) => {
   const [offerId, setOfferId] = useState('');
   
 
-
-
   // Pagination states
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -90,13 +88,11 @@ const OffersList = (props) => {
   }
   /* function pour recommander*/
   const recommend = (offerId, offerTitle) => {
-    console.log("offeridInRecommend", offerId);
     setOfferId(offerId)
   }
 
   console.log("offeridInExterior", offerId)
   if (offerId) {
-    console.log("offeridInInCondition", offerId)
     return <Redirect to={`/addCoopte/${offerId}`} />
   }
 

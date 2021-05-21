@@ -31,7 +31,7 @@ function App() {
           <Route component={AddOffer} path="/addOffer/:id" exact />
           <Route component={AddOffer} path="/addOffer" exact />
           <Route component={AddCoopte} path="/addCoopte/:offerId" exact />
-          <Route component={ViewOffer} path="/viewOffer" exact />
+          <Route component={ViewOffer} path="/viewOffer/:offerIdView" exact />
           <Route component={OffersList} path="/" exact />
           <Route component={OffersList} path="/offersList" exact />
           <Route component={ReferralsList} path="/referralsList" exact />

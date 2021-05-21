@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Button,
     Container,
@@ -7,60 +7,104 @@ import {
 } from 'reactstrap';
 import { Badge } from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../App.css';
 import NavBar from './NavBar'
+import { useParams, Redirect, Link } from "react-router-dom";
+import { connect } from 'react-redux';
+;
 
 const ViewOffer = (props) => {
 
+    const { offerIdView } = useParams();
+
+    const [title, setTitle] = useState('');
+    const [city, setCity] = useState('');
+    const [creationDate, setCreationDate] = useState(new Date());
+    const [bonusAmount, setBonusAmount] = useState('');
+    const [contract, setContract] = useState('');
+    const [link, setLink] = useState('');
+    const [resume, setResume] = useState('');
+    const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
+    const [isRedirectToAddCoopte, setIsRedirectToAddCoopte] = useState(false)
+
+    // Fetch to get the offer
+    useEffect(() => {
+        const loadOffer = async () => {
+            var rawResponse = await fetch(`/offers/get`);
+            var response = await rawResponse.json();
+            const offer = response.offers.filter(offer => offer._id == offerIdView)
+
+            if (offer.length > 0) {
+                setTitle(offer[0].title);
+                setCity(offer[0].city);
+                setCreationDate(offer[0].creationDate);
+                setBonusAmount(offer[0].bonusAmount);
+                setContract(offer[0].contract);
+                setLink(offer[0].link);
+                setResume(offer[0].resume);
+            }
+        };
+        loadOffer();
+    }, []);
+
+    // Days since offer's creation date
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const firstDate = new Date(creationDate);
+    const secondDate = new Date();
+    const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+
+    // Functions de redirection
+    const redirectionToOffersList = () => {
+        setIsRedirectToOffersList(true)
+    }
+
+    const redirectionToAddCoopte = () => {
+        setIsRedirectToAddCoopte(true)
+    }
+
+    if(isRedirectToOffersList) {
+        return <Redirect to="/offersList" />;
+    }else if (isRedirectToAddCoopte) {
+        return <Redirect to={`/addCoopte/${offerIdView}`} />
+    }
+    
+    if (!props.token) {
+        return <Redirect to="/login" />;
+    }
 
     return (
         <div className="section">
             <NavBar />
             <Container >
 
-                <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
+                <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
                     <Col sm="12" md={{ size: 6, offset: 3 }} >
-                        <h3 style={{ marginTop: "40px" }} >Développeur Fullstack <br />Applications IT - H/F
-                    <div class="btnEnd">
-                                <Button id="enlargeButton">
-                                    <ArrowBackIcon />
-                                </Button>
-                            </div>
-                        </h3>
-
-
-                        <p>CDI - 2 années d’expérience</p>
-                        <Button id="referralButton">Recommend</Button>
+                        <h3 style={{ marginTop: "40px" }} > {title} </h3>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}><p>{contract}</p> <p>Publié il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
                         <hr />
-                        <span>Imaginez demain...</span>
-                        <p>Au sein du département IT, vous rejoignez l’organisation Information Systems for IT, gérant, développant et inventant de nombreuses applications. Vous intervenez dans un contexte international afin de fournir des outils pour l’ensemble de l’entreprise et pour les clients de Dassault Systèmes.
-                        Dans une équipe franco-indienne, vous assurez le développement et la maintenance d’applications diverses pour l’ITSM, la communication interne, les process IT. Vous créez de nouvelles possibilités d’améliorer la productivité de vos clients et simplifiez leur quotidien par des outils accessibles. La transversalité des activités vous permet de toucher à de nombreux domaines différents et d’intéragir avec des interlocuteurs.
-                    Poste en CDI basé à Vélizy-Villacoublay (78).</p>
-                        <span>Votre contribution et vos missions :</span>
-                        <p>Dans le cadre de l'amélioration des outils utilisés pour assurer une qualité de services irréprochables pour nos clients internes comme externes, nous vous proposons de travailler sur les sujets suivants:<br /><br />
-                    Développement de l’outil de gestion du support dédié aux utilisateurs internes.<br />
-                    Développement de l’outil de gestion de la flotte mobile<br />
-                    Développement des applications de l’IT, gestion des firewalls, gestion de certificats SSL…<br />
-                    Développement d’outil de gestion des évènements internes.<br />
-                    Développement de librairies client et serveur pour le développement de widgets sur la 3D EXPERIENCE Platform.<br />
-                    Développement d’applications mobiles en JavaScript.<br />
-                    Recueil et analyse des besoins.</p>
-                        <span id="badge" class="badge" >Published three days ago</span>
+                        <p>{resume}</p>
+                        
+                        <div style={{marginBottom: 20}}>
+                            <a href={link} target="_blank">{link}</a>
+                        </div>
 
-
-
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <button  onClick = {() => redirectionToAddCoopte(offerIdView)} id="referralButton">Recommander</button>
+                            <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
+                        </div>
                     </Col>
-
                 </Row>
-
-
-
             </Container>
         </div>
 
     );
 }
 
-export default ViewOffer;
+function mapStateToProps(state) {
+    return { token: state.token }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(ViewOffer)

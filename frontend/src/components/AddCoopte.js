@@ -85,7 +85,7 @@ const AddCoopte = (props) => {
             <Container >
               <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
                 <Col sm="12" md={{ size: 6, offset: 3 }}>
-                  <h3 style={{ margin: "40px" }}>You co-opt for the {offerTitle}</h3>
+                  <h3 style={{ margin: "40px" }}>You co-opt for the </h3>
                   <Form>
                     <FormGroup>
                       <Label for="firstname">Firstname</Label>

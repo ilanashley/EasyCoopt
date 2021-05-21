@@ -16,7 +16,28 @@ import {
 import NavBar from "./NavBar";
 import ErrorIcon from "@material-ui/icons/Error";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
+// Modal style
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 function MyAccount(props) {
+
   const [avatarUrl, setAvatarUrl] = useState(
     "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg "
   );
@@ -28,7 +49,15 @@ function MyAccount(props) {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userExists, setUserExists] = useState(false);
-  const [listErrorsAccount, setlistErrorsAccount] = useState([]);
+  const [error, setError] = useState('')
+
+  // Modal state
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  // Modal function
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     async function loadUser() {
@@ -46,7 +75,7 @@ function MyAccount(props) {
   }, []);
 
   let loadPicture = async () => {
-    console.log("le fichier arrive dans loadPicture-->", avatarUrl);
+    // console.log("le fichier arrive dans loadPicture-->", avatarUrl);
     var data = new FormData();
 
     data.append("avatar", avatarUrl);
@@ -57,7 +86,7 @@ function MyAccount(props) {
     });
     var newPicture = await rawResponse.json();
     if (newPicture) {
-      console.log("new picture OK", newPicture.secure_url);
+      // console.log("new picture OK", newPicture.secure_url);
       setAvatarUrl(newPicture.secure_url);
     }
   };
@@ -74,24 +103,17 @@ function MyAccount(props) {
       body: `token=${props.token}&avatarUrl=${avatarUrl}&firstName=${firstName}&lastName=${lastName}&email=${email}&type=${type}&oldPassword=${oldPassword}&newPassword=${newPassword}&confirmPassword=${confirmPassword}`,
     });
 
-    const body = await data.json();
-    setlistErrorsAccount(body.error);
-    props.addProfileType(type);
-    console.log(type);
+    const body = await data.json();    
 
-    if (body.result == true && listErrorsAccount.length == 0) {
+    if (body.result === true ) {
+      console.log(body.user.groupsId)
+      props.addProfileType(body.user.groupsId)
       setUserExists(true);
+    } else {
+      setError(body.error)
+      setOpen(true)
     }
   };
-
-  let tabErrorsAccount = listErrorsAccount.map((error, i) => {
-    return (
-      <Alert color="warning">
-        <ErrorIcon style={{ color: "#f78400" }} fontSize="medium" />
-        {error}
-      </Alert>
-    );
-  });
 
   // redirige le user si son changement de profil est bien enregistré
   if (userExists) {
@@ -105,6 +127,26 @@ function MyAccount(props) {
 
   return (
     <div className="main-container">
+      <div className='d-flex justify-content-center'>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              {error}
+            </div>
+          </Fade>
+        </Modal>
+      </div>
       <NavBar />
       <Container className='pb-5'>
         <Row
@@ -157,7 +199,6 @@ function MyAccount(props) {
                   >
                     Sauvegarder votre portrait
                   </Button>
-                  {tabErrorsAccount}
                 </div>
               </div>
             </div>
@@ -213,7 +254,7 @@ function MyAccount(props) {
               <Label for="ancien mot de passe">Ancien mot de passe</Label>
               <Input
                 onChange={(e) => setOldPassword(e.target.value)}
-                type="text"
+                type="password"
                 name="ancien mot de passe"
                 placeholder="Ancien mot de passe"
               />
@@ -222,7 +263,7 @@ function MyAccount(props) {
               <Label for="ancien mot de passe">Nouveau mot de passe</Label>
               <Input
                 onChange={(e) => setNewPassword(e.target.value)}
-                type="text"
+                type="password"
                 name="nouveau mot de passe"
                 placeholder="Nouveau mot de passe"
               />
@@ -233,7 +274,7 @@ function MyAccount(props) {
               </Label>
               <Input
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                type="text"
+                type="password"
                 name="confirmer nouveau mot de passe"
                 placeholder="Confirmer nouveau mot de passe"
               />
@@ -257,8 +298,7 @@ function MyAccount(props) {
 function mapStateToProps(state) {
   return {
     token: state.token,
-    typeId: state.typeId,
-    isLogin: state.isLogin,
+    typeId: state.typeId
   };
 }
 

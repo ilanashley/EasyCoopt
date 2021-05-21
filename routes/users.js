@@ -131,120 +131,152 @@ router.get("/account", async function (req, res, next) {
 });
 
 
-// router.post('/account', async (req, res, next) => {
+router.post('/account', async (req, res, next) => {
 
-//   let firstName = req.body.firstName
-//   let lastName = req.body.lastName
-//   let avatarUrl = req.body.avatarUrl
-//   let email = req.body.email
-//   let type = req.body.type
-//   let oldPassword = req.body.oldPassword
-//   let newPassword = req.body.newPassword
-//   let confirmPassword = req.body.confirmPassword
-
-//   if(!firstName || !lastName || !email || !type ) {
-//     res.json({ result: false, error: 'Les champs prénom, nom , email et profil utilisateurs sont obligatoires'})
-//   } else {
-//     if (oldPassword) {
-//       if(oldPassword === 'azerty') {
-//         if ( !newPassword && !confirmPassword ) {
-//           res.json({ result: false, message: 'Veuillez saisir un nouveau mot de passe' });
-//         } else if (newPassword || !confirmPassword) {
-//           res.json({ result: false, message: 'error' });
-//         } else {
-//           if (newPassword !== confirmPassword) {
-//             res.json({ result: false, message: 'error' });
-//           } else {
-//             res.json({ result: true, isLogin: true, message:'success', user: {firstName, lastName, avatarUrl, email, type, newPassword} });
-//           }
-//         }
-//       } else {
-//         res.json({ result: false, message: 'error' });
-//       }
-//     } else {
-//       res.json({ result: true, isLogin: true, message:'success', user: {firstName, lastName, avatarUrl, email, type, oldPassword: 'azerty'} });
-//     }    
-//   }
-// })
-
-
-
-router.post("/account", async (req, res, next) => {
-  let result = false;
-  let error = [];
-  let user = await userModel.findOne({ token: req.body.token });
-
-  if (user) {
-    token = user.token
-  }
-
-  /* renommage de tout du frontend */
-  let avatarUrl = req.body.avatarUrl;
-  let firstName = req.body.firstName;
-  let lastName = req.body.lastName;
-  let email = req.body.email;
-  let type = req.body.type;
-  let oldPassword = req.body.oldPassword;
-  let confirmPassword = req.body.confirmPassword;
+  let firstName = req.body.firstName
+  let lastName = req.body.lastName
+  let avatarUrl = req.body.avatarUrl
+  let email = req.body.email
+  let type = req.body.type
+  let oldPassword = req.body.oldPassword
   let newPassword = req.body.newPassword
+  let confirmPassword = req.body.confirmPassword
+  let token = req.body.token
 
-  // On vérifie la saisie dans les champs indispensables email firstname lastname
-  if (!email || email == 'undefined') {
-    error.push(`Champ "Email" vide`);
-  }
-  if (!firstName || firstName == 'undefined') {
-    error.push(`Champ "Prénom" vide`);
-  }
-  if (!lastName || lastName == 'undefined') {
-    error.push(`Champ "Nom" vide`);
-  }
-
-
-  /* Si l'utilisateur a entré un ancien mot de passe: */
-  if (oldPassword) {
-    var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
-    let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
-
-    if (checkPassword == false) {
-      error.push(`"Ancien mot de passe" erroné`);
-    }
-
-    /* Vérification la presence de contenu sur les nouveau mot de passe */
-    else if (!newPassword) {
-      error.push(`Champ "Nouveau mot de passe" vide`);
-    }
-    else if (!confirmPassword) {
-      error.push(`Champ "Ancien mot de passe" vide`);
-    }
-    /* Vérification du contenu des nouveaux mot de passe*/
-
-    else if (newPassword !== confirmPassword) {
-      error.push("Les ancien et nouveau mot de passe sont différents ");
-    }
-  }
-
-
-
-  if (error.length == 0) {
-    result = true;
-    /* enregistrement de toutes les nouvelles infos en base de donnée */
-    var updatedUser = await userModel.updateOne(
-      { token: token },
-      {
-        avatarUrl: avatarUrl,
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        groupsId: type,
-      });
-
-    if (updatedUser != null) {
-      let newUserdata = await userModel.findOne({ token: token });
-      res.json({ result, error, user: newUserdata });
-    }
+  if(!firstName || !lastName || !email || !type ) {
+    res.json({ result: false, error: 'Les champs prénom, nom , email et profil utilisateurs sont obligatoires'})
   } else {
-    res.json({ result, error })
+    let user = await userModel.findOne({ token: req.body.token })
+    if (oldPassword) {
+      let checkPassword = bcrypt.compareSync(oldPassword, user.password)      
+      if(checkPassword) {
+        if ( !newPassword || !confirmPassword ) {
+          res.json({ result: false, error: 'Pour changer votre mot de passe, les champs nouveau mot de passe et confirmation du mot de passe sont obligatoires' });
+        } else {
+          if (newPassword !== confirmPassword) {
+            res.json({ result: false, error: 'Le nouveau mot de passe et la confirmation du mot de passe ne correspondent pas, veuillez les ressaisir' });
+          } else {
+            var newPasswordHash = bcrypt.hashSync(newPassword, 10);
+            var updatedUser = await userModel.updateOne(
+              { token: token },
+              {
+                avatarUrl: avatarUrl,
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                groupsId: type,
+                password: newPasswordHash
+              });
+
+              if (updatedUser) {
+                let user = await userModel.findOne({ token: token });
+                res.json({ result: true, user });
+              } else {
+                res.json({ result: false, error: 'Erreur de chargement' });
+              }
+          }
+        }
+      } else {
+        res.json({ result: false, error: 'Mauvais mot de passe' });
+      }
+    } else {
+      var updatedUser = await userModel.updateOne(
+        { token: token },
+        {
+          avatarUrl: avatarUrl,
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          groupsId: type
+        });
+        if (updatedUser) {
+          let user = await userModel.findOne({ token: token });
+          res.json({ result: true, user });
+        } else {
+          res.json({ result: false, error: 'Erreur de chargement' });
+        }
+    }    
   }
-});
+})
+
+
+
+// router.post("/account", async (req, res, next) => {
+//   let result = false;
+//   let error = [];
+//   let user = await userModel.findOne({ token: req.body.token });
+
+//   if (user) {
+//     token = user.token
+//   }
+
+//   /* renommage de tout du frontend */
+//   let avatarUrl = req.body.avatarUrl;
+//   let firstName = req.body.firstName;
+//   let lastName = req.body.lastName;
+//   let email = req.body.email;
+//   let type = req.body.type;
+//   let oldPassword = req.body.oldPassword;
+//   let confirmPassword = req.body.confirmPassword;
+//   let newPassword = req.body.newPassword
+
+//   // On vérifie la saisie dans les champs indispensables email firstname lastname
+//   if (!email || email == 'undefined') {
+//     error.push(`Champ "Email" vide`);
+//   }
+//   if (!firstName || firstName == 'undefined') {
+//     error.push(`Champ "Prénom" vide`);
+//   }
+//   if (!lastName || lastName == 'undefined') {
+//     error.push(`Champ "Nom" vide`);
+//   }
+
+
+//   /* Si l'utilisateur a entré un ancien mot de passe: */
+//   if (oldPassword) {
+//     var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
+//     let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
+
+//     if (checkPassword == false) {
+//       error.push(`"Ancien mot de passe" erroné`);
+//     }
+
+//     /* Vérification la presence de contenu sur les nouveau mot de passe */
+//     else if (!newPassword) {
+//       error.push(`Champ "Nouveau mot de passe" vide`);
+//     }
+//     else if (!confirmPassword) {
+//       error.push(`Champ "Ancien mot de passe" vide`);
+//     }
+//     /* Vérification du contenu des nouveaux mot de passe*/
+
+//     else if (newPassword !== confirmPassword) {
+//       error.push("Les ancien et nouveau mot de passe sont différents ");
+//     }
+//   }
+
+
+
+//   if (error.length == 0) {
+//     result = true;
+//     /* enregistrement de toutes les nouvelles infos en base de donnée */
+//     var updatedUser = await userModel.updateOne(
+//       { token: token },
+//       {
+//         avatarUrl: avatarUrl,
+//         email: email,
+//         firstName: firstName,
+//         lastName: lastName,
+//         groupsId: type,
+//       });
+
+//     if (updatedUser != null) {
+//       let newUserdata = await userModel.findOne({ token: token });
+//       res.json({ result, error, user: newUserdata });
+//     }
+//   } else {
+//     res.json({ result, error })
+//   }
+// });
 
 module.exports = router;

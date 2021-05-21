@@ -1,6 +1,6 @@
 export default function (offers = [], action) {
 
-    if (action.type == 'addAnOffer') {
+    if (action.type === 'addAnOffer') {
         var saveOfferCopy = [...offers]
         saveOfferCopy.push(action.offerAdded)
 

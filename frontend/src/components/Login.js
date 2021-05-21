@@ -95,8 +95,10 @@ function Login(props) {
 
     const body = await data.json()
 
+    console.log(body.result)
+
     if (body.result == true) {
-      props.addToken(body.token)
+      props.addToken(body.user.token)
       setUserExists(true)
       setSignUp(true)
 

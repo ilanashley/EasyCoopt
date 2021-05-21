@@ -40,24 +40,24 @@ const Offers = (props) => {
         return (
             <div key={offer._id} className="cardBackground mb-2" style={display}>
                 <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
-                    <h4>{offer.title}</h4>
+                    <h5>{offer.title}</h5>
                     <div className="cardInfoBg">
                         <span className="d-flex justify-content-center">
                             <div className="cardInfoIcons">
-                                <CalendarTodayIcon fontSize="large" />
+                                <CalendarTodayIcon />
                                 <p>Il y a {diffDays} jours</p>
                             </div>
                             <div className="cardInfoIcons">
-                                <BusinessCenterIcon fontSize="large" />
+                                <BusinessCenterIcon />
                                 <p>{offer.contract}</p>
                             </div>
                             <div className="cardInfoIcons">
-                                <PlaceIcon fontSize="large" />
+                                <PlaceIcon />
                                 <p>{offer.city}</p>
                             </div>
                         </span>
                     </div>
-                    <h3>{offer.bonusAmount}€</h3>
+                    <h5>{offer.bonusAmount}€</h5>
                     <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
                     <button>
                         <DeleteIcon onClick={() => { props.archiveOffer(offer._id) }} />

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Container, Col, Row, Button } from "reactstrap";
 import { Link } from 'react-router-dom'
 import NavBar from './NavBar'
 import Pagination from './Pagination';
@@ -17,13 +16,11 @@ const OffersList = (props) => {
   const [offerId, setOfferId] = useState('');
   
 
-
-
   // Pagination states
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [offersPerPage, setOffersPerPage] = useState(10);
-  const [pageNumberLimit, setPageNumberLimit] = useState(5);
+  const [pageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
@@ -82,7 +79,7 @@ const OffersList = (props) => {
     const body = await archiveReq.json()
 
     console.log(body)
-    if (body.result == true) {
+    if (body.result === true) {
 
       setAjoutId([...ajoutId, body.offerCurrent._id])
       console.log('Je suis là')
@@ -90,13 +87,11 @@ const OffersList = (props) => {
   }
   /* function pour recommander*/
   const recommend = (offerId, offerTitle) => {
-    console.log("offeridInRecommend", offerId);
     setOfferId(offerId)
   }
 
   console.log("offeridInExterior", offerId)
   if (offerId) {
-    console.log("offeridInInCondition", offerId)
     return <Redirect to={`/addCoopte/${offerId}`} />
   }
 
@@ -204,7 +199,6 @@ const OffersList = (props) => {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-  console.log('Etat du store dans offersList ----> ', state)
   return {
     token: state.token
   };

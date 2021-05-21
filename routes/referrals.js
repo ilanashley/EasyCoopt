@@ -63,7 +63,6 @@ console.log("ref", referral._id)
 });
 
 
-/* Get Referral 
 
 
 /* Get Referrals*/

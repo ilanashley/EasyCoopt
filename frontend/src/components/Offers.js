@@ -5,8 +5,8 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import PlaceIcon from '@material-ui/icons/Place';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux'
-import { Container, Col, Row, Button } from "reactstrap";
-import { Link, useParams, Redirect } from 'react-router-dom'
+import { Button } from "reactstrap";
+import { Redirect } from 'react-router-dom'
 
 const Offers = (props) => {
 
@@ -16,10 +16,10 @@ const Offers = (props) => {
         return <h2>Loading...</h2>
     }
 
-    const handleOnClickFaitChier = (id) => {
+    const handleOnClick = (id) => {
         setOfferId(id)
     }
-    if (offerId !='') {
+    if (offerId !=='') {
         return <Redirect to={`/addoffer/${offerId}`}></Redirect>
     }
 
@@ -39,37 +39,55 @@ const Offers = (props) => {
         }
         return (
             <div key={offer._id} className="cardBackground mb-2" style={display}>
-                <li className="d-flex flex-column flex-md-row align-items-center justify-content-around">
-                    <h4>{offer.title}</h4>
-                    <div className="cardInfoBg">
-                        <span className="d-flex justify-content-center">
-                            <div className="cardInfoIcons">
-                                <CalendarTodayIcon fontSize="large" />
-                                <p>Il y a {diffDays} jours</p>
-                            </div>
-                            <div className="cardInfoIcons">
-                                <BusinessCenterIcon fontSize="large" />
-                                <p>{offer.contract}</p>
-                            </div>
-                            <div className="cardInfoIcons">
-                                <PlaceIcon fontSize="large" />
-                                <p>{offer.city}</p>
-                            </div>
-                        </span>
-                    </div>
-                    <h3>{offer.bonusAmount}€</h3>
-                    <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
-                    <button>
-                        <DeleteIcon onClick={() => { props.archiveOffer(offer._id) }} />
-                    </button>
+                <Row className="d-flex flex-column flex-md-row align-items-center ">
 
+                <Col >
+                    <h5 className="d-flex justify-content-center mt-1">{offer.title}</h5>
+                </Col>
+                <Col className="cardInfoBg">
+                    <Row className="d.flex justify-content-center align-items-center">
+                        <Col >
+                            <div className="cardInfoIcons mt-3">
+                                <CalendarTodayIcon fontSize="medium"/>
+                                <p className="cardIconsText mt-1">Il y a {diffDays} jours</p>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div className="cardInfoIcons mt-3">
+                                <BusinessCenterIcon fontSize="medium"/>
+                                <p className="cardIconsText mt-1">{offer.contract}</p>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div className="cardInfoIcons mt-3">
+                                <PlaceIcon fontSize="medium"/>
+                                <p className="cardIconsText mt-1">{offer.city}</p>
+                            </div>
+                        </Col>
+
+                    </Row>
+                </Col>
+                <Col>
+                <Row md="auto" className="d-flex">
+                    <Col >
+                    <h5 className="mt-3">{offer.bonusAmount}€</h5>
+                    </Col>
+                    <Col>
+                    <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
+                    </Col>
+                </Row>
+                </Col>
+                <Col  md="auto" className="d-flex justify-content-around">    
                     <Button onClick={() => handleOnClickFaitChier(offer._id)} id="modifyButton">
                         Modifier
                     </Button>
-                    <button id="enlargeButton">
+                    <DeleteIcon  className="mt-3 deleteIcon"  fontSize="medium"  onClick={() => { props.archiveOffer(offer._id) }}/>
+                    <Button  className="mt-2"  id="enlargeButton">
                         <OpenInNewIcon />
-                    </button>
-                </li>
+                    </Button>
+                </Col>
+
+                </Row>
             </div>
         )
     })

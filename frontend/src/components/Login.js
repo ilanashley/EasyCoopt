@@ -8,16 +8,11 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Button,
   Container,
   Row,
-  Col,
-  Alert
+  Col
 } from 'reactstrap';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ErrorIcon from '@material-ui/icons/Error';
 import NavBar from './NavBar'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -25,6 +20,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
+// Modal style
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -41,14 +37,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Login(props) {
 
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-
   const [signInEmail, setSignInEmail] = useState('')
   const [signInPassword, setSignInPassword] = useState('')
 
@@ -56,12 +44,19 @@ function Login(props) {
   const [signUpPassword, setSignUpPassword] = useState('')
   const [signUpConfirmationPassword, setSignUpConfirmationPassword] = useState('')
 
-  const [userExists, setUserExists] = useState(false)
-
   const [error, setError] = useState()
 
   const [signIn, setSignIn] = useState(false)
   const [signUp, setSignUp] = useState(false)
+
+  // Modal state
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  
+  // Modal function
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   var handleSubmitSignin = async () => {
 
@@ -76,9 +71,7 @@ function Login(props) {
     if (body.result == true) {
       props.addToken(body.user.token)
       props.addProfileType(body.user.groupsId)
-      setUserExists(true)
       setSignIn(true)
-
     } else {
       setError(body.error)
       setOpen(true);
@@ -95,13 +88,9 @@ function Login(props) {
 
     const body = await data.json()
 
-    console.log(body.result)
-
     if (body.result == true) {
       props.addToken(body.user.token)
-      setUserExists(true)
       setSignUp(true)
-
     } else {
       setError(body.error)
       setOpen(true);

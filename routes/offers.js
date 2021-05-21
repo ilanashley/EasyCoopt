@@ -165,4 +165,11 @@ router.get("/offer", async function (req, res, next) {
 });
 
 
+/* Get Offer By Id */
+router.get('/findById/:offerId', async (req, res, next )=> {
+  var offer = await offerModel.findById({ _id: req.params.offerId}) 
+  res.json({result: true, offerTitle: offer.title})
+})
+
+
 module.exports = router;

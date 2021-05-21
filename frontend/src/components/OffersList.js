@@ -90,7 +90,6 @@ const OffersList = (props) => {
     setOfferId(offerId)
   }
 
-  console.log("offeridInExterior", offerId)
   if (offerId) {
     return <Redirect to={`/addCoopte/${offerId}`} />
   }

@@ -5,7 +5,9 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import PlaceIcon from '@material-ui/icons/Place';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux'
-import { Button } from "reactstrap";
+import { Button,
+Col,
+Row } from "reactstrap";
 import { Redirect } from 'react-router-dom'
 
 const Offers = (props) => {
@@ -78,7 +80,7 @@ const Offers = (props) => {
                 </Row>
                 </Col>
                 <Col  md="auto" className="d-flex justify-content-around">    
-                    <Button onClick={() => handleOnClickFaitChier(offer._id)} id="modifyButton">
+                    <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
                         Modifier
                     </Button>
                     <DeleteIcon  className="mt-3 deleteIcon"  fontSize="medium"  onClick={() => { props.archiveOffer(offer._id) }}/>

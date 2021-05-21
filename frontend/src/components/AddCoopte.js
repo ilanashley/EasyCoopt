@@ -6,18 +6,14 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Button,
   Container,
   Row,
   Col,
   Modal,
-  ModalHeader,
   ModalBody,
   ModalFooter
 } from 'reactstrap';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar';
 import { useParams, Redirect } from "react-router-dom";
 
@@ -35,9 +31,9 @@ const AddCoopte = (props) => {
   const [offerCompleted, setOfferCompleted] = useState('');
   const [loading, setLoading] = useState(false);
   const [offerTitle, setOfferTitle] = useState('');
-  
 
-  const { offerId} = useParams();
+
+  const { offerId } = useParams();
 
   /* function fetch to add coopte with file to the back */
   var saveCoopte = async () => {
@@ -63,22 +59,22 @@ const AddCoopte = (props) => {
       method: 'post',
       body: data
     })
-    var response = await saveReq.json();
+    await saveReq.json();
     setLoading(false)
 
   }
 
   useEffect(() => {
     const printTitle = async () => {
-    
-        let rawResponse = await fetch(`/offers/findById/${offerId}`);
-        let response = await rawResponse.json();
-        setOfferTitle(response.offerTitle)
+
+      let rawResponse = await fetch(`/offers/findById/${offerId}`);
+      let response = await rawResponse.json();
+      setOfferTitle(response.offerTitle)
     };
     printTitle();
   },
- []);
-/* function to redirect to offersList */
+    []);
+  /* function to redirect to offersList */
   const toggleRedirect = () => {
     setModal(!modal)
     setOfferCompleted(!offerCompleted)
@@ -91,7 +87,7 @@ const AddCoopte = (props) => {
   if (loading) {
     var contentModal = <ModalBody>Loading</ModalBody>
   } else {
-    var contentModal = <ModalBody>Votre Cooptation a bien été prise en compte</ModalBody>
+    contentModal = <ModalBody>Votre Cooptation a bien été prise en compte</ModalBody>
   }
 
   if (!props.token) {

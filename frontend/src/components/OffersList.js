@@ -15,6 +15,7 @@ const OffersList = (props) => {
   const [offers, setOffers] = useState([]);
   const [ajoutId, setAjoutId] = useState([]);
   const [offerId, setOfferId] = useState('');
+  
 
 
 
@@ -88,7 +89,7 @@ const OffersList = (props) => {
     }
   }
   /* function pour recommander*/
-  const recommend = (offerId) => {
+  const recommend = (offerId, offerTitle) => {
     console.log("offeridInRecommend", offerId);
     setOfferId(offerId)
   }

@@ -12,13 +12,42 @@ import {
   Button,
   Container,
   Row,
-  Col
+  Col,
+  Alert
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ErrorIcon from '@material-ui/icons/Error';
 import NavBar from './NavBar'
 
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 function Login(props) {
+
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   const [signInEmail, setSignInEmail] = useState('')
   const [signInPassword, setSignInPassword] = useState('')
@@ -29,8 +58,7 @@ function Login(props) {
 
   const [userExists, setUserExists] = useState(false)
 
-  const [listErrorsSignin, setErrorsSignin] = useState([])
-  const [listErrorsSignup, setErrorsSignup] = useState([])
+  const [error, setError] = useState()
 
   const [signIn, setSignIn] = useState(false)
   const [signUp, setSignUp] = useState(false)
@@ -46,13 +74,14 @@ function Login(props) {
     const body = await data.json();
 
     if (body.result == true) {
-      props.addToken(body.token)
+      props.addToken(body.user.token)
       props.addProfileType(body.user.groupsId)
       setUserExists(true)
       setSignIn(true)
 
     } else {
-      setErrorsSignin(body.error)
+      setError(body.error)
+      setOpen(true);
     }
   }
 
@@ -72,30 +101,39 @@ function Login(props) {
       setSignUp(true)
 
     } else {
-      setErrorsSignup(body.error)
+      setError(body.error)
+      setOpen(true);
     }
   }
 
   if (signIn) {
     return <Redirect to='/offerslist' />
-  }
-
-  if (signUp) {
+  } else  if (signUp) {
     return <Redirect to='/myAccount' />
   }
 
-  var tabErrorsSignin = listErrorsSignin.map((error, i) => {
-    return (<p>{error}</p>)
-  })
-
-  var tabErrorsSignup = listErrorsSignup.map((error, i) => {
-    return (<p>{error}</p>)
-  })
-
-
-
   return (
     <div>
+      <div className='d-flex justify-content-center'>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              {error}
+            </div>
+          </Fade>
+        </Modal>
+      </div>
       <NavBar />
       <Container >
 
@@ -115,7 +153,7 @@ function Login(props) {
                 <Label for="password">Password</Label>
                 <Input onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password" />
               </FormGroup>
-              {tabErrorsSignin}
+             
               <div class="btnEnd">
                 <Button onClick={() => handleSubmitSignin()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign In </Button>
               </div>
@@ -136,7 +174,7 @@ function Login(props) {
                 <Label for="email">Confirm password</Label>
                 <Input onChange={(e) => setSignUpConfirmationPassword(e.target.value)} type="password" name="password" placeholder="password" />
               </FormGroup>
-              {tabErrorsSignup}
+              
               <div class="btnEnd">
                 <Button onClick={() => handleSubmitSignup()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign Up </Button>
               </div>

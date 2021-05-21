@@ -66,7 +66,7 @@ const Referrals = (props) => {
                 <td>{referral.referralLastName}</td>
                 <td><div className='d-flex'><TransitionModal modalTitle={'Recommandation'} modalDescription={referral.referralReason} modalIcon={'VisibilityOutlinedIcon'}/></div></td>
                 <td>{referral.offerTitle}</td>
-                <td><div className='d-flex'><TransitionModal modalTitle={'Curriculum vitae'} modalDescription={'Le cv a aller chercher sur cloudinary !!!'} referralResumeUrl={referral.referralResumeUrl} modalIcon={'AssignmentOutlinedIcon'}/></div></td>
+                <td><div className='d-flex'><TransitionModal modalTitle={'Curriculum vitae'} referralResumeUrl={referral.referralResumeUrl} modalIcon={'AssignmentOutlinedIcon'}/></div></td>
                 <td>
                     {referralStatus}
                 </td> 

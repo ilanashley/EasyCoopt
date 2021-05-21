@@ -26,118 +26,89 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
-/*
-  Sign-up
-  Body: email (string), password (string)
-  Response: result(true), isLogin(true), message(string), user(object)
-*/
-
-router.post('/upload', async function(req, res, next) {
+router.post('/upload', async function (req, res, next) {
   var result = false;
 
-  var pictureName = './tmp/'+uniqid()+'.jpg';
+  var pictureName = './tmp/' + uniqid() + '.jpg';
   var resultCopy = await req.files.avatar.mv(pictureName);
 
-  if(resultCopy == undefined) {
+  if (resultCopy == undefined) {
     var result = true;
     var resultCloudinary = await cloudinary.uploader.upload(pictureName);
     fs.unlinkSync(pictureName)
     res.json(resultCloudinary);
   } else {
-    res.json({result});
+    res.json({ result });
   }
 
- });
-
-router.post("/sign-up", async (req, res, next) => {
-  let confirmPassword = req.body.confirmPassword;
-  let password = req.body.password;
-  let email = req.body.email;
-  var error = [];
-  var result = false;
-  var saveUser = null;
-  var token = null;
-  let isLogin = false;
-
-  const data = await userModel.findOne({
-    email: email,
-  });
-
-  if (data != null) {
-    error.push("utilisateur déjà présent");
-    res.json({ result, error });
-  }
-
-  if (!password || !confirmPassword || !email) {
-    error.push("Champs vides");
-    res.json({ result, error });
-  }
-
-  if (password !== confirmPassword) {
-    error.push("Mot de passe et confirmation différents");
-    res.json({ result, error });
-  }
-
-  if (error.length == 0) {
-    var hash = bcrypt.hashSync(password, 10);
-    var newUser = new userModel({
-      email: email,
-      password: password,
-      password: hash,
-      token: uid2(32),
-      groupsId: "Coopteur",
-      avatarUrl : "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg",
-    });
-
-    saveUser = await newUser.save();
-
-    if (saveUser) {
-      result = true;
-      token = saveUser.token;
-      isLogin = true
-    }
-
-    res.json({ isLogin, result, user: saveUser, error, token });
-  }
 });
+
+/*
+  Sign-up
+  Body: email (string), password (string), confirPassword (string)
+  Response: result(bool), error(string), user(object)
+*/
+
+router.post('/sign-up', async (req, res, next) => {
+  let confirmPassword = req.body.confirmPassword
+  let password = req.body.password
+  let email = req.body.email
+  if (!password || !confirmPassword || !email) {
+    res.json({ result: false, error: 'Veuillez remplir tous les champs' });
+  } else if (password !== confirmPassword) {
+    res.json({ result: false, error: 'Les mots de passe ne correspondent pas, veuillez les ressaisir' });
+  } else {
+    const data = await userModel.findOne({
+      email: email,
+    });
+    if (data) {
+      res.json({ result: false, error: 'Utilisateur déjà présent' });
+    } else {
+      var hash = bcrypt.hashSync(password, 10);
+      var newUser = new userModel({
+        email: email,
+        password: password,
+        password: hash,
+        token: uid2(32),
+        groupsId: "Coopteur",
+        avatarUrl: "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg",
+      });
+
+      user = await newUser.save();
+      if(!saveUser) {
+        res.json({ result: false, error: "L'utilisateur n'a pas pu être enregistré" });
+      } else {
+        res.json({ result: true, user });
+      }
+    }   
+  }
+})
 
 /*
   Sign-in
   Body: email (string), password (string)
-  Response: result(true), isLogin(true), message(string), user(object)
+  Response: result(bool),erro(string), user(object)
 */
 
-router.post("/sign-in", async (req, res, next) => {
-  let email = req.body.email;
-  var error = [];
-  let result = false;
-  let user = null;
-  let isLogin = false
+router.post('/sign-in', async (req, res, next) => {
+  let password = req.body.password
+  let email = req.body.email
 
-  if (!req.body.password || !email) {
-    error.push("Champs vides");
-  }
-  if (error.length == 0) {
+  if (!password || !email) {
+    res.json({ result: false, error: "Veuillez remplir tous les champs" });
+  } else {
     user = await userModel.findOne({
       email: email,
     });
 
-    if (user) {
-      if (bcrypt.compareSync(req.body.password, user.password)) {
-        result = true;
-        token = user.token;
-        isLogin = true
-      } else {
-        result = false;
-        error.push("mot de passe incorrect");
-      }
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+      res.json({ result: false, error: "Email ou mot de pass incorrect" });
     } else {
-      error.push("email incorrect");
+      res.json({ result: true, user });
     }
   }
 
-  res.json({ result, user, error, token, isLogin });
-});
+})
 
 /*
   Account
@@ -166,7 +137,7 @@ router.post("/account", async (req, res, next) => {
   let user = await userModel.findOne({ token: req.body.token });
 
   if (user) {
-    token = user.token;
+    token = user.token
   }
 
   /* renommage de tout du frontend */
@@ -180,13 +151,13 @@ router.post("/account", async (req, res, next) => {
   let newPassword = req.body.newPassword
 
   // On vérifie la saisie dans les champs indispensables email firstname lastname
-  if(!email || email == 'undefined') {
+  if (!email || email == 'undefined') {
     error.push(`Champ "Email" vide`);
   }
-  if(!firstName || firstName == 'undefined') {
+  if (!firstName || firstName == 'undefined') {
     error.push(`Champ "Prénom" vide`);
   }
-  if(!lastName || lastName == 'undefined') {
+  if (!lastName || lastName == 'undefined') {
     error.push(`Champ "Nom" vide`);
   }
 
@@ -196,23 +167,24 @@ router.post("/account", async (req, res, next) => {
     var oldPasswordhash = bcrypt.hashSync(oldPassword, 10);
     let checkPassword = bcrypt.compareSync(oldPasswordhash, user.password)
 
-        if (checkPassword == false) {
-              error.push(`"Ancien mot de passe" erroné`);
-        }
+    if (checkPassword == false) {
+      error.push(`"Ancien mot de passe" erroné`);
+    }
 
-      /* Vérification la presence de contenu sur les nouveau mot de passe */
-        else if ( !newPassword) {
-        error.push(`Champ "Nouveau mot de passe" vide`);
-        } 
-        else if (!confirmPassword) {
-          error.push(`Champ "Ancien mot de passe" vide`);
-        }
-            /* Vérification du contenu des nouveaux mot de passe*/
+    /* Vérification la presence de contenu sur les nouveau mot de passe */
+    else if (!newPassword) {
+      error.push(`Champ "Nouveau mot de passe" vide`);
+    }
+    else if (!confirmPassword) {
+      error.push(`Champ "Ancien mot de passe" vide`);
+    }
+    /* Vérification du contenu des nouveaux mot de passe*/
 
-        else if (newPassword !== confirmPassword) {
-          error.push("Les ancien et nouveau mot de passe sont différents ");
-        }}
-  
+    else if (newPassword !== confirmPassword) {
+      error.push("Les ancien et nouveau mot de passe sont différents ");
+    }
+  }
+
 
 
   if (error.length == 0) {
@@ -227,12 +199,12 @@ router.post("/account", async (req, res, next) => {
         lastName: lastName,
         groupsId: type,
       });
- 
-  if (updatedUser != null){
-    let newUserdata = await userModel.findOne({ token: token });
-    res.json({ result, error, user: newUserdata });
+
+    if (updatedUser != null) {
+      let newUserdata = await userModel.findOne({ token: token });
+      res.json({ result, error, user: newUserdata });
     }
-  }  else {
+  } else {
     res.json({ result, error })
   }
 });

@@ -5,9 +5,6 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
-import CardMedia from '@material-ui/core/CardMedia';
-
-
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -60,7 +57,7 @@ export default function TransitionsModal(props) {
   let resumeImage
   if(props.referralResumeUrl) {
      resumeImage = <div className='d-flex flex-column'>
-                      <img src={props.referralResumeUrl} height={400} width={400} alt='Resume'></img>
+                      <img src={props.referralResumeUrl} height={600} width={400} alt='Resume'></img>
                       {/* <a href={props.referralResumeUrl} download> Download CV</a>
                       <button onclick={handleDownloadResume}>Télécharger</button> */}
                     </div>                  

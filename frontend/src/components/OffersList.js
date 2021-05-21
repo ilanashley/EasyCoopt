@@ -6,6 +6,7 @@ import NavBar from './NavBar'
 import Pagination from './Pagination';
 import Offers from './Offers';
 import { Redirect } from 'react-router';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 
 const OffersList = (props) => {
@@ -98,26 +99,6 @@ const OffersList = (props) => {
     return <Redirect to={`/addCoopte/${offerId}`} />
   }
 
-  // Rajout offre ou connexion
-  if (props.token) {
-    var securite =
-      <Link to={"/addoffer/"}>
-        <Button id="modifyButton">
-          Rajouter Offre
-      </Button>
-      </Link>
-  }
-  else {
-
-    var securite =
-      <Link to="/login">
-        <Button id="modifyButton">
-          Se Connecter
-        </Button>
-      </Link>
-  }
-
-
   // Filter per date
   const addDateArray = offers.map((offer) => { return offer.creationDate })
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
@@ -171,8 +152,6 @@ const OffersList = (props) => {
 
       <NavBar />
 
-      {securite}
-
       <div className='container-lg'>
 
         <div className='titleContainer'>
@@ -193,6 +172,11 @@ const OffersList = (props) => {
             {contractFilteredList}
           </select>
           <button onClick={handleSelectResetFilters} className='custom-btn-style'>Supprimer</button>
+        </div>
+
+        <div className='selectContainer'>
+          <Link to={"/addoffer/"}><PostAddIcon fontSize='large'/></Link> 
+          <p>Ajouter une Offre</p>
         </div>
 
         <div className='tableContainer'>

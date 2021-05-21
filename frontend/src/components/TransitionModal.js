@@ -33,10 +33,6 @@ export default function TransitionsModal(props) {
     setOpen(false);
   };
 
-  // const handleDownloadResume = () => {
-
-  // }
-
   let modalIcon 
   if(props.modalIcon === 'VisibilityOutlinedIcon') {
     modalIcon = <div><VisibilityOutlinedIcon style={{cursor: 'pointer'}} onClick={handleOpen} /> {props.modalDescription.substring(0,15)}... </div>

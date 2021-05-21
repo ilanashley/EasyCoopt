@@ -14,7 +14,7 @@ const ReferralsList = (props) => {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [referralsPerPage, setReferralsPerPage] = useState(10);
-  const [pageNumberLimit, setPageNumberLimit] = useState(5);
+  const [pageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
@@ -81,7 +81,7 @@ const ReferralsList = (props) => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `referralStatus=${event.target.value}&referralId=${referralId}`
     })
-    var response = await rawResponse.json()
+    await rawResponse.json()
   }
 
   // Filter per date

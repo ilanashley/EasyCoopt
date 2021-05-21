@@ -46,7 +46,6 @@ function AddOffer(props) {
       var rawResponse = await fetch(`/offers/get`);
       var response = await rawResponse.json();
       const offer = response.offers.filter(offer => offer._id == id)
-      console.log('Offer', offer)
       if (offer.length > 0) {
         setTitle(offer[0].title);
         setCity(offer[0].city);
@@ -73,8 +72,6 @@ function AddOffer(props) {
       })
       const body = await saveReq.json()
 
-      console.log("Je suis la")
-
       props.addToOfferList(body.offer)
     }
   }
@@ -90,9 +87,6 @@ function AddOffer(props) {
       })
       const body = await saveReq.json()
 
-      console.log("LALA")
-
-
       props.addToOfferList(body.offer)
     }
   }
@@ -106,26 +100,18 @@ function AddOffer(props) {
   };
 
 
-
   if (offerExist) {
 
     var affichageTexteModal = <ModalBody>
       Votre offre a bien été prise en compte !
     </ModalBody>
-  }
-  else if (!offerExist) {
-
-    var affichageTexteModal = <ModalBody>
-      Votre offre a bien été ajoute !
-      </ModalBody>
-  }
-
-  if (offerExist) {
-
     var modification = <Button onClick={() => { { toggle() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> Modifier </Button>
   }
   else if (!offerExist) {
 
+    var affichageTexteModal = <ModalBody>
+      Votre offre a bien été ajoutée !
+      </ModalBody>
     var modification = <Button onClick={() => { { toggle() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
 
   }
@@ -182,7 +168,6 @@ function AddOffer(props) {
               <div class="btnEnd">
                 {modification}
                 <Modal isOpen={modal} toggle={toggle}>
-                  <ModalHeader toggle={toggle}>Modal title</ModalHeader>
                   {affichageTexteModal}
                   <ModalFooter>
                     <Button color="secondary" onClick={toggleBack}>Page des offres</Button>

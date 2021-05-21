@@ -106,18 +106,29 @@ function AddOffer(props) {
   };
 
 
-  const affichageTexteModal = () => {
-  if (offerExist) {
-    console.log('ICI');
 
-    <Text>Votre offre a bien ete modifie !</Text>
+  if (offerExist) {
+
+    var affichageTexteModal = <ModalBody>
+      Votre offre a bien été prise en compte !
+    </ModalBody>
   }
   else if (!offerExist) {
-    console.log('LABAS');
 
-    <Text> Votre offre a bien ete ajoute !</Text>
+    var affichageTexteModal = <ModalBody>
+      Votre offre a bien été ajoute !
+      </ModalBody>
   }
-}
+
+  if (offerExist) {
+
+    var modification = <Button onClick={() => { { toggle() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> Modifier </Button>
+  }
+  else if (!offerExist) {
+
+    var modification = <Button onClick={() => { { toggle() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
+
+  }
 
 
   if (offerModifiee) {
@@ -168,14 +179,11 @@ function AddOffer(props) {
                 <Label for="resume">Resume</Label>
                 <Input value={resume} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
-
               <div class="btnEnd">
-                <Button onClick={() => { {toggle()} {saveOffer() }}} style={{ margin: "10px", backgroundColor: '#254383' }}> Add </Button>
+                {modification}
                 <Modal isOpen={modal} toggle={toggle}>
                   <ModalHeader toggle={toggle}>Modal title</ModalHeader>
-                  <ModalBody>
-                  Votre offre a bien été prise en compte!
-                    </ModalBody>
+                  {affichageTexteModal}
                   <ModalFooter>
                     <Button color="secondary" onClick={toggleBack}>Page des offres</Button>
                   </ModalFooter>
@@ -191,19 +199,10 @@ function AddOffer(props) {
   );
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addToOfferList: function (offer) {
-      dispatch({ type: 'addAnOffer', OfferAdded: offer })
-    }
-  }
-}
-
 function mapStateToProps(state) {
   return { token: state.token }
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(AddOffer)

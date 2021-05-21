@@ -68,7 +68,7 @@ function Login(props) {
 
     const body = await data.json();
 
-    if (body.result == true) {
+    if (body.result === true) {
       props.addToken(body.user.token)
       props.addProfileType(body.user.groupsId)
       setSignIn(true)
@@ -88,7 +88,7 @@ function Login(props) {
 
     const body = await data.json()
 
-    if (body.result == true) {
+    if (body.result === true) {
       props.addToken(body.user.token)
       setSignUp(true)
     } else {

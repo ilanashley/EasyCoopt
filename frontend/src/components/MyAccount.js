@@ -14,7 +14,6 @@ import {
   Alert,
 } from "reactstrap";
 import NavBar from "./NavBar";
-import ErrorIcon from "@material-ui/icons/Error";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -106,7 +105,7 @@ function MyAccount(props) {
     const body = await data.json();    
 
     if (body.result === true ) {
-      console.log(body.user.groupsId)
+      // console.log(body.user.groupsId)
       props.addProfileType(body.user.groupsId)
       setUserExists(true);
     } else {
@@ -177,10 +176,10 @@ function MyAccount(props) {
                   <Input
                     type="file"
                     onChange={(e) => {
-                      console.log(
-                        "Le fichier est bien envoye tout contenu-->",
-                        e.target.files[0]
-                      );
+                      // console.log(
+                      //   "Le fichier est bien envoye tout contenu-->",
+                      //   e.target.files[0]
+                      // );
                       setAvatarUrl(e.target.files[0]);
                     }}
                     accept="image/png, image/jpeg"
@@ -189,10 +188,10 @@ function MyAccount(props) {
                   />
                   <Button
                     onClick={() => {
-                      console.log(
-                        "L avatar url arrive bien dans ce bouton-->",
-                        avatarUrl
-                      );
+                      // console.log(
+                      //   "L avatar url arrive bien dans ce bouton-->",
+                      //   avatarUrl
+                      // );
                       loadPicture();
                     }}
                     style={{ margin: "10px" }}

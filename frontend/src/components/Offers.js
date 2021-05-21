@@ -68,16 +68,16 @@ const Offers = (props) => {
                     </Row>
                 </Col>
                 <Col>
-                <Row md="auto" className="d-flex">
+                <Row >
                     <Col >
-                    <h5 className="mt-3">{offer.bonusAmount}€</h5>
+                    <h5 className="mt-3 ml-4">{offer.bonusAmount}€</h5>
                     </Col>
                     <Col>
                     <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
                     </Col>
                 </Row>
                 </Col>
-                <Col  md="auto" className="d-flex justify-content-around">    
+                <Col className="d-flex justify-content-around">    
                     <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
                         Modifier
                     </Button>

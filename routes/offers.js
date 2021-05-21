@@ -48,6 +48,7 @@ router.post('/add', async function (req, res, next) {
   }
 
   if ((user != null && error.length == 0)) {
+    console.log('TEST', title, city, creationDate, bonusAmount, contract, link, resume)
     var newOffer = new offerModel({
       title: title,
       city: city,
@@ -162,6 +163,13 @@ router.get("/offer", async function (req, res, next) {
   }
   res.json({ password, avatarUrl, email, firstName, lastName, type });
 });
+
+
+/* Get Offer By Id */
+router.get('/findById/:offerId', async (req, res, next )=> {
+  var offer = await offerModel.findById({ _id: req.params.offerId}) 
+  res.json({result: true, offerTitle: offer.title})
+})
 
 
 module.exports = router;

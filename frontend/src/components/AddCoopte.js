@@ -30,17 +30,18 @@ const AddCoopte = (props) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [reason, setReason] = useState('');
-  const [creationDate, setCreationDate] = useState('');
   const [cv, setCv] = useState('');
   const [modal, setModal] = useState(false);
   const [offerCompleted, setOfferCompleted] = useState('');
+  const[loading, setLoading] = useState('false');
 
-  const {offerId} = useParams();
-  console.log("offeridInAddCoopte", offerId)
-
+  const {offerId, offerTitle } = useParams();
+  console.log("offeridInAddCoopte", offerId, offerTitle)
 
 
   var saveCoopte = async () => {
+    setModal(!modal)
+    setLoading(true)
 
     var data = new FormData();
 
@@ -60,14 +61,14 @@ const AddCoopte = (props) => {
 
 
     );
-
   
     const saveReq = await fetch('/referrals/add', {
       method: 'post',
       body: data
     })
     var response = await saveReq.json();
-    setModal(!modal)
+    setLoading(false)
+    
   }
   const toggleRedirect = () => {
     setModal(!modal)
@@ -77,16 +78,21 @@ const AddCoopte = (props) => {
     return <Redirect to='/offerslist' />
   }
 
+  if(loading) {
+    var contentModal = <ModalBody>Loading</ModalBody>
+  } else {
+    var contentModal = <ModalBody>Votre Cooptation a bien été prise en compte</ModalBody>
+  }
 
  if(!props.token){
             return <Redirect to="/myaccount" />;
-        } else{return (
+        } else { return (
           <div className="section">
             <NavBar />
             <Container >
               <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
                 <Col sm="12" md={{ size: 6, offset: 3 }}>
-                  <h3 style={{ margin: "40px" }}>You co-opt for the "job title"</h3>
+                  <h3 style={{ margin: "40px" }}>You co-opt for the </h3>
                   <Form>
                     <FormGroup>
                       <Label for="firstname">Firstname</Label>
@@ -119,9 +125,7 @@ const AddCoopte = (props) => {
                     </div>
                   </Form>
                   <Modal isOpen={modal} >
-                    <ModalBody>
-                      Votre cooptation a bien été prise en compte!
-                  </ModalBody>
+                  {contentModal}
                     <ModalFooter>
                       <Button color="primary" onClick={() => {toggleRedirect()}}>Close</Button>
                     </ModalFooter>

@@ -16,7 +16,7 @@ const Offers = (props) => {
         return <h2>Loading...</h2>
     }
 
-    const handleOnClickFaitChier = (id) => {
+    const handleOnClick = (id) => {
         setOfferId(id)
     }
     if (offerId !=='') {
@@ -63,7 +63,7 @@ const Offers = (props) => {
                         <DeleteIcon onClick={() => { props.archiveOffer(offer._id) }} />
                     </button>
 
-                    <Button onClick={() => handleOnClickFaitChier(offer._id)} id="modifyButton">
+                    <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
                         Modifier
                     </Button>
                     <button id="enlargeButton">

@@ -30,13 +30,12 @@ const AddCoopte = (props) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [reason, setReason] = useState('');
-  const [creationDate, setCreationDate] = useState('');
   const [cv, setCv] = useState('');
   const [modal, setModal] = useState(false);
   const [offerCompleted, setOfferCompleted] = useState('');
 
-  const {offerId} = useParams();
-  console.log("offeridInAddCoopte", offerId)
+  const {offerId, offerTitle } = useParams();
+  console.log("offeridInAddCoopte", offerId, offerTitle)
 
 
 
@@ -80,13 +79,13 @@ const AddCoopte = (props) => {
 
  if(!props.token){
             return <Redirect to="/myaccount" />;
-        } else{return (
+        } else { return (
           <div className="section">
             <NavBar />
             <Container >
               <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
                 <Col sm="12" md={{ size: 6, offset: 3 }}>
-                  <h3 style={{ margin: "40px" }}>You co-opt for the "job title"</h3>
+                  <h3 style={{ margin: "40px" }}>You co-opt for the {offerTitle}</h3>
                   <Form>
                     <FormGroup>
                       <Label for="firstname">Firstname</Label>

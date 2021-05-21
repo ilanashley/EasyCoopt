@@ -5,7 +5,7 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import PlaceIcon from '@material-ui/icons/Place';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux'
-import { Button, Col, Row } from "reactstrap";
+import { Button, Row, Col } from "reactstrap";
 import { Redirect } from 'react-router-dom'
 import ViewOffer from './ViewOffer';
 
@@ -69,16 +69,16 @@ const Offers = (props) => {
                     </Row>
                 </Col>
                 <Col>
-                <Row md="auto" className="d-flex">
+                <Row >
                     <Col >
-                    <h5 className="mt-3">{offer.bonusAmount}€</h5>
+                    <h5 className="mt-3 ml-4">{offer.bonusAmount}€</h5>
                     </Col>
                     <Col>
                     <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
                     </Col>
                 </Row>
                 </Col>
-                <Col  md="auto" className="d-flex justify-content-around">    
+                <Col className="d-flex justify-content-around">    
                     <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
                         Modifier
                     </Button>

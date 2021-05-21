@@ -74,8 +74,8 @@ router.post('/sign-up', async (req, res, next) => {
         avatarUrl: "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg",
       });
 
-      saveUser = await newUser.save();
-      if(!saveUser) {
+      user = await newUser.save();
+      if(!user) {
         res.json({ result: false, error: "L'utilisateur n'a pas pu être enregistré" });
       } else {
         res.json({ result: true, user });
@@ -129,6 +129,44 @@ router.get("/account", async function (req, res, next) {
   }
   res.json({ password, avatarUrl, email, firstName, lastName, type });
 });
+
+
+// router.post('/account', async (req, res, next) => {
+
+//   let firstName = req.body.firstName
+//   let lastName = req.body.lastName
+//   let avatarUrl = req.body.avatarUrl
+//   let email = req.body.email
+//   let type = req.body.type
+//   let oldPassword = req.body.oldPassword
+//   let newPassword = req.body.newPassword
+//   let confirmPassword = req.body.confirmPassword
+
+//   if(!firstName || !lastName || !email || !type ) {
+//     res.json({ result: false, error: 'Les champs prénom, nom , email et profil utilisateurs sont obligatoires'})
+//   } else {
+//     if (oldPassword) {
+//       if(oldPassword === 'azerty') {
+//         if ( !newPassword && !confirmPassword ) {
+//           res.json({ result: false, message: 'Veuillez saisir un nouveau mot de passe' });
+//         } else if (newPassword || !confirmPassword) {
+//           res.json({ result: false, message: 'error' });
+//         } else {
+//           if (newPassword !== confirmPassword) {
+//             res.json({ result: false, message: 'error' });
+//           } else {
+//             res.json({ result: true, isLogin: true, message:'success', user: {firstName, lastName, avatarUrl, email, type, newPassword} });
+//           }
+//         }
+//       } else {
+//         res.json({ result: false, message: 'error' });
+//       }
+//     } else {
+//       res.json({ result: true, isLogin: true, message:'success', user: {firstName, lastName, avatarUrl, email, type, oldPassword: 'azerty'} });
+//     }    
+//   }
+// })
+
 
 
 router.post("/account", async (req, res, next) => {

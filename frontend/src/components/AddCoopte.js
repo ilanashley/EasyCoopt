@@ -33,13 +33,15 @@ const AddCoopte = (props) => {
   const [cv, setCv] = useState('');
   const [modal, setModal] = useState(false);
   const [offerCompleted, setOfferCompleted] = useState('');
+  const[loading, setLoading] = useState('false');
 
   const {offerId, offerTitle } = useParams();
   console.log("offeridInAddCoopte", offerId, offerTitle)
 
 
-
   var saveCoopte = async () => {
+    setModal(!modal)
+    setLoading(true)
 
     var data = new FormData();
 
@@ -59,14 +61,14 @@ const AddCoopte = (props) => {
 
 
     );
-
   
     const saveReq = await fetch('/referrals/add', {
       method: 'post',
       body: data
     })
     var response = await saveReq.json();
-    setModal(!modal)
+    setLoading(false)
+    
   }
   const toggleRedirect = () => {
     setModal(!modal)
@@ -76,6 +78,11 @@ const AddCoopte = (props) => {
     return <Redirect to='/offerslist' />
   }
 
+  if(loading) {
+    var contentModal = <ModalBody>Loading</ModalBody>
+  } else {
+    var contentModal = <ModalBody>Votre Cooptation a bien été prise en compte</ModalBody>
+  }
 
  if(!props.token){
             return <Redirect to="/myaccount" />;
@@ -118,9 +125,7 @@ const AddCoopte = (props) => {
                     </div>
                   </Form>
                   <Modal isOpen={modal} >
-                    <ModalBody>
-                      Votre cooptation a bien été prise en compte!
-                  </ModalBody>
+                  {contentModal}
                     <ModalFooter>
                       <Button color="primary" onClick={() => {toggleRedirect()}}>Close</Button>
                     </ModalFooter>

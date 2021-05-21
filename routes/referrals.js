@@ -63,7 +63,12 @@ console.log("ref", referral._id)
 });
 
 
-/* Get Referral 
+// /* Get Referral By Id */
+// router.get('/findById', async (req, res, next )=> {
+//   var referral = await referralModel.findById(req.body.referralId) 
+//   var title = referral.title 
+//   res.json({result: true, title})
+// })
 
 
 /* Get Referrals*/

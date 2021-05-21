@@ -5,8 +5,8 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import PlaceIcon from '@material-ui/icons/Place';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux'
-import { Container, Col, Row, Button } from "reactstrap";
-import { Link, useParams, Redirect } from 'react-router-dom'
+import { Button } from "reactstrap";
+import { Redirect } from 'react-router-dom'
 
 const Offers = (props) => {
 
@@ -16,10 +16,10 @@ const Offers = (props) => {
         return <h2>Loading...</h2>
     }
 
-    const handleOnClickFaitChier = (id) => {
+    const handleOnClick = (id) => {
         setOfferId(id)
     }
-    if (offerId !='') {
+    if (offerId !=='') {
         return <Redirect to={`/addoffer/${offerId}`}></Redirect>
     }
 

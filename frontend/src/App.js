@@ -7,6 +7,7 @@ import {createStore, combineReducers} from 'redux'
 
 import token from './reducers/token'
 import typeId from './reducers/type'
+import userId from './reducers/userId'
 
 import AddOffer from './components/AddOffer';
 import AddCoopte from './components/AddCoopte';
@@ -19,7 +20,7 @@ import MyAccount from './components/MyAccount';
 
 
 
-const store = createStore(combineReducers({ token, typeId }))
+const store = createStore(combineReducers({ token, typeId, userId }))
 
 function App() {
   return (

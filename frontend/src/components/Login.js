@@ -70,7 +70,8 @@ function Login(props) {
 
     if (body.result === true) {
       props.addToken(body.user.token)
-      props.addProfileType(body.user.groupsId)
+      props.addProfileType(body.user.group)
+      props.addUserId(body.user._id)
       setSignIn(true)
     } else {
       setError(body.error)
@@ -90,6 +91,7 @@ function Login(props) {
 
     if (body.result === true) {
       props.addToken(body.user.token)
+      props.addUserId(body.user._id)
       setSignUp(true)
     } else {
       setError(body.error)
@@ -191,10 +193,13 @@ function Login(props) {
 function mapDispatchToProps(dispatch) {
   return {
     addToken: function (token) {
-      dispatch({ type: 'addToken', token: token })
+      dispatch({ type: 'addToken', token })
     },
     addProfileType: function (typeId) {
-      dispatch({ type: 'addProfileType', typeId: typeId })
+      dispatch({ type: 'addProfileType', typeId })
+    },
+    addUserId: function (userId) {
+      dispatch({ type: 'addUserId', userId })
     }
   }
 }

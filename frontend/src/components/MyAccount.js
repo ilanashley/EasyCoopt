@@ -61,7 +61,7 @@ function MyAccount(props) {
 
   useEffect(() => {
     async function loadUser() {
-      var rawResponse = await fetch(`/users/account/?token=${props.token}`);
+      var rawResponse = await fetch(`/users/account?token=${props.token}`);
       var response = await rawResponse.json();
       if (response.avatarUrl) {
         setAvatarUrl(response.avatarUrl);
@@ -112,7 +112,7 @@ useEffect(() => {
 
     if (body.result === true ) {
       // console.log(body.user.groupsId)
-      props.addProfileType(body.user.groupsId)
+      props.addProfileType(body.user.group)
       setUserExists(true);
     } else {
       setError(body.error)

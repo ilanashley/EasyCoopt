@@ -7,7 +7,9 @@ const referralSchema = mongoose.Schema({
     reason: String,
     resumeUrl: String,
     email: String,
-    status: String
+    status: String,
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+    offerId: {type: mongoose.Schema.Types.ObjectId, ref: 'offers'}
 })
 
 const referralModel = mongoose.model('referrals', referralSchema)

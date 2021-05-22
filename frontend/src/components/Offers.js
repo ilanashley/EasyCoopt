@@ -5,7 +5,7 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import PlaceIcon from '@material-ui/icons/Place';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux'
-import { Button, Row, Col } from "reactstrap";
+import { Button, Row, Col, Input, Label } from "reactstrap";
 import { Redirect } from 'react-router-dom'
 import ViewOffer from './ViewOffer';
 
@@ -21,7 +21,7 @@ const Offers = (props) => {
         setOfferId(id)
     }
     
-    if (offerId !=='') {
+    if (offerId) {
         return <Redirect to={`/addoffer/${offerId}`}></Redirect>
     }
 
@@ -84,6 +84,19 @@ const Offers = (props) => {
                     <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
                         Modifier
                     </Button>
+                    {/* <select defaultValue={offer ? offer.contract : 'CDI'} className="form-select" onChange={(e) => props.archiveOffer(offer._id)} aria-label="Default select example" name="contract">
+                        <option value="CDI">CDI</option>
+                        <option value="CDD">CDD</option>
+                        <option value="Stage">Stage</option>
+                    </select> */}
+                    {/* <div className="form-check">
+  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
+  <label className="form-check-label" for="flexCheckDefault">
+    Archiver
+  </label>
+</div> */}
+                    {/* <Label for="contract">Archiver</Label>
+                    <Input addon type="checkbox" aria-label="Checkbox for following text input" onChange={() => { props.archiveOffer(offer._id) }}/> */}
                     <DeleteIcon  className="mt-3 deleteIcon"  fontSize="medium"  onClick={() => { props.archiveOffer(offer._id) }}/>
                     <Button  className="mt-2"  id="enlargeButton" onClick={() => props.viewOffer(offer._id)}>
                         <OpenInNewIcon />

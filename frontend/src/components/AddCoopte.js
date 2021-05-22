@@ -17,9 +17,6 @@ import {
 import NavBar from './NavBar';
 import { useParams, Redirect } from "react-router-dom";
 
-
-
-
 const AddCoopte = (props) => {
 
   const [firstName, setFirstName] = useState('');
@@ -53,6 +50,7 @@ const AddCoopte = (props) => {
     data.append('reason', reason);
     data.append('creationDate', date);
     data.append('offerId', offerId);
+    data.append('userId', props.userId)
 
     data.append(
       "cv",
@@ -77,7 +75,7 @@ const AddCoopte = (props) => {
     const getTitle = async () => {
       let rawResponse = await fetch(`/offers/findById/${offerId}`);
       let response = await rawResponse.json();
-      setOfferTitle(response.offerTitle)
+      setOfferTitle(response.offer.title)
     };
     getTitle();
   },
@@ -102,15 +100,18 @@ const AddCoopte = (props) => {
 
   if (!props.token) {
     return <Redirect to="/myaccount" />;
+  } else if (props.typeId !== 'Coopteur') {
+    return <Redirect to="/offersList" />;
   }
 
   return (
-    <div className="section" style={{marginBottom: 50}}>
+    <div className="section">
       <NavBar />
+      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', padding: 20 }}><h1>Vous recommandez une personne pour le poste de :</h1><h1>{offerTitle}</h1></div>
+
       <Container >
-        <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
+        <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
           <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <h3 style={{ margin: "40px" }}>You co-opt for the {offerTitle}</h3>
             <Form>
               <FormGroup>
                 <Label for="firstname">Firstname</Label>
@@ -156,9 +157,11 @@ const AddCoopte = (props) => {
 }
 
 function mapStateToProps(state) {
-  // console.log("state", state)
+  console.log("state", state)
   return {
     token: state.token,
+    typeId: state.typeId,
+    userId: state.userId
   }
 }
 

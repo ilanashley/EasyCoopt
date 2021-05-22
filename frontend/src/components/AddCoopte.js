@@ -6,18 +6,14 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Button,
   Container,
   Row,
   Col,
   Modal,
-  ModalHeader,
   ModalBody,
   ModalFooter
 } from 'reactstrap';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar';
 import { useParams, Redirect } from "react-router-dom";
 
@@ -101,7 +97,7 @@ const AddCoopte = (props) => {
   if (loading) {
     var contentModal = <ModalBody>Loading</ModalBody>
   } else {
-    var contentModal = <ModalBody>Votre Cooptation a bien été prise en compte</ModalBody>
+    contentModal = <ModalBody>Votre Cooptation a bien été prise en compte</ModalBody>
   }
 
   if (!props.token) {

@@ -87,7 +87,7 @@ const OffersList = (props) => {
     }
   }
   
-  /* function pour recommander*/
+  // Function pour recommander 
   const recommend = (offerId) => {
     setOfferId(offerId)
   }

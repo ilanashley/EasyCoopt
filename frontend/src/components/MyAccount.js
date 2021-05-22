@@ -49,6 +49,7 @@ function MyAccount(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userExists, setUserExists] = useState(false);
   const [error, setError] = useState('')
+  const [uploadPicture, setUploadPicture] = useState('')
 
   // Modal state
   const classes = useStyles();
@@ -73,11 +74,16 @@ function MyAccount(props) {
     loadUser();
   }, []);
 
-  let loadPicture = async () => {
-    // console.log("le fichier arrive dans loadPicture-->", avatarUrl);
+// UseEffect afin d'afficher l'avatar de cloudinary
+useEffect(() => {
+  setAvatarUrl(uploadPicture)
+}, [uploadPicture]);
+
+  async function loadPicture (PictureData) {
+    console.log("le fichier arrive dans loadPicture-->", avatarUrl);
     var data = new FormData();
 
-    data.append("avatar", avatarUrl);
+    data.append("avatar", PictureData);
 
     var rawResponse = await fetch("/users/upload", {
       method: "POST",
@@ -85,8 +91,8 @@ function MyAccount(props) {
     });
     var newPicture = await rawResponse.json();
     if (newPicture) {
-      // console.log("new picture OK", newPicture.secure_url);
-      setAvatarUrl(newPicture.secure_url);
+      console.log("new picture OK", newPicture.secure_url);
+      setUploadPicture(newPicture.secure_url);
     }
   };
 
@@ -180,24 +186,24 @@ function MyAccount(props) {
                       //   "Le fichier est bien envoye tout contenu-->",
                       //   e.target.files[0]
                       // );
-                      setAvatarUrl(e.target.files[0]);
+                      setAvatarUrl(e.target.files[0]);  loadPicture(e.target.files[0])
                     }}
                     accept="image/png, image/jpeg"
                     name="avatar"
                     placeholder="Avatar"
                   />
-                  <Button
+                  {/* <Button
                     onClick={() => {
-                      // console.log(
-                      //   "L avatar url arrive bien dans ce bouton-->",
-                      //   avatarUrl
-                      // );
-                      loadPicture();
+                      console.log(
+                        "L avatar url arrive bien dans ce bouton-->",
+                        avatarUrl
+                      );
+                      ;
                     }}
                     style={{ margin: "10px" }}
                   >
                     Sauvegarder votre portrait
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>

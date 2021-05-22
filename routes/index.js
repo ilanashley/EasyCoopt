@@ -8,13 +8,13 @@ router.get('/', function(req, res, next) {
 });
 
 
-let APkey = process.env.API_K;
-let APsecret = process.env.API_S;
+// let APkey = process.env.API_K;
+// let APsecret = process.env.API_S;
 
-cloudinary.config({
-  cloud_name: 'dyx38qkbh',
-  api_key: APkey,
-  api_secret: APsecret 
- });
+// cloudinary.config({
+//   cloud_name: 'dyx38qkbh',
+//   api_key: APkey,
+//   api_secret: APsecret 
+//  });
 
 module.exports = router;

@@ -23,15 +23,19 @@ cloudinary.config({
 /* Add Referrals */
 
 router.post('/add', async (req, res, next) => {
+
+ 
   
 /* send cv in cloudinary */
   var cvPath = './tmp/' + uniqid() + '.jpg';
   var resultCopy = await req.files.cv.mv(cvPath);
-
+  if(resultCopy) {
+    console.log('resultCopy exist')
+  }
   if (!resultCopy) {
     var resultCloudinary = await cloudinary.uploader.upload(cvPath);
     
-  
+  console.log('resultCloudinary --> ', resultCloudinary)
 
     const newReferral = new referralModel({
       firstName: req.body.firstName,
@@ -46,8 +50,8 @@ router.post('/add', async (req, res, next) => {
 
     var referral = await newReferral.save();
 
-console.log("req", req.body.offerId)
-console.log("ref", referral._id)
+    console.log("offerId de req.body dans le back --> ", req.body.offerId)
+    console.log("id de la cooptation dans le back --> ", referral._id)
 
     await offerModel.updateOne(
       { _id: req.body.offerId },
@@ -79,6 +83,7 @@ router.get('/get', async (req, res, next) => {
       for (let i = 0; i < users[k].offersId.length; i++) {
         for (let j = 0; j < users[k].offersId[i].referralsId.length; j++) {
           usersInfo.push({
+            recipientToken: users[k].token,
             recipientFirstName: users[k].firstName,
             recipientLastName: users[k].lastName,
             offerId: users[k].offersId[i]._id,
@@ -96,6 +101,7 @@ router.get('/get', async (req, res, next) => {
         }
       }
     }
+
     res.json({ result: true, usersInfo });
   }
 });

@@ -39,6 +39,7 @@ const Offers = (props) => {
             display = { display: 'none' }
         }
         return (
+            
             <div key={offer._id} className="cardBackground mb-2" style={display}>
                 <Row className="d-flex flex-column flex-md-row align-items-center ">
 

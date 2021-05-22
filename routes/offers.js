@@ -6,11 +6,9 @@ var userModel = require("../models/users");
 
 
 router.get('/get', async (req, res, next) => {
-  let error
   var offers = await offerModel.find()
   if (!offers) {
-    error = "Il n'y a pas d'offre à afficher"
-    res.json({ result: false, error })
+    res.json({ result: false, error: "Il n'y a pas d'offre à afficher" })
   } else {
     res.json({ result: true, offers })
   }
@@ -145,9 +143,12 @@ router.get("/offer", async function (req, res, next) {
 
 /* Get Offer By Id */
 router.get('/findById/:offerId', async (req, res, next )=> {
-  console.log('id du back ---> ', req.params.id)
+  // console.log('id du back ---> ', req.params.offerId)
   var offer = await offerModel.findById({ _id: req.params.offerId}) 
-  res.json({result: true, offerTitle: offer.title})
+  if(offer) {
+    res.json({result: true, offerTitle: offer.title})
+  }
+  res.json({result: false})
 })
 
 

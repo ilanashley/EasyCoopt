@@ -47,6 +47,8 @@ const AddCoopte = (props) => {
     var date = new Date()
     date.setHours(0, 0, 0, 0)
 
+    console.log('date de creation de la cooptation --> ',date)
+
     var data = new FormData();
 
     data.append('firstName', firstName);
@@ -66,8 +68,12 @@ const AddCoopte = (props) => {
       method: 'post',
       body: data
     })
-    await saveReq.json();
-    setLoading(false)
+    let response = await saveReq.json();
+
+    if(response) {
+      console.log('réponse du back au fetch du coopté')
+      setLoading(false)
+    }
 
   }
 
@@ -103,7 +109,7 @@ const AddCoopte = (props) => {
   }
 
   return (
-    <div className="section">
+    <div className="section" style={{marginBottom: 50}}>
       <NavBar />
       <Container >
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
@@ -154,7 +160,7 @@ const AddCoopte = (props) => {
 }
 
 function mapStateToProps(state) {
-  console.log("state", state)
+  // console.log("state", state)
   return {
     token: state.token,
   }

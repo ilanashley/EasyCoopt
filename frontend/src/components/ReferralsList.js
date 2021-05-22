@@ -28,7 +28,7 @@ const ReferralsList = (props) => {
     setLoading(true)
     var rawResponse = await fetch('/referrals/get')
     var response = await rawResponse.json()
-    setReferrals(response.usersInfo)
+    setReferrals(referrals.usersInfo)
     setLoading(false)
   }
 
@@ -212,7 +212,8 @@ const ReferralsList = (props) => {
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
   return { 
-    token: state.token
+    token: state.token,
+    typeId: state.typeId
   };
 }
 

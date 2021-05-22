@@ -70,7 +70,7 @@ router.post('/sign-up', async (req, res, next) => {
         password: password,
         password: hash,
         token: uid2(32),
-        groupsId: "Coopteur",
+        group: "Coopteur",
         avatarUrl: "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg",
       });
 
@@ -119,13 +119,13 @@ router.post('/sign-in', async (req, res, next) => {
 router.get("/account", async function (req, res, next) {
   var user = await userModel.findOne({ token: req.query.token });
 
-  if (user != null) {
-    (password = user.password),
-      (avatarUrl = user.avatarUrl),
-      (email = user.email),
-      (firstName = user.firstName),
-      (lastName = user.lastName),
-      (type = user.groupsId);
+  if (user) {
+      password = user.password,
+      avatarUrl = user.avatarUrl,
+      email = user.email,
+      firstName = user.firstName,
+      lastName = user.lastName,
+      type = user.group
   }
   res.json({ password, avatarUrl, email, firstName, lastName, type });
 });
@@ -164,7 +164,7 @@ router.post('/account', async (req, res, next) => {
                 email: email,
                 firstName: firstName,
                 lastName: lastName,
-                groupsId: type,
+                group: type,
                 password: newPasswordHash
               });
 
@@ -187,7 +187,7 @@ router.post('/account', async (req, res, next) => {
           email: email,
           firstName: firstName,
           lastName: lastName,
-          groupsId: type
+          group: type
         });
         if (updatedUser) {
           let user = await userModel.findOne({ token: token });

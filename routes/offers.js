@@ -6,11 +6,9 @@ var userModel = require("../models/users");
 
 
 router.get('/get', async (req, res, next) => {
-  let error
   var offers = await offerModel.find()
   if (!offers) {
-    error = "Il n'y a pas d'offre à afficher"
-    res.json({ result: false, error })
+    res.json({ result: false, error: "Il n'y a pas d'offre à afficher" })
   } else {
     res.json({ result: true, offers })
   }
@@ -25,46 +23,43 @@ router.post('/add', async function (req, res, next) {
   let contract = req.body.contract;
   let link = req.body.link;
   let resume = req.body.resume;
-  let status = req.body.status;
-  var error = [];
-  let result = false;
-  let saveOffer = null;
+  let status = req.body.status; 
 
   var user = await userModel.findOne({ token: req.body.token })
 
   // Si un des champs est vide, afficher un message d'erreur
-  if (!title || !city || !creationDate || !bonusAmount || !contract || !link || !resume) {
-    error.push("Champs vides");
-    res.json({ result, error });
-  }
-
-  if ((user != null && error.length == 0)) {
-    var newOffer = new offerModel({
-      title: title,
-      city: city,
-      creationDate: creationDate,
-      bonusAmount: bonusAmount,
-      contract: contract,
-      link: link,
-      resume: resume,
-      status: true,
-    });
-
-    saveOffer = await newOffer.save();
-
-    var n = await userModel.updateOne(
-      { token: req.body.token },
-      {
-        $push: { offersId: saveOffer._id }
+  if (!title || !city || !creationDate || !bonusAmount || !contract || !resume) {
+    res.json({ result: false, error: "Tous les champs sont requis sauf le lien" });
+  } else {
+    if (user) {
+      var newOffer = new offerModel({
+        title: title,
+        city: city,
+        creationDate: creationDate,
+        bonusAmount: bonusAmount,
+        contract: contract,
+        link: link,
+        resume: resume,
+        status: true,
+        userId: user._id
+      });
+      var savedOffer = await newOffer.save();
+      var updatedUser = await userModel.updateOne(
+        { token: req.body.token },
+        {
+          $push: { offersId: savedOffer._id }
+        }
+      );
+  
+      if (savedOffer && updatedUser) {
+        res.json({ result: true });
+      } else {
+        res.json({ result: false, error: "La connexion à la bdd a échoué" });
       }
-    );
-
-    if (saveOffer) {
-      result = true;
+    } else {
+      res.json({ result: false, error: "Cet utilisateur n'existe pas" });
     }
-
-    res.json({ result, offer: saveOffer, error, token });
-  }
+  } 
 })
 
 router.put('/add', async function (req, res, next) {
@@ -84,12 +79,10 @@ router.put('/add', async function (req, res, next) {
   var user = await userModel.findOne({ token: req.body.token })
 
   // Si un des champs est vide, afficher un message d'erreur
-  if (!title || !city || !creationDate || !bonusAmount || !contract || !link || !resume) {
+  if (!title || !city || !creationDate || !bonusAmount || !contract || !resume) {
     error.push("Champs vides");
     res.json({ result, error });
-  }
-
-  if ((user != null && error.length == 0)) {
+  } else if (user != null && error.length == 0) {
     var modifiedOffer = await offerModel.updateOne(
       { _id: req.body.id },
       {
@@ -101,6 +94,7 @@ router.put('/add', async function (req, res, next) {
         link: link,
         resume: resume,
         status: true,
+        userId: user._id
       });
 
     if (modifiedOffer) {
@@ -115,7 +109,7 @@ router.put('/archive', async function (req, res, next) {
   var result = false
   var status = req.body.status
 
-  var archiveOffer = await offerModel.updateOne(
+  await offerModel.updateOne(
     { _id: req.body.id },
     {
       status: status
@@ -132,12 +126,12 @@ router.get("/offer", async function (req, res, next) {
   var user = await offerModel.findOne({ id: req.query.token });
 
   if (user != null) {
-    (password = user.password),
-      (avatarUrl = user.avatarUrl),
-      (email = user.email),
-      (firstName = user.firstName),
-      (lastName = user.lastName),
-      (type = user.groupsId);
+    password = user.password,
+    avatarUrl = user.avatarUrl,
+    email = user.email,
+    firstName = user.firstName,
+    lastName = user.lastName,
+    type = user.groupsId
   }
   res.json({ password, avatarUrl, email, firstName, lastName, type });
 });
@@ -145,9 +139,13 @@ router.get("/offer", async function (req, res, next) {
 
 /* Get Offer By Id */
 router.get('/findById/:offerId', async (req, res, next )=> {
-  console.log('id du back ---> ', req.params.id)
+  // console.log('id du back ---> ', req.params.offerId)
   var offer = await offerModel.findById({ _id: req.params.offerId}) 
-  res.json({result: true, offerTitle: offer.title})
+  if(!offer) {
+    res.json({result: false, error: "L'offre n'existe pas" })
+  } else {
+    res.json({result: true, offer})  
+  }
 })
 
 

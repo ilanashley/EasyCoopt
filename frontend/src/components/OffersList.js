@@ -70,8 +70,7 @@ const OffersList = (props) => {
   // Enlever offre
 
   var archiveOffer = async (id) => {
-    console.log('Id', id)
-
+ console.log(id)
     const archiveReq = await fetch('/offers/archive', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -79,13 +78,13 @@ const OffersList = (props) => {
     })
     const body = await archiveReq.json()
 
-    console.log(body)
     if (body.result === true) {
 
       setAjoutId([...ajoutId, body.offerCurrent._id])
       console.log('Je suis là')
     }
   }
+
   // Function pour recommander 
   const recommend = (offerId) => {
     setOfferId(offerId)

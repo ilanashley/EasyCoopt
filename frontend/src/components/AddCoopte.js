@@ -17,9 +17,6 @@ import {
 import NavBar from './NavBar';
 import { useParams, Redirect } from "react-router-dom";
 
-
-
-
 const AddCoopte = (props) => {
 
   const [firstName, setFirstName] = useState('');
@@ -43,6 +40,8 @@ const AddCoopte = (props) => {
     var date = new Date()
     date.setHours(0, 0, 0, 0)
 
+    console.log('date de creation de la cooptation --> ',date)
+
     var data = new FormData();
 
     data.append('firstName', firstName);
@@ -51,6 +50,7 @@ const AddCoopte = (props) => {
     data.append('reason', reason);
     data.append('creationDate', date);
     data.append('offerId', offerId);
+    data.append('userId', props.userId)
 
     data.append(
       "cv",
@@ -62,8 +62,12 @@ const AddCoopte = (props) => {
       method: 'post',
       body: data
     })
-    await saveReq.json();
-    setLoading(false)
+    let response = await saveReq.json();
+
+    if(response) {
+      console.log('réponse du back au fetch du coopté')
+      setLoading(false)
+    }
 
   }
 
@@ -71,7 +75,7 @@ const AddCoopte = (props) => {
     const getTitle = async () => {
       let rawResponse = await fetch(`/offers/findById/${offerId}`);
       let response = await rawResponse.json();
-      setOfferTitle(response.offerTitle)
+      setOfferTitle(response.offer.title)
     };
     getTitle();
   },
@@ -96,15 +100,18 @@ const AddCoopte = (props) => {
 
   if (!props.token) {
     return <Redirect to="/myaccount" />;
+  } else if (props.typeId !== 'Coopteur') {
+    return <Redirect to="/offersList" />;
   }
 
   return (
     <div className="section">
       <NavBar />
+      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', padding: 20 }}><h1>Vous recommandez une personne pour le poste de :</h1><h1>{offerTitle}</h1></div>
+
       <Container >
-        <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
+        <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
           <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <h3 style={{ margin: "40px" }}>You co-opt for the {offerTitle}</h3>
             <Form>
               <FormGroup>
                 <Label for="firstname">Firstname</Label>
@@ -153,6 +160,8 @@ function mapStateToProps(state) {
   console.log("state", state)
   return {
     token: state.token,
+    typeId: state.typeId,
+    userId: state.userId
   }
 }
 

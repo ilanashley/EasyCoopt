@@ -28,7 +28,12 @@ const ReferralsList = (props) => {
     setLoading(true)
     var rawResponse = await fetch('/referrals/get')
     var response = await rawResponse.json()
-    setReferrals(response.usersInfo)
+    if(props.typeId === 'Coopteur') {
+      let filteredReferrals = response.referrals.filter(referral => referral.userId.token === props.token)
+      setReferrals(filteredReferrals)
+    } else {
+      setReferrals(response.referrals)
+    }
     setLoading(false)
   }
 
@@ -74,7 +79,7 @@ const ReferralsList = (props) => {
   const handleSelectStatusChange = async (event, i, referralId) => {
     let newReferrals = [...referrals]
     let index = i + indexOfFirstReferral
-    newReferrals[index].referralStatus = event.target.value
+    newReferrals[index].status = event.target.value
     setReferrals(newReferrals)
     var rawResponse = await fetch('/referrals/update', {
       method: 'POST',
@@ -85,7 +90,7 @@ const ReferralsList = (props) => {
   }
 
   // Filter per date
-  const addDateArray = referrals.map((referral) => { return referral.referralCreationDate })
+  const addDateArray = referrals.map((referral) => { return referral.creationDate })
   console.log(addDateArray)
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
     return addDateArray.indexOf(date) === pos;
@@ -99,12 +104,12 @@ const ReferralsList = (props) => {
   })
 
   const handleSelectFilteredDate = (event) => {
-    const referralsPerDate = referrals.filter(referral => referral.referralCreationDate === event.target.value)
+    const referralsPerDate = referrals.filter(referral => referral.creationDate === event.target.value)
     setReferrals(referralsPerDate)
   }
 
   // Filter per recipient
-  const recipientArray = referrals.map((referral) => { return referral.recipientLastName })
+  const recipientArray = referrals.map((referral) => { return referral.userId.lastName })
   const recipientFilteredArray = recipientArray.filter((recipient, pos) => {
     return recipientArray.indexOf(recipient) === pos;
   }).sort()
@@ -113,12 +118,12 @@ const ReferralsList = (props) => {
   })
 
   const handleSelectFilteredRecipient = (event) => {
-    const referralsPerRecipient = referrals.filter(referral => referral.recipientLastName === event.target.value)
+    const referralsPerRecipient = referrals.filter(referral => referral.userId.lastName === event.target.value)
     setReferrals(referralsPerRecipient)
   }
 
   // Fiter per referral
-  const referralArray = referrals.map((referral) => { return referral.referralLastName })
+  const referralArray = referrals.map((referral) => { return referral.lastName })
   const referralFilteredArray = referralArray.filter((referral, pos) => {
     return referralArray.indexOf(referral) === pos;
   }).sort()
@@ -127,22 +132,22 @@ const ReferralsList = (props) => {
   })
 
   const handleSelectFilteredReferral = (event) => {
-    const referralsPerReferral = referrals.filter(referral => referral.referralLastName === event.target.value)
+    const referralsPerReferral = referrals.filter(referral => referral.lastName === event.target.value)
     setReferrals(referralsPerReferral)
   }
 
   // Filter per status
-  const statusArray = referrals.map((referral) => { return referral.referralStatus })
+  const statusArray = referrals.map((referral) => { return referral.status })
   const statusFilteredArray = statusArray.filter((status, pos) => {
     return statusArray.indexOf(status) === pos;
   }).sort()
   const statusFilteredList = statusFilteredArray.map((status) => {
-    let statusDescription = status === '1' ? 'En attente' : (status === '2' ? 'Approuvé' : 'Refusé')
+    let statusDescription = status === '1' ? 'En cours' : (status === '2' ? 'Approuvé' : 'Refusé')
     return (<option value={status}>{statusDescription}</option>)
   })
 
   const handleSelectFilteredStatus = (event) => {
-    const referralsPerStatus = referrals.filter(referral => referral.referralStatus === event.target.value)
+    const referralsPerStatus = referrals.filter(referral => referral.status === event.target.value)
     setReferrals(referralsPerStatus)
   }
 
@@ -153,6 +158,14 @@ const ReferralsList = (props) => {
 
   if(!props.token) {
     return <Redirect to="/login" />;
+  }
+
+  let filterPerRecipient
+  if(props.typeId === 'Recruteur') {
+    filterPerRecipient = <select onChange={handleSelectFilteredRecipient} className="custom-form-select mr-2" aria-label="Default select example">
+                                <option selected>Filtrer par bénéficiaire</option>
+                                {recipientFilteredList}
+                              </select>
   }
 
   return (
@@ -172,10 +185,7 @@ const ReferralsList = (props) => {
             <option selected>Filtrer par date</option>
             {addDateFilteredList}
           </select>
-          <select onChange={handleSelectFilteredRecipient} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par bénéficiaire</option>
-            {recipientFilteredList}
-          </select>
+          {filterPerRecipient}
           <select onChange={handleSelectFilteredReferral} className="custom-form-select mr-2" aria-label="Default select example">
             <option selected>Filtrer par coopté</option>
             {referralFilteredList}
@@ -212,7 +222,8 @@ const ReferralsList = (props) => {
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
   return { 
-    token: state.token
+    token: state.token,
+    typeId: state.typeId
   };
 }
 

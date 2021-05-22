@@ -91,7 +91,7 @@ useEffect(() => {
     });
     var newPicture = await rawResponse.json();
     if (newPicture) {
-      console.log("new picture OK", newPicture.secure_url);
+      // console.log("new picture OK", newPicture.secure_url);
       setUploadPicture(newPicture.secure_url);
     }
   };

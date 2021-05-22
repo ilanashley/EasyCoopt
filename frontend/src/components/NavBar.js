@@ -17,8 +17,8 @@ function NavBar(props) {
                 <div className="container-fluid">
                     <Link to="/" className="navbar-brand"><img src='./images/easycoopt_logo.png' alt='logo' height='40px' /></Link>
                     <div className="linkContainer">
-                        <Link to="/referralslist" className="navbar-brand" style={{ color: "#254383" }}>Cooptations</Link>
                         <Link to="/" className="navbar-brand" style={{ color: "#254383" }}>Annonces</Link>
+                        <Link to="/referralslist" className="navbar-brand" style={{ color: "#254383" }}>Cooptations</Link>
                         <Link to="/myaccount"> <button id="largeButton" style={{ margin: "10px", color: "#FFFFF" }}> <PersonOutlineIcon fontSize="medium" /> </button> </Link>
                         <button onClick={handleLogOut} id="largeButton" style={{ margin: "10px" }}>  <ExitToAppIcon fontSize="medium" /></button>
                     </div>

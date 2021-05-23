@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { Button, Row, Col, Input, Label } from "reactstrap";
 import { Redirect } from 'react-router-dom'
 import ViewOffer from './ViewOffer';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const Offers = (props) => {
 
@@ -97,10 +98,10 @@ const Offers = (props) => {
 </div> */}
                     {/* <Label for="contract">Archiver</Label>
                     <Input addon type="checkbox" aria-label="Checkbox for following text input" onChange={() => { props.archiveOffer(offer._id) }}/> */}
-                    <DeleteIcon  className="mt-3 deleteIcon"  fontSize="medium"  onClick={() => { props.archiveOffer(offer._id) }}/>
-                    <Button  className="mt-2"  id="enlargeButton" onClick={() => props.viewOffer(offer._id)}>
-                        <OpenInNewIcon />
-                    </Button>
+                    <Tooltip title="Supprimer"><DeleteIcon  className="mt-3 deleteIcon" style={{cursor: 'pointer'}}  fontSize="medium"  onClick={() => { props.archiveOffer(offer._id) }}/></Tooltip>
+                    <Tooltip title="Voir l'offre"><OpenInNewIcon   className="mt-3 deleteIcon"  style={{cursor: 'pointer'}} onClick={() => props.viewOffer(offer._id)}/></Tooltip>
+                        {/* <OpenInNewIcon />
+                    </Button> */}
                 </Col>
 
                 </Row>

@@ -15,7 +15,7 @@ function NavBar(props) {
         <div className='navbarContainer'>
             <nav className="navbar navbar-light bg-white">
                 <div className="container-fluid">
-                    <Link to="/" className="navbar-brand"><img src='./images/easycoopt_logo.png' alt='logo' height='40px' /></Link>
+                    <Link to="/" className="navbar-brand"><img src='../images/easycoopt_logo.png' alt='logo' height='40px' /></Link>
                     <div className="linkContainer">
                         <Link to="/" className="navbar-brand" style={{ color: "#254383" }}>Annonces</Link>
                         <Link to="/referralslist" className="navbar-brand" style={{ color: "#254383" }}>Cooptations</Link>

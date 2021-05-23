@@ -40,12 +40,10 @@ const AddCoopte = (props) => {
     var date = new Date()
     date.setHours(0, 0, 0, 0)
 
-    console.log('date de creation de la cooptation --> ',date)
-
     var data = new FormData();
 
-    data.append('firstName', firstName);
-    data.append('lastName', lastName);
+    data.append('firstName', firstName.charAt(0).toUpperCase() + firstName.slice(1));
+    data.append('lastName', lastName.charAt(0).toUpperCase() + lastName.slice(1));
     data.append('email', email);
     data.append('reason', reason);
     data.append('creationDate', date);
@@ -78,8 +76,7 @@ const AddCoopte = (props) => {
       setOfferTitle(response.offer.title)
     };
     getTitle();
-  },
-    []);
+  }, []);
 
   /* function to redirect to offersList */
   const toggleRedirect = () => {
@@ -147,7 +144,6 @@ const AddCoopte = (props) => {
             </Modal>
           </Col>
         </Row>
-
       </Container>
     </div>
 

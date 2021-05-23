@@ -105,7 +105,7 @@ useEffect(() => {
     const data = await fetch("/users/account", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${props.token}&avatarUrl=${avatarUrl}&firstName=${firstName}&lastName=${lastName}&email=${email}&type=${type}&oldPassword=${oldPassword}&newPassword=${newPassword}&confirmPassword=${confirmPassword}`,
+      body: `token=${props.token}&avatarUrl=${avatarUrl}&firstName=${firstName.charAt(0).toUpperCase() + firstName.slice(1)}&lastName=${lastName.charAt(0).toUpperCase() + lastName.slice(1)}&email=${email}&type=${type}&oldPassword=${oldPassword}&newPassword=${newPassword}&confirmPassword=${confirmPassword}`,
     });
 
     const body = await data.json();    
@@ -316,4 +316,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyAccount);
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(MyAccount);

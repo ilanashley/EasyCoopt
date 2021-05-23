@@ -6,16 +6,15 @@ import Pagination from './Pagination';
 import Offers from './Offers';
 import { Redirect } from 'react-router';
 import PostAddIcon from '@material-ui/icons/PostAdd';
-
+import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
 const OffersList = (props) => {
-
 
   const [offers, setOffers] = useState([]);
   const [ajoutId, setAjoutId] = useState([]);
   const [offerId, setOfferId] = useState('');
   const [offerIdView, setOfferIdView] = useState('')
-  
+
 
   // Pagination states
   const [loading, setLoading] = useState(false);
@@ -37,7 +36,6 @@ const OffersList = (props) => {
     setOffers(response.offers)
     setLoading(false)
   }
-
 
   useEffect(() => {
     fetchOffers()
@@ -70,7 +68,6 @@ const OffersList = (props) => {
   // Enlever offre
 
   var archiveOffer = async (id) => {
- console.log(id)
     const archiveReq = await fetch('/offers/archive', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -79,9 +76,7 @@ const OffersList = (props) => {
     const body = await archiveReq.json()
 
     if (body.result === true) {
-
       setAjoutId([...ajoutId, body.offerCurrent._id])
-      console.log('Je suis là')
     }
   }
 
@@ -109,8 +104,8 @@ const OffersList = (props) => {
   const addDateFilteredList = addDateFilteredArray.map((date) => {
     var myDate = new Date(date)
     var myDateString = ('0' + myDate.getDate()).slice(-2) + '/'
-        + ('0' + (myDate.getMonth()+1)).slice(-2) + '/'
-        + myDate.getFullYear();
+      + ('0' + (myDate.getMonth() + 1)).slice(-2) + '/'
+      + myDate.getFullYear();
     return (<option value={date}>{myDateString}</option>)
   })
 
@@ -152,6 +147,14 @@ const OffersList = (props) => {
     fetchOffers()
   }
 
+  let addOffer
+  if (props.typeId === 'Recruteur') {
+    addOffer = <div className='selectContainer'>
+      <Link to={"/addoffer/"}><PostAddIcon fontSize='large' /></Link>
+      <p>Ajouter une Offre</p>
+    </div>
+  }
+
   return (
 
     <div className='mainContainer'>
@@ -177,16 +180,13 @@ const OffersList = (props) => {
             <option selected>Filtrer par contrat</option>
             {contractFilteredList}
           </select>
-          <button onClick={handleSelectResetFilters} className='custom-btn-style'>Supprimer</button>
+          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon/></button>
         </div>
 
-        <div className='selectContainer'>
-          <Link to={"/addoffer/"}><PostAddIcon fontSize='large'/></Link> 
-          <p>Ajouter une Offre</p>
-        </div>
+        {addOffer}
 
         <div className='tableContainer'>
-          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer}/>
+          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />
         </div>
 
         <div className='perPageContainer'>
@@ -210,7 +210,8 @@ const OffersList = (props) => {
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
   return {
-    token: state.token
+    token: state.token,
+    typeId: state.typeId
   };
 }
 

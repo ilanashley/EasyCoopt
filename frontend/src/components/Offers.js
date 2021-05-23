@@ -20,11 +20,10 @@ const Offers = (props) => {
     const handleOnClick = (id) => {
         setOfferId(id)
     }
-    
+
     if (offerId) {
         return <Redirect to={`/addoffer/${offerId}`}></Redirect>
     }
-
 
     // Map pour l'affichage des offres
     const offersList = props.currentOffers.map((offer, i) => {
@@ -39,69 +38,78 @@ const Offers = (props) => {
         if (props.ajoutId.includes(offer._id)) {
             display = { display: 'none' }
         }
+
+        let updateOffer
+        let archiveOffer
+        if (props.typeId === 'Recruteur') {
+            updateOffer = <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
+                Modifier
+            </Button>
+            archiveOffer = <DeleteIcon className="mt-3 deleteIcon" fontSize="medium" onClick={() => { props.archiveOffer(offer._id) }} />
+        }
+
         return (
-            
+
             <div key={offer._id} className="cardBackground mb-2" style={display}>
                 <Row className="d-flex flex-column flex-md-row align-items-center ">
 
-                <Col >
-                    <h5 className="d-flex justify-content-center mt-1">{offer.title}</h5>
-                </Col>
-                <Col className="cardInfoBg">
-                    <Row className="d.flex justify-content-center align-items-center">
-                        <Col >
-                            <div className="cardInfoIcons mt-3">
-                                <CalendarTodayIcon fontSize="medium"/>
-                                <p className="cardIconsText mt-1">Il y a {diffDays} jour{diffDays>1 ? 's': ''}</p>
-                            </div>
-                        </Col>
-                        <Col>
-                            <div className="cardInfoIcons mt-3">
-                                <BusinessCenterIcon fontSize="medium"/>
-                                <p className="cardIconsText mt-1">{offer.contract}</p>
-                            </div>
-                        </Col>
-                        <Col>
-                            <div className="cardInfoIcons mt-3">
-                                <PlaceIcon fontSize="medium"/>
-                                <p className="cardIconsText mt-1">{offer.city}</p>
-                            </div>
-                        </Col>
-
-                    </Row>
-                </Col>
-                <Col>
-                <Row >
                     <Col >
-                    <h5 className="mt-3 ml-4">{offer.bonusAmount}€</h5>
+                        <h5 className="d-flex justify-content-center mt-1">{offer.title}</h5>
+                    </Col>
+                    <Col className="cardInfoBg">
+                        <Row className="d.flex justify-content-center align-items-center">
+                            <Col >
+                                <div className="cardInfoIcons mt-3">
+                                    <CalendarTodayIcon fontSize="medium" />
+                                    <p className="cardIconsText mt-1">Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</p>
+                                </div>
+                            </Col>
+                            <Col>
+                                <div className="cardInfoIcons mt-3">
+                                    <BusinessCenterIcon fontSize="medium" />
+                                    <p className="cardIconsText mt-1">{offer.contract}</p>
+                                </div>
+                            </Col>
+                            <Col>
+                                <div className="cardInfoIcons mt-3">
+                                    <PlaceIcon fontSize="medium" />
+                                    <p className="cardIconsText mt-1">{offer.city}</p>
+                                </div>
+                            </Col>
+
+                        </Row>
                     </Col>
                     <Col>
-                    <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
+                        <Row >
+                            <Col >
+                                <h5 className="mt-3 ml-4">{offer.bonusAmount}€</h5>
+                            </Col>
+                            <Col>
+                                <button onClick={() => props.recommend(offer._id)} id="referralButton">Recommander</button>
+                            </Col>
+                            <Col className="d-flex justify-content-around">
+                                {updateOffer}
+                                {/* <select defaultValue={offer ? offer.contract : 'CDI'} className="form-select" onChange={(e) => props.archiveOffer(offer._id)} aria-label="Default select example" name="contract">
+                                <option value="CDI">CDI</option>
+                                <option value="CDD">CDD</option>
+                                <option value="Stage">Stage</option>
+                            </select> */}
+                                {/* <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
+                                        <label className="form-check-label" for="flexCheckDefault">
+                                            Archiver
+                                        </label>
+                                    </div> */}
+                                {/* <Label for="contract">Archiver</Label>
+                                <Input addon type="checkbox" aria-label="Checkbox for following text input" onChange={() => { props.archiveOffer(offer._id) }}/> */}
+                                {archiveOffer}
+                                <Button className="mt-2" id="enlargeButton" onClick={() => props.viewOffer(offer._id)}>
+                                    <OpenInNewIcon />
+                                </Button>
+                            </Col>
+                        </Row>
                     </Col>
-                </Row>
-                </Col>
-                <Col className="d-flex justify-content-around">    
-                    <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
-                        Modifier
-                    </Button>
-                    {/* <select defaultValue={offer ? offer.contract : 'CDI'} className="form-select" onChange={(e) => props.archiveOffer(offer._id)} aria-label="Default select example" name="contract">
-                        <option value="CDI">CDI</option>
-                        <option value="CDD">CDD</option>
-                        <option value="Stage">Stage</option>
-                    </select> */}
-                    {/* <div className="form-check">
-  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-  <label className="form-check-label" for="flexCheckDefault">
-    Archiver
-  </label>
-</div> */}
-                    {/* <Label for="contract">Archiver</Label>
-                    <Input addon type="checkbox" aria-label="Checkbox for following text input" onChange={() => { props.archiveOffer(offer._id) }}/> */}
-                    <DeleteIcon  className="mt-3 deleteIcon"  fontSize="medium"  onClick={() => { props.archiveOffer(offer._id) }}/>
-                    <Button  className="mt-2"  id="enlargeButton" onClick={() => props.viewOffer(offer._id)}>
-                        <OpenInNewIcon />
-                    </Button>
-                </Col>
+                    
 
                 </Row>
             </div>

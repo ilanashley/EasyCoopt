@@ -5,6 +5,7 @@ import Pagination from './Pagination';
 import NavBar from './NavBar'
 import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
+import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
 const ReferralsList = (props) => {
 
@@ -194,7 +195,7 @@ const ReferralsList = (props) => {
             <option selected>Filtrer par status</option>
             {statusFilteredList}
           </select>
-          <button onClick={handleSelectResetFilters} className='custom-btn-style'>Supprimer</button>
+          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon/></button>
         </div>
 
         <div className='tableContainer'>

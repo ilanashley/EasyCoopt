@@ -61,9 +61,9 @@ const Referrals = (props) => {
             <tr>
                 <th scope="row">{i + 1}</th>
                 <td>{myDateString}</td>
-                <td>{referral.userId.lastName}</td>
+                <td>{referral.userId.lastName.charAt(0).toUpperCase() + referral.userId.lastName.slice(1)}</td>
                 <td>{referral.offerId.bonusAmount}€</td>
-                <td>{referral.lastName}</td>
+                <td>{referral.lastName.charAt(0).toUpperCase() + referral.lastName.slice(1)}</td>
                 <td><div className='d-flex'><TransitionModal modalTitle={'Recommandation'} modalDescription={referral.reason} modalIcon={'VisibilityOutlinedIcon'}/></div></td>
                 <td>{referral.offerId.title}</td>
                 <td><div className='d-flex'><TransitionModal modalTitle={'Curriculum vitae'} referralResumeUrl={referral.resumeUrl} modalIcon={'AssignmentOutlinedIcon'}/></div></td>

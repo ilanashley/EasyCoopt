@@ -80,12 +80,10 @@ const AddCoopte = (props) => {
     var date = new Date()
     date.setHours(0, 0, 0, 0)
 
-    console.log('date de creation de la cooptation --> ', date)
-
     var data = new FormData();
 
-    data.append('firstName', firstName);
-    data.append('lastName', lastName);
+    data.append('firstName', firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : '');
+    data.append('lastName', lastName ? lastName.charAt(0).toUpperCase() + lastName.slice(1) : '');
     data.append('email', email);
     data.append('reason', reason);
     data.append('creationDate', date);
@@ -118,8 +116,7 @@ const AddCoopte = (props) => {
       setOfferTitle(response.offer.title)
     };
     getTitle();
-  },
-    []);
+  }, []);
 
   /* function to redirect to offersList */
   const toggleRedirect = () => {
@@ -154,11 +151,11 @@ const AddCoopte = (props) => {
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <Form>
               <FormGroup>
-                <Label for="firstname">Firstname</Label>
+                <Label for="firstname">Nom</Label>
                 <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
               </FormGroup>
               <FormGroup>
-                <Label for="lastname">Lastname</Label>
+                <Label for="lastname">Prénom</Label>
                 <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
               </FormGroup>
               <FormGroup>
@@ -171,7 +168,7 @@ const AddCoopte = (props) => {
               </FormGroup>
 
               <FormGroup>
-                <Label for="reason">Reason of cooptation</Label>
+                <Label for="reason">Raison de la cooptation</Label>
                 <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
               </FormGroup>
               <FormGroup>
@@ -182,12 +179,6 @@ const AddCoopte = (props) => {
                 <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
               </div>
             </Form>
-            {/* <Modal isOpen={modal} >
-              {contentModal}
-              <ModalFooter>
-                <Button color="primary" onClick={() => { toggleRedirect() }}>Close</Button>
-              </ModalFooter>
-            </Modal> */}
             <Modal
               aria-labelledby="transition-modal-title"
               aria-describedby="transition-modal-description"
@@ -208,7 +199,6 @@ const AddCoopte = (props) => {
             </Modal>
           </Col>
         </Row>
-
       </Container>
     </div>
 

@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+
+import PlaceIcon from '@material-ui/icons/Place';
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { Button, Container, Row, Col, Input, Label } from "reactstrap";
+
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
-import PlaceIcon from '@material-ui/icons/Place';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { connect } from 'react-redux'
-import { Button, Row, Col, Input, Label } from "reactstrap";
-import { Redirect } from 'react-router-dom'
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import IconButton from '@material-ui/core/IconButton';
+import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
+
 import ViewOffer from './ViewOffer';
 import Tooltip from '@material-ui/core/Tooltip';
+
 
 const Offers = (props) => {
 
@@ -21,11 +27,10 @@ const Offers = (props) => {
     const handleOnClick = (id) => {
         setOfferId(id)
     }
-    
+
     if (offerId) {
         return <Redirect to={`/addoffer/${offerId}`}></Redirect>
     }
-
 
     // Map pour l'affichage des offres
     const offersList = props.currentOffers.map((offer, i) => {
@@ -40,70 +45,64 @@ const Offers = (props) => {
         if (props.ajoutId.includes(offer._id)) {
             display = { display: 'none' }
         }
+
+        let updateOffer
+        let archiveOffer
+        let recommendOnOffer
+        if (props.typeId === 'Recruteur') {
+            updateOffer = <Col md='2' sm="4" className="d-flex justify-content-center p-2">
+                <button className="referralButton" onClick={() => handleOnClick(offer._id)}>
+                    Modifier
+                </button>
+            </Col> 
+            archiveOffer = <Col md='2' sm="4" className="d-flex justify-content-center p-2">
+                <button className="referralButton" onClick={() => { props.archiveOffer(offer._id) }}>
+                    Archiver
+                </button>
+            </Col>
+        } else if (props.typeId === 'Coopteur') {
+            recommendOnOffer =<Col md='4' sm="6" className="d-flex justify-content-center p-2">
+                <button className="referralButton" onClick={() => props.recommend(offer._id)} >Recommander</button>
+            </Col>
+        }
+
         return (
-            
+
             <div key={offer._id} className="cardBackground mb-2" style={display}>
-                <Row className="d-flex flex-column flex-md-row align-items-center ">
+                <Row className="d-flex align-items-center ">
 
-                <Col >
-                    <h5 className="d-flex justify-content-center mt-1">{offer.title}</h5>
-                </Col>
-                <Col className="cardInfoBg">
-                    <Row className="d.flex justify-content-center align-items-center">
-                        <Col >
-                            <div className="cardInfoIcons mt-3">
-                                <CalendarTodayIcon fontSize="medium"/>
-                                <p className="cardIconsText mt-1">Il y a {diffDays} jour{diffDays>1 ? 's': ''}</p>
-                            </div>
-                        </Col>
-                        <Col>
-                            <div className="cardInfoIcons mt-3">
-                                <BusinessCenterIcon fontSize="medium"/>
-                                <p className="cardIconsText mt-1">{offer.contract}</p>
-                            </div>
-                        </Col>
-                        <Col>
-                            <div className="cardInfoIcons mt-3">
-                                <PlaceIcon fontSize="medium"/>
-                                <p className="cardIconsText mt-1">{offer.city}</p>
-                            </div>
-                        </Col>
-
-                    </Row>
-                </Col>
-                <Col>
-                <Row >
-                    <Col >
-                    <h5 className="mt-3 ml-4">{offer.bonusAmount}€</h5>
+                    <Col md='3' sm="6"  className="d-flex justify-content-center">
+                        <h5 className="m-2">{offer.title}</h5>
                     </Col>
-                    <Col>
-                    <button  onClick = {() =>  props.recommend(offer._id)} id="referralButton">Recommander</button>
+                    <Col md='4' sm="6">
+                        <Row  className="bg-light pt-3 m-2 border rounded-3">
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <CalendarTodayIcon fontSize="small" />
+                                <div style={{fontSize: 12, padding: 10}}>Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</div>
+                            </Col>
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <BusinessCenterIcon fontSize="small" />
+                                <div style={{fontSize: 12, padding: 10}}>{offer.contract}</div>
+                            </Col>
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <PlaceIcon fontSize="small" />
+                                <div style={{fontSize: 12, padding: 10}}>{offer.city}</div>
+                            </Col>
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <AccountBalanceOutlinedIcon fontSize="small"/>
+                                <div style={{fontSize: 12, padding: 10}}>{offer.bonusAmount}€</div>
+                            </Col>
+                        </Row>                                            
                     </Col>
-                </Row>
-                </Col>
-                <Col className="d-flex justify-content-around">    
-                    <Button onClick={() => handleOnClick(offer._id)} id="modifyButton">
-                        Modifier
-                    </Button>
-                    {/* <select defaultValue={offer ? offer.contract : 'CDI'} className="form-select" onChange={(e) => props.archiveOffer(offer._id)} aria-label="Default select example" name="contract">
-                        <option value="CDI">CDI</option>
-                        <option value="CDD">CDD</option>
-                        <option value="Stage">Stage</option>
-                    </select> */}
-                    {/* <div className="form-check">
-  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-  <label className="form-check-label" for="flexCheckDefault">
-    Archiver
-  </label>
-</div> */}
-                    {/* <Label for="contract">Archiver</Label>
-                    <Input addon type="checkbox" aria-label="Checkbox for following text input" onChange={() => { props.archiveOffer(offer._id) }}/> */}
-                    <Tooltip title="Supprimer"><DeleteIcon  className="mt-3 deleteIcon" style={{cursor: 'pointer'}}  fontSize="medium"  onClick={() => { props.archiveOffer(offer._id) }}/></Tooltip>
-                    <Tooltip title="Voir l'offre"><OpenInNewIcon   className="mt-3 deleteIcon"  style={{cursor: 'pointer'}} onClick={() => props.viewOffer(offer._id)}/></Tooltip>
-                        {/* <OpenInNewIcon />
-                    </Button> */}
-                </Col>
-
+                    {recommendOnOffer}
+                    {updateOffer}
+                    {archiveOffer}
+                    <Col md='1' sm="4" className="d-flex justify-content-center p-2">
+                        <button className="referralButton m-2" onClick={() => props.viewOffer(offer._id)}>
+                            Voir
+                        </button>
+                    </Col>
+                        
                 </Row>
             </div>
         )

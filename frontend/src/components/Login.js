@@ -72,6 +72,8 @@ function Login(props) {
       props.addToken(body.user.token)
       props.addProfileType(body.user.group)
       props.addUserId(body.user._id)
+      console.log(body.user.lastName)
+      props.addUserLastName(body.user.lastName ? body.user.lastName.charAt(0).toUpperCase() + body.user.lastName.slice(1) : null)
       setSignIn(true)
     } else {
       setError(body.error)
@@ -107,6 +109,7 @@ function Login(props) {
 
   return (
     <div>
+      <NavBar />
       <div className='d-flex justify-content-center'>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -127,7 +130,7 @@ function Login(props) {
           </Fade>
         </Modal>
       </div>
-      <NavBar />
+      
       <Container >
 
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
@@ -200,6 +203,9 @@ function mapDispatchToProps(dispatch) {
     },
     addUserId: function (userId) {
       dispatch({ type: 'addUserId', userId })
+    },
+    addUserLastName: function (userLastName) {
+      dispatch({ type: 'addUserLastName', userLastName })
     }
   }
 }

@@ -80,9 +80,10 @@ const ViewOffer = (props) => {
                 <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
                     <Col sm="12" md={{ size: 6, offset: 3 }} >
                         <h3 style={{ marginTop: "40px" }} > {title} </h3>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}><p>{contract}</p> <p>Publié il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between'}}><p style={{fontSize: 20, fontWeight: 'bold', marginTop: 20}}>{contract} - Ville de {city}</p> </div>
+                        <p>Publié il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p>
                         <hr />
-                        <p>{resume}</p>
+                        <p style={{textAlign: 'justify'}}>{resume}</p>
 
                         <div style={{ marginBottom: 20 }}>
                             <a href={link} target="_blank">{link}</a>
@@ -90,7 +91,7 @@ const ViewOffer = (props) => {
 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <button id="enlargeButton" onClick={redirectionToOffersList} style={{ marginTop: 10}} ><ArrowBackIcon /></button>
-                            <button onClick={() => redirectionToAddCoopte(offerIdView)} id="referralButton">Recommander</button>
+                            <button onClick={() => redirectionToAddCoopte(offerIdView)} className="referralButton">Recommander</button>
                         </div>
                     </Col>
                 </Row>

@@ -71,7 +71,6 @@ router.post('/sign-up', async (req, res, next) => {
         password: hash,
         token: uid2(32),
         group: "Coopteur",
-        avatarUrl: "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg",
       });
 
       user = await newUser.save();

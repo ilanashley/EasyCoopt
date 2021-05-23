@@ -80,7 +80,6 @@ useEffect(() => {
 }, [uploadPicture]);
 
   async function loadPicture (PictureData) {
-    console.log("le fichier arrive dans loadPicture-->", avatarUrl);
     var data = new FormData();
 
     data.append("avatar", PictureData);
@@ -91,7 +90,6 @@ useEffect(() => {
     });
     var newPicture = await rawResponse.json();
     if (newPicture) {
-      // console.log("new picture OK", newPicture.secure_url);
       setUploadPicture(newPicture.secure_url);
     }
   };
@@ -111,7 +109,6 @@ useEffect(() => {
     const body = await data.json();    
 
     if (body.result === true ) {
-      // console.log(body.user.groupsId)
       props.addProfileType(body.user.group)
       setUserExists(true);
     } else {
@@ -182,28 +179,12 @@ useEffect(() => {
                   <Input
                     type="file"
                     onChange={(e) => {
-                      // console.log(
-                      //   "Le fichier est bien envoye tout contenu-->",
-                      //   e.target.files[0]
-                      // );
-                      setAvatarUrl(e.target.files[0]);  loadPicture(e.target.files[0])
+                      loadPicture(e.target.files[0])
                     }}
                     accept="image/png, image/jpeg"
                     name="avatar"
                     placeholder="Avatar"
                   />
-                  {/* <Button
-                    onClick={() => {
-                      console.log(
-                        "L avatar url arrive bien dans ce bouton-->",
-                        avatarUrl
-                      );
-                      ;
-                    }}
-                    style={{ margin: "10px" }}
-                  >
-                    Sauvegarder votre portrait
-                  </Button> */}
                 </div>
               </div>
             </div>

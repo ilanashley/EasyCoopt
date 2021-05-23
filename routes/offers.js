@@ -51,7 +51,7 @@ router.post('/add', async function (req, res, next) {
       );
   
       if (savedOffer && updatedUser) {
-        res.json({ result: true });
+        res.json({ result: true, message: "L'offre a bien été enregistrée" });
       } else {
         res.json({ result: false, error: "La connexion à la bdd a échoué" });
       }
@@ -94,7 +94,7 @@ router.put('/add', async function (req, res, next) {
         });
   
       if (modifiedOffer) {
-        res.json({ result: true });
+        res.json({ result: true, message: "La modification a bien été prise en compte" });
       } else{
         res.json({ result: false, error: "La connexion à la bdd a échoué" });
       }  

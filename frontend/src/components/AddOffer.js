@@ -34,7 +34,8 @@ function AddOffer(props) {
 
   const [offerModifiee, setOfferModifiee] = useState(false);
 
-  const [offer, setOffer] = useState([])
+  const [error, setError] = useState('')
+  const [offer, setOffer] = useState(false)
   const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0,10))
 
   const [modal, setModal] = useState(false);
@@ -43,21 +44,27 @@ function AddOffer(props) {
 
   useEffect(() => {
     async function loadOffer() {
-      var rawResponse = await fetch(`/offers/get`);
-      var response = await rawResponse.json();
-      const offer = response.offers.filter(offer => offer._id == id)
-      if(offer.length !== 0) {
-        setTitle(offer[0].title)
-        setCity(offer[0].city)
-        setCreationDate(offer[0].creationDate)
-        setBonusAmount(offer[0].bonusAmount)
-        setContract(offer[0].contract)      
-        setResume(offer[0].resume)
-        if(offer[0].link) {
-          setLink(offer[0].link)
-        }
-        setOffer(offer)
-      } 
+      const rawResponse = await fetch(`/offers/get`);
+      const response = await rawResponse.json();
+      if(response.result === true) {
+        const offer = response.offers.filter(offer => offer._id == id)
+        if(offer.length !== 0) {
+          setTitle(offer[0].title)
+          setCity(offer[0].city)
+          setCreationDate(offer[0].creationDate)
+          setBonusAmount(offer[0].bonusAmount)
+          setContract(offer[0].contract)      
+          setResume(offer[0].resume)
+          if(offer[0].link) {
+            setLink(offer[0].link)
+          }
+          setOffer(true)
+        } 
+      } else {
+        setError(response.error)
+        setModal(!modal);
+      }
+      
       // console.log('offerDate --> ',offerDate)
       // if(offer) {
       //   let offerDate = new Date(offer[0].creationDate)
@@ -95,7 +102,6 @@ function AddOffer(props) {
   //   setCreationDate(stringDate)
   // }, [offer]);
 
-  let modalText
   let modalButtonText
   let methodOption
   let pageTitle
@@ -104,7 +110,6 @@ function AddOffer(props) {
   // let stringDate
   if(offer) {
     methodOption = 'PUT' // Fetch method option
-    modalText = 'Votre offre a bien été modifiée !'
     modalButtonText = 'Modifier'
     pageTitle = 'Modifier une offre'
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&id=${id}&token=${props.token}`
@@ -113,7 +118,6 @@ function AddOffer(props) {
 
   } else {
     methodOption = 'POST' // Fetch method option
-    modalText = 'Votre offre a bien été ajoutée !'
     modalButtonText = 'Ajouter'
     pageTitle = 'Ajouter une offre'
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
@@ -129,7 +133,13 @@ function AddOffer(props) {
       body: body
     })
     const response = await saveReq.json()
-    console.log(response.error)
+    if(response.result === false) {
+      setError(response.error)
+      setModal(!modal);
+    } else {
+      setError(response.message)
+      setModal(!modal)
+    }
   }
     
   const toggle = () => {
@@ -199,9 +209,10 @@ function AddOffer(props) {
                 <Button onClick={() => { { toggle() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> {modalButtonText} </Button>
                 <Modal isOpen={modal} toggle={toggle}>
                   <ModalBody>
-                    {modalText}
+                    {error}
                   </ModalBody>
                   <ModalFooter>
+                  <Button color="secondary" onClick={() => setModal(!modal)}>Rester sur la page</Button>
                     <Button color="secondary" onClick={toggleBack}>Page des offres</Button>
                   </ModalFooter>
                 </Modal>

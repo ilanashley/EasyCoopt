@@ -303,7 +303,7 @@ span {
   color:         #ffffff;
 }
 
-#referralButton{
+.referralButton{
   background:    #78CFCE;
   border-radius: 15px;
   color: #ffffff;
@@ -314,10 +314,11 @@ span {
   font-weight: 400;
   height: 55px;
   padding: 15px;
+  margin: 15px,
 
 }
 
-#referralButton:hover {
+.referralButton:hover {
   filter: brightness(110%);
 }
 

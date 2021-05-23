@@ -14,7 +14,7 @@ const OffersList = (props) => {
   const [ajoutId, setAjoutId] = useState([]);
   const [offerId, setOfferId] = useState('');
   const [offerIdView, setOfferIdView] = useState('')
-
+  const [addOffer, setAddOffer] = useState(false)
 
   // Pagination states
   const [loading, setLoading] = useState(false);
@@ -96,6 +96,15 @@ const OffersList = (props) => {
     return <Redirect to={`/viewOffer/${offerIdView}`} />
   }
 
+  // Fucntion pour ajouter une offre
+  const handleOnAddOffer = () => {
+    setAddOffer(true)
+  }
+
+  if(addOffer) {
+    return <Redirect to={`/addOffer`} />
+  }
+
   // Filter per date
   const addDateArray = offers.map((offer) => { return offer.creationDate })
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
@@ -147,11 +156,10 @@ const OffersList = (props) => {
     fetchOffers()
   }
 
-  let addOffer
+  let addOfferButton
   if (props.typeId === 'Recruteur') {
-    addOffer = <div className='selectContainer'>
-      <Link to={"/addoffer/"}><PostAddIcon fontSize='large' /></Link>
-      <p>Ajouter une Offre</p>
+    addOfferButton = <div className='perPageContainer w-100'>
+      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large'/>Ajouter une Offre</button>
     </div>
   }
 
@@ -183,7 +191,7 @@ const OffersList = (props) => {
           <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon/></button>
         </div>
 
-        {addOffer}
+        {addOfferButton}
 
         <div className='tableContainer'>
           <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />

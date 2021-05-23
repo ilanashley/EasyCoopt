@@ -42,8 +42,8 @@ const AddCoopte = (props) => {
 
     var data = new FormData();
 
-    data.append('firstName', firstName.charAt(0).toUpperCase() + firstName.slice(1));
-    data.append('lastName', lastName.charAt(0).toUpperCase() + lastName.slice(1));
+    data.append('firstName', firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : '');
+    data.append('lastName', lastName ? lastName.charAt(0).toUpperCase() + lastName.slice(1) : '');
     data.append('email', email);
     data.append('reason', reason);
     data.append('creationDate', date);

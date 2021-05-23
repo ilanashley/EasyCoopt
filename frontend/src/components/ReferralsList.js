@@ -115,7 +115,7 @@ const ReferralsList = (props) => {
     return recipientArray.indexOf(recipient) === pos;
   }).sort()
   const recipientFilteredList = recipientFilteredArray.map((recipient) => {
-    return (<option value={recipient}>{recipient}</option>)
+    return (<option value={recipient}>{recipient.charAt(0).toUpperCase() + recipient.slice(1)}</option>)
   })
 
   const handleSelectFilteredRecipient = (event) => {
@@ -129,7 +129,7 @@ const ReferralsList = (props) => {
     return referralArray.indexOf(referral) === pos;
   }).sort()
   const referralFilteredList = referralFilteredArray.map((referral) => {
-    return (<option value={referral}>{referral}</option>)
+    return (<option value={referral}>{referral.charAt(0).toUpperCase() + referral.slice(1)}</option>)
   })
 
   const handleSelectFilteredReferral = (event) => {

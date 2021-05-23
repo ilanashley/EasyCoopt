@@ -36,7 +36,7 @@ function NavBar(props) {
 
     return (
         <Navbar color="light" light expand="md" className='navbarContainer'>
-            <NavbarBrand><Link to="/"><img src='./images/easycoopt_logo.png' alt='logo' height='40px' /></Link></NavbarBrand>
+            <NavbarBrand><Link to="/"><img src='../images/easycoopt_logo.png' alt='logo' height='40px' /></Link></NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="ml-auto" navbar>

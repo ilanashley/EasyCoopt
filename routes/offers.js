@@ -22,8 +22,7 @@ router.post('/add', async function (req, res, next) {
   let bonusAmount = req.body.bonusAmount;
   let contract = req.body.contract;
   let link = req.body.link;
-  let resume = req.body.resume;
-  let status = req.body.status; 
+  let resume = req.body.resume; 
 
   var user = await userModel.findOne({ token: req.body.token })
 
@@ -72,37 +71,37 @@ router.put('/add', async function (req, res, next) {
   let link = req.body.link;
   let resume = req.body.resume;
   let status = req.body.status;
-  var error = [];
-  let result = false;
-  let saveOffer = null;
 
   var user = await userModel.findOne({ token: req.body.token })
 
   // Si un des champs est vide, afficher un message d'erreur
   if (!title || !city || !creationDate || !bonusAmount || !contract || !resume) {
-    error.push("Champs vides");
-    res.json({ result, error });
-  } else if (user != null && error.length == 0) {
-    var modifiedOffer = await offerModel.updateOne(
-      { _id: req.body.id },
-      {
-        title: title,
-        city: city,
-        creationDate: creationDate,
-        bonusAmount: bonusAmount,
-        contract: contract,
-        link: link,
-        resume: resume,
-        status: true,
-        userId: user._id
-      });
-
-    if (modifiedOffer) {
-      result = true;
+    res.json({ result: false, error: 'Tous les champs sont requis sauf le lien' });
+  } else {
+    if (user) {
+      var modifiedOffer = await offerModel.updateOne(
+        { _id: req.body.id },
+        {
+          title: title,
+          city: city,
+          creationDate: creationDate,
+          bonusAmount: bonusAmount,
+          contract: contract,
+          link: link,
+          resume: resume,
+          status: true,
+          userId: user._id
+        });
+  
+      if (modifiedOffer) {
+        res.json({ result: true });
+      } else{
+        res.json({ result: false, error: "La connexion à la bdd a échoué" });
+      }  
+    } else {
+      res.json({ result: false, error: "Cet utilisateur n'existe pas" });
     }
-
-    res.json({ result, offer: modifiedOffer, error, token });
-  }
+  } 
 })
 
 router.put('/archive', async function (req, res, next) {

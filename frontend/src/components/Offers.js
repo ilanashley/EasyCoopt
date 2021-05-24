@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 
 import ViewOffer from './ViewOffer';
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 const Offers = (props) => {

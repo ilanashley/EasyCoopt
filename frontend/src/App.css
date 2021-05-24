@@ -263,6 +263,12 @@ span {
   background-color:#ffffff;
   border-radius: 15px;
   padding: 10px;
+  z-index: auto
+}
+
+.cardBackgroundLogin {
+  border-radius: 15px;
+  padding: 10px;
 }
 
 .cardInfoBg{

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import '../App.css';
@@ -20,6 +20,16 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
+// Background image style
+const styles1 = {
+      backgroundImage: `url(${'/images/image_4.jpeg'})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      width: '100wh',
+      height: '100vh',
+};
+
 // Modal style
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -34,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
 }));
+
 
 function Login(props) {
 
@@ -108,7 +119,7 @@ function Login(props) {
   }
 
   return (
-    <div>
+    <div style={styles1}>
       <NavBar />
       <div className='d-flex justify-content-center'>
         <Modal
@@ -131,15 +142,15 @@ function Login(props) {
         </Modal>
       </div>
       
-      <Container >
+      <Container>
 
-        <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
+        <Row className="cardBackgroundLogin" style={{ padding: "10px", marginTop: "50px" }} >
 
           <div class="col-12 text-center get_started">
             <h3>Welcome !</h3>
           </div>
 
-          <Col sm="12" md="6">
+          <Col style= {{ styles1 }} sm="12" md="6">
             <Form>
               <FormGroup>
                 <Label for="email">Your email</Label>

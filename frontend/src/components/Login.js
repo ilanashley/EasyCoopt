@@ -144,7 +144,7 @@ function Login(props) {
       
       <Container>
 
-        <Row className="cardBackgroundLogin" style={{ padding: "10px", marginTop: "50px" }} >
+        <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
 
           <div class="col-12 text-center get_started">
             <h3>Welcome !</h3>
@@ -188,12 +188,12 @@ function Login(props) {
             </Form>
           </Col>
 
-          {/* <div class="btnEnd1">
+          <div class="btnEnd1">
             <Button onClick={() => handleSubmitSignup()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign Up with Linkedin </Button>
           </div>
           <div class="btnEnd1">
             <Button onClick={() => handleSubmitSignup()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign Up with Google </Button>
-          </div> */}
+          </div>
 
         </Row>
 

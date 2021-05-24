@@ -113,12 +113,12 @@ const ViewOffer = (props) => {
 
         <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
         <Col sm="12" md={{ size: 6, offset: 3 }} >
-            <h3 style={{ marginTop: "40px" }} > {title} </h3>
-            <div style={{display: 'flex'}}><p className="mr-2">{contract}</p><p className="mr-2">-</p> <p>{city}</p> 
+            <h3 style={{ marginTop: "40px" }}> {title} </h3>
+            <div style={{display: 'flex', color: '#7785A2', lineHeight: 1}} className="mb-0"><p className="mr-2">{contract}</p><p>-</p> <p className="ml-2">{city}</p> 
             </div>
             <div>
-            <p className="mt-0">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
-            <hr />
+            <p style={{color: '#7785A2', lineHeight: 1}} className="mb-0">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
+            <hr/>
             <p style={{textAlign: 'justify'}}>{resume}</p>
 
             <div style={{ marginBottom: 20 }}>

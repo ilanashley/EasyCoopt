@@ -10,7 +10,8 @@ const offerSchema = mongoose.Schema({
     city: String,
     resume: String,
     archived: Boolean,
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    referralsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'referrals' }]
     });
     
     const offerModel = mongoose.model('offers', offerSchema);

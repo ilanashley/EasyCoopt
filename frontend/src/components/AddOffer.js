@@ -93,8 +93,8 @@ function AddOffer(props) {
           setStringDate(stringDate)
         } 
       } else {
-        setMessage(response.error)
-        setModal(!modal);
+        setError(response.error)
+        setOpen(!open);
         return
       }
     };

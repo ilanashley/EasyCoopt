@@ -208,7 +208,7 @@ const AddCoopte = (props) => {
 }
 
 function mapStateToProps(state) {
-  console.log("state", state)
+  // console.log("state", state)
   return {
     token: state.token,
     typeId: state.typeId,

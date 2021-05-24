@@ -54,7 +54,7 @@ const Referrals = (props) => {
         } else if (props.typeId.toLowerCase() === 'coopteur') {
             referralStatus = <div style ={statusStyle}>{status}</div>
             deleteReferralTitle = <th>Supp</th>
-            deleteReferralButton = <td><DeleteOutlineIcon style={{cursor: 'pointer'}} onClick={() => props.handleDeleteReferral(referral._id)}/></td>
+            deleteReferralButton = <td><DeleteOutlineIcon style={{cursor: 'pointer'}} onClick={() => props.handleDeleteReferral(referral._id, referral.offerId._id)}/></td>
         }
 
         return (

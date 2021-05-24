@@ -34,7 +34,7 @@ function AddOffer(props) {
 
   const [offerModifiee, setOfferModifiee] = useState(false);
 
-  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
   const [offer, setOffer] = useState(false)
   const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0,10))
 
@@ -61,7 +61,7 @@ function AddOffer(props) {
           setOffer(true)
         } 
       } else {
-        setError(response.error)
+        setMessage(response.error)
         setModal(!modal);
       }
       
@@ -123,7 +123,6 @@ function AddOffer(props) {
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
     // let currentDate = new Date();
     // stringDate = currentDate.toISOString().substr(0,10);
-
   }
 
   var saveOffer = async () => {
@@ -134,10 +133,10 @@ function AddOffer(props) {
     })
     const response = await saveReq.json()
     if(response.result === false) {
-      setError(response.error)
+      setMessage(response.error)
       setModal(!modal);
     } else {
-      setError(response.message)
+      setMessage(response.success)
       setModal(!modal)
     }
   }
@@ -209,10 +208,10 @@ function AddOffer(props) {
                 <Button onClick={() => { { toggle() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> {modalButtonText} </Button>
                 <Modal isOpen={modal} toggle={toggle}>
                   <ModalBody>
-                    {error}
+                    {message}
                   </ModalBody>
                   <ModalFooter>
-                  <Button color="secondary" onClick={() => setModal(!modal)}>Rester sur la page</Button>
+                    <Button color="secondary" onClick={() => setModal(!modal)}>Rester sur la page</Button>
                     <Button color="secondary" onClick={toggleBack}>Page des offres</Button>
                   </ModalFooter>
                 </Modal>

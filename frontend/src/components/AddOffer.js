@@ -11,21 +11,12 @@ import {
   Button,
   Container,
   Row,
-  Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+  Col
 } from 'reactstrap';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
+import Backdrop from '@material-ui/core/Backdrop';
+import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 
 // Modal style
@@ -55,10 +46,16 @@ function AddOffer(props) {
 
   const [offerModifiee, setOfferModifiee] = useState(false);
 
-  const [message, setMessage] = useState('')
+  
   const [offer, setOffer] = useState(false)
-  const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0,10))
-  const [modal, setModal] = useState(false)
+  const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0, 10))
+  
+
+  // State for model
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState();
+  const [error, setError] = useState('')
 
   const style = {
     position: 'absolute',
@@ -96,8 +93,8 @@ function AddOffer(props) {
           setStringDate(stringDate)
         } 
       } else {
-        setMessage(response.error)
-        setModal(!modal);
+        setError(response.error)
+        setOpen(!open);
         return
       }
     };
@@ -130,25 +127,36 @@ function AddOffer(props) {
     })
     const response = await saveReq.json()
     if(response.result === false) {
-      setMessage(response.error)
-      setModal(!modal);
+      setError(response.error)
+      setOpen(!open);
+      console.log("messageError", response.error)
     } else {
-      setMessage(response.success)
-      setModal(!modal)
+      setSuccess(response.success)
+      setOpen(!open)
+      console.log("messageSuccess", response.success)
     }
   }
 
-  const toggle = () => {
-    setModal(!modal);
-  };
-  const toggleBack = () => {
-    setModal(!modal);
-    setOfferModifiee(true)
+  /* function to redirect to offersList */
+  const toggleRedirect = () => {
+    if(success){
+      setOpen(!open)
+      setOfferModifiee(!offerModifiee)
+    } else {
+      setOpen(!open)
+    }
   };
 
+  let message;
+ if(!success) {
+   message = error;
+ }
+ else {
+   message = success
+ }
 
   if (offerModifiee) {
-    return <Redirect to='/offerslist' />
+    return <Redirect to='/referralsList' />
   }
 
   if (!props.token) {
@@ -187,7 +195,7 @@ function AddOffer(props) {
               </FormGroup>
               <FormGroup>
                 <Label for="contract">Type du contrat</Label>
-                <select defaultValue={contract ? contract : 'CDI'} className="form-select" onChange={(e) => setContract(e.target.value)} aria-label="Default select example" name="contract">
+                <select value={contract ? contract : 'CDI'} className="form-select" onChange={(e) => setContract(e.target.value)} aria-label="Default select example" name="contract">
                   <option value="CDI">CDI</option>
                   <option value="CDD">CDD</option>
                   <option value="Stage">Stage</option>
@@ -202,31 +210,25 @@ function AddOffer(props) {
                 <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
               <div class="btnEnd">
-                <Button onClick={() => { { toggle() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> {modalButtonText} </Button>
-                <Modal isOpen={modal} toggle={toggle}>
-                  <ModalBody>
-                    {message}
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="secondary" onClick={() => setModal(!modal)}>Rester sur la page</Button>
-                    <Button color="secondary" onClick={toggleBack}>Page des offres</Button>
-                  </ModalFooter>
-                </Modal>
-                {/* <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  className={classes.modal}
-                >
-                      <Fade in={open}>
-                        <div className={classes.paper}  >
-                        {error}
-                          <br/>
-                          <Button style={{ marginTop: 20}} onClick={handleClose}>Page des offres</Button>
-                        </div>
-                      </Fade>
-                </Dialog> */}
+                <Button onClick={() => { { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> {modalButtonText} </Button>
+                <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={toggleRedirect}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  {message}
+                </div>
+              </Fade>
+            </Modal>
               </div>
             </Form>
           </Col>

@@ -9,8 +9,7 @@ import {
   Button,
   Container,
   Row,
-  Col,
-
+  Col
 } from 'reactstrap';
 import NavBar from './NavBar';
 import { useParams, Redirect } from "react-router-dom";
@@ -42,20 +41,21 @@ const useStyles = makeStyles((theme) => ({
 
 const AddCoopte = (props) => {
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [reason, setReason] = useState('');
-  const [cv, setCv] = useState('');
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [reason, setReason] = useState();
+  const [cv, setCv] = useState();
 
-  const [offerCompleted, setOfferCompleted] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [offerTitle, setOfferTitle] = useState('');
+  const [offerCompleted, setOfferCompleted] = useState();
+  const [offerTitle, setOfferTitle] = useState();
 
   // State for modal
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+  
 
 
   const style = {
@@ -74,40 +74,52 @@ const AddCoopte = (props) => {
 
   /* function fetch to add coopte with file to the back */
   var saveCoopte = async () => {
-    setOpen(!open)
-    setLoading(true)
 
     var date = new Date()
     date.setHours(0, 0, 0, 0)
 
     var data = new FormData();
+    if(!cv) {
+      setError('oubli de cv')
+      setOpen(true)
+    } else {
+      data.append('firstName', firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : '');
+      data.append('lastName', lastName ? lastName.charAt(0).toUpperCase() + lastName.slice(1) : '');
+      data.append('email', email);
+      data.append('reason', reason);
+      data.append('creationDate', date);
+      data.append('offerId', offerId);
+      data.append('userId', props.userId)
+  
+      data.append(
+        "cv",
+        cv,
+        cv.name
+        
+      );
+      console.log("cv", cv)
+  
+      const saveReq = await fetch('/referrals/add', {
+        method: 'post',
+        body: data
+      })
+      let response = await saveReq.json();
+      if(response.result === false){
+        setError(response.error)
+        setOpen(!open);
+        console.log("messageError", error)
+      } else {
+        setSuccess(response.success)
+        setOpen(!open)
+        console.log("messageSuccess", success)
+      }
+      }
 
-    data.append('firstName', firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : '');
-    data.append('lastName', lastName ? lastName.charAt(0).toUpperCase() + lastName.slice(1) : '');
-    data.append('email', email);
-    data.append('reason', reason);
-    data.append('creationDate', date);
-    data.append('offerId', offerId);
-    data.append('userId', props.userId)
-
-    data.append(
-      "cv",
-      cv,
-      cv.name
-    );
-
-    const saveReq = await fetch('/referrals/add', {
-      method: 'post',
-      body: data
-    })
-    let response = await saveReq.json();
-
-    if (response) {
-      console.log('réponse du back au fetch du coopté')
-      setLoading(false)
     }
 
-  }
+   
+   
+  
 
   useEffect(() => {
     const getTitle = async () => {
@@ -120,20 +132,26 @@ const AddCoopte = (props) => {
 
   /* function to redirect to offersList */
   const toggleRedirect = () => {
-    setOpen(!open)
-    setOfferCompleted(!offerCompleted)
+    if(success){
+      setOpen(!open)
+      setOfferCompleted(!offerCompleted)
+    } else {
+      setOpen(!open)
+    }
   };
+  let message;
+ if(!success) {
+   message = error;
+ }
+ else {
+   message = success
+ }
 
   if (offerCompleted) {
     return <Redirect to='/referralsList' />
   }
 
-  /* conditions for modal */
-  if (loading) {
-    var contentModal = <p>Loading</p>
-  } else {
-    contentModal = <p>Votre Cooptation a bien été prise en compte</p>
-  }
+
 
   if (!props.token) {
     return <Redirect to="/myaccount" />;
@@ -164,7 +182,7 @@ const AddCoopte = (props) => {
               </FormGroup>
               <FormGroup>
                 <Label for="cv">Curriculum Vitae</Label>
-                <Input onChange={(e) => { console.log(e.target.files); setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
+                <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
               <FormGroup>
@@ -193,7 +211,7 @@ const AddCoopte = (props) => {
             >
               <Fade in={open}>
                 <div className={classes.paper}>
-                  {contentModal}
+                  {message}
                 </div>
               </Fade>
             </Modal>
@@ -208,7 +226,7 @@ const AddCoopte = (props) => {
 }
 
 function mapStateToProps(state) {
-  console.log("state", state)
+  // console.log("state", state)
   return {
     token: state.token,
     typeId: state.typeId,

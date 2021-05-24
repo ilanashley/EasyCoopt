@@ -9,8 +9,9 @@ const offerSchema = mongoose.Schema({
     contract: String,
     city: String,
     resume: String,
-    status: Boolean,
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }
+    archived: Boolean,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    referralsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'referrals' }]
     });
     
     const offerModel = mongoose.model('offers', offerSchema);

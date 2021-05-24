@@ -39,8 +39,8 @@ const ReferralsList = (props) => {
   }
 
   // Fetch backend to delete referral by id
-  const handleDeleteReferral = async (referralId) => {
-    var rawResponse =  await fetch(`/referrals/delete/${referralId}`, {
+  const handleDeleteReferral = async (referralId, offerId) => {
+    var rawResponse =  await fetch(`/referrals/delete/${referralId}/${offerId}`, {
       method: 'DELETE'
     })
     await rawResponse.json()

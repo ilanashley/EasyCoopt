@@ -68,19 +68,18 @@ router.post('/add', async (req, res, next) => {
   
   
       var savedReferral = await newReferral.save()
-  
-      if(savedReferral) {
+      var updatedOffer = await offerModel.updateOne(
+        { _id: req.body.offerId },
+        {
+          $push: { referralsIds: savedReferral._id }
+        }
+      );
+      if(savedReferral && updatedOffer)  {
         res.json({ result: true, success: 'Votre cooptation a bien été prise en compte' });
       } else {
         res.json({ result: false, error: 'failed' });
       }
-
      }
-    
- 
-
-  
-  
   }
   fs.unlinkSync(cvPath);
   }
@@ -98,62 +97,29 @@ router.get('/get', async (req, res, next) => {
   }
 });
 
-
-// /* Get Referrals*/
-// router.get('/get', async (req, res, next) => {
-//   let error
-//   let usersInfo = []
-//   var users = await userModel.find().populate({ path: 'offersId', populate: { path: 'referralsId' } }).exec();
-//   if (!users) {
-//     error = "Il manque des données"
-//     res.json({ result: false, error, usersInfo });
-//   } else {
-
-    // console.log('tous les utilisateurs --> ', users[0].offersId)
-
-    // users = users.filter(user => user.groupsId === 'Coopteur')
-    // console.log('Uniquement les coopteurs --> ', users)
-    // const referralsPerRecipient = referrals.filter(referral => referral.recipientLastName === event.target.value)
-
-    // for (let k = 0; k < users.length; k++) {
-    //   for (let i = 0; i < users[k].offersId.length; i++) {
-    //     for (let j = 0; j < users[k].offersId[i].referralsId.length; j++) {
-    //       usersInfo.push({
-    //         recipientToken: users[k].token,
-    //         recipientFirstName: users[k].firstName,
-    //         recipientLastName: users[k].lastName,
-    //         offerId: users[k].offersId[i]._id,
-    //         offerTitle: users[k].offersId[i].title,
-    //         offerContent: users[k].offersId[i].content,
-    //         offerBonusAmount: users[k].offersId[i].bonusAmount,
-    //         referralId: users[k].offersId[i].referralsId[j]._id,
-    //         referralCreationDate: users[k].offersId[i].referralsId[j].creationDate,
-    //         referralFirstName: users[k].offersId[i].referralsId[j].firstName,
-    //         referralLastName: users[k].offersId[i].referralsId[j].lastName,
-    //         referralReason: users[k].offersId[i].referralsId[j].reason,
-    //         referralStatus: users[k].offersId[i].referralsId[j].status,
-    //         referralResumeUrl: users[k].offersId[i].referralsId[j].resumeUrl
-    //       })
-    //     }
-    //   }
-    // }
-
-
-    // console.log('usersInfo --> ', usersInfo)
-
-//     res.json({ result: true, usersInfo });
-//   }
-// });
-
 router.post('/update', async (req, res, next) => {
-  await referralModel.updateOne({ _id: req.body.referralId }, { status: req.body.referralStatus });
-  res.json({ result: true })
+  var updatedReferral = await referralModel.updateOne({ _id: req.body.referralId }, { status: req.body.referralStatus });
+  if(updatedReferral) {
+    res.json({ result: true })
+  } else {
+    res.json({ result: false })
+  }
 })
 
-router.delete('/delete/:referralId', async (req, res, next) => {
-  // console.log(req.params.referralId)
-  await referralModel.deleteOne({ _id: req.params.referralId })
-  res.json({ result: true })
+router.delete('/delete/:referralId/:offerId', async (req, res, next) => {
+  var deletedReferral = await referralModel.deleteOne({ _id: req.params.referralId })
+  var updatedOffer = await offerModel.updateOne(
+    { _id: req.params.offerId },
+    {
+      $pull: { referralsIds: req.params.referralId }
+    }
+  );
+  if(deletedReferral && updatedOffer) {
+    res.json({ result: true })
+  } else {
+    res.json({ result: false })
+  }
+
 })
 
 

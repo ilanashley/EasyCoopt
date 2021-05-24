@@ -187,14 +187,13 @@ color:         #ffffff;
 .section {
   background-color: #F3F2F1;
   font-family: 'Poppins', sans-serif;
- 
 }
 
 h1 {
   font-family: Poppins;
   color: #254383;
   font-style: bold;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 20px;
   letter-spacing: -1.5%;
 }
@@ -417,14 +416,4 @@ letter-spacing: 0em;
 
 .deleteIcon:hover {
   filter: brightness(110%);
-}
-
-
-.backgroundImage {
-  background-image: url("./image_1.jpeg");
-  background-position: 'center';
-  background-size: 'cover';
-  background-repeat: 'no-repeat';
-  width: '100wh';
-  height: '100vh';
 }

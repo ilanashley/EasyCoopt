@@ -24,6 +24,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+// Background image
+const backgroundImage = {
+  backgroundImage: `url(${'/images/image_1.jpeg'})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+};
+
 // Modal style
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -142,7 +150,7 @@ const AddCoopte = (props) => {
   }
 
   return (
-    <div className="section">
+    <div className="section" style={backgroundImage}>
       <NavBar />
       <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center',marginTop: 40 }}><h1 style={{fontSize: 40}}> Vous recommandez une personne pour le poste de :</h1><h1 style={{fontSize: 40}}>{offerTitle}</h1></div>
 

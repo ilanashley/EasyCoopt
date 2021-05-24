@@ -21,6 +21,15 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar'
 
+// Background image
+const backgroundImage = {
+  backgroundImage: `url(${'/images/image_1.jpeg'})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  height: '100vh',
+  weight: '100wh'
+};
 
 function AddOffer(props) {
 
@@ -163,7 +172,9 @@ function AddOffer(props) {
 
   return (
 
-    <div className="section backgroundImage">
+    <div style = {backgroundImage}>
+
+    <div className="section">
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
 
@@ -222,6 +233,7 @@ function AddOffer(props) {
         </Row>
 
       </Container>
+    </div>
     </div>
 
   );

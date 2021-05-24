@@ -8,6 +8,15 @@ import { Redirect } from 'react-router';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
+
+// Background image
+const backgroundImage = {
+  backgroundImage: `url(${'/images/image_1.jpeg'})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+};
+
 const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
@@ -100,7 +109,7 @@ const OffersList = (props) => {
     setAddOffer(true)
   }
 
-  if(addOffer) {
+  if (addOffer) {
     return <Redirect to={`/addOffer`} />
   }
 
@@ -174,12 +183,12 @@ const OffersList = (props) => {
   let addOfferButton
   if (props.typeId === 'Recruteur') {
     addOfferButton = <div className='perPageContainer w-100'>
-      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large'/>Ajouter une Offre</button>
+      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large' />Ajouter une Offre</button>
     </div>
   }
 
   let filterPerStatus
-  if(props.typeId === 'Recruteur') {
+  if (props.typeId === 'Recruteur') {
     filterPerStatus = <select onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
       <option selected>Filtrer par status</option>
       {archivedFilteredList}
@@ -188,7 +197,7 @@ const OffersList = (props) => {
 
   return (
 
-    <div className='mainContainer'>
+    <div className='mainContainer' style={backgroundImage}>
 
       <NavBar />
 
@@ -212,7 +221,7 @@ const OffersList = (props) => {
             {contractFilteredList}
           </select>
           {filterPerStatus}
-          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon/></button>
+          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
         </div>
 
         {addOfferButton}

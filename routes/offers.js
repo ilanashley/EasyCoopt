@@ -6,7 +6,7 @@ var userModel = require("../models/users");
 
 
 router.get('/get', async (req, res, next) => {
-  var offers = await offerModel.find()
+  var offers = await offerModel.find().populate('userId').exec();
   if (!offers) {
     res.json({ result: false, error: "Il n'y a pas d'offre à afficher" })
   } else {
@@ -22,7 +22,8 @@ router.post('/add', async function (req, res, next) {
   let bonusAmount = req.body.bonusAmount;
   let contract = req.body.contract;
   let link = req.body.link;
-  let resume = req.body.resume; 
+  let resume = req.body.resume;
+  let archived = false; 
 
   var user = await userModel.findOne({ token: req.body.token })
 
@@ -39,7 +40,7 @@ router.post('/add', async function (req, res, next) {
         contract: contract,
         link: link,
         resume: resume,
-        status: true,
+        archived: archived,
         userId: user._id
       });
       var savedOffer = await newOffer.save();
@@ -51,7 +52,7 @@ router.post('/add', async function (req, res, next) {
       );
   
       if (savedOffer && updatedUser) {
-        res.json({ result: true, message: "L'offre a bien été enregistrée" });
+        res.json({ result: true, success: "L'offre a bien été enregistrée" });
       } else {
         res.json({ result: false, error: "La connexion à la bdd a échoué" });
       }
@@ -70,7 +71,7 @@ router.put('/add', async function (req, res, next) {
   let contract = req.body.contract;
   let link = req.body.link;
   let resume = req.body.resume;
-  let status = req.body.status;
+  let archived = req.body.archived;
 
   var user = await userModel.findOne({ token: req.body.token })
 
@@ -89,12 +90,12 @@ router.put('/add', async function (req, res, next) {
           contract: contract,
           link: link,
           resume: resume,
-          status: true,
+          archived: archived,
           userId: user._id
         });
   
       if (modifiedOffer) {
-        res.json({ result: true, message: "La modification a bien été prise en compte" });
+        res.json({ result: true, success: "La modification a bien été prise en compte" });
       } else{
         res.json({ result: false, error: "La connexion à la bdd a échoué" });
       }  
@@ -105,20 +106,22 @@ router.put('/add', async function (req, res, next) {
 })
 
 router.put('/archive', async function (req, res, next) {
-  var result = false
-  var status = req.body.status
-
-  await offerModel.updateOne(
-    { _id: req.body.id },
+  var archived = req.body.archived
+  var offerId = req.body.offerId
+  var updatedOffer = await offerModel.updateOne(
+    { _id: offerId },
     {
-      status: status
+      archived: archived
     }
   );
 
-  var offerCurrent = await offerModel.findOne({ _id: req.body.id })
-  if (offerCurrent.status === false) { result = true }
+  if (updatedOffer) {
+    res.json({ result: true, success: "L'offre a bien été archivée" })
+  } else {
+    res.json({ result: false, error: "L'offre n'a pas été archivée, veuillez recommencer" })
+  }
 
-  res.json({ result, offerCurrent })
+  
 })
 
 router.get("/offer", async function (req, res, next) {

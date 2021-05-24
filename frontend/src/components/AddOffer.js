@@ -45,12 +45,10 @@ function AddOffer(props) {
   const [resume, setResume] = useState('');
 
   const [offerModifiee, setOfferModifiee] = useState(false);
-
-  
+ 
   const [offer, setOffer] = useState(false)
-  const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0, 10))
+  const [stringDate, setStringDate] = useState('')
   
-
   // State for model
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -77,7 +75,7 @@ function AddOffer(props) {
       const response = await rawResponse.json();
       if(response.result === true) {
         const offer = response.offers.filter(offer => offer._id == id)
-        if(offer.length !== 0) {
+        if(offer.length > 0) {
           setTitle(offer[0].title)
           setCity(offer[0].city)
           setCreationDate(offer[0].creationDate)
@@ -95,7 +93,6 @@ function AddOffer(props) {
       } else {
         setError(response.error)
         setOpen(!open);
-        return
       }
     };
     loadOffer();
@@ -129,11 +126,9 @@ function AddOffer(props) {
     if(response.result === false) {
       setError(response.error)
       setOpen(!open);
-      console.log("messageError", response.error)
     } else {
       setSuccess(response.success)
       setOpen(!open)
-      console.log("messageSuccess", response.success)
     }
   }
 
@@ -187,23 +182,24 @@ function AddOffer(props) {
               </FormGroup>
               <FormGroup>
                 <Label for="creationDate">Date</Label>
-                <Input value={stringDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
+                <Input defaultValue={stringDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
               </FormGroup>
               <FormGroup>
                 <Label for="bonusAmount">Prime</Label>
                 <Input defaultValue={bonusAmount ? bonusAmount : ''} onChange={(e) => setBonusAmount(e.target.value)} min={0} max={1000} type="number" step="10" name="bonusAmount" placeholder="400€" />
               </FormGroup>
               <FormGroup>
-                <Label for="contract">Type du contrat</Label>
-                <select value={contract ? contract : 'CDI'} className="form-select" onChange={(e) => setContract(e.target.value)} aria-label="Default select example" name="contract">
+                <Label for="exampleSelect">Type de contrat</Label>
+                <Input type="select" name="select" id="exampleSelect" value={contract} onChange={(e) => setContract(e.target.value)}>
+                  <option >Choisir une option</option>
                   <option value="CDI">CDI</option>
                   <option value="CDD">CDD</option>
-                  <option value="Stage">Stage</option>
-                </select>
+                  <option value="STAGE">STAGE</option>
+                </Input>
               </FormGroup>
               <FormGroup>
                 <Label for="link">Lien du contrat</Label>
-                <Input defaultValue={link ? link : ''} onChange={(e) => setLink(e.target.value)} type="link" name="link" placeholder="https://" />
+                <Input defaultValue={link ? link : ''} onChange={(e) => setLink(e.target.value)} type="url" name="link" placeholder="https://" />
               </FormGroup>
               <FormGroup>
                 <Label for="resume">Contenu</Label>

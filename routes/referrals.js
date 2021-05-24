@@ -51,9 +51,9 @@ router.post('/add', async (req, res, next) => {
     var savedReferral = await newReferral.save()
 
     if(savedReferral) {
-      res.json({ result: true });
+      res.json({ result: true, success: 'un message' });
     } else {
-      res.json({ result: false, message: resultCopy });
+      res.json({ result: false, error: "un message d'erreur" });
     }
   
   }

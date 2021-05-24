@@ -10,12 +10,35 @@ import {
   Container,
   Row,
   Col,
-  Modal,
-  ModalBody,
-  ModalFooter
+
 } from 'reactstrap';
 import NavBar from './NavBar';
 import { useParams, Redirect } from "react-router-dom";
+import Backdrop from '@material-ui/core/Backdrop';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
+
+
+import { makeStyles } from '@material-ui/core/styles';
+
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
+// Modal style
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 
 const AddCoopte = (props) => {
 
@@ -24,17 +47,34 @@ const AddCoopte = (props) => {
   const [email, setEmail] = useState('');
   const [reason, setReason] = useState('');
   const [cv, setCv] = useState('');
-  const [modal, setModal] = useState(false);
+
   const [offerCompleted, setOfferCompleted] = useState('');
   const [loading, setLoading] = useState(false);
   const [offerTitle, setOfferTitle] = useState('');
 
+  // State for modal
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   const { offerId } = useParams();
 
   /* function fetch to add coopte with file to the back */
   var saveCoopte = async () => {
-    setModal(!modal)
+    setOpen(!open)
     setLoading(true)
 
     var date = new Date()
@@ -62,7 +102,7 @@ const AddCoopte = (props) => {
     })
     let response = await saveReq.json();
 
-    if(response) {
+    if (response) {
       console.log('réponse du back au fetch du coopté')
       setLoading(false)
     }
@@ -80,19 +120,19 @@ const AddCoopte = (props) => {
 
   /* function to redirect to offersList */
   const toggleRedirect = () => {
-    setModal(!modal)
+    setOpen(!open)
     setOfferCompleted(!offerCompleted)
   };
 
   if (offerCompleted) {
-    return <Redirect to='/offerslist' />
+    return <Redirect to='/referralsList' />
   }
 
   /* conditions for modal */
   if (loading) {
-    var contentModal = <ModalBody>Loading</ModalBody>
+    var contentModal = <p>Loading</p>
   } else {
-    contentModal = <ModalBody>Votre Cooptation a bien été prise en compte</ModalBody>
+    contentModal = <p>Votre Cooptation a bien été prise en compte</p>
   }
 
   if (!props.token) {
@@ -104,18 +144,18 @@ const AddCoopte = (props) => {
   return (
     <div className="section">
       <NavBar />
-      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', padding: 20 }}><h1>Vous recommandez une personne pour le poste de :</h1><h1>{offerTitle}</h1></div>
+      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center',marginTop: 40 }}><h1 style={{fontSize: 40}}> Vous recommandez une personne pour le poste de :</h1><h1 style={{fontSize: 40}}>{offerTitle}</h1></div>
 
       <Container >
-        <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
+        <Row className="cardBackground" style={{ padding: 20, marginTop: 50, marginBottom: 50 }} >
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <Form>
               <FormGroup>
-                <Label for="firstname">Firstname</Label>
+                <Label for="firstname">Nom</Label>
                 <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
               </FormGroup>
               <FormGroup>
-                <Label for="lastname">Lastname</Label>
+                <Label for="lastname">Prénom</Label>
                 <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
               </FormGroup>
               <FormGroup>
@@ -128,19 +168,34 @@ const AddCoopte = (props) => {
               </FormGroup>
 
               <FormGroup>
-                <Label for="reason">Reason of cooptation</Label>
+                <Label for="reason">Raison de la cooptation</Label>
                 <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
               </FormGroup>
+              {/* <FormGroup>
+                <FormControlLabel control={<Checkbox />} value="end" label="J'accepte de partager les données relatives à cette cooptation" />
+              </FormGroup> */}
 
               <div class="btnEnd">
                 <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
               </div>
             </Form>
-            <Modal isOpen={modal} >
-              {contentModal}
-              <ModalFooter>
-                <Button color="primary" onClick={() => { toggleRedirect() }}>Close</Button>
-              </ModalFooter>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={toggleRedirect}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  {contentModal}
+                </div>
+              </Fade>
             </Modal>
           </Col>
         </Row>

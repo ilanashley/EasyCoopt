@@ -65,27 +65,26 @@ const OffersList = (props) => {
     setOffersPerPage(event.target.value)
   }
 
-  // Enlever offre
-
-  var archiveOffer = async (id) => {
-    const archiveReq = await fetch('/offers/archive', {
+  // Archive offer
+  var archiveOffer = async (i, offerId) => {
+    let newOffers = [...offers]
+    let index = i + indexOfFirstOffer
+    newOffers[index].archived = !offers[index].archived
+    setOffers(newOffers)
+    const rawResponse = await fetch('/offers/archive', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `status=${false}&id=${id}`
+      body: `archived=${newOffers[index].archived}&offerId=${offerId}`
     })
-    const body = await archiveReq.json()
-
-    if (body.result === true) {
-      setAjoutId([...ajoutId, body.offerCurrent._id])
-    }
+    await rawResponse.json()
   }
 
-  // Function pour recommander 
+  // Recommend someone 
   const recommend = (offerId) => {
     setOfferId(offerId)
   }
 
-  // Function pour voir l'offre
+  // View offer
   const viewOffer = (offerId) => {
     setOfferIdView(offerId)
   }
@@ -96,7 +95,7 @@ const OffersList = (props) => {
     return <Redirect to={`/viewOffer/${offerIdView}`} />
   }
 
-  // Fucntion pour ajouter une offre
+  // Add offer
   const handleOnAddOffer = () => {
     setAddOffer(true)
   }
@@ -151,6 +150,22 @@ const OffersList = (props) => {
     setOffers(offersPerContract)
   }
 
+  // Filter per status
+  const archivedArray = offers.map((offer) => { return offer.archived })
+  const archivedFilteredArray = archivedArray.filter((status, pos) => {
+    return archivedArray.indexOf(status) === pos;
+  }).sort()
+  const archivedFilteredList = archivedFilteredArray.map((archived) => {
+    let archivedDescription = archived === true ? 'Inactive' : 'Active'
+    return (<option value={archived}>{archivedDescription}</option>)
+  })
+
+  const handleSelectFilteredStatus = (event) => {
+    let value = event.target.value === 'true' ? true : false
+    const offersPerStatus = offers.filter(offer => offer.archived === value)
+    setOffers(offersPerStatus)
+  }
+
   // Reset Filters
   const handleSelectResetFilters = () => {
     fetchOffers()
@@ -161,6 +176,14 @@ const OffersList = (props) => {
     addOfferButton = <div className='perPageContainer w-100'>
       <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large'/>Ajouter une Offre</button>
     </div>
+  }
+
+  let filterPerStatus
+  if(props.typeId === 'Recruteur') {
+    filterPerStatus = <select onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
+      <option selected>Filtrer par status</option>
+      {archivedFilteredList}
+    </select>
   }
 
   return (
@@ -188,6 +211,7 @@ const OffersList = (props) => {
             <option selected>Filtrer par contrat</option>
             {contractFilteredList}
           </select>
+          {filterPerStatus}
           <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon/></button>
         </div>
 

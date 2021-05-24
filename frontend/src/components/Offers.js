@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 
 import ViewOffer from './ViewOffer';
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 const Offers = (props) => {
@@ -40,9 +41,10 @@ const Offers = (props) => {
         const secondDate = new Date();
         const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 
-        var display = {};
-        if (props.ajoutId.includes(offer._id)) {
-            display = { display: 'none' }
+        // Archived offer style
+        let archivedStyle
+        if(offer.archived === true) {
+            archivedStyle = { border: 'solid #f78400'}
         }
 
         let updateOffer
@@ -55,56 +57,60 @@ const Offers = (props) => {
                 </button>
             </Col> 
             archiveOffer = <Col md='2' sm="4" className="d-flex justify-content-center p-2">
-                <button className="referralButton" onClick={() => { props.archiveOffer(offer._id) }}>
+                <button className="referralButton" onClick={() => { props.archiveOffer(i, offer._id) }}>
                     Archiver
                 </button>
             </Col>
-        } else if (props.typeId === 'Coopteur') {
+        } else {
             recommendOnOffer =<Col md='4' sm="6" className="d-flex justify-content-center p-2">
                 <button className="referralButton" onClick={() => props.recommend(offer._id)} >Recommander</button>
             </Col>
         }
 
-        return (
+        if (props.typeId === 'Recruteur' || offer.archived === false) {
+            return (
 
-            <div key={offer._id} className="cardBackground mb-2" style={display}>
-                <Row className="d-flex align-items-center ">
+                <div key={offer._id} className="cardBackground mb-2" style={archivedStyle}>
+                    <Row className="d-flex align-items-center " >
+    
+                        <Col md='3' sm="6"  className="d-flex justify-content-center">
+                            <h5 className="m-2">{offer.title}</h5>
+                        </Col>
+                        <Col md='4' sm="6">
+                            <Row  className="bg-light pt-3 m-2 border rounded-3">
+                                <Col className="d-flex flex-column justify-content-start align-items-center">
+                                    <CalendarTodayIcon fontSize="small" />
+                                    <div style={{fontSize: 12, padding: 10}}>Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</div>
+                                </Col>
+                                <Col className="d-flex flex-column justify-content-start align-items-center">
+                                    <BusinessCenterIcon fontSize="small" />
+                                    <div style={{fontSize: 12, padding: 10}}>{offer.contract}</div>
+                                </Col>
+                                <Col className="d-flex flex-column justify-content-start align-items-center">
+                                    <PlaceIcon fontSize="small" />
+                                    <div style={{fontSize: 12, padding: 10}}>{offer.city}</div>
+                                </Col>
+                                <Col className="d-flex flex-column justify-content-start align-items-center">
+                                    <AccountBalanceOutlinedIcon fontSize="small"/>
+                                    <div style={{fontSize: 12, padding: 10}}>{offer.bonusAmount}€</div>
+                                </Col>
+                            </Row>                                            
+                        </Col>
+                        {recommendOnOffer}
+                        {updateOffer}
+                        {archiveOffer}
+                        <Col md='1' sm="4" className="d-flex justify-content-center p-2">
+                            <button className="referralButton m-2" onClick={() => props.viewOffer(offer._id)}>
+                                Voir
+                            </button>
+                        </Col>
+                            
+                    </Row>
+                </div>
+            )
+        }
 
-                    <Col md='3' sm="6"  className="d-flex justify-content-center">
-                        <h5 className="m-2">{offer.title}</h5>
-                    </Col>
-                    <Col md='4' sm="6">
-                        <Row  className="bg-light pt-3 m-2 border rounded-3">
-                            <Col className="d-flex flex-column justify-content-start align-items-center">
-                                <CalendarTodayIcon fontSize="small" />
-                                <div style={{fontSize: 12, padding: 10}}>Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</div>
-                            </Col>
-                            <Col className="d-flex flex-column justify-content-start align-items-center">
-                                <BusinessCenterIcon fontSize="small" />
-                                <div style={{fontSize: 12, padding: 10}}>{offer.contract}</div>
-                            </Col>
-                            <Col className="d-flex flex-column justify-content-start align-items-center">
-                                <PlaceIcon fontSize="small" />
-                                <div style={{fontSize: 12, padding: 10}}>{offer.city}</div>
-                            </Col>
-                            <Col className="d-flex flex-column justify-content-start align-items-center">
-                                <AccountBalanceOutlinedIcon fontSize="small"/>
-                                <div style={{fontSize: 12, padding: 10}}>{offer.bonusAmount}€</div>
-                            </Col>
-                        </Row>                                            
-                    </Col>
-                    {recommendOnOffer}
-                    {updateOffer}
-                    {archiveOffer}
-                    <Col md='1' sm="4" className="d-flex justify-content-center p-2">
-                        <button className="referralButton m-2" onClick={() => props.viewOffer(offer._id)}>
-                            Voir
-                        </button>
-                    </Col>
-                        
-                </Row>
-            </div>
-        )
+        
     })
 
     return (

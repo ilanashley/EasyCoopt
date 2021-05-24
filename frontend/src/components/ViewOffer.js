@@ -65,66 +65,75 @@ const ViewOffer = (props) => {
         setIsRedirectToAddCoopte(true)
     }
 
-    if(isRedirectToOffersList) {
+    if (isRedirectToOffersList) {
         return <Redirect to="/offersList" />;
-    }else if (isRedirectToAddCoopte) {
+    } else if (isRedirectToAddCoopte) {
         return <Redirect to={`/addCoopte/${offerIdView}`} />
     }
-    
+
     if (!props.token) {
         return <Redirect to="/login" />;
     }
 
-    return (
-        <div className="section">
-            <NavBar />
-            <Container >
+    // affichage de la card du recruteur en fonction de la présence de l'id du recruteur
+    let recruiterCard;
+    if (recruiterId){
+        recruiterCard =             
+        <Row className="bg-light pt-3 m-2 border rounded-3 d-flex ">
+        <h6 className="d-flex justify-content-center">Recruteur suivant cette annonce :</h6>
+        <Col className="d-flex justify-content-end">
+            <div>
+            <img
+                src={recruiterId.avatarUrl}
+                class="rounded-circle z-depth-1-half avatar-pic"
+                alt=""
+                height="60px"
+                width="60px"
+                onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src =
+                    "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg";
+            }}/>
+            </div>
+        </Col>
+            <Col>
+                <div >
+                <p style={{ margin: 1 , padding: 1, lineHeight: 1}}>{recruiterId.firstName}  </p>
+                <p style={{ margin: 1 , paddingBottom: 7}}>{recruiterId.lastName}</p>
+                </div>
+            </Col>
+        </Row>
+    }
 
-                <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
-                    <Col sm="12" md={{ size: 6, offset: 3 }} >
-                        <h3 style={{ marginTop: "40px" }} > {title} </h3>
-                        <div style={{display: 'flex'}}><p className="mr-2">{contract}</p><p className="mr-2">-</p> <p>{city}</p> 
-                        </div>
-                        <div className="mt-0">
-                        <p className="mt-0">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
-                        <hr />
-                        <p>{resume}</p>
-                        
-                        <div style={{marginBottom: 20}}>
-                            <a href={link} target="_blank">{link}</a>
-                        </div>
-                        <Row className="bg-light pt-3 m-2 border rounded-3">
-                        <h6>Recruteur suivant cette annonce:</h6>
-                        <Col >
-                        <div>
-                        <img
-                            src={recruiterId.avatarUrl}
-                            class="rounded-circle z-depth-1-half avatar-pic"
-                            alt=""
-                            height="60px"
-                            width="60px"
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src =
-                                "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg";
-                        }}/>
-                        </div>
-                        </Col>
-                        <Col>
-                        <div>
-                        <p>{recruiterId.firstName}</p>
-                        <p>{recruiterId.lastName}</p>
-                        </div>
-                        </Col>
-                        </Row>
-                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <button  onClick = {() => redirectionToAddCoopte(offerIdView)} className="referralButton pt-3">Recommander</button>
-                            <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
-        </div>
+
+    return (
+    <div className="section">
+    <NavBar />
+    <Container >
+
+        <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
+        <Col sm="12" md={{ size: 6, offset: 3 }} >
+            <h3 style={{ marginTop: "40px" }} > {title} </h3>
+            <div style={{display: 'flex'}}><p className="mr-2">{contract}</p><p className="mr-2">-</p> <p>{city}</p> 
+            </div>
+            <div>
+            <p className="mt-0">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
+            <hr />
+            <p style={{textAlign: 'justify'}}>{resume}</p>
+
+            <div style={{ marginBottom: 20 }}>
+                <a href={link} target="_blank">{link}</a>
+            </div>
+            {recruiterCard}
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <button  onClick = {() => redirectionToAddCoopte(offerIdView)} className="referralButton pt-3 mb-4">Recommander</button>
+                <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
+            </div>
+            </Col>
+        </Row>
+
+    </Container>
+    </div>
 
     );
 }

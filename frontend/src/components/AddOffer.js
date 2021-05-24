@@ -91,70 +91,35 @@ function AddOffer(props) {
             setLink(offer[0].link)
           }
           setOffer(true)
+          let offerDate = new Date(offer[0].creationDate)
+          let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
+          setStringDate(stringDate)
         } 
       } else {
         setMessage(response.error)
         setModal(!modal);
+        return
       }
-      
-      // console.log('offerDate --> ',offerDate)
-      // if(offer) {
-      //   let offerDate = new Date(offer[0].creationDate)
-      //   let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
-      //   setStringDate(stringDate)
-      //   setOffer(...offer)
-
-      //   console.log('stringDate --> ',stringDate)
-
-      // } else {
-      //   let currentDate = new Date();
-      //   let stringDate = currentDate.toISOString().substr(0,10);
-      //   console.log('stringDateBis --> ',stringDate)
-      //   setStringDate(stringDate)
-      // }
     };
     loadOffer();
   }, []);
-
-  // const isInitialMount = useRef(true);
-
-  // useEffect(() => {
-  //   if (isInitialMount.current) {
-  //     isInitialMount.current = false;
-  //   } else {
-  //     let offerDate = new Date(offer.creationDate)
-  //     let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
-  //     setCreationDate(stringDate)
-  //   }
-  // });
-
-  // useEffect(() => {
-  //   let offerDate = new Date(offer.creationDate)
-  //   let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
-  //   setCreationDate(stringDate)
-  // }, [offer]);
 
   let modalButtonText
   let methodOption
   let pageTitle
   let body
   
-  // let stringDate
   if (offer) {
     methodOption = 'PUT' // Fetch method option
     modalButtonText = 'Modifier'
     pageTitle = 'Modifier une offre'
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&id=${id}&token=${props.token}`
-    // let offerDate = new Date(offer.creationDate)
-    // stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
 
   } else {
     methodOption = 'POST' // Fetch method option
     modalButtonText = 'Ajouter'
     pageTitle = 'Ajouter une offre'
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
-    // let currentDate = new Date();
-    // stringDate = currentDate.toISOString().substr(0,10);
   }
 
   var saveOffer = async () => {
@@ -214,7 +179,7 @@ function AddOffer(props) {
               </FormGroup>
               <FormGroup>
                 <Label for="creationDate">Date</Label>
-                <Input defaultValue={stringDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
+                <Input value={stringDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
               </FormGroup>
               <FormGroup>
                 <Label for="bonusAmount">Prime</Label>

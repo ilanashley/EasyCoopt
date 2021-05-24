@@ -20,6 +20,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
+import { FormHelperText } from '@material-ui/core';
 
 // Background image
 const backgroundImage = {
@@ -27,6 +28,8 @@ const backgroundImage = {
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
+  minWidth: '70wh',
+  minHeight: '70vw'
 };
 
 // Modal style
@@ -213,17 +216,11 @@ function AddOffer(props) {
   }
 
   return (
-
-    <div style = {backgroundImage}>
-
-    <div className="section">
+    <div className="section" style = {backgroundImage}>
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
-
       <Container>
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
-
-
           <Col sm="12" md={{ size: 6, offset: 3 }} >
             <Form>
               <FormGroup>
@@ -282,11 +279,8 @@ function AddOffer(props) {
             </Form>
           </Col>
         </Row>
-
       </Container>
     </div>
-    </div>
-
   );
 }
 

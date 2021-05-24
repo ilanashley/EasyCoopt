@@ -16,6 +16,8 @@ const backgroundImage = {
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
+    minWidth: '50wh',
+    minHeight: '50vw'
   };
 
 const ViewOffer = (props) => {

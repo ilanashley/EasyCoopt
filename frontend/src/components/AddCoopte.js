@@ -29,6 +29,8 @@ const backgroundImage = {
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
+  minWidth: '60wh',
+  minHeight: '60vw'
 };
 
 // Modal style
@@ -63,7 +65,7 @@ const AddCoopte = (props) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
-  
+
 
 
   const style = {
@@ -87,7 +89,7 @@ const AddCoopte = (props) => {
     date.setHours(0, 0, 0, 0)
 
     var data = new FormData();
-    if(!cv) {
+    if (!cv) {
       setError('oubli de cv')
       setOpen(true)
     } else {
@@ -98,21 +100,21 @@ const AddCoopte = (props) => {
       data.append('creationDate', date);
       data.append('offerId', offerId);
       data.append('userId', props.userId)
-  
+
       data.append(
         "cv",
         cv,
         cv.name
-        
+
       );
       console.log("cv", cv)
-  
+
       const saveReq = await fetch('/referrals/add', {
         method: 'post',
         body: data
       })
       let response = await saveReq.json();
-      if(response.result === false){
+      if (response.result === false) {
         setError(response.error)
         setOpen(!open);
         console.log("messageError", error)
@@ -121,13 +123,13 @@ const AddCoopte = (props) => {
         setOpen(!open)
         console.log("messageSuccess", success)
       }
-      }
-
     }
 
-   
-   
-  
+  }
+
+
+
+
 
   useEffect(() => {
     const getTitle = async () => {
@@ -140,7 +142,7 @@ const AddCoopte = (props) => {
 
   /* function to redirect to offersList */
   const toggleRedirect = () => {
-    if(success){
+    if (success) {
       setOpen(!open)
       setOfferCompleted(!offerCompleted)
     } else {
@@ -148,18 +150,16 @@ const AddCoopte = (props) => {
     }
   };
   let message;
- if(!success) {
-   message = error;
- }
- else {
-   message = success
- }
+  if (!success) {
+    message = error;
+  }
+  else {
+    message = success
+  }
 
   if (offerCompleted) {
     return <Redirect to='/referralsList' />
   }
-
-
 
   if (!props.token) {
     return <Redirect to="/myaccount" />;
@@ -168,65 +168,65 @@ const AddCoopte = (props) => {
   }
 
   return (
-    <div className="section" style={backgroundImage}>
-      <NavBar />
-      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center',marginTop: 40 }}><h1 style={{fontSize: 40}}> Vous recommandez une personne pour le poste de :</h1><h1 style={{fontSize: 40}}>{offerTitle}</h1></div>
+      <div className="section" style={backgroundImage}>
+        <NavBar />
+        <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez une personne pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
 
-      <Container >
-        <Row className="cardBackground" style={{ padding: 20, marginTop: 50, marginBottom: 50 }} >
-          <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <Form>
-              <FormGroup>
-                <Label for="firstname">Nom</Label>
-                <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="lastname">Prénom</Label>
-                <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="email">Email</Label>
-                <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="cv">Curriculum Vitae</Label>
-                <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
-              </FormGroup>
+        <Container >
+          <Row className="cardBackground" style={{ padding: 20, marginTop: 50, marginBottom: 50 }} >
+            <Col sm="12" md={{ size: 6, offset: 3 }}>
+              <Form>
+                <FormGroup>
+                  <Label for="firstname">Nom</Label>
+                  <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="lastname">Prénom</Label>
+                  <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="email">Email</Label>
+                  <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="cv">Curriculum Vitae</Label>
+                  <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
+                </FormGroup>
 
-              <FormGroup>
-                <Label for="reason">Raison de la cooptation</Label>
-                <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
-              </FormGroup>
-              {/* <FormGroup>
+                <FormGroup>
+                  <Label for="reason">Raison de la cooptation</Label>
+                  <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
+                </FormGroup>
+                {/* <FormGroup>
                 <FormControlLabel control={<Checkbox />} value="end" label="J'accepte de partager les données relatives à cette cooptation" />
               </FormGroup> */}
 
-              <div class="btnEnd">
-                <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
-              </div>
-            </Form>
-            <Modal
-              aria-labelledby="transition-modal-title"
-              aria-describedby="transition-modal-description"
-              className={classes.modal}
-              open={open}
-              onClose={toggleRedirect}
-              closeAfterTransition
-              BackdropComponent={Backdrop}
-              BackdropProps={{
-                timeout: 500,
-              }}
-            >
-              <Fade in={open}>
-                <div className={classes.paper}>
-                  {message}
+                <div class="btnEnd">
+                  <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
                 </div>
-              </Fade>
-            </Modal>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+              </Form>
+              <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={toggleRedirect}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                  timeout: 500,
+                }}
+              >
+                <Fade in={open}>
+                  <div className={classes.paper}>
+                    {message}
+                  </div>
+                </Fade>
+              </Modal>
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
   );
 

@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Button,
     Container,
     Row,
     Col
 } from 'reactstrap';
-import { Badge } from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import '../App.css';
 import NavBar from './NavBar'
-import { useParams, Redirect, Link } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 ;
 
@@ -21,6 +19,8 @@ const ViewOffer = (props) => {
     const [city, setCity] = useState('');
     const [creationDate, setCreationDate] = useState(new Date());
     const [bonusAmount, setBonusAmount] = useState('');
+    const [recruiterId, setRecruiterId] = useState('');
+    const [recruiterInfo, setRecruiterInfo] = useState('');
     const [contract, setContract] = useState('');
     const [link, setLink] = useState('');
     const [resume, setResume] = useState('');
@@ -42,10 +42,13 @@ const ViewOffer = (props) => {
                 setContract(offer[0].contract);
                 setLink(offer[0].link);
                 setResume(offer[0].resume);
-            }
+                setRecruiterId(offer[0].userId)
+        }
         };
         loadOffer();
     }, []);
+
+
 
     // Days since offer's creation date
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
@@ -80,16 +83,42 @@ const ViewOffer = (props) => {
                 <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
                     <Col sm="12" md={{ size: 6, offset: 3 }} >
                         <h3 style={{ marginTop: "40px" }} > {title} </h3>
-                        <div style={{display: 'flex', justifyContent: 'space-between'}}><p>{contract}</p> <p>Publié il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
+                        <div style={{display: 'flex'}}><p className="mr-2">{contract}</p><p className="mr-2">-</p> <p>{city}</p> 
+                        </div>
+                        <div className="mt-0">
+                        <p className="mt-0">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
                         <hr />
                         <p>{resume}</p>
                         
                         <div style={{marginBottom: 20}}>
                             <a href={link} target="_blank">{link}</a>
                         </div>
-
+                        <Row className="bg-light pt-3 m-2 border rounded-3">
+                        <h6>Recruteur suivant cette annonce:</h6>
+                        <Col >
+                        <div>
+                        <img
+                            src={recruiterId.avatarUrl}
+                            class="rounded-circle z-depth-1-half avatar-pic"
+                            alt=""
+                            height="60px"
+                            width="60px"
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg";
+                        }}/>
+                        </div>
+                        </Col>
+                        <Col>
+                        <div>
+                        <p>{recruiterId.firstName}</p>
+                        <p>{recruiterId.lastName}</p>
+                        </div>
+                        </Col>
+                        </Row>
                         <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <button  onClick = {() => redirectionToAddCoopte(offerIdView)} id="referralButton">Recommander</button>
+                            <button  onClick = {() => redirectionToAddCoopte(offerIdView)} className="referralButton pt-3">Recommander</button>
                             <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
                         </div>
                     </Col>

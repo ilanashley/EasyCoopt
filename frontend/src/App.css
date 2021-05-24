@@ -418,3 +418,13 @@ letter-spacing: 0em;
 .deleteIcon:hover {
   filter: brightness(110%);
 }
+
+
+.backgroundImage {
+  background-image: url("./image_1.jpeg");
+  background-position: 'center';
+  background-size: 'cover';
+  background-repeat: 'no-repeat';
+  width: '100wh';
+  height: '100vh';
+}

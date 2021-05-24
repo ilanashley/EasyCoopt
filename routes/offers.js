@@ -7,7 +7,6 @@ var userModel = require("../models/users");
 
 router.get('/get', async (req, res, next) => {
   var offers = await offerModel.find().populate('userId').exec();
-  console.log(offers)
   if (!offers) {
     res.json({ result: false, error: "Il n'y a pas d'offre à afficher" })
   } else {

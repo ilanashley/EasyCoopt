@@ -86,9 +86,9 @@ const ViewOffer = (props) => {
     let recruiterCard;
     if (recruiterId){
         recruiterCard =             
-        <Row className="bg-light pt-3 m-2 border rounded-3 d-flex ">
-        <h6 className="d-flex justify-content-center">Recruteur suivant cette annonce :</h6>
-        <Col className="d-flex justify-content-end">
+        <Row className="bg-light pt-2 pb-2 m-2 border rounded-3 d-flex ">
+        <h7 className="d-flex justify-content-center">Recruteur suivant cette annonce :</h7>
+        <Col  className="d-flex justify-content-end">
             <div>
             <img
                 src={recruiterId.avatarUrl}
@@ -105,8 +105,8 @@ const ViewOffer = (props) => {
         </Col>
             <Col>
                 <div >
-                <p style={{ margin: 1 , padding: 1, lineHeight: 1}}>{recruiterId.firstName}  </p>
-                <p style={{ margin: 1 , paddingBottom: 7}}>{recruiterId.lastName}</p>
+                <p style={{ margin: 1 , padding: 1, fontSize: 13}}>{recruiterId.firstName} {recruiterId.lastName}  </p>
+                <p style={{ margin: 1 , paddingBottom: 7,lineHeight: 0.8, fontSize: 13}}></p>
                 </div>
             </Col>
         </Row>
@@ -121,12 +121,12 @@ const ViewOffer = (props) => {
         <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
         <Col sm="12" md={{ size: 6, offset: 3 }} >
             <h3 style={{ marginTop: "40px" }}> {title} </h3>
-            <div style={{display: 'flex', color: '#7785A2', lineHeight: 1}} className="mb-0"><p className="mr-2">{contract}</p><p>-</p> <p className="ml-2">{city}</p> 
+            <div style={{display: 'flex'}} className="mb-0 offerSubtitle"><p className="mr-2 offerSubtitle" >{contract}</p><p className="offerSubtitle">-</p> <p className="ml-2 offerSubtitle">{city}</p> 
             </div>
             <div>
-            <p style={{color: '#7785A2', lineHeight: 1}} className="mb-0">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
+            <p className="mb-0 offerSubtitle">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
             <hr/>
-            <p style={{textAlign: 'justify'}}>{resume}</p>
+            <p style={{lineHeight: 1.5,  fontSize: 16}}>{resume}</p>
 
             <div style={{ marginBottom: 20 }}>
                 <a href={link} target="_blank">{link}</a>

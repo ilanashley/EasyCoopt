@@ -23,45 +23,68 @@ cloudinary.config({
 /* Add Referrals */
 
 router.post('/add', async (req, res, next) => {
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let reason = req.body.reason;
+  let email = req.body.email;
+  let creationDate = req.body.creationDate;
+  let cv = req.files.cv
   
-  /* send cv in cloudinary */
+  // Condition champs vides
+  if(!firstName || !lastName || !reason || !email || !creationDate || !cv){
+    res.json({result: false, error: 'Les champs ne sont pas tous renseignés'})
+
+    // Condition fichier trop gros
+  } else if(cv.size > 10000000) {
+    res.json({result: false, error: 'Le fichier est trop volumineux'})
+  } else {
+    
+     // envoi du cv vers cloudinary
   var cvPath = './tmp/' + uniqid() + '.jpg';
   var resultCopy = await req.files.cv.mv(cvPath);
   if(resultCopy) {
-    console.log('resultCopy exist')
+    console.log(resultCopy)
   }
   if (!resultCopy) {
     var resultCloudinary = await cloudinary.uploader.upload(cvPath);
-    
-  // console.log('resultCloudinary --> ', resultCloudinary)
+    console.log('resultCloudinary --> ', resultCloudinary)
+     if(!resultCloudinary){
+      res.json({ result: false, error: 'failed' });
+     } 
 
-    const newReferral = new referralModel({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      reason: req.body.reason,
-      email: req.body.email,
-      resumeUrl: resultCloudinary.url,
-      creationDate: req.body.creationDate,
-      status: '1',
-      userId: req.body.userId,
-      offerId: req.body.offerId
-    });
-    var savedReferral = await newReferral.save()
-    var updatedOffer = await offerModel.updateOne(
-      { _id: req.body.offerId },
-      {
-        $push: { referralsIds: savedReferral._id }
-      }
-    );
-
-    if(savedReferral && updatedOffer) {
-      res.json({ result: true, success: "La cooptation a bien été enregistrée" });
-    } else {
-      res.json({ result: false, error: "La connexion à la bdd a échoué" });
-    }
+     // Création du coopte
+     else {
+      const newReferral = new referralModel({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        reason: req.body.reason,
+        email: req.body.email,
+        resumeUrl: resultCloudinary.url,
+        creationDate: req.body.creationDate,
+        status: '1',
+        userId: req.body.userId,
+        offerId: req.body.offerId
+      });
   
+  
+      var savedReferral = await newReferral.save()
+      var updatedOffer = await offerModel.updateOne(
+        { _id: req.body.offerId },
+        {
+          $push: { referralsIds: savedReferral._id }
+        }
+      );
+      if(savedReferral && updatedOffer)  {
+        res.json({ result: true, success: 'Votre cooptation a bien été prise en compte' });
+      } else {
+        res.json({ result: false, error: 'failed' });
+      }
+     }
   }
   fs.unlinkSync(cvPath);
+  }
+  
+ 
 });
 
 /* Get Referrals*/

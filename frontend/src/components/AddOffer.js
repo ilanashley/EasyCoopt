@@ -11,15 +11,15 @@ import {
   Button,
   Container,
   Row,
-  Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+  Col
 } from 'reactstrap';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import NavBar from './NavBar'
+import NavBar from './NavBar';
+import { makeStyles } from '@material-ui/core/styles';
+import Backdrop from '@material-ui/core/Backdrop';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
 
 // Background image
 const backgroundImage = {
@@ -27,9 +27,22 @@ const backgroundImage = {
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
-  height: '100vh',
-  weight: '100wh'
 };
+
+// Modal style
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 function AddOffer(props) {
 
@@ -43,11 +56,28 @@ function AddOffer(props) {
 
   const [offerModifiee, setOfferModifiee] = useState(false);
 
-  const [error, setError] = useState('')
+  
   const [offer, setOffer] = useState(false)
-  const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0,10))
+  const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0, 10))
+  
 
-  const [modal, setModal] = useState(false);
+  // State for model
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState();
+  const [error, setError] = useState('')
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   var { id } = useParams();
 
@@ -71,7 +101,8 @@ function AddOffer(props) {
         } 
       } else {
         setError(response.error)
-        setModal(!modal);
+        setOpen(!open);
+        return
       }
       
       // console.log('offerDate --> ',offerDate)
@@ -144,24 +175,35 @@ function AddOffer(props) {
     const response = await saveReq.json()
     if(response.result === false) {
       setError(response.error)
-      setModal(!modal);
+      setOpen(!open);
+      console.log("messageError", response.error)
     } else {
-      setError(response.message)
-      setModal(!modal)
+      setSuccess(response.success)
+      setOpen(!open)
+      console.log("messageSuccess", response.success)
     }
   }
-    
-  const toggle = () => {
-    setModal(!modal);
+
+  /* function to redirect to offersList */
+  const toggleRedirect = () => {
+    if(success){
+      setOpen(!open)
+      setOfferModifiee(!offerModifiee)
+    } else {
+      setOpen(!open)
+    }
   };
 
-  const toggleBack = () => {
-    setModal(!modal);
-    setOfferModifiee(true)
-  };
+  let message;
+ if(!success) {
+   message = error;
+ }
+ else {
+   message = success
+ }
 
   if (offerModifiee) {
-    return <Redirect to='/offerslist' />
+    return <Redirect to='/referralsList' />
   }
 
   if (!props.token) {
@@ -201,8 +243,8 @@ function AddOffer(props) {
                 <Input defaultValue={bonusAmount ? bonusAmount : ''} onChange={(e) => setBonusAmount(e.target.value)} min={0} max={1000} type="number" step="10" name="bonusAmount" placeholder="400€" />
               </FormGroup>
               <FormGroup>
-                <Label for="contract">Type of contract</Label>
-                <select defaultValue={contract ? contract : 'CDI'} className="form-select" onChange={(e) => setContract(e.target.value)} aria-label="Default select example" name="contract">
+                <Label for="contract">Type du contrat</Label>
+                <select value={contract ? contract : 'CDI'} className="form-select" onChange={(e) => setContract(e.target.value)} aria-label="Default select example" name="contract">
                   <option value="CDI">CDI</option>
                   <option value="CDD">CDD</option>
                   <option value="Stage">Stage</option>
@@ -217,16 +259,25 @@ function AddOffer(props) {
                 <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
               <div class="btnEnd">
-                <Button onClick={() => { { toggle() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> {modalButtonText} </Button>
-                <Modal isOpen={modal} toggle={toggle}>
-                  <ModalBody>
-                    {error}
-                  </ModalBody>
-                  <ModalFooter>
-                  <Button color="secondary" onClick={() => setModal(!modal)}>Rester sur la page</Button>
-                    <Button color="secondary" onClick={toggleBack}>Page des offres</Button>
-                  </ModalFooter>
-                </Modal>
+                <Button onClick={() => { { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> {modalButtonText} </Button>
+                <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={toggleRedirect}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  {message}
+                </div>
+              </Fade>
+            </Modal>
               </div>
             </Form>
           </Col>

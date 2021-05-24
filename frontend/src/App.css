@@ -417,3 +417,10 @@ letter-spacing: 0em;
 .deleteIcon:hover {
   filter: brightness(110%);
 }
+
+.offerSubtitle{
+  line-height: 18px;
+  font-size: 15px;
+  color: #7785A2;
+
+}

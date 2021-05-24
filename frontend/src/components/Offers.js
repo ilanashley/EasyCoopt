@@ -11,6 +11,7 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
+import ContactsOutlinedIcon from '@material-ui/icons/ContactsOutlined';
 
 import ViewOffer from './ViewOffer';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -80,19 +81,23 @@ const Offers = (props) => {
                             <Row  className="bg-light pt-3 m-2 border rounded-3">
                                 <Col className="d-flex flex-column justify-content-start align-items-center">
                                     <CalendarTodayIcon fontSize="small" />
-                                    <div style={{fontSize: 12, padding: 10}}>Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</div>
+                                    <div style={{fontSize: 12}} className="text-center p-2">Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</div>
                                 </Col>
                                 <Col className="d-flex flex-column justify-content-start align-items-center">
                                     <BusinessCenterIcon fontSize="small" />
-                                    <div style={{fontSize: 12, padding: 10}}>{offer.contract}</div>
+                                    <div style={{fontSize: 12}} className="text-center p-2">{offer.contract}</div>
                                 </Col>
                                 <Col className="d-flex flex-column justify-content-start align-items-center">
                                     <PlaceIcon fontSize="small" />
-                                    <div style={{fontSize: 12, padding: 10}}>{offer.city}</div>
+                                    <div style={{fontSize: 12}} className="text-center p-2">{offer.city}</div>
                                 </Col>
                                 <Col className="d-flex flex-column justify-content-start align-items-center">
                                     <AccountBalanceOutlinedIcon fontSize="small"/>
-                                    <div style={{fontSize: 12, padding: 10}}>{offer.bonusAmount}€</div>
+                                    <div style={{fontSize: 12}} className="text-center p-2">{offer.bonusAmount}€</div>
+                                </Col>
+                                <Col className="d-flex flex-column justify-content-start align-items-center">
+                                    <ContactsOutlinedIcon fontSize="small"/>
+                                    <div style={{fontSize: 12}} className="text-center p-2">{offer.referralsIds.length} coopté{offer.referralsIds.length > 1 ? 's' : ''}</div>
                                 </Col>
                             </Row>                                            
                         </Col>

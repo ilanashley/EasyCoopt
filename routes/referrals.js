@@ -47,16 +47,12 @@ router.post('/add', async (req, res, next) => {
       offerId: req.body.offerId
     });
     var savedReferral = await newReferral.save()
-    console.log(savedRefferal ? 'SavedReferral exist' : "SavedReferral doesn't exist")
-    // var updatedOffer = await offersModel.updateOne(
-    //   { id: req.body.offerId },
-    //   {
-    //     $push: { referralsIds: savedReferral._id }
-    //   }
-    // );
-
-    // console.log(updatedOffer ? 'updatedOffer exist' : "updatedOffer doesn't exist")
-
+    var updatedOffer = await offerModel.updateOne(
+      { _id: req.body.offerId },
+      {
+        $push: { referralsIds: savedReferral._id }
+      }
+    );
 
     if(savedReferral && updatedOffer) {
       res.json({ result: true, success: "La cooptation a bien été enregistrée" });
@@ -79,13 +75,28 @@ router.get('/get', async (req, res, next) => {
 });
 
 router.post('/update', async (req, res, next) => {
-  await referralModel.updateOne({ _id: req.body.referralId }, { status: req.body.referralStatus });
-  res.json({ result: true })
+  var updatedReferral = await referralModel.updateOne({ _id: req.body.referralId }, { status: req.body.referralStatus });
+  if(updatedReferral) {
+    res.json({ result: true })
+  } else {
+    res.json({ result: false })
+  }
 })
 
-router.delete('/delete/:referralId', async (req, res, next) => {
-  await referralModel.deleteOne({ _id: req.params.referralId })
-  res.json({ result: true })
+router.delete('/delete/:referralId/:offerId', async (req, res, next) => {
+  var deletedReferral = await referralModel.deleteOne({ _id: req.params.referralId })
+  var updatedOffer = await offerModel.updateOne(
+    { _id: req.params.offerId },
+    {
+      $pull: { referralsIds: req.params.referralId }
+    }
+  );
+  if(deletedReferral && updatedOffer) {
+    res.json({ result: true })
+  } else {
+    res.json({ result: false })
+  }
+
 })
 
 

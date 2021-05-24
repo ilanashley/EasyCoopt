@@ -55,7 +55,7 @@ const AddCoopte = (props) => {
   // State for modal
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-
+  const [message, setMessage] = useState('');
 
 
   const style = {
@@ -171,9 +171,9 @@ const AddCoopte = (props) => {
                 <Label for="reason">Raison de la cooptation</Label>
                 <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
               </FormGroup>
-              <FormGroup>
+              {/* <FormGroup>
                 <FormControlLabel control={<Checkbox />} value="end" label="J'accepte de partager les données relatives à cette cooptation" />
-              </FormGroup>
+              </FormGroup> */}
 
               <div class="btnEnd">
                 <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>

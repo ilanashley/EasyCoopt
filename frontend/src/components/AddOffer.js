@@ -55,6 +55,7 @@ function AddOffer(props) {
 
   const [offerModifiee, setOfferModifiee] = useState(false);
 
+  const [error, setError] = useState('')
   const [offer, setOffer] = useState({})
   const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0, 10))
   const classes = useStyles();
@@ -76,12 +77,27 @@ function AddOffer(props) {
 
   useEffect(() => {
     async function loadOffer() {
-      var rawResponse = await fetch(`/offers/get`);
-      var response = await rawResponse.json();
-      const offer = response.offers.filter(offer => offer._id === id)
-      if (offer) {
-        setOffer(...offer)
+      const rawResponse = await fetch(`/offers/get`);
+      const response = await rawResponse.json();
+      if(response.result === true) {
+        const offer = response.offers.filter(offer => offer._id == id)
+        if(offer.length !== 0) {
+          setTitle(offer[0].title)
+          setCity(offer[0].city)
+          setCreationDate(offer[0].creationDate)
+          setBonusAmount(offer[0].bonusAmount)
+          setContract(offer[0].contract)      
+          setResume(offer[0].resume)
+          if(offer[0].link) {
+            setLink(offer[0].link)
+          }
+          setOffer(true)
+        } 
+      } else {
+        setError(response.error)
+        setOpen(!open);
       }
+      
       // console.log('offerDate --> ',offerDate)
       // if(offer) {
       //   let offerDate = new Date(offer[0].creationDate)
@@ -119,25 +135,25 @@ function AddOffer(props) {
   //   setCreationDate(stringDate)
   // }, [offer]);
 
-  let modalText
   let modalButtonText
   let methodOption
   let pageTitle
-
+  let body
+  
   // let stringDate
   if (offer) {
     methodOption = 'PUT' // Fetch method option
-    modalText = 'Votre offre a bien été modifiée !'
     modalButtonText = 'Modifier'
     pageTitle = 'Modifier une offre'
+    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&id=${id}&token=${props.token}`
     // let offerDate = new Date(offer.creationDate)
     // stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
 
   } else {
     methodOption = 'POST' // Fetch method option
-    modalText = 'Votre offre a bien été ajoutée !'
     modalButtonText = 'Ajouter'
     pageTitle = 'Ajouter une offre'
+    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
     // let currentDate = new Date();
     // stringDate = currentDate.toISOString().substr(0,10);
 
@@ -147,9 +163,16 @@ function AddOffer(props) {
     const saveReq = await fetch('/offers/add', {
       method: methodOption,
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&id=${id}&token=${props.token}`
+      body: body
     })
-    await saveReq.json()
+    const response = await saveReq.json()
+    if(response.result === false) {
+      setError(response.error)
+      setOpen(!open);
+    } else {
+      setError(response.message)
+      setOpen(!open)
+    }
   }
 
   const handleClickOpen = () => {
@@ -185,11 +208,11 @@ function AddOffer(props) {
             <Form>
               <FormGroup>
                 <Label for="title">Intitulé du poste</Label>
-                <Input defaultValue={offer ? offer.title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
+                <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
               </FormGroup>
               <FormGroup>
                 <Label for="city">Ville</Label>
-                <Input defaultValue={offer ? offer.city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
+                <Input defaultValue={city ? city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
               </FormGroup>
               <FormGroup>
                 <Label for="creationDate">Date</Label>
@@ -197,35 +220,36 @@ function AddOffer(props) {
               </FormGroup>
               <FormGroup>
                 <Label for="bonusAmount">Prime</Label>
-                <Input defaultValue={offer ? offer.bonusAmount : ''} onChange={(e) => setBonusAmount(e.target.value)} min={0} max={1000} type="number" step="10" name="bonusAmount" placeholder="400€" />
+                <Input defaultValue={bonusAmount ? bonusAmount : ''} onChange={(e) => setBonusAmount(e.target.value)} min={0} max={1000} type="number" step="10" name="bonusAmount" placeholder="400€" />
               </FormGroup>
               <FormGroup>
                 <Label for="contract">Type du contrat</Label>
-                <select defaultValue={offer ? offer.contract : 'CDI'} className="form-select" onChange={(e) => setContract(e.target.value)} aria-label="Default select example" name="contract">
+                <select defaultValue={contract ? contract : 'CDI'} className="form-select" onChange={(e) => setContract(e.target.value)} aria-label="Default select example" name="contract">
                   <option value="CDI">CDI</option>
                   <option value="CDD">CDD</option>
                   <option value="Stage">Stage</option>
                 </select>
               </FormGroup>
               <FormGroup>
-                <Label for="link">Lien de l'offre</Label>
-                <Input defaultValue={offer ? offer.link : ''} onChange={(e) => setLink(e.target.value)} type="link" name="link" placeholder="https://" />
+                <Label for="link">Lien du contrat</Label>
+                <Input defaultValue={link ? link : ''} onChange={(e) => setLink(e.target.value)} type="link" name="link" placeholder="https://" />
               </FormGroup>
               <FormGroup>
                 <Label for="resume">Contenu</Label>
-                <Input defaultValue={offer ? offer.resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
+                <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
               <div class="btnEnd">
                 <Button onClick={() => { { handleClickOpen() } { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> {modalButtonText} </Button>
                 {/* <Modal isOpen={modal} toggle={toggle}>
                   <ModalBody>
-                    {modalText}
+                    {error}
                   </ModalBody>
                   <ModalFooter>
+                  <Button color="secondary" onClick={() => setModal(!modal)}>Rester sur la page</Button>
                     <Button color="secondary" onClick={toggleBack}>Page des offres</Button>
                   </ModalFooter>
                 </Modal> */}
-                <Dialog
+                {/* <Dialog
                   open={open}
                   onClose={handleClose}
                   aria-labelledby="transition-modal-title"
@@ -234,12 +258,12 @@ function AddOffer(props) {
                 >
                       <Fade in={open}>
                         <div className={classes.paper}  >
-                          {modalText}
+                        {error}
                           <br/>
                           <Button style={{ marginTop: 20}} onClick={handleClose}>Page des offres</Button>
                         </div>
                       </Fade>
-                </Dialog>
+                </Dialog> */}
               </div>
             </Form>
           </Col>

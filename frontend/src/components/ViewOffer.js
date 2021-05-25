@@ -9,7 +9,16 @@ import '../App.css';
 import NavBar from './NavBar'
 import { useParams, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
-;
+
+// Background image
+const backgroundImage = {
+    backgroundImage: `url(${'/images/image_1.jpeg'})`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    minWidth: '50wh',
+    minHeight: '50vw'
+  };
 
 const ViewOffer = (props) => {
 
@@ -107,7 +116,7 @@ const ViewOffer = (props) => {
 
 
     return (
-    <div className="section">
+    <div className="section" style={backgroundImage}>
     <NavBar />
     <Container >
 

@@ -187,14 +187,13 @@ color:         #ffffff;
 .section {
   background-color: #F3F2F1;
   font-family: 'Poppins', sans-serif;
- 
 }
 
 h1 {
   font-family: Poppins;
   color: #254383;
   font-style: bold;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 20px;
   letter-spacing: -1.5%;
 }

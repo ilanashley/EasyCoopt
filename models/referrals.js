@@ -8,6 +8,7 @@ const referralSchema = mongoose.Schema({
     resumeUrl: String,
     email: String,
     status: String,
+    isAgree: Boolean,
     userId: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
     offerId: {type: mongoose.Schema.Types.ObjectId, ref: 'offers'}
 })

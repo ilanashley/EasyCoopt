@@ -3,19 +3,12 @@ import React, { useState } from 'react';
 import PlaceIcon from '@material-ui/icons/Place';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { Button, Container, Row, Col, Input, Label } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
-import IconButton from '@material-ui/core/IconButton';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 import ContactsOutlinedIcon from '@material-ui/icons/ContactsOutlined';
-
-import ViewOffer from './ViewOffer';
-import Tooltip from '@material-ui/core/Tooltip';
-
 
 const Offers = (props) => {
 

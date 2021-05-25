@@ -213,9 +213,9 @@ const ReferralsList = (props) => {
         <div className='perPageContainer'>
           <select className="custom-form-select" defaultValue={referralsPerPage} onChange={handleSelectPerPage} aria-label="Default select example">
             <option value="10">10 par page</option>
-            <option value="20">20 par page</option>
-            <option value="30">30 par page</option>
-            <option value="40">40 par page</option>
+            <option value="25">25 par page</option>
+            <option value="50">50 par page</option>
+            <option value="100">100 par page</option>
           </select>
         </div>
 

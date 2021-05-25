@@ -5,8 +5,6 @@
 }
 .navbarContainer {
   margin-bottom: 10px;
-  -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
-  box-shadow: 4px 4px 10px 2px #C9C9C9;
 }
 
 .linkContainer {
@@ -50,12 +48,15 @@
   border-radius: 0.75rem;
   -webkit-appearance: none;
   appearance: none;
-  -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
-  box-shadow: 4px 4px 10px 2px #C9C9C9;
 }
 
 .custom-form-select:hover {
   filter: brightness(110%);
+}
+
+.shadow {
+  -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
+  box-shadow: 4px 4px 10px 2px #C9C9C9;
 }
 
 .custom-btn-style {
@@ -77,8 +78,6 @@
   font-size: 1rem;
   border-radius: .75rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
-  box-shadow: 4px 4px 10px 2px #C9C9C9;
 }
 
 .custom-btn-style:hover{
@@ -89,8 +88,6 @@ table {
   border-collapse: collapse;
   border-radius: 1em;
   overflow: hidden;
-  -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
-  box-shadow: 4px 4px 10px 2px #C9C9C9
 }
 
 .table thead th {
@@ -114,8 +111,6 @@ table {
 
 .pagination-shadow {
   display: flex;
-  -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
-  box-shadow: 4px 4px 10px 2px #C9C9C9;
 }
 
 .perPageContainer {
@@ -313,10 +308,8 @@ span {
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
-  height: 55px;
-  padding: 15px;
-  margin: 15px,
-
+  padding: 10px;
+  /* margin: 15px, */
 }
 
 .referralButton:hover {

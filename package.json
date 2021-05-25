@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "heroku-postbuild": "cd reactapp && npm install && npm run build"
   },
-  "proxy": "http://localhost:3000/",
+  "proxy": "http://localhost:3000",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.25.1",

@@ -157,50 +157,39 @@ const AddCoopte = (props) => {
   }
 
   return (
-    <div className="section" style={backgroundImage}>
-      <NavBar />
-      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
+      <div className="section" style={backgroundImage}>
+        <NavBar />
+        <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
 
-      <Container   >
-        <Row style={{ marginTop: 50, marginBottom: 50 }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
-            <Form >
-              <FormGroup>
-                <Label for="firstname">Nom</Label>
-                <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
+        <Container   >
+          <Row style={{  marginTop: 50, marginBottom: 50}} >
+            <Col sm="12" md={{ size: 10, offset: 1 }} style={{padding: 40}} className="cardBackground" >
+              <Form >
+                <FormGroup>
+                  <Label for="firstname">Nom</Label>
+                  <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="lastname">Prénom</Label>
+                  <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="email">Email</Label>
+                  <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="cv">Curriculum Vitae</Label>
+                  <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="reason">Raison de la cooptation</Label>
+                  <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
+                </FormGroup>
+                <FormGroup>
+                <FormControlLabel control={<Checkbox />} /><span style={{fontSize: 15}}>J'accepte de partager les données relatives à cette cooptation</span>
+                <p></p>
               </FormGroup>
-              <FormGroup>
-                <Label for="lastname">Prénom</Label>
-                <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="email">Email</Label>
-                <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="cv">Curriculum Vitae</Label>
-                <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="reason">Raison de la cooptation</Label>
-                <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
-              </FormGroup>
-              {/* <FormGroup>
-                <FormControlLabel control={<Checkbox />} value="end" label="J'accepte de partager les données relatives à cette cooptation" />
-              </FormGroup> */}
-              {/* <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      isAgree={isAgree}
-                      onChange={handleChange}
-                      color="primary"
-                      inputProps={{ 'aria-label': 'primary checkbox' }}
-                    />
-                  }
-                  label="Je certifie sur l'honneur avoir l'accord préalable du coopté afin de transmettre cette candidature"
-                />
-              </FormGroup> */}
 
 
               <div class="btnEnd mt-5">

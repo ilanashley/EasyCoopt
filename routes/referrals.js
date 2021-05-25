@@ -29,9 +29,10 @@ router.post('/add', async (req, res, next) => {
   let email = req.body.email;
   let creationDate = req.body.creationDate;
   let cv = req.files.cv
+  let isAgree = req.body.isAgree
   
   // Condition champs vides
-  if(!firstName || !lastName || !reason || !email || !creationDate || !cv){
+  if(!firstName || !lastName || !reason || !email || !creationDate || !cv || !isAgree){
     res.json({result: false, error: 'Les champs ne sont pas tous renseignés'})
 
     // Condition fichier trop gros
@@ -63,7 +64,8 @@ router.post('/add', async (req, res, next) => {
         creationDate: req.body.creationDate,
         status: '1',
         userId: req.body.userId,
-        offerId: req.body.offerId
+        offerId: req.body.offerId,
+        isAgree: req.body.isAgree
       });
   
   

@@ -1,4 +1,4 @@
-export default function(numberOffers = null, action){
+export default function addNumberOffers(numberOffers = null, action){
     if(action.type === 'addNumberOffers'){
         return action.numberOffers
     } else {

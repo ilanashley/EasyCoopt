@@ -66,19 +66,8 @@ const AddCoopte = (props) => {
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
 
-
-
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
+  // State for checkbox
+  const [isAgree, setIsAgree] = useState(false);
 
   const { offerId } = useParams();
 
@@ -99,7 +88,8 @@ const AddCoopte = (props) => {
       data.append('reason', reason);
       data.append('creationDate', date);
       data.append('offerId', offerId);
-      data.append('userId', props.userId)
+      data.append('userId', props.userId);
+      // data.append('isAgree', isAgree)
 
       data.append(
         "cv",
@@ -124,12 +114,7 @@ const AddCoopte = (props) => {
         console.log("messageSuccess", success)
       }
     }
-
   }
-
-
-
-
 
   useEffect(() => {
     const getTitle = async () => {
@@ -139,6 +124,10 @@ const AddCoopte = (props) => {
     };
     getTitle();
   }, []);
+
+  const handleChange = (event) => {
+    setIsAgree(event.target.isAgree);
+  };
 
   /* function to redirect to offersList */
   const toggleRedirect = () => {
@@ -168,73 +157,83 @@ const AddCoopte = (props) => {
   }
 
   return (
-      <div className="section" style={backgroundImage}>
-        <NavBar />
-        <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
+    <div className="section" style={backgroundImage}>
+      <NavBar />
+      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
 
-        <Container   >
-          <Row style={{  marginTop: 50, marginBottom: 50}} >
-            <Col sm="12" md={{ size: 10, offset: 1 }} style={{padding: 40}} className="cardBackground" >
-              <Form >
-                <FormGroup>
-                  <Label for="firstname">Nom</Label>
-                  <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="lastname">Prénom</Label>
-                  <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="email">Email</Label>
-                  <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="cv">Curriculum Vitae</Label>
-                  <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="reason">Raison de la cooptation</Label>
-                  <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
-                </FormGroup>
-                {/* <FormGroup>
+      <Container   >
+        <Row style={{ marginTop: 50, marginBottom: 50 }} >
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
+            <Form >
+              <FormGroup>
+                <Label for="firstname">Nom</Label>
+                <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="lastname">Prénom</Label>
+                <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="email">Email</Label>
+                <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="cv">Curriculum Vitae</Label>
+                <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="reason">Raison de la cooptation</Label>
+                <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
+              </FormGroup>
+              {/* <FormGroup>
                 <FormControlLabel control={<Checkbox />} value="end" label="J'accepte de partager les données relatives à cette cooptation" />
               </FormGroup> */}
+              {/* <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      isAgree={isAgree}
+                      onChange={handleChange}
+                      color="primary"
+                      inputProps={{ 'aria-label': 'primary checkbox' }}
+                    />
+                  }
+                  label="Je certifie sur l'honneur avoir l'accord préalable du coopté afin de transmettre cette candidature"
+                />
+              </FormGroup> */}
 
-                <div class="btnEnd">
-                  <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
+
+              <div class="btnEnd mt-5">
+                <button onClick={() => { saveCoopte() }} className="custom-btn-style"> Send </button>
+              </div>
+            </Form>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={toggleRedirect}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  {message}
                 </div>
-              </Form>
-              <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={toggleRedirect}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={open}>
-                  <div className={classes.paper}>
-                    {message}
-                  </div>
-                </Fade>
-              </Modal>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+              </Fade>
+            </Modal>
+          </Col>
+        </Row>
+      </Container>
+    </div>
 
   );
-
-
 }
 
 function mapStateToProps(state) {
-  // console.log("state", state)
   return {
     token: state.token,
     typeId: state.typeId,

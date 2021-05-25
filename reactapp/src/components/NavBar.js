@@ -42,10 +42,16 @@ function NavBar(props) {
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                     <NavItem>
-                        <NavLink><Link to="/" className="navbar-brand" style={{ color: "#254383" }}>Annonces</Link><Badge style={{position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE'}} color="secondary">{props.numberOffers}</Badge></NavLink>
+                        <NavLink>
+                            <Link to="/" className="navbar-brand" style={{ color: "#254383" }}>Annonces</Link>
+                            <Badge style={{position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE'}} color="secondary">{props.numberOffers}</Badge>
+                        </NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink><Link to="/referralslist" className="navbar-brand" style={{ color: "#254383" }}>Cooptations</Link></NavLink>
+                        <NavLink>
+                            <Link to="/referralslist" className="navbar-brand" style={{ color: "#254383" }}>Cooptations</Link>
+                            <Badge style={{position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE'}} color="secondary">{props.numberReferrals}</Badge>
+                        </NavLink>
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
@@ -70,7 +76,8 @@ function mapStateToProps(state) {
     return {
         token: state.token,
         userLastName: state.userLastName,
-        numberOffers: state.numberOffers
+        numberOffers: state.numberOffers,
+        numberReferrals: state.numberReferrals
     }
 }
 

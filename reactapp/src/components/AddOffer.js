@@ -13,14 +13,11 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
-import { FormHelperText } from '@material-ui/core';
 
 // Background image
 const backgroundImage = {

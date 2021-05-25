@@ -68,18 +68,6 @@ const AddCoopte = (props) => {
 
 
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
   const { offerId } = useParams();
 
   /* function fetch to add coopte with file to the back */
@@ -107,7 +95,7 @@ const AddCoopte = (props) => {
         cv.name
 
       );
-      console.log("cv", cv)
+      
 
       const saveReq = await fetch('/referrals/add', {
         method: 'post',
@@ -117,18 +105,13 @@ const AddCoopte = (props) => {
       if (response.result === false) {
         setError(response.error)
         setOpen(!open);
-        console.log("messageError", error)
       } else {
         setSuccess(response.success)
         setOpen(!open)
-        console.log("messageSuccess", success)
       }
     }
 
   }
-
-
-
 
 
   useEffect(() => {
@@ -199,7 +182,6 @@ const AddCoopte = (props) => {
                 </FormGroup>
                 <FormGroup>
                 <FormControlLabel control={<Checkbox />} /><span style={{fontSize: 15}}>J'accepte de partager les données relatives à cette cooptation</span>
-                <p></p>
               </FormGroup>
 
                 <div class="btnEnd">
@@ -235,7 +217,6 @@ const AddCoopte = (props) => {
 }
 
 function mapStateToProps(state) {
-  // console.log("state", state)
   return {
     token: state.token,
     typeId: state.typeId,

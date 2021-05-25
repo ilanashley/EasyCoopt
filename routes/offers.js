@@ -78,7 +78,7 @@ router.put('/add', async function (req, res, next) {
 
   // Si un des champs est vide, afficher un message d'erreur
   if (!title || !city || !creationDate || !bonusAmount || !contract || !resume) {
-    res.json({ result: false, error: 'Tout les champs sont requis sauf le lien' });
+    res.json({ result: false, error: 'Tous les champs sont requis sauf le lien' });
   } else {
     if (user) {
       var modifiedOffer = await offerModel.updateOne(

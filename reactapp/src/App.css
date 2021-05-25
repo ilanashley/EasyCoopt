@@ -55,8 +55,8 @@
 }
 
 .shadow {
-  -webkit-box-shadow: 4px 4px 10px 2px #C9C9C9; 
-  box-shadow: 4px 4px 10px 2px #C9C9C9;
+  -webkit-box-shadow: 4px 4px 5px 2px #C9C9C9; 
+  box-shadow: 4px 4px 5px 2px #C9C9C9;
 }
 
 .custom-btn-style {
@@ -70,9 +70,7 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  /* margin: 10px; */
-  background:    #78CFCE;
-  /* background-color: #FFFFFF; */
+  background-color:    #78CFCE;
   border: 1px solid transparent;
   padding: .375rem .75rem;
   font-size: 1rem;
@@ -255,9 +253,7 @@ span {
 .cardBackground {
   background-color:#ffffff;
   border-radius: 15px;
-  padding: 10px;
   border:1px solid #ced4da;
-  margin-bottom: 25px;
 }
 
 .cardInfoBg{

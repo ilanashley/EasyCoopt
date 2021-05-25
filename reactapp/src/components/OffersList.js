@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
 import NavBar from './NavBar'
 import Pagination from './Pagination';
 import Offers from './Offers';
@@ -42,13 +41,35 @@ const OffersList = (props) => {
     setLoading(true)
     var rawResponse = await fetch('/offers/get')
     var response = await rawResponse.json()
-    if(props.typeId !== 'Recruteur') {
-      response.offers = response.offers.filter(offer => offer.isActive === true)
-      props.addNumberOffers(response.offers.length)
+
+    let offers = [...response.offers]
+    let numberOffers = 0
+    let numberReferrals = 0
+
+    if(props.token) {
+      if(props.typeId === 'Coopteur') {
+        offers = offers.filter(offer => offer.isActive === true)
+        numberOffers = offers.length
+        for(let i=0; i<numberOffers; i++ ) {
+          numberReferrals += offers[i].referralsIds.length
+        }
+      } else if (props.typeId === 'Recruteur')  {
+        numberOffers = offers.length
+        for(let i=0; i<numberOffers; i++ ) {
+          numberReferrals += offers[i].referralsIds.length
+        }
+      }
     } else {
-      props.addNumberOffers(response.offers.length)
+      offers = offers.filter(offer => offer.isActive === true)
+      numberOffers = offers.length
+      for(let i=0; i<numberOffers; i++ ) {
+        numberReferrals += offers[i].referralsIds.length
+      }
     }
-    setOffers(response.offers)
+
+    props.addNumberOffers(numberOffers)
+    props.addNumberReferrals(numberReferrals)
+    setOffers(offers)
     setLoading(false)
     
   }
@@ -170,7 +191,7 @@ const OffersList = (props) => {
   const archivedArray = offers.map((offer) => { return offer.isActive })
   const archivedFilteredArray = archivedArray.filter((status, pos) => {
     return archivedArray.indexOf(status) === pos;
-  }).sort()
+  }).reverse()
   const archivedFilteredList = archivedFilteredArray.map((isActive) => {
     let archivedDescription = isActive === true ? 'Active' : 'Inactive'
     return (<option value={isActive}>{archivedDescription}</option>)
@@ -240,9 +261,9 @@ const OffersList = (props) => {
         <div className='perPageContainer'>
           <select className="custom-form-select" defaultValue={offersPerPage} onChange={handleSelectPerPage} aria-label="Default select example">
             <option value="10">10 par page</option>
-            <option value="20">20 par page</option>
-            <option value="30">30 par page</option>
-            <option value="40">40 par page</option>
+            <option value="25">25 par page</option>
+            <option value="50">50 par page</option>
+            <option value="100">100 par page</option>
           </select>
         </div>
 
@@ -267,6 +288,9 @@ function mapDispatchToProps(dispatch) {
   return {
     addNumberOffers: function (numberOffers) {
       dispatch({ type: 'addNumberOffers', numberOffers })
+    },
+    addNumberReferrals: function (numberReferrals) {
+      dispatch({ type: 'addNumberReferrals', numberReferrals })
     }
   }
 }

@@ -55,10 +55,10 @@ function AddOffer(props) {
   const [resume, setResume] = useState('');
 
   const [offerModifiee, setOfferModifiee] = useState(false);
- 
+
   const [offer, setOffer] = useState(false)
   const [stringDate, setStringDate] = useState('')
-  
+
   // State for model
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -83,84 +83,43 @@ function AddOffer(props) {
     async function loadOffer() {
       const rawResponse = await fetch(`/offers/get`);
       const response = await rawResponse.json();
-      if(response.result === true) {
+      if (response.result === true) {
         const offer = response.offers.filter(offer => offer._id == id)
-        if(offer.length > 0) {
+        if (offer.length > 0) {
           setTitle(offer[0].title)
           setCity(offer[0].city)
           setCreationDate(offer[0].creationDate)
           setBonusAmount(offer[0].bonusAmount)
-          setContract(offer[0].contract)      
+          setContract(offer[0].contract)
           setResume(offer[0].resume)
-          if(offer[0].link) {
+          if (offer[0].link) {
             setLink(offer[0].link)
           }
           setOffer(true)
-        } 
+        }
       } else {
         setError(response.error)
         setOpen(!open);
       }
-      
-      // console.log('offerDate --> ',offerDate)
-      // if(offer) {
-      //   let offerDate = new Date(offer[0].creationDate)
-      //   let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
-      //   setStringDate(stringDate)
-      //   setOffer(...offer)
-        
-      //   console.log('stringDate --> ',stringDate)
-        
-      // } else {
-      //   let currentDate = new Date();
-      //   let stringDate = currentDate.toISOString().substr(0,10);
-      //   console.log('stringDateBis --> ',stringDate)
-      //   setStringDate(stringDate)
-      // }
     };
     loadOffer();
   }, []);
-
-  // const isInitialMount = useRef(true);
-
-  // useEffect(() => {
-  //   if (isInitialMount.current) {
-  //     isInitialMount.current = false;
-  //   } else {
-  //     let offerDate = new Date(offer.creationDate)
-  //     let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
-  //     setCreationDate(stringDate)
-  //   }
-  // });
-
-  // useEffect(() => {
-  //   let offerDate = new Date(offer.creationDate)
-  //   let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
-  //   setCreationDate(stringDate)
-  // }, [offer]);
 
   let modalButtonText
   let methodOption
   let pageTitle
   let body
-  
-  // let stringDate
-  if(offer) {
+
+  if (offer) {
     methodOption = 'PUT' // Fetch method option
     modalButtonText = 'Modifier'
     pageTitle = 'Modifier une offre'
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&id=${id}&token=${props.token}`
-    // let offerDate = new Date(offer.creationDate)
-    // stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
-
   } else {
     methodOption = 'POST' // Fetch method option
     modalButtonText = 'Ajouter'
     pageTitle = 'Ajouter une offre'
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
-    // let currentDate = new Date();
-    // stringDate = currentDate.toISOString().substr(0,10);
-
   }
 
   var saveOffer = async () => {
@@ -170,7 +129,7 @@ function AddOffer(props) {
       body: body
     })
     const response = await saveReq.json()
-    if(response.result === false) {
+    if (response.result === false) {
       setError(response.error)
       setOpen(!open);
     } else {
@@ -181,7 +140,7 @@ function AddOffer(props) {
 
   /* function to redirect to offersList */
   const toggleRedirect = () => {
-    if(success){
+    if (success) {
       setOpen(!open)
       setOfferModifiee(!offerModifiee)
     } else {
@@ -190,12 +149,12 @@ function AddOffer(props) {
   };
 
   let message;
- if(!success) {
-   message = error;
- }
- else {
-   message = success
- }
+  if (!success) {
+    message = error;
+  }
+  else {
+    message = success
+  }
 
   if (offerModifiee) {
     return <Redirect to='/referralsList' />
@@ -208,13 +167,13 @@ function AddOffer(props) {
   }
 
   return (
-    <div className="section" style = {backgroundImage}>
+    <div className="section" style={backgroundImage}>
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
       <Container>
         <Row style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{padding: 40}} className="cardBackground" >
-            <Form>
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
+            
               <FormGroup>
                 <Label for="title">Job Title</Label>
                 <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
@@ -248,28 +207,28 @@ function AddOffer(props) {
                 <Label for="resume">Resume</Label>
                 <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
-              <div class="btnEnd">
-                <Button onClick={() => { { saveOffer() } }} style={{ margin: "10px", backgroundColor: '#254383' }}> {modalButtonText} </Button>
+              <div className="btnEnd mt-5">
+                <button onClick={() => { { saveOffer() } }} style={{backgroundColor: '#78CFCE', borderRadius: '.75rem', border: '1px solid transparent', padding: '.375rem .75rem', fontSize: '1rem'}}> {modalButtonText} </button>
                 <Modal
-              aria-labelledby="transition-modal-title"
-              aria-describedby="transition-modal-description"
-              className={classes.modal}
-              open={open}
-              onClose={toggleRedirect}
-              closeAfterTransition
-              BackdropComponent={Backdrop}
-              BackdropProps={{
-                timeout: 500,
-              }}
-            >
-              <Fade in={open}>
-                <div className={classes.paper}>
-                  {message}
-                </div>
-              </Fade>
-            </Modal>
+                  aria-labelledby="transition-modal-title"
+                  aria-describedby="transition-modal-description"
+                  className={classes.modal}
+                  open={open}
+                  onClose={toggleRedirect}
+                  closeAfterTransition
+                  BackdropComponent={Backdrop}
+                  BackdropProps={{
+                    timeout: 500,
+                  }}
+                >
+                  <Fade in={open}>
+                    <div className={classes.paper}>
+                      {message}
+                    </div>
+                  </Fade>
+                </Modal>
               </div>
-            </Form>
+           
           </Col>
         </Row>
       </Container>

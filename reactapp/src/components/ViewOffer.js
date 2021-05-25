@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Container,
-    Row,
-    Col
-} from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import '../App.css';
 import NavBar from './NavBar'
@@ -29,7 +25,6 @@ const ViewOffer = (props) => {
     const [creationDate, setCreationDate] = useState(new Date());
     const [bonusAmount, setBonusAmount] = useState('');
     const [recruterId, setRecruterId] = useState('');
-    const [recruterInfo, setRecruterInfo] = useState('');
     const [contract, setContract] = useState('');
     const [link, setLink] = useState('');
     const [resume, setResume] = useState('');
@@ -88,8 +83,8 @@ const ViewOffer = (props) => {
     let recruterCard;
     if (recruterId) {
         recruterCard =
-            <Row className="bg-light pt-2 pb-2 m-2 border rounded-3 d-flex ">
-                <h7 className="d-flex justify-content-center">Recruteur suivant cette annonce :</h7>
+            <Row className="bg-light p-3 m-1 border rounded-3 d-flex ">
+                <h7 className="d-flex justify-content-center mb-2">Recruteur suivant cette annonce :</h7>
                 <Col className="d-flex justify-content-end">
                     <div>
                         <img
@@ -106,7 +101,7 @@ const ViewOffer = (props) => {
                     </div>
                 </Col>
                 <Col>
-                    <div >
+                    <div>
                         <p style={{ margin: 1, padding: 1, fontSize: 13 }}>{recruterId.firstName} {recruterId.lastName}  </p>
                         <p style={{ margin: 1, paddingBottom: 7, lineHeight: 0.8, fontSize: 13 }}></p>
                     </div>
@@ -120,23 +115,25 @@ const ViewOffer = (props) => {
             <NavBar />
             <Container >
 
-                <Row style={{ padding: 10, marginTop: 50 }} >
-                    <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 50, marginBottom: 50 }} className="cardBackground"  >
-                        <h3 style={{ marginTop: "40px" }}> {title} </h3>
-                        <div style={{ display: 'flex', fontWeight: 'bold' }} className="mb-0 offerSubtitle"><p className="mr-2 offerSubtitle" >{contract}</p><p className="offerSubtitle">-</p> <p className="ml-2 offerSubtitle">{city}</p>
+                <Row>
+                    <Col sm="12" md={{ size: 10, offset: 1 }} className="cardBackground mt-4 mb-4 p-5"  >
+                        <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
+                        <h3 className="mt-5"> {title} </h3>
+                        <div className="d-flex mb-0 font-weight-bold offerSubtitle">
+                            <p className="mr-2 offerSubtitle" >{contract} - {city} - {bonusAmount}€</p>
                         </div>
                         <div>
-                            <p className="mb-0 offerSubtitle">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
+                            <p className="mb-0 offerSubtitle">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p>
+                        </div>
                         <hr />
-                        <p style={{ lineHeight: 1.5, fontSize: 16, textAlign: 'justify' }}>{resume}</p>
+                        <p className="fs-6 text-justify p-4">{resume}</p>
 
                         <div style={{ marginBottom: 20 }}>
                             <a href={link} target="_blank">{link}</a>
                         </div>
                         {recruterCard}
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
-                            <button onClick={() => redirectionToAddCoopte(offerIdView)} className="referralButton pt-3 mb-4">Recommander</button>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 40 }}>
+                            <button onClick={() => redirectionToAddCoopte(offerIdView)} className="custom-btn-style">Recommander</button>
                         </div>
                     </Col>
                 </Row>

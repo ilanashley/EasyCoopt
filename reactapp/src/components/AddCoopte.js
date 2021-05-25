@@ -66,7 +66,8 @@ const AddCoopte = (props) => {
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
 
-
+  // State for checkbox
+  const [isAgree, setIsAgree] = useState(false);
 
   const { offerId } = useParams();
 
@@ -78,7 +79,10 @@ const AddCoopte = (props) => {
 
     var data = new FormData();
     if (!cv) {
-      setError('oubli de cv')
+      setError('Vous devez joindre un Cv')
+      setOpen(true)
+    } else if (isAgree === false){
+      setError("Vous devez avoir l'accord préalable du coopté afin de transmettre cette candidature")
       setOpen(true)
     } else {
       data.append('firstName', firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : '');
@@ -87,15 +91,9 @@ const AddCoopte = (props) => {
       data.append('reason', reason);
       data.append('creationDate', date);
       data.append('offerId', offerId);
-      data.append('userId', props.userId)
-
-      data.append(
-        "cv",
-        cv,
-        cv.name
-
-      );
-      
+      data.append('userId', props.userId);
+      data.append('isAgree', isAgree)
+      data.append("cv", cv, cv.name );
 
       const saveReq = await fetch('/referrals/add', {
         method: 'post',
@@ -110,9 +108,7 @@ const AddCoopte = (props) => {
         setOpen(!open)
       }
     }
-
   }
-
 
   useEffect(() => {
     const getTitle = async () => {
@@ -122,6 +118,10 @@ const AddCoopte = (props) => {
     };
     getTitle();
   }, []);
+
+  const handleChange = (event) => {
+    setIsAgree(event.target.checked);
+  };
 
   /* function to redirect to offersList */
   const toggleRedirect = () => {
@@ -145,75 +145,83 @@ const AddCoopte = (props) => {
   }
 
   if (!props.token) {
-    return <Redirect to="/myaccount" />;
+    return <Redirect to="/login" />;
   } else if (props.typeId !== 'Coopteur') {
     return <Redirect to="/offersList" />;
   }
 
   return (
-      <div className="section" style={backgroundImage}>
-        <NavBar />
-        <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
+    <div className="section" style={backgroundImage}>
+      <NavBar />
+      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
 
-        <Container   >
-          <Row style={{  marginTop: 50, marginBottom: 50}} >
-            <Col sm="12" md={{ size: 10, offset: 1 }} style={{padding: 40}} className="cardBackground" >
-              <Form >
-                <FormGroup>
-                  <Label for="firstname">Nom</Label>
-                  <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="lastname">Prénom</Label>
-                  <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="email">Email</Label>
-                  <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="cv">Curriculum Vitae</Label>
-                  <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="reason">Raison de la cooptation</Label>
-                  <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
-                </FormGroup>
-                <FormGroup>
-                <FormControlLabel control={<Checkbox />} /><span style={{fontSize: 15}}>J'accepte de partager les données relatives à cette cooptation</span>
+      <Container   >
+        <Row style={{ marginTop: 50, marginBottom: 50 }} >
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
+            <Form >
+              <FormGroup>
+                <Label for="firstname">Nom</Label>
+                <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="lastname">Prénom</Label>
+                <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="email">Email</Label>
+                <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="cv">Curriculum Vitae</Label>
+                <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
-                <div class="btnEnd">
-                  <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>
+              <FormGroup>
+                <Label for="reason">Raison de la cooptation</Label>
+                <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
+              </FormGroup>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isAgree}
+                      onChange={handleChange}
+                      name="checkedB"
+                      color="primary"
+                    />
+                  }
+                  label="Je certifie sur l'honneur avoir l'accord préalable du coopté afin de transmettre cette candidature"
+                />
+              </FormGroup>
+
+              <div class="btnEnd mt-5">
+                <Button onClick={() => { saveCoopte() }} style={{backgroundColor: '#78CFCE', borderRadius: '.75rem', border: '1px solid transparent', padding: '.375rem .75rem', fontSize: '1rem'}} > Envoyer </Button>
+              </div>
+            </Form>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={toggleRedirect}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  {message}
                 </div>
-              </Form>
-              <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={toggleRedirect}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={open}>
-                  <div className={classes.paper}>
-                    {message}
-                  </div>
-                </Fade>
-              </Modal>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+              </Fade>
+            </Modal>
+          </Col>
+        </Row>
+      </Container>
+    </div>
 
   );
-
-
 }
 
 function mapStateToProps(state) {
@@ -225,5 +233,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-  mapStateToProps, null
+  mapStateToProps,
+  null
 )(AddCoopte)

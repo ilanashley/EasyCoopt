@@ -45,6 +45,7 @@ function MyPagination(props) {
                     <button onClick={() => props.handlePrevBtn()}
                         disabled={props.currentPage === pageNumbers[0] ? true : false}
                         className='page-link'
+                        style={{borderTopLeftRadius: 10, borderBottomLeftRadius: 10}}
                     >Prev</button>
                 </li>
                 {pageDecrementBtn}
@@ -54,6 +55,7 @@ function MyPagination(props) {
                     <button onClick={() => props.handleNextBtn()}
                         disabled={props.currentPage === pageNumbers[pageNumbers.length - 1] ? true : false}
                         className='page-link'
+                        style={{borderTopRightRadius: 10, borderBottomRightRadius: 10}}
                     >Next</button>
                 </li>
             </ul>

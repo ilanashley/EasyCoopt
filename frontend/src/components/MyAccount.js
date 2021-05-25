@@ -20,7 +20,13 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
-
+// Background image
+const backgroundImage = {
+  backgroundImage: `url(${'/images/image_1.jpeg'})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+};
 
 // Modal style
 const useStyles = makeStyles((theme) => ({
@@ -130,7 +136,7 @@ useEffect(() => {
   }
 
   return (
-    <div className="main-container">
+    <div className="main-container" style={backgroundImage}>
       <div className='d-flex justify-content-center'>
         <Modal
           aria-labelledby="transition-modal-title"

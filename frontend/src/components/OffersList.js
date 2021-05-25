@@ -8,6 +8,15 @@ import { Redirect } from 'react-router';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
+
+// Background image
+const backgroundImage = {
+  backgroundImage: `url(${'/images/image_1.jpeg'})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+};
+
 const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
@@ -33,6 +42,9 @@ const OffersList = (props) => {
     setLoading(true)
     var rawResponse = await fetch('/offers/get')
     var response = await rawResponse.json()
+    if(props.typeId !== 'Recruteur') {
+      response.offers = response.offers.filter(offer => offer.isActive === true)
+    }
     setOffers(response.offers)
     setLoading(false)
   }
@@ -69,12 +81,12 @@ const OffersList = (props) => {
   var archiveOffer = async (i, offerId) => {
     let newOffers = [...offers]
     let index = i + indexOfFirstOffer
-    newOffers[index].archived = !offers[index].archived
+    newOffers[index].isActive = !offers[index].isActive
     setOffers(newOffers)
     const rawResponse = await fetch('/offers/archive', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `archived=${newOffers[index].archived}&offerId=${offerId}`
+      body: `isActive=${newOffers[index].isActive}&offerId=${offerId}`
     })
     await rawResponse.json()
   }
@@ -100,7 +112,7 @@ const OffersList = (props) => {
     setAddOffer(true)
   }
 
-  if(addOffer) {
+  if (addOffer) {
     return <Redirect to={`/addOffer`} />
   }
 
@@ -151,18 +163,18 @@ const OffersList = (props) => {
   }
 
   // Filter per status
-  const archivedArray = offers.map((offer) => { return offer.archived })
+  const archivedArray = offers.map((offer) => { return offer.isActive })
   const archivedFilteredArray = archivedArray.filter((status, pos) => {
     return archivedArray.indexOf(status) === pos;
   }).sort()
-  const archivedFilteredList = archivedFilteredArray.map((archived) => {
-    let archivedDescription = archived === true ? 'Inactive' : 'Active'
-    return (<option value={archived}>{archivedDescription}</option>)
+  const archivedFilteredList = archivedFilteredArray.map((isActive) => {
+    let archivedDescription = isActive === true ? 'Active' : 'Inactive'
+    return (<option value={isActive}>{archivedDescription}</option>)
   })
 
   const handleSelectFilteredStatus = (event) => {
     let value = event.target.value === 'true' ? true : false
-    const offersPerStatus = offers.filter(offer => offer.archived === value)
+    const offersPerStatus = offers.filter(offer => offer.isActive === value)
     setOffers(offersPerStatus)
   }
 
@@ -174,12 +186,12 @@ const OffersList = (props) => {
   let addOfferButton
   if (props.typeId === 'Recruteur') {
     addOfferButton = <div className='perPageContainer w-100'>
-      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large'/>Ajouter une Offre</button>
+      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large' />Ajouter une Offre</button>
     </div>
   }
 
   let filterPerStatus
-  if(props.typeId === 'Recruteur') {
+  if (props.typeId === 'Recruteur') {
     filterPerStatus = <select onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
       <option selected>Filtrer par status</option>
       {archivedFilteredList}
@@ -188,7 +200,7 @@ const OffersList = (props) => {
 
   return (
 
-    <div className='mainContainer'>
+    <div className='mainContainer' style={backgroundImage}>
 
       <NavBar />
 
@@ -212,7 +224,7 @@ const OffersList = (props) => {
             {contractFilteredList}
           </select>
           {filterPerStatus}
-          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon/></button>
+          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
         </div>
 
         {addOfferButton}

@@ -13,11 +13,24 @@ import {
   Row,
   Col
 } from 'reactstrap';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
+import { FormHelperText } from '@material-ui/core';
+
+// Background image
+const backgroundImage = {
+  backgroundImage: `url(${'/images/image_1.jpeg'})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  minWidth: '70wh',
+  minHeight: '70vw'
+};
 
 // Modal style
 const useStyles = makeStyles((theme) => ({
@@ -45,12 +58,10 @@ function AddOffer(props) {
   const [resume, setResume] = useState('');
 
   const [offerModifiee, setOfferModifiee] = useState(false);
-
-  
+ 
   const [offer, setOffer] = useState(false)
-  const [stringDate, setStringDate] = useState(new Date().toISOString().substr(0, 10))
+  const [stringDate, setStringDate] = useState('')
   
-
   // State for model
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -77,7 +88,7 @@ function AddOffer(props) {
       const response = await rawResponse.json();
       if(response.result === true) {
         const offer = response.offers.filter(offer => offer._id == id)
-        if(offer.length !== 0) {
+        if(offer.length > 0) {
           setTitle(offer[0].title)
           setCity(offer[0].city)
           setCreationDate(offer[0].creationDate)
@@ -88,35 +99,71 @@ function AddOffer(props) {
             setLink(offer[0].link)
           }
           setOffer(true)
-          let offerDate = new Date(offer[0].creationDate)
-          let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
-          setStringDate(stringDate)
         } 
       } else {
         setError(response.error)
         setOpen(!open);
-        return
       }
+      
+      // console.log('offerDate --> ',offerDate)
+      // if(offer) {
+      //   let offerDate = new Date(offer[0].creationDate)
+      //   let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
+      //   setStringDate(stringDate)
+      //   setOffer(...offer)
+        
+      //   console.log('stringDate --> ',stringDate)
+        
+      // } else {
+      //   let currentDate = new Date();
+      //   let stringDate = currentDate.toISOString().substr(0,10);
+      //   console.log('stringDateBis --> ',stringDate)
+      //   setStringDate(stringDate)
+      // }
     };
     loadOffer();
   }, []);
+
+  // const isInitialMount = useRef(true);
+
+  // useEffect(() => {
+  //   if (isInitialMount.current) {
+  //     isInitialMount.current = false;
+  //   } else {
+  //     let offerDate = new Date(offer.creationDate)
+  //     let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
+  //     setCreationDate(stringDate)
+  //   }
+  // });
+
+  // useEffect(() => {
+  //   let offerDate = new Date(offer.creationDate)
+  //   let stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
+  //   setCreationDate(stringDate)
+  // }, [offer]);
 
   let modalButtonText
   let methodOption
   let pageTitle
   let body
   
-  if (offer) {
+  // let stringDate
+  if(offer) {
     methodOption = 'PUT' // Fetch method option
     modalButtonText = 'Modifier'
     pageTitle = 'Modifier une offre'
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&id=${id}&token=${props.token}`
+    // let offerDate = new Date(offer.creationDate)
+    // stringDate = offerDate.getFullYear() + '-' + ('0' + (offerDate.getMonth()+1)).slice(-2) + '-' + ('0' + offerDate.getDate()).slice(-2);
 
   } else {
     methodOption = 'POST' // Fetch method option
     modalButtonText = 'Ajouter'
     pageTitle = 'Ajouter une offre'
     body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
+    // let currentDate = new Date();
+    // stringDate = currentDate.toISOString().substr(0,10);
+
   }
 
   var saveOffer = async () => {
@@ -129,11 +176,9 @@ function AddOffer(props) {
     if(response.result === false) {
       setError(response.error)
       setOpen(!open);
-      console.log("messageError", response.error)
     } else {
       setSuccess(response.success)
       setOpen(!open)
-      console.log("messageSuccess", response.success)
     }
   }
 
@@ -166,47 +211,44 @@ function AddOffer(props) {
   }
 
   return (
-
-    <div className="section">
+    <div className="section" style = {backgroundImage}>
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
-
       <Container>
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
-
-
           <Col sm="12" md={{ size: 6, offset: 3 }} >
             <Form>
               <FormGroup>
-                <Label for="title">Intitulé du poste</Label>
+                <Label for="title">Job Title</Label>
                 <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
               </FormGroup>
               <FormGroup>
-                <Label for="city">Ville</Label>
+                <Label for="city">City</Label>
                 <Input defaultValue={city ? city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
               </FormGroup>
               <FormGroup>
                 <Label for="creationDate">Date</Label>
-                <Input value={stringDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
+                <Input defaultValue={stringDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
               </FormGroup>
               <FormGroup>
-                <Label for="bonusAmount">Prime</Label>
+                <Label for="bonusAmount">Bonus</Label>
                 <Input defaultValue={bonusAmount ? bonusAmount : ''} onChange={(e) => setBonusAmount(e.target.value)} min={0} max={1000} type="number" step="10" name="bonusAmount" placeholder="400€" />
               </FormGroup>
               <FormGroup>
-                <Label for="contract">Type du contrat</Label>
-                <select value={contract ? contract : 'CDI'} className="form-select" onChange={(e) => setContract(e.target.value)} aria-label="Default select example" name="contract">
+                <Label for="exampleSelect">Type de contrat</Label>
+                <Input type="select" name="select" id="exampleSelect" value={contract} onChange={(e) => setContract(e.target.value)}>
+                  <option >Choisir une option</option>
                   <option value="CDI">CDI</option>
                   <option value="CDD">CDD</option>
-                  <option value="Stage">Stage</option>
-                </select>
+                  <option value="STAGE">STAGE</option>
+                </Input>
               </FormGroup>
               <FormGroup>
                 <Label for="link">Lien du contrat</Label>
-                <Input defaultValue={link ? link : ''} onChange={(e) => setLink(e.target.value)} type="link" name="link" placeholder="https://" />
+                <Input defaultValue={link ? link : ''} onChange={(e) => setLink(e.target.value)} type="url" name="link" placeholder="https://" />
               </FormGroup>
               <FormGroup>
-                <Label for="resume">Contenu</Label>
+                <Label for="resume">Resume</Label>
                 <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
               <div class="btnEnd">
@@ -233,10 +275,8 @@ function AddOffer(props) {
             </Form>
           </Col>
         </Row>
-
       </Container>
     </div>
-
   );
 }
 

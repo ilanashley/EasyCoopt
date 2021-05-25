@@ -20,8 +20,8 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
-// Background image style
-const styles1 = {
+// Background image
+const backgroundImage = {
       backgroundImage: `url(${'/images/image_4.jpeg'})`,
       backgroundPosition: 'center',
       backgroundSize: 'cover',
@@ -119,7 +119,7 @@ function Login(props) {
   }
 
   return (
-    <div style={styles1}>
+    <div style={backgroundImage}>
       <NavBar />
       <div className='d-flex justify-content-center'>
         <Modal
@@ -150,7 +150,7 @@ function Login(props) {
             <h3>Welcome !</h3>
           </div>
 
-          <Col style= {{ styles1 }} sm="12" md="6">
+          <Col sm="12" md="6">
             <Form>
               <FormGroup>
                 <Label for="email">Your email</Label>

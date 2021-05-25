@@ -44,7 +44,7 @@ const Offers = (props) => {
 
         // Archived offer style
         let archivedStyle
-        if(offer.archived === true) {
+        if(offer.isActive === false) {
             archivedStyle = { border: 'solid #f78400'}
         }
 
@@ -68,7 +68,7 @@ const Offers = (props) => {
             </Col>
         }
 
-        if (props.typeId === 'Recruteur' || offer.archived === false) {
+        if (props.typeId === 'Recruteur' || offer.isActive === true) {
             return (
 
                 <div key={offer._id} className="cardBackground mb-2" style={archivedStyle}>

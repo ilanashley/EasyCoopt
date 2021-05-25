@@ -24,7 +24,7 @@ router.post('/add', async function (req, res, next) {
   let contract = req.body.contract;
   let link = req.body.link;
   let resume = req.body.resume;
-  let archived = false; 
+  let isActive = true; 
 
   var user = await userModel.findOne({ token: req.body.token })
 
@@ -41,7 +41,7 @@ router.post('/add', async function (req, res, next) {
         contract: contract,
         link: link,
         resume: resume,
-        archived: archived,
+        isActive: isActive,
         userId: user._id
       });
       var savedOffer = await newOffer.save();
@@ -72,7 +72,7 @@ router.put('/add', async function (req, res, next) {
   let contract = req.body.contract;
   let link = req.body.link;
   let resume = req.body.resume;
-  let archived = req.body.archived;
+  let isActive = req.body.isActive;
 
   var user = await userModel.findOne({ token: req.body.token })
 
@@ -91,7 +91,7 @@ router.put('/add', async function (req, res, next) {
           contract: contract,
           link: link,
           resume: resume,
-          archived: archived,
+          isActive: isActive,
           userId: user._id
         });
   
@@ -107,12 +107,12 @@ router.put('/add', async function (req, res, next) {
 })
 
 router.put('/archive', async function (req, res, next) {
-  var archived = req.body.archived
+  var isActive = req.body.isActive
   var offerId = req.body.offerId
   var updatedOffer = await offerModel.updateOne(
     { _id: offerId },
     {
-      archived: archived
+      isActive: isActive
     }
   );
 

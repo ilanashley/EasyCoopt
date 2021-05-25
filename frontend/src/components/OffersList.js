@@ -69,12 +69,12 @@ const OffersList = (props) => {
   var archiveOffer = async (i, offerId) => {
     let newOffers = [...offers]
     let index = i + indexOfFirstOffer
-    newOffers[index].archived = !offers[index].archived
+    newOffers[index].isActive = !offers[index].isActive
     setOffers(newOffers)
     const rawResponse = await fetch('/offers/archive', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `archived=${newOffers[index].archived}&offerId=${offerId}`
+      body: `isActive=${newOffers[index].isActive}&offerId=${offerId}`
     })
     await rawResponse.json()
   }
@@ -151,18 +151,18 @@ const OffersList = (props) => {
   }
 
   // Filter per status
-  const archivedArray = offers.map((offer) => { return offer.archived })
+  const archivedArray = offers.map((offer) => { return offer.isActive })
   const archivedFilteredArray = archivedArray.filter((status, pos) => {
     return archivedArray.indexOf(status) === pos;
   }).sort()
-  const archivedFilteredList = archivedFilteredArray.map((archived) => {
-    let archivedDescription = archived === true ? 'Inactive' : 'Active'
-    return (<option value={archived}>{archivedDescription}</option>)
+  const archivedFilteredList = archivedFilteredArray.map((isActive) => {
+    let archivedDescription = isActive === true ? 'Active' : 'Inactive'
+    return (<option value={isActive}>{archivedDescription}</option>)
   })
 
   const handleSelectFilteredStatus = (event) => {
     let value = event.target.value === 'true' ? true : false
-    const offersPerStatus = offers.filter(offer => offer.archived === value)
+    const offersPerStatus = offers.filter(offer => offer.isActive === value)
     setOffers(offersPerStatus)
   }
 

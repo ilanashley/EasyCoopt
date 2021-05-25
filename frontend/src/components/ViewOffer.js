@@ -18,7 +18,7 @@ const backgroundImage = {
     backgroundRepeat: 'no-repeat',
     minWidth: '50wh',
     minHeight: '50vw'
-  };
+};
 
 const ViewOffer = (props) => {
 
@@ -28,8 +28,8 @@ const ViewOffer = (props) => {
     const [city, setCity] = useState('');
     const [creationDate, setCreationDate] = useState(new Date());
     const [bonusAmount, setBonusAmount] = useState('');
-    const [recruiterId, setRecruiterId] = useState('');
-    const [recruiterInfo, setRecruiterInfo] = useState('');
+    const [recruterId, setRecruterId] = useState('');
+    const [recruterInfo, setRecruterInfo] = useState('');
     const [contract, setContract] = useState('');
     const [link, setLink] = useState('');
     const [resume, setResume] = useState('');
@@ -51,8 +51,8 @@ const ViewOffer = (props) => {
                 setContract(offer[0].contract);
                 setLink(offer[0].link);
                 setResume(offer[0].resume);
-                setRecruiterId(offer[0].userId)
-        }
+                setRecruterId(offer[0].userId)
+            }
         };
         loadOffer();
     }, []);
@@ -85,64 +85,64 @@ const ViewOffer = (props) => {
     }
 
     // affichage de la card du recruteur en fonction de la présence de l'id du recruteur
-    let recruiterCard;
-    if (recruiterId){
-        recruiterCard =             
-        <Row className="bg-light pt-2 pb-2 m-2 border rounded-3 d-flex ">
-        <h7 className="d-flex justify-content-center">Recruteur suivant cette annonce :</h7>
-        <Col  className="d-flex justify-content-end">
-            <div>
-            <img
-                src={recruiterId.avatarUrl}
-                class="rounded-circle z-depth-1-half avatar-pic"
-                alt=""
-                height="60px"
-                width="60px"
-                onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src =
-                    "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg";
-            }}/>
-            </div>
-        </Col>
-            <Col>
-                <div >
-                <p style={{ margin: 1 , padding: 1, fontSize: 13}}>{recruiterId.firstName} {recruiterId.lastName}  </p>
-                <p style={{ margin: 1 , paddingBottom: 7,lineHeight: 0.8, fontSize: 13}}></p>
-                </div>
-            </Col>
-        </Row>
+    let recruterCard;
+    if (recruterId) {
+        recruterCard =
+            <Row className="bg-light pt-2 pb-2 m-2 border rounded-3 d-flex ">
+                <h7 className="d-flex justify-content-center">Recruteur suivant cette annonce :</h7>
+                <Col className="d-flex justify-content-end">
+                    <div>
+                        <img
+                            src={recruterId.avatarUrl}
+                            class="rounded-circle z-depth-1-half avatar-pic"
+                            alt=""
+                            height="60px"
+                            width="60px"
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                    "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg";
+                            }} />
+                    </div>
+                </Col>
+                <Col>
+                    <div >
+                        <p style={{ margin: 1, padding: 1, fontSize: 13 }}>{recruterId.firstName} {recruterId.lastName}  </p>
+                        <p style={{ margin: 1, paddingBottom: 7, lineHeight: 0.8, fontSize: 13 }}></p>
+                    </div>
+                </Col>
+            </Row>
     }
 
 
     return (
-    <div className="section" style={backgroundImage}>
-    <NavBar />
-    <Container >
+        <div className="section" style={backgroundImage} >
+            <NavBar />
+            <Container >
 
-        <Row className="cardBackground" style={{ padding: 10, marginTop: 50, marginBottom: 50 }} >
-        <Col sm="12" md={{ size: 6, offset: 3 }} >
-            <h3 style={{ marginTop: "40px" }}> {title} </h3>
-            <div style={{display: 'flex'}} className="mb-0 offerSubtitle"><p className="mr-2 offerSubtitle" >{contract}</p><p className="offerSubtitle">-</p> <p className="ml-2 offerSubtitle">{city}</p> 
-            </div>
-            <div>
-            <p className="mb-0 offerSubtitle">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
-            <hr/>
-            <p style={{lineHeight: 1.5,  fontSize: 16}}>{resume}</p>
+                <Row style={{ padding: 10, marginTop: 50 }} >
+                    <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 50, marginBottom: 50 }} className="cardBackground"  >
+                        <h3 style={{ marginTop: "40px" }}> {title} </h3>
+                        <div style={{ display: 'flex', fontWeight: 'bold' }} className="mb-0 offerSubtitle"><p className="mr-2 offerSubtitle" >{contract}</p><p className="offerSubtitle">-</p> <p className="ml-2 offerSubtitle">{city}</p>
+                        </div>
+                        <div>
+                            <p className="mb-0 offerSubtitle">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p></div>
+                        <hr />
+                        <p style={{ lineHeight: 1.5, fontSize: 16, textAlign: 'justify' }}>{resume}</p>
 
-            <div style={{ marginBottom: 20 }}>
-                <a href={link} target="_blank">{link}</a>
-            </div>
-            {recruiterCard}
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <button  onClick = {() => redirectionToAddCoopte(offerIdView)} className="referralButton pt-3 mb-4">Recommander</button>
-                <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
-            </div>
-            </Col>
-        </Row>
+                        <div style={{ marginBottom: 20 }}>
+                            <a href={link} target="_blank">{link}</a>
+                        </div>
+                        {recruterCard}
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
+                            <button onClick={() => redirectionToAddCoopte(offerIdView)} className="referralButton pt-3 mb-4">Recommander</button>
+                        </div>
+                    </Col>
+                </Row>
 
-    </Container>
-    </div>
+            </Container>
+        </div>
 
     );
 }

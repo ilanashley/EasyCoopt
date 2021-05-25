@@ -29,7 +29,7 @@ const backgroundImage = {
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   minWidth: '70wh',
-  minHeight: '70vw'
+  minHeight: '70vw',
 };
 
 // Modal style
@@ -215,8 +215,8 @@ function AddOffer(props) {
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
       <Container>
-        <Row className="cardBackground" style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
-          <Col sm="12" md={{ size: 6, offset: 3 }} >
+        <Row style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{padding: 40}} className="cardBackground" >
             <Form>
               <FormGroup>
                 <Label for="title">Job Title</Label>

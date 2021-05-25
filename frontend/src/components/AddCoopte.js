@@ -170,12 +170,12 @@ const AddCoopte = (props) => {
   return (
       <div className="section" style={backgroundImage}>
         <NavBar />
-        <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez une personne pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
+        <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
 
-        <Container >
-          <Row className="cardBackground" style={{ padding: 20, marginTop: 50, marginBottom: 50 }} >
-            <Col sm="12" md={{ size: 6, offset: 3 }}>
-              <Form>
+        <Container   >
+          <Row style={{  marginTop: 50, marginBottom: 50}} >
+            <Col sm="12" md={{ size: 10, offset: 1 }} style={{padding: 40}} className="cardBackground" >
+              <Form >
                 <FormGroup>
                   <Label for="firstname">Nom</Label>
                   <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />

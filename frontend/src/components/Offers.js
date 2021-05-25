@@ -45,8 +45,8 @@ const Offers = (props) => {
         // Archived offer style
         let archivedStyle
         if(offer.isActive === false) {
-            archivedStyle = { border: 'solid #f78400'}
-        }
+            archivedStyle = { border: ' 1px solid #f78400'}
+        } 
 
         let updateOffer
         let archiveOffer
@@ -70,13 +70,13 @@ const Offers = (props) => {
        
         return (
 
-            <div key={offer._id} className="cardBackground mb-2" style={archivedStyle}>
-                <Row className="d-flex align-items-center " >
+            <div key={offer._id} className="cardBackground mb-2 " style={archivedStyle} >
+                <Row className="d-flex align-items-center ">
 
-                    <Col md='3' sm="6"  className="d-flex justify-content-center">
+                    <Col md='3' sm="6"  className="d-flex justify-content-center" >
                         <h5 className="m-2">{offer.title}</h5>
                     </Col>
-                    <Col md='4' sm="6">
+                    <Col md='4' sm="6" >
                         <Row  className="bg-light pt-3 m-2 border rounded-3">
                             <Col className="d-flex flex-column justify-content-start align-items-center">
                                 <CalendarTodayIcon fontSize="small" />

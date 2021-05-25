@@ -47,25 +47,41 @@ const Offers = (props) => {
         if(offer.isActive === false) {
             archivedStyle = { border: 'solid #f78400'}
         }
-
-        let updateOffer
-        let archiveOffer
-        let recommendOnOffer
+       
+        let offerButton
         if (props.typeId === 'Recruteur') {
-            updateOffer = <Col md='2' sm="4" className="d-flex justify-content-center p-2">
-                <button className="referralButton" onClick={() => handleOnClick(offer._id)}>
-                    Modifier
-                </button>
-            </Col> 
-            archiveOffer = <Col md='2' sm="4" className="d-flex justify-content-center p-2">
-                <button className="referralButton" onClick={() => { props.archiveOffer(i, offer._id) }}>
-                    Archiver
-                </button>
-            </Col>
+            offerButton = <Container>
+                <Row>
+                    <Col  className='d-flex justify-content-center m-2'>
+                        <button className="custom-btn-style" onClick={() => handleOnClick(offer._id)}>
+                            Modifier
+                        </button>
+                    </Col> 
+                    <Col  className='d-flex justify-content-center m-2'>
+                        <button className="custom-btn-style" onClick={() => { props.archiveOffer(i, offer._id) }}>
+                            {offer.isActive === true ? 'Archiver' : 'Restaurer'}
+                        </button>
+                    </Col>
+                    <Col  className='d-flex justify-content-center m-2'>
+                        <button className="custom-btn-style" onClick={() => props.viewOffer(offer._id)}>
+                            Voir
+                        </button>
+                    </Col>
+                </Row>
+            </Container>
         } else {
-            recommendOnOffer =<Col md='4' sm="6" className="d-flex justify-content-center p-2">
-                <button className="referralButton" onClick={() => props.recommend(offer._id)} >Recommander</button>
-            </Col>
+            offerButton = <Container className='d-flex justify-content-around align-items-center'>
+                <Row>
+                    <Col >
+                        <button className="custom-btn-style" onClick={() => props.recommend(offer._id)} >Recommander</button>
+                    </Col>
+                    <Col>
+                        <button className="custom-btn-style" onClick={() => props.viewOffer(offer._id)}>
+                            Voir
+                        </button>
+                    </Col>
+                </Row>
+            </Container>
         }
        
         return (
@@ -73,10 +89,10 @@ const Offers = (props) => {
             <div key={offer._id} className="cardBackground mb-2" style={archivedStyle}>
                 <Row className="d-flex align-items-center " >
 
-                    <Col md='3' sm="6"  className="d-flex justify-content-center">
+                    <Col lg='4' sm="12"  className="d-flex justify-content-center">
                         <h5 className="m-2">{offer.title}</h5>
                     </Col>
-                    <Col md='4' sm="6">
+                    <Col lg='4' sm="12">
                         <Row  className="bg-light pt-3 m-2 border rounded-3">
                             <Col className="d-flex flex-column justify-content-start align-items-center">
                                 <CalendarTodayIcon fontSize="small" />
@@ -100,15 +116,9 @@ const Offers = (props) => {
                             </Col>
                         </Row>                                            
                     </Col>
-                    {recommendOnOffer}
-                    {updateOffer}
-                    {archiveOffer}
-                    <Col md='1' sm="4" className="d-flex justify-content-center p-2">
-                        <button className="referralButton m-2" onClick={() => props.viewOffer(offer._id)}>
-                            Voir
-                        </button>
-                    </Col>
-                        
+                    <Col lg='4' sm="12">
+                        {offerButton}
+                    </Col>                       
                 </Row>
             </div>
         )       

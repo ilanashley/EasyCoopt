@@ -44,9 +44,13 @@ const OffersList = (props) => {
     var response = await rawResponse.json()
     if(props.typeId !== 'Recruteur') {
       response.offers = response.offers.filter(offer => offer.isActive === true)
+      props.addNumberOffers(response.offers.length)
+    } else {
+      props.addNumberOffers(response.offers.length)
     }
     setOffers(response.offers)
     setLoading(false)
+    
   }
 
   useEffect(() => {
@@ -259,9 +263,17 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    addNumberOffers: function (numberOffers) {
+      dispatch({ type: 'addNumberOffers', numberOffers })
+    }
+  }
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(OffersList);
 
 

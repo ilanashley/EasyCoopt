@@ -176,7 +176,7 @@ function AddOffer(props) {
       <Container>
         <Row style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
           <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
-            <Form>
+            
               <FormGroup>
                 <Label for="title">Job Title</Label>
                 <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
@@ -211,7 +211,7 @@ function AddOffer(props) {
                 <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
               <div className="btnEnd mt-5">
-                <button onClick={() => { { saveOffer() } }} className="custom-btn-style"> {modalButtonText} </button>
+                <button onClick={() => { { saveOffer() } }} style={{backgroundColor: '#78CFCE', borderRadius: '.75rem', border: '1px solid transparent', padding: '.375rem .75rem', fontSize: '1rem'}}> {modalButtonText} </button>
                 <Modal
                   aria-labelledby="transition-modal-title"
                   aria-describedby="transition-modal-description"
@@ -231,7 +231,7 @@ function AddOffer(props) {
                   </Fade>
                 </Modal>
               </div>
-            </Form>
+           
           </Col>
         </Row>
       </Container>

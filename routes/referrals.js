@@ -30,9 +30,11 @@ router.post('/add', async (req, res, next) => {
   let creationDate = req.body.creationDate;
   let cv = req.files.cv
   let isAgree = req.body.isAgree
+
+  console.log('isAgree --> ', isAgree)
   
   // Condition champs vides
-  if(!firstName || !lastName || !reason || !email || !creationDate || !cv || !isAgree){
+  if(!firstName || !lastName || !reason || !email || !creationDate || !cv ){
     res.json({result: false, error: 'Les champs ne sont pas tous renseignés'})
 
     // Condition fichier trop gros
@@ -48,7 +50,6 @@ router.post('/add', async (req, res, next) => {
   }
   if (!resultCopy) {
     var resultCloudinary = await cloudinary.uploader.upload(cvPath);
-    console.log('resultCloudinary --> ', resultCloudinary)
      if(!resultCloudinary){
       res.json({ result: false, error: 'failed' });
      } 

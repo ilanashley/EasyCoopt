@@ -79,7 +79,10 @@ const AddCoopte = (props) => {
 
     var data = new FormData();
     if (!cv) {
-      setError('oubli de cv')
+      setError('Vous devez joindre un Cv')
+      setOpen(true)
+    } else if (isAgree === false){
+      setError("Vous devez avoir l'accord préalable du coopté afin de transmettre cette candidature")
       setOpen(true)
     } else {
       data.append('firstName', firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : '');
@@ -89,15 +92,8 @@ const AddCoopte = (props) => {
       data.append('creationDate', date);
       data.append('offerId', offerId);
       data.append('userId', props.userId);
-      // data.append('isAgree', isAgree)
-
-      data.append(
-        "cv",
-        cv,
-        cv.name
-
-      );
-      console.log("cv", cv)
+      data.append('isAgree', isAgree)
+      data.append("cv", cv, cv.name );
 
       const saveReq = await fetch('/referrals/add', {
         method: 'post',
@@ -107,11 +103,9 @@ const AddCoopte = (props) => {
       if (response.result === false) {
         setError(response.error)
         setOpen(!open);
-        console.log("messageError", error)
       } else {
         setSuccess(response.success)
         setOpen(!open)
-        console.log("messageSuccess", success)
       }
     }
   }
@@ -126,7 +120,7 @@ const AddCoopte = (props) => {
   }, []);
 
   const handleChange = (event) => {
-    setIsAgree(event.target.isAgree);
+    setIsAgree(event.target.checked);
   };
 
   /* function to redirect to offersList */
@@ -151,49 +145,57 @@ const AddCoopte = (props) => {
   }
 
   if (!props.token) {
-    return <Redirect to="/myaccount" />;
+    return <Redirect to="/login" />;
   } else if (props.typeId !== 'Coopteur') {
     return <Redirect to="/offersList" />;
   }
 
   return (
-      <div className="section" style={backgroundImage}>
-        <NavBar />
-        <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
+    <div className="section" style={backgroundImage}>
+      <NavBar />
+      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
 
-        <Container   >
-          <Row style={{  marginTop: 50, marginBottom: 50}} >
-            <Col sm="12" md={{ size: 10, offset: 1 }} style={{padding: 40}} className="cardBackground" >
-              <Form >
-                <FormGroup>
-                  <Label for="firstname">Nom</Label>
-                  <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="lastname">Prénom</Label>
-                  <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="email">Email</Label>
-                  <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="cv">Curriculum Vitae</Label>
-                  <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="reason">Raison de la cooptation</Label>
-                  <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
-                </FormGroup>
-                <FormGroup>
-                <FormControlLabel control={<Checkbox />} /><span style={{fontSize: 15}}>J'accepte de partager les données relatives à cette cooptation</span>
-                <p></p>
+      <Container   >
+        <Row style={{ marginTop: 50, marginBottom: 50 }} >
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
+            <Form >
+              <FormGroup>
+                <Label for="firstname">Nom</Label>
+                <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="lastname">Prénom</Label>
+                <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="email">Email</Label>
+                <Input onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="johndoe@gmail.com" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="cv">Curriculum Vitae</Label>
+                <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
 
+              <FormGroup>
+                <Label for="reason">Raison de la cooptation</Label>
+                <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
+              </FormGroup>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isAgree}
+                      onChange={handleChange}
+                      name="checkedB"
+                      color="primary"
+                    />
+                  }
+                  label="Je certifie sur l'honneur avoir l'accord préalable du coopté afin de transmettre cette candidature"
+                />
+              </FormGroup>
 
               <div class="btnEnd mt-5">
-                <button onClick={() => { saveCoopte() }} className="custom-btn-style"> Send </button>
+                <Button onClick={() => { saveCoopte() }} style={{backgroundColor: '#78CFCE', borderRadius: '.75rem', border: '1px solid transparent', padding: '.375rem .75rem', fontSize: '1rem'}} > Envoyer </Button>
               </div>
             </Form>
             <Modal
@@ -231,5 +233,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-  mapStateToProps, null
+  mapStateToProps,
+  null
 )(AddCoopte)

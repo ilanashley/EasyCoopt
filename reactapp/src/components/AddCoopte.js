@@ -197,9 +197,10 @@ const AddCoopte = (props) => {
                   <Label for="reason">Raison de la cooptation</Label>
                   <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
                 </FormGroup>
-                {/* <FormGroup>
-                <FormControlLabel control={<Checkbox />} value="end" label="J'accepte de partager les données relatives à cette cooptation" />
-              </FormGroup> */}
+                <FormGroup>
+                <FormControlLabel control={<Checkbox />} /><span style={{fontSize: 15}}>J'accepte de partager les données relatives à cette cooptation</span>
+                <p></p>
+              </FormGroup>
 
                 <div class="btnEnd">
                   <Button onClick={() => { saveCoopte() }} style={{ margin: "10px", backgroundColor: '#254383' }}> Send </Button>

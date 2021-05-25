@@ -67,55 +67,51 @@ const Offers = (props) => {
                 <button className="referralButton" onClick={() => props.recommend(offer._id)} >Recommander</button>
             </Col>
         }
+       
+        return (
 
-        if (props.typeId === 'Recruteur' || offer.isActive === true) {
-            return (
+            <div key={offer._id} className="cardBackground mb-2" style={archivedStyle}>
+                <Row className="d-flex align-items-center " >
 
-                <div key={offer._id} className="cardBackground mb-2" style={archivedStyle}>
-                    <Row className="d-flex align-items-center " >
-    
-                        <Col md='3' sm="6"  className="d-flex justify-content-center">
-                            <h5 className="m-2">{offer.title}</h5>
-                        </Col>
-                        <Col md='4' sm="6">
-                            <Row  className="bg-light pt-3 m-2 border rounded-3">
-                                <Col className="d-flex flex-column justify-content-start align-items-center">
-                                    <CalendarTodayIcon fontSize="small" />
-                                    <div style={{fontSize: 12}} className="text-center p-2">Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</div>
-                                </Col>
-                                <Col className="d-flex flex-column justify-content-start align-items-center">
-                                    <BusinessCenterIcon fontSize="small" />
-                                    <div style={{fontSize: 12}} className="text-center p-2">{offer.contract}</div>
-                                </Col>
-                                <Col className="d-flex flex-column justify-content-start align-items-center">
-                                    <PlaceIcon fontSize="small" />
-                                    <div style={{fontSize: 12}} className="text-center p-2">{offer.city}</div>
-                                </Col>
-                                <Col className="d-flex flex-column justify-content-start align-items-center">
-                                    <AccountBalanceOutlinedIcon fontSize="small"/>
-                                    <div style={{fontSize: 12}} className="text-center p-2">{offer.bonusAmount}€</div>
-                                </Col>
-                                <Col className="d-flex flex-column justify-content-start align-items-center">
-                                    <ContactsOutlinedIcon fontSize="small"/>
-                                    <div style={{fontSize: 12}} className="text-center p-2">{offer.referralsIds.length} coopté{offer.referralsIds.length > 1 ? 's' : ''}</div>
-                                </Col>
-                            </Row>                                            
-                        </Col>
-                        {recommendOnOffer}
-                        {updateOffer}
-                        {archiveOffer}
-                        <Col md='1' sm="4" className="d-flex justify-content-center p-2">
-                            <button className="referralButton m-2" onClick={() => props.viewOffer(offer._id)}>
-                                Voir
-                            </button>
-                        </Col>
-                            
-                    </Row>
-                </div>
-            )
-        }
-
-        
+                    <Col md='3' sm="6"  className="d-flex justify-content-center">
+                        <h5 className="m-2">{offer.title}</h5>
+                    </Col>
+                    <Col md='4' sm="6">
+                        <Row  className="bg-light pt-3 m-2 border rounded-3">
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <CalendarTodayIcon fontSize="small" />
+                                <div style={{fontSize: 12}} className="text-center p-2">Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</div>
+                            </Col>
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <BusinessCenterIcon fontSize="small" />
+                                <div style={{fontSize: 12}} className="text-center p-2">{offer.contract}</div>
+                            </Col>
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <PlaceIcon fontSize="small" />
+                                <div style={{fontSize: 12}} className="text-center p-2">{offer.city}</div>
+                            </Col>
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <AccountBalanceOutlinedIcon fontSize="small"/>
+                                <div style={{fontSize: 12}} className="text-center p-2">{offer.bonusAmount}€</div>
+                            </Col>
+                            <Col className="d-flex flex-column justify-content-start align-items-center">
+                                <ContactsOutlinedIcon fontSize="small"/>
+                                <div style={{fontSize: 12}} className="text-center p-2">{offer.referralsIds.length} coopté{offer.referralsIds.length > 1 ? 's' : ''}</div>
+                            </Col>
+                        </Row>                                            
+                    </Col>
+                    {recommendOnOffer}
+                    {updateOffer}
+                    {archiveOffer}
+                    <Col md='1' sm="4" className="d-flex justify-content-center p-2">
+                        <button className="referralButton m-2" onClick={() => props.viewOffer(offer._id)}>
+                            Voir
+                        </button>
+                    </Col>
+                        
+                </Row>
+            </div>
+        )       
     })
 
     return (

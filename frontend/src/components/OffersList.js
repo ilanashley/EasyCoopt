@@ -42,6 +42,9 @@ const OffersList = (props) => {
     setLoading(true)
     var rawResponse = await fetch('/offers/get')
     var response = await rawResponse.json()
+    if(props.typeId !== 'Recruteur') {
+      response.offers = response.offers.filter(offer => offer.isActive === true)
+    }
     setOffers(response.offers)
     setLoading(false)
   }

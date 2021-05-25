@@ -28,8 +28,8 @@ const backgroundImage = {
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
-  minWidth: '70wh',
-  minHeight: '70vw',
+  minWidth: '73wh',
+  minHeight: '73vw',
 };
 
 // Modal style

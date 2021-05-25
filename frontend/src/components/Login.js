@@ -187,14 +187,6 @@ function Login(props) {
               </div>
             </Form>
           </Col>
-
-          <div class="btnEnd1">
-            <Button onClick={() => handleSubmitSignup()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign Up with Linkedin </Button>
-          </div>
-          <div class="btnEnd1">
-            <Button onClick={() => handleSubmitSignup()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign Up with Google </Button>
-          </div>
-
         </Row>
 
       </Container>

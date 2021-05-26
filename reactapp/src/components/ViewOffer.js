@@ -28,7 +28,7 @@ const ViewOffer = (props) => {
         const loadOffer = async () => {
             var rawResponse = await fetch(`/offers/get`);
             var response = await rawResponse.json();
-            const offer = response.offers.filter(offer => offer._id == offerId)
+            const offer = response.offers.filter(offer => offer._id === offerId)
 
             if (offer.length > 0) {
                 setTitle(offer[0].title);
@@ -42,7 +42,7 @@ const ViewOffer = (props) => {
             }
         };
         loadOffer();
-    }, []);
+    }, [offerId]);
 
 
 
@@ -104,7 +104,7 @@ const ViewOffer = (props) => {
     if (link) {
         offerLink = <div style={{ marginBottom: 20, padding: 5 }}>
             <h6>Lien vers l'offre :</h6>
-            <a href={link} target="_blank">{link}</a>
+            <a href={link} target="_blank" rel="noreferrer">{link}</a>
         </div>
     }
 

@@ -1,4 +1,4 @@
-export default function (numberReferrals = null, action){
+export default function addNumberReferrals(numberReferrals = null, action){
     if(action.type === 'addNumberReferrals'){
         return action.numberReferrals
     } else {

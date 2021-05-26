@@ -79,7 +79,7 @@ function AddOffer(props) {
       const rawResponse = await fetch(`/offers/get`);
       const response = await rawResponse.json();
       if (response.result === true) {
-        const offer = response.offers.filter(offer => offer._id == id)
+        const offer = response.offers.filter(offer => offer._id === id)
         if (offer.length > 0) {
           setTitle(offer[0].title)
           setCity(offer[0].city)

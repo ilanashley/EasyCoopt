@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import PlaceIcon from '@material-ui/icons/Place';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Container, Row, Col } from "reactstrap";

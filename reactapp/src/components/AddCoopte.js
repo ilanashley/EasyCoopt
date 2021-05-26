@@ -130,7 +130,7 @@ const AddCoopte = (props) => {
       setOfferTitle(response.offer.title)
     };
     getTitle();
-  }, []);
+  }, [offerId]);
 
   // Function checkbox
   const handleChange = (event) => {

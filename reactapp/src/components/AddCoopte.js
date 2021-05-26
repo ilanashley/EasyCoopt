@@ -165,13 +165,13 @@ const AddCoopte = (props) => {
   }
 
   return (
-    <div className="section backgroundImageAddCoopte">
+    <div className="section">
       <NavBar />
-      <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
+      <div className="d-flex justify-content-center my-5"><h1> Vous recommandez pour le poste de :<br/>{offerTitle}</h1></div>
 
       <Container   >
-        <Row style={{ marginTop: 50 }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: 50 }} className="cardBackground" >
+        <Row className="d-flex justify-content-center mt-5">
+          <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground" >
             <Form >
               <FormGroup>
                 <Label for="firstname">Prénom</Label>

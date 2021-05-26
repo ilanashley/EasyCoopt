@@ -212,7 +212,7 @@ const ReferralsList = (props) => {
 
   return (
 
-    <div className='mainContainer backgroundImageMyAccountAndReferralsList'>
+    <div className='mainContainer'>
 
       <NavBar />
 

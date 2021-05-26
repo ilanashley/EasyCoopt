@@ -109,12 +109,13 @@ const ViewOffer = (props) => {
     }
 
     return (
-        <div className="section backgroundImageViewOffer">
+        <div className="section">
             <NavBar />
+            <div className="d-flex justify-content-center my-5"><h1>Voir une offre</h1></div>
             <Container >
 
-                <Row className="d-flex justify-content-center">
-                    <Col sm="12" md={{ size: 10, offset: 1 }} style={{ maxWidth: 750 }} className="cardBackground mt-4 mb-4 p-5"  >
+                <Row className="d-flex justify-content-center mt-5">
+                    <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground"  >
                         <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
                         <h3 className="mt-5"> {title} </h3>
                         <div className="d-flex mb-0 font-weight-bold offerSubtitle">

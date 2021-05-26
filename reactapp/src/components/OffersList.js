@@ -257,7 +257,7 @@ const OffersList = (props) => {
   }
 
   return (
-    <div className='mainContainer backgroundImageOffersList'>
+    <div className='mainContainer'>
 
       <NavBar />
 

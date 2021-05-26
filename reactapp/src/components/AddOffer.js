@@ -162,12 +162,12 @@ function AddOffer(props) {
   }
 
   return (
-    <div className="section backgroundImageAddOffer">
+    <div className="section">
       <NavBar />
-      <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
+      <div className="d-flex justify-content-center my-5"><h1>{pageTitle}</h1></div>
       <Container>
-        <Row style={{ padding: "10px", marginTop: "20px" }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: "50px" }} className="cardBackground" >
+        <Row className="d-flex justify-content-center mt-5">
+          <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground" >
             
               <FormGroup>
                 <Label for="title">Intitulé du poste</Label>

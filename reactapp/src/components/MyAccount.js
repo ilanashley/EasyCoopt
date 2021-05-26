@@ -153,7 +153,7 @@ useEffect(() => {
   }
 
   return (
-    <div className="main-container backgroundImageMyAccountAndReferralsList">
+    <div className="main-container">
       <div className='d-flex justify-content-center'>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -180,9 +180,11 @@ useEffect(() => {
           className="cardBackground"
           style={{ padding: "10px", marginTop: "50px" }}
         >
-          <div className="col-12 text-center get_started pt-4">
-            <h3>Mon compte</h3>
-          </div>
+          <Col sm='12' md='12'>
+            <div class="col-12 text-center get_started p-4">
+              <h3>Mon compte</h3>
+            </div>
+          
           <form className="md-form">
             <div className="file-field">
               <div className=" d-flex justify-content-center mb-4 p-4">
@@ -201,6 +203,7 @@ useEffect(() => {
               </div>
             </div>
           </form>
+          </Col>
           <Col sm="12" md="6">
             <Form>
               <FormGroup>

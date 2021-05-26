@@ -140,10 +140,9 @@ function Login(props) {
   }
 
   return (
-    <div className='backgroundImageLogin'>
-      <NavBar />
+    <div className="main-container">
       <div className='d-flex justify-content-center'>
-        <Modal
+      <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           className={classes.modal}
@@ -162,16 +161,21 @@ function Login(props) {
           </Fade>
         </Modal>
       </div>
+      <NavBar />
+      <Container className='pb-5'>
+        <Row
+          className="cardBackground"
+          style={{ padding: "10px", marginTop: "50px" }}
+        >
+          
+          <Col sm='12' md='12'>
+            <div class="col-12 text-center get_started p-4">
+              <h3>Welcome !</h3>
+            </div>
+          </Col>
+          
 
-      <Container>
-
-        <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
-
-          <div class="col-12 text-center get_started p-4">
-            <h3>Welcome !</h3>
-          </div>
-
-          <Col sm="12" md="6">
+          <Col sm="6" md="6">
             <Form>
               <FormGroup>
                 <Label for="email">Your email</Label>
@@ -188,7 +192,7 @@ function Login(props) {
             </Form>
           </Col>
 
-          <Col sm="12" md="6">
+          <Col sm="6" md="6">
             <Form>
               <FormGroup>
                 <Label for="email">Your email</Label>
@@ -208,10 +212,11 @@ function Login(props) {
               </div>
             </Form>
           </Col>
+          
         </Row>
-
       </Container>
     </div>
+    
   );
 }
 

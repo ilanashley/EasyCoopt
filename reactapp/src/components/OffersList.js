@@ -46,23 +46,23 @@ const OffersList = (props) => {
     let numberOffers = 0
     let numberReferrals = 0
 
-    if(props.token) {
-      if(props.typeId === 'Coopteur') {
+    if (props.token) {
+      if (props.typeId === 'Coopteur') {
         offers = offers.filter(offer => offer.isActive === true)
         numberOffers = offers.length
-        for(let i=0; i<numberOffers; i++ ) {
+        for (let i = 0; i < numberOffers; i++) {
           numberReferrals += offers[i].referralsIds.length
         }
-      } else if (props.typeId === 'Recruteur')  {
+      } else if (props.typeId === 'Recruteur') {
         numberOffers = offers.length
-        for(let i=0; i<numberOffers; i++ ) {
+        for (let i = 0; i < numberOffers; i++) {
           numberReferrals += offers[i].referralsIds.length
         }
       }
     } else {
       offers = offers.filter(offer => offer.isActive === true)
       numberOffers = offers.length
-      for(let i=0; i<numberOffers; i++ ) {
+      for (let i = 0; i < numberOffers; i++) {
         numberReferrals += offers[i].referralsIds.length
       }
     }
@@ -71,7 +71,7 @@ const OffersList = (props) => {
     props.addNumberReferrals(numberReferrals)
     setOffers(offers)
     setLoading(false)
-    
+
   }
 
   useEffect(() => {
@@ -203,6 +203,22 @@ const OffersList = (props) => {
     setOffers(offersPerStatus)
   }
 
+  // Filter per offerOwner
+  const offerOwnerArray = offers.map((offer) => { return offer.userId.lastName })
+
+  const offerOwnerFilteredArray = offerOwnerArray.filter((lastName, pos) => {
+    return offerOwnerArray.indexOf(lastName) === pos;
+  }).sort()
+  console.log(offerOwnerFilteredArray)
+  const offerOwnerFilteredList = offerOwnerFilteredArray.map((lastName) => {
+    return (<option value={lastName}>{lastName}</option>)
+  })
+
+  const handleSelectFilteredPerOfferOwner = (event) => {
+    const offersPerOfferOwner = offers.filter(offer => offer.userId.lastName === event.target.value)
+    setOffers(offersPerOfferOwner)
+  }
+
   // Reset Filters
   const handleSelectResetFilters = () => {
     fetchOffers()
@@ -211,7 +227,9 @@ const OffersList = (props) => {
   let addOfferButton
   if (props.typeId === 'Recruteur') {
     addOfferButton = <div className='perPageContainer w-100'>
-      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large' />Ajouter une Offre</button>
+      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large' />
+        Ajouter une offre
+      </button>
     </div>
   }
 
@@ -249,6 +267,10 @@ const OffersList = (props) => {
             {contractFilteredList}
           </select>
           {filterPerStatus}
+          <select onChange={handleSelectFilteredPerOfferOwner} className="custom-form-select mr-2" aria-label="Default select example">
+            <option selected>Filtrer par rédacteur</option>
+            {offerOwnerFilteredList}
+          </select>
           <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
         </div>
 
@@ -260,10 +282,10 @@ const OffersList = (props) => {
 
         <div className='perPageContainer'>
           <select className="custom-form-select" defaultValue={offersPerPage} onChange={handleSelectPerPage} aria-label="Default select example">
-            <option value="10">10 par page</option>
-            <option value="25">25 par page</option>
-            <option value="50">50 par page</option>
-            <option value="100">100 par page</option>
+            <option value="10">10 lignes par page</option>
+            <option value="25">25 lignes par page</option>
+            <option value="50">50 lignes par page</option>
+            <option value="100">100 lignes par page</option>
           </select>
         </div>
 

@@ -165,7 +165,7 @@ function Login(props) {
 
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
 
-          <div class="col-12 text-center get_started">
+          <div class="col-12 text-center get_started p-4">
             <h3>Welcome !</h3>
           </div>
 

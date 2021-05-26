@@ -7,15 +7,6 @@ import { Redirect } from 'react-router';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
-
-// Background image
-const backgroundImage = {
-  backgroundImage: `url(${'/images/image_1.jpeg'})`,
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-};
-
 const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
@@ -46,23 +37,23 @@ const OffersList = (props) => {
     let numberOffers = 0
     let numberReferrals = 0
 
-    if(props.token) {
-      if(props.typeId === 'Coopteur') {
+    if (props.token) {
+      if (props.typeId === 'Coopteur') {
         offers = offers.filter(offer => offer.isActive === true)
         numberOffers = offers.length
-        for(let i=0; i<numberOffers; i++ ) {
+        for (let i = 0; i < numberOffers; i++) {
           numberReferrals += offers[i].referralsIds.length
         }
-      } else if (props.typeId === 'Recruteur')  {
+      } else if (props.typeId === 'Recruteur') {
         numberOffers = offers.length
-        for(let i=0; i<numberOffers; i++ ) {
+        for (let i = 0; i < numberOffers; i++) {
           numberReferrals += offers[i].referralsIds.length
         }
       }
     } else {
       offers = offers.filter(offer => offer.isActive === true)
       numberOffers = offers.length
-      for(let i=0; i<numberOffers; i++ ) {
+      for (let i = 0; i < numberOffers; i++) {
         numberReferrals += offers[i].referralsIds.length
       }
     }
@@ -71,7 +62,7 @@ const OffersList = (props) => {
     props.addNumberReferrals(numberReferrals)
     setOffers(offers)
     setLoading(false)
-    
+
   }
 
   useEffect(() => {
@@ -224,55 +215,54 @@ const OffersList = (props) => {
   }
 
   return (
+      <div className='mainContainer backgroundImageOffersList'>
 
-    <div className='mainContainer' style={backgroundImage}>
+        <NavBar />
 
-      <NavBar />
+        <div className='container-lg'>
 
-      <div className='container-lg'>
+          <div className='titleContainer'>
+            <h1>Offres en cours</h1>
+          </div>
 
-        <div className='titleContainer'>
-          <h1>Offres en cours</h1>
+          <div className='selectContainer'>
+            <select onChange={handleSelectFilteredPerDate} className="custom-form-select mr-2" aria-label="Default select example">
+              <option selected>Filtrer par date</option>
+              {addDateFilteredList}
+            </select>
+            <select onChange={handleSelectFilteredPerCity} className="custom-form-select mr-2" aria-label="Default select example">
+              <option selected>Filtrer par ville</option>
+              {cityFilteredList}
+            </select>
+            <select onChange={handleSelectFilteredPerContract} className="custom-form-select mr-2" aria-label="Default select example">
+              <option selected>Filtrer par contrat</option>
+              {contractFilteredList}
+            </select>
+            {filterPerStatus}
+            <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
+          </div>
+
+          {addOfferButton}
+
+          <div className='tableContainer'>
+            <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />
+          </div>
+
+          <div className='perPageContainer'>
+            <select className="custom-form-select" defaultValue={offersPerPage} onChange={handleSelectPerPage} aria-label="Default select example">
+              <option value="10">10 par page</option>
+              <option value="25">25 par page</option>
+              <option value="50">50 par page</option>
+              <option value="100">100 par page</option>
+            </select>
+          </div>
+
+          <div className='paginationContainer'>
+            <Pagination ItemsPerPage={offersPerPage} totalItems={offers.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} items={offers} />
+          </div>
+
         </div>
-
-        <div className='selectContainer'>
-          <select onChange={handleSelectFilteredPerDate} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par date</option>
-            {addDateFilteredList}
-          </select>
-          <select onChange={handleSelectFilteredPerCity} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par ville</option>
-            {cityFilteredList}
-          </select>
-          <select onChange={handleSelectFilteredPerContract} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par contrat</option>
-            {contractFilteredList}
-          </select>
-          {filterPerStatus}
-          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
-        </div>
-
-        {addOfferButton}
-
-        <div className='tableContainer'>
-          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />
-        </div>
-
-        <div className='perPageContainer'>
-          <select className="custom-form-select" defaultValue={offersPerPage} onChange={handleSelectPerPage} aria-label="Default select example">
-            <option value="10">10 par page</option>
-            <option value="25">25 par page</option>
-            <option value="50">50 par page</option>
-            <option value="100">100 par page</option>
-          </select>
-        </div>
-
-        <div className='paginationContainer'>
-          <Pagination ItemsPerPage={offersPerPage} totalItems={offers.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} items={offers} />
-        </div>
-
       </div>
-    </div>
   );
 }
 

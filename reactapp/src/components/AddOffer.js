@@ -22,16 +22,6 @@ import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import { FormHelperText } from '@material-ui/core';
 
-// Background image
-const backgroundImage = {
-  backgroundImage: `url(${'/images/image_1.jpeg'})`,
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  minWidth: '73wh',
-  minHeight: '73vw',
-};
-
 // Modal style
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -170,7 +160,7 @@ function AddOffer(props) {
   }
 
   return (
-    <div className="section" style={backgroundImage}>
+    <div className="section backgroundImageAddOffer">
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
       <Container>

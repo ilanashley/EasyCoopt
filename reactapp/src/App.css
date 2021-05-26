@@ -414,3 +414,69 @@ letter-spacing: 0em;
   color: #7785A2;
 
 }
+
+/* Fonds d'ecran pour chaque page */
+
+/* Login */
+
+.backgroundImageLogin {
+  background-image: url("./images/Login.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+/* AddCoopte */
+
+.backgroundImageAddCoopte {
+  background-image: url("./images/EnsembleDuSite.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-width: 60vw;
+  min-height: 60vh;
+}
+
+/* AddOffer */
+
+.backgroundImageAddOffer {
+  background-image: url("./images/EnsembleDuSite.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-width: 73vw;
+  min-height: 73vh;
+}
+
+/* MyAccount et ReferralsList */
+
+.backgroundImageMyAccountAndReferralsList {
+  background-image: url("./images/EnsembleDuSite.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* OffersList */
+
+.backgroundImageOffersList {
+  background-image: url("./images/EnsembleDuSite.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+/* ViewOffer */
+
+.backgroundImageViewOffer {
+  background-image: url("./images/EnsembleDuSite.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-width: 50vw;
+  min-height: 50vh;
+}

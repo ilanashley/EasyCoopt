@@ -20,16 +20,6 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
-// Background image
-const backgroundImage = {
-      backgroundImage: `url(${'/images/image_4.jpeg'})`,
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      width: '100wh',
-      height: '100vh',
-};
-
 // Modal style
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -63,7 +53,7 @@ function Login(props) {
   // Modal state
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  
+
   // Modal function
   const handleClose = () => {
     setOpen(false);
@@ -114,12 +104,12 @@ function Login(props) {
 
   if (signIn) {
     return <Redirect to='/offerslist' />
-  } else  if (signUp) {
+  } else if (signUp) {
     return <Redirect to='/myAccount' />
   }
 
   return (
-    <div style={backgroundImage}>
+    <div className='backgroundImageLogin'>
       <NavBar />
       <div className='d-flex justify-content-center'>
         <Modal
@@ -141,7 +131,7 @@ function Login(props) {
           </Fade>
         </Modal>
       </div>
-      
+
       <Container>
 
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >
@@ -160,7 +150,7 @@ function Login(props) {
                 <Label for="password">Password</Label>
                 <Input onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password" />
               </FormGroup>
-             
+
               <div class="btnEnd">
                 <Button onClick={() => handleSubmitSignin()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign In </Button>
               </div>
@@ -181,7 +171,7 @@ function Login(props) {
                 <Label for="email">Confirm password</Label>
                 <Input onChange={(e) => setSignUpConfirmationPassword(e.target.value)} type="password" name="password" placeholder="password" />
               </FormGroup>
-              
+
               <div class="btnEnd">
                 <Button onClick={() => handleSubmitSignup()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign Up </Button>
               </div>
@@ -191,6 +181,7 @@ function Login(props) {
 
       </Container>
     </div>
+
 
 
   );

@@ -171,14 +171,14 @@ function AddOffer(props) {
             
               <FormGroup>
                 <Label for="title">Intitulé du poste</Label>
-                <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
+                <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Marketing Client Manager..." />
               </FormGroup>
               <FormGroup>
                 <Label for="city">Ville</Label>
-                <Input defaultValue={city ? city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
+                <Input defaultValue={city ? city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris, Lyon, Marseilles..." />
               </FormGroup>
               <FormGroup>
-                <Label for="creationDate">Date</Label>
+                <Label for="creationDate">Date de publication</Label>
                 <Input defaultValue={stringDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
               </FormGroup>
               <FormGroup>
@@ -195,11 +195,11 @@ function AddOffer(props) {
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Label for="link">Lien du contrat</Label>
+                <Label for="link">Lien de l'offre</Label>
                 <Input defaultValue={link ? link : ''} onChange={(e) => setLink(e.target.value)} type="url" name="link" placeholder="https://" />
               </FormGroup>
               <FormGroup>
-                <Label for="resume">Resume</Label>
+                <Label for="resume">Description de l'offre</Label>
                 <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
               <div className="d-flex justify-content-end">

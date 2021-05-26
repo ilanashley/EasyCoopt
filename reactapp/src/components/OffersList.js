@@ -282,7 +282,7 @@ const OffersList = (props) => {
           </select>
           {filterPerStatus}
           <select value={offerOwner} onChange={handleSelectFilteredPerOfferOwner} className="custom-form-select mr-2" aria-label="Default select example">
-            <option>Filtrer par rédacteur</option>
+            <option>Filtrer par recruteur</option>
             {offerOwnerFilteredList}
           </select>
           <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>

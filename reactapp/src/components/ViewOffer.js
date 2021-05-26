@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 const ViewOffer = (props) => {
 
     // Params
-    const { offerIdView } = useParams();
+    const { offerId } = useParams();
 
     // States
     const [title, setTitle] = useState('');
@@ -28,7 +28,7 @@ const ViewOffer = (props) => {
         const loadOffer = async () => {
             var rawResponse = await fetch(`/offers/get`);
             var response = await rawResponse.json();
-            const offer = response.offers.filter(offer => offer._id == offerIdView)
+            const offer = response.offers.filter(offer => offer._id == offerId)
 
             if (offer.length > 0) {
                 setTitle(offer[0].title);
@@ -64,7 +64,7 @@ const ViewOffer = (props) => {
     if (isRedirectToOffersList) {
         return <Redirect to="/offersList" />;
     } else if (isRedirectToAddCoopte) {
-        return <Redirect to={`/addCoopte/${offerIdView}`} />
+        return <Redirect to={`/addCoopte/${offerId}`} />
     }
 
     if (!props.token) {
@@ -76,7 +76,7 @@ const ViewOffer = (props) => {
     if (recruterId) {
         recruterCard =
             <Row className="bg-light p-3 m-1 border rounded-3 d-flex ">
-                <h7 className="d-flex justify-content-center mb-2">Recruteur suivant cette annonce :</h7>
+                <h6 className="d-flex justify-content-center mb-2">Recruteur suivant cette annonce :</h6>
                 <Col className="d-flex justify-content-end">
                     <div>
                         <img
@@ -128,7 +128,7 @@ const ViewOffer = (props) => {
                         {offerLink}
                         {recruterCard}
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 40 }}>
-                            <button onClick={() => redirectionToAddCoopte(offerIdView)} className="custom-btn-style">Recommander</button>
+                            <button onClick={() => redirectionToAddCoopte(offerId)} className="custom-btn-style">Recommander</button>
                         </div>
                     </Col>
                 </Row>

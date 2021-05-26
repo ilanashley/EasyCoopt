@@ -105,7 +105,6 @@ const ReferralsList = (props) => {
 
   // Filter per date
   const addDateArray = referrals.map((referral) => { return referral.creationDate })
-  console.log(addDateArray)
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
     return addDateArray.indexOf(date) === pos;
   }).sort()

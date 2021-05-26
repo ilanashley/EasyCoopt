@@ -10,7 +10,7 @@ import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
-  const [offerId, setOfferId] = useState('');
+  const [offerIdCoopte, setOfferIdCoopte] = useState('');
   const [offerIdView, setOfferIdView] = useState('')
   const [addOffer, setAddOffer] = useState(false)
 
@@ -119,7 +119,7 @@ const OffersList = (props) => {
 
   // Recommend someone 
   const recommend = (offerId) => {
-    setOfferId(offerId)
+    setOfferIdCoopte(offerId)
   }
 
   // View offer
@@ -127,8 +127,8 @@ const OffersList = (props) => {
     setOfferIdView(offerId)
   }
 
-  if (offerId) {
-    return <Redirect to={`/addCoopte/${offerId}`} />
+  if (offerIdCoopte) {
+    return <Redirect to={`/addCoopte/${offerIdCoopte}`} />
   } else if (offerIdView) {
     return <Redirect to={`/viewOffer/${offerIdView}`} />
   }

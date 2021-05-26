@@ -63,7 +63,6 @@ const AddCoopte = (props) => {
   const [reason, setReason] = useState();
   const [cv, setCv] = useState();
 
- 
   const [offerTitle, setOfferTitle] = useState();
 
   // State for modal
@@ -107,7 +106,7 @@ const AddCoopte = (props) => {
       data.append('offerId', offerId);
       data.append('userId', props.userId);
       data.append('isAgree', isAgree)
-      data.append("cv", cv, cv.name );
+      data.append("cv", cv );
 
       const saveReq = await fetch('/referrals/add', {
         method: 'post',

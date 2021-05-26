@@ -29,7 +29,7 @@ const backgroundImage = {
   minHeight: '73vw',
 };
 
-// Modal style
+// Style
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -42,6 +42,25 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  btn: {
+    display: 'inline-block',
+    fontWeight: 400,
+    lineHeight: 1.5,
+    color: '#fff',
+    textAlign: 'center',
+    textDecoration: 'none',
+    verticalAlign: 'middle',
+    cursor: 'pointer',
+    backgroundColor:    '#78CFCE',
+    border: '1px solid transparent',
+    padding: '.375rem .75rem',
+    fontSize:' 1rem',
+    borderRadius: '.75rem',
+    '&:hover': {
+      border: '1px solid transparent',
+      backgroundColor: '#6bbbba'
+    }
+  }
 }));
 
 function AddOffer(props) {
@@ -63,7 +82,6 @@ function AddOffer(props) {
   const [success, setSuccess] = useState();
   const [error, setError] = useState('')
   const [offerModifiee, setOfferModifiee] = useState(false);
-
 
   var { id } = useParams();
 
@@ -195,8 +213,8 @@ function AddOffer(props) {
                 <Label for="resume">Resume</Label>
                 <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
               </FormGroup>
-              <div className="btnEnd mt-5">
-                <button onClick={() => { { saveOffer() } }} style={{backgroundColor: '#78CFCE', borderRadius: '.75rem', border: '1px solid transparent', padding: '.375rem .75rem', fontSize: '1rem'}}> {modalButtonText} </button>
+              <div className="d-flex justify-content-end">
+                <Button onClick={() => saveOffer()} className={classes.btn}> {modalButtonText} </Button>
                 <Modal
                   aria-labelledby="transition-modal-title"
                   aria-describedby="transition-modal-description"

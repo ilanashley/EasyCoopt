@@ -28,7 +28,7 @@ const backgroundImage = {
   backgroundRepeat: 'no-repeat',
 };
 
-// Modal style
+// Style
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -41,6 +41,25 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  btn: {
+    display: 'inline-block',
+    fontWeight: 400,
+    lineHeight: 1.5,
+    color: '#fff',
+    textAlign: 'center',
+    textDecoration: 'none',
+    verticalAlign: 'middle',
+    cursor: 'pointer',
+    backgroundColor:    '#78CFCE',
+    border: '1px solid transparent',
+    padding: '.375rem .75rem',
+    fontSize:' 1rem',
+    borderRadius: '.75rem',
+    '&:hover': {
+      border: '1px solid transparent',
+      backgroundColor: '#6bbbba'
+    }
+  }
 }));
 
 function MyAccount(props) {
@@ -163,15 +182,15 @@ useEffect(() => {
           className="cardBackground"
           style={{ padding: "10px", marginTop: "50px" }}
         >
-          <div class="col-12 text-center get_started">
+          <div className="col-12 text-center get_started pt-4">
             <h3>Mon compte</h3>
           </div>
-          <form class="md-form">
-            <div class="file-field">
-              <div class=" d-flex justify-content-center mb-4">
+          <form className="md-form">
+            <div className="file-field">
+              <div className=" d-flex justify-content-center mb-4 p-4">
                 <img
                   src={avatarUrl}
-                  class="rounded-circle z-depth-1-half avatar-pic"
+                  className="rounded-circle z-depth-1-half avatar-pic"
                   alt="Cliquez sur Sauvegarder afin d'enregistrer votre photo"
                   height="130px"
                   width="130px"
@@ -181,19 +200,6 @@ useEffect(() => {
                       "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg";
                   }}
                 />
-              </div>
-              <div class="d-flex justify-content-center">
-                <div class="btn btn-mdb-color btn-rounded float-left">
-                  <Input
-                    type="file"
-                    onChange={(e) => {
-                      loadPicture(e.target.files[0])
-                    }}
-                    accept="image/png, image/jpeg"
-                    name="avatar"
-                    placeholder="Avatar"
-                  />
-                </div>
               </div>
             </div>
           </form>
@@ -228,6 +234,18 @@ useEffect(() => {
                   name="email"
                   placeholder="Email"
                 />
+              </FormGroup>
+              <FormGroup>
+                <Label for="avatar">Avatar</Label>
+                <Input
+                    type="file"
+                    onChange={(e) => {
+                      loadPicture(e.target.files[0])
+                    }}
+                    accept="image/png, image/jpeg"
+                    name="avatar"
+                    placeholder="Avatar"
+                  />
               </FormGroup>
             </Form>
           </Col>
@@ -274,10 +292,10 @@ useEffect(() => {
               />
             </FormGroup>
           </Col>
-          <div class="btnEnd1">
+          <div className="d-flex justify-content-end py-4">
             <Button
               onClick={() => handleSubmitAccount()}
-              style={{ margin: "10px", backgroundColor: "#254383" }}
+              className={classes.btn}
             >
               Enregistrer
             </Button>

@@ -117,7 +117,7 @@ const ViewOffer = (props) => {
 
                 <Row>
                     <Col sm="12" md={{ size: 10, offset: 1 }} className="cardBackground mt-4 mb-4 p-5"  >
-                        <button id="enlargeButton" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
+                        <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
                         <h3 className="mt-5"> {title} </h3>
                         <div className="d-flex mb-0 font-weight-bold offerSubtitle">
                             <p className="mr-2 offerSubtitle" >{contract} - {city} - {bonusAmount}€</p>

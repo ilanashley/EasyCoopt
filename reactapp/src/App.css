@@ -51,7 +51,7 @@
 }
 
 .custom-form-select:hover {
-  filter: brightness(110%);
+  background-color: #f3f3f3;
 }
 
 .shadow {
@@ -68,18 +68,15 @@
   text-decoration: none;
   vertical-align: middle;
   cursor: pointer;
-  -webkit-user-select: none;
-  user-select: none;
   background-color:    #78CFCE;
   border: 1px solid transparent;
   padding: .375rem .75rem;
   font-size: 1rem;
   border-radius: .75rem;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .custom-btn-style:hover{
-  filter: brightness(110%);
+  background-color:#6bbbba;
 }
 
 table {
@@ -150,19 +147,19 @@ table {
   justify-content: flex-end;
 }
 
-#largeButton {
+/* #largeButton {
   border-radius: 15px;
   background: #254383;
   color:         #ffffff;
-}
+} */
 
-#mediumButton {
+/* #mediumButton {
 height: 70px;
 width: 163px;
 border-radius: 15px;
 background: #254383;
 color:         #ffffff;
-}
+} */
 
 #badge {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -278,7 +275,6 @@ span {
 .btnEnd{
   display: flex;
   justify-content: flex-end;
-  color: #569df4;
 }
 
 /* Style des boutons sign up avec Linkedin et Facebook */
@@ -291,7 +287,7 @@ span {
 #largeButton{
   border-radius: 50%;
   background: #254383;
-  color:         #ffffff;
+  color:#ffffff;
 }
 
 .referralButton{
@@ -308,7 +304,7 @@ span {
 }
 
 .referralButton:hover {
-  filter: brightness(110%);
+  background-color:#6bbbba;
 }
 
 #referralButton:focus {
@@ -329,7 +325,7 @@ span {
 }
 
 #modifyButton:hover {
-  filter: brightness(110%);
+  background-color:#6bbbba;
 }
 
 #modifyButton:focus {
@@ -338,47 +334,20 @@ span {
 
 #enlargeButton{
   height: 40px;
-width: 47px;
-border-radius: 15px;
-background: #254383;
-color:         #ffffff;
+  width: 47px;
+  border-radius: 15px;
+  background: #254383;
+  color:         #ffffff;
 }
 #enlargeButton:hover {
-  filter: brightness(110%);
+  background-color:#6bbbba;
 }
 
 #enlargeButton:focus {
   outline:0;
 }
 
-.searchBar{
-background-color: #F9FAFD;
-height: 48px;
-width: 245px;
-border-radius: 15px;
-border: none;
-margin-right: 10px;
-}
-.searchBar::placeholder {
-  text-align: center;
-  font-family: Poppins;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: 18px;
-letter-spacing: 0em;
-}
-.searchBar:hover {
-  filter: brightness(110%);
-}
-
-.searchBar:focus {
-  outline:0;
-  padding: 5px;
-  
-}
-
-.onclickButton{
+/* .onclickButton{
     background-color: #F9FAFD;
     height: 48px;
     width: 150px;
@@ -397,20 +366,19 @@ letter-spacing: 0em;
     margin-right: 10px;
 }
 .onclickButton:hover {
-  filter: brightness(110%);
-}
+  filter: brightness(90%);
+} */
 
-.deleteIcon{
+/* .deleteIcon{
  color: #254383;
 }
 
 .deleteIcon:hover {
-  filter: brightness(110%);
-}
+  filter: brightness(90%);
+} */
 
 .offerSubtitle{
   line-height: 18px;
   font-size: 15px;
   color: #7785A2;
-
 }

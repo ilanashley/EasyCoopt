@@ -33,7 +33,7 @@ const backgroundImage = {
   minHeight: '60vw'
 };
 
-// Modal style
+// Style
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -46,6 +46,25 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  btn: {
+    display: 'inline-block',
+    fontWeight: 400,
+    lineHeight: 1.5,
+    color: '#fff',
+    textAlign: 'center',
+    textDecoration: 'none',
+    verticalAlign: 'middle',
+    cursor: 'pointer',
+    backgroundColor:    '#78CFCE',
+    border: '1px solid transparent',
+    padding: '.375rem .75rem',
+    fontSize:' 1rem',
+    borderRadius: '.75rem',
+    '&:hover': {
+      border: '1px solid transparent',
+      backgroundColor: '#6bbbba'
+    }
+  }
 }));
 
 
@@ -120,6 +139,7 @@ const AddCoopte = (props) => {
     getTitle();
   }, []);
 
+  // Function checkbox
   const handleChange = (event) => {
     setIsAgree(event.target.checked);
   };
@@ -195,8 +215,8 @@ const AddCoopte = (props) => {
                 />
               </FormGroup>
 
-              <div class="btnEnd mt-5">
-                <Button onClick={() => { saveCoopte() }} style={{backgroundColor: '#78CFCE', borderRadius: '.75rem', border: '1px solid transparent', padding: '.375rem .75rem', fontSize: '1rem'}} > Envoyer </Button>
+              <div className="d-flex justify-content-end">
+                <Button onClick={() => saveCoopte()} className={classes.btn} > Envoyer </Button>
               </div>
             </Form>
             <Modal

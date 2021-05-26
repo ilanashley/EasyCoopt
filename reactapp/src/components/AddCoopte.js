@@ -166,8 +166,8 @@ const AddCoopte = (props) => {
       <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
 
       <Container   >
-        <Row style={{ marginTop: 50, marginBottom: 50 }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
+        <Row style={{ marginTop: 50 }} >
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: 50 }} className="cardBackground" >
             <Form >
               <FormGroup>
                 <Label for="firstname">Nom</Label>

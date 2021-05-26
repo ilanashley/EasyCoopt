@@ -171,8 +171,8 @@ function AddOffer(props) {
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
       <Container>
-        <Row style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
+        <Row style={{ padding: "10px", marginTop: "20px" }} >
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: "50px" }} className="cardBackground" >
             
               <FormGroup>
                 <Label for="title">Job Title</Label>

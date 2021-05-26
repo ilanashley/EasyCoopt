@@ -13,14 +13,11 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
-import { FormHelperText } from '@material-ui/core';
 
 // Modal style
 const useStyles = makeStyles((theme) => ({
@@ -66,8 +63,6 @@ function AddOffer(props) {
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
-  const [offerModifiee, setOfferModifiee] = useState(false);
-
   const [offer, setOffer] = useState(false)
   const [stringDate, setStringDate] = useState('')
 
@@ -76,6 +71,7 @@ function AddOffer(props) {
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState();
   const [error, setError] = useState('')
+  const [offerModifiee, setOfferModifiee] = useState(false);
 
   var { id } = useParams();
 
@@ -175,11 +171,11 @@ function AddOffer(props) {
           <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: "50px" }} className="cardBackground" >
             
               <FormGroup>
-                <Label for="title">Job Title</Label>
+                <Label for="title">Intitulé du poste</Label>
                 <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
               </FormGroup>
               <FormGroup>
-                <Label for="city">City</Label>
+                <Label for="city">Ville</Label>
                 <Input defaultValue={city ? city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
               </FormGroup>
               <FormGroup>

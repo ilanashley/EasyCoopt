@@ -105,6 +105,7 @@ router.put('/add', async function (req, res, next) {
   } 
 })
 
+//Update offer 
 router.put('/archive', async function (req, res, next) {
   var isActive = req.body.isActive
   var offerId = req.body.offerId
@@ -124,7 +125,7 @@ router.put('/archive', async function (req, res, next) {
   
 })
 
-router.get("/offer", async function (req, res, next) {
+router.get('/offers', async function (req, res, next) {
   var user = await offerModel.findOne({ id: req.query.token });
 
   if (user != null) {
@@ -139,9 +140,8 @@ router.get("/offer", async function (req, res, next) {
 });
 
 
-/* Get Offer By Id */
+// Get Offer By Id 
 router.get('/findById/:offerId', async (req, res, next )=> {
-  // console.log('id du back ---> ', req.params.offerId)
   var offer = await offerModel.findById({ _id: req.params.offerId}) 
   if(!offer) {
     res.json({result: false, error: "L'offre n'existe pas" })

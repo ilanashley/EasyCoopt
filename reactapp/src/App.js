@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 import {createStore, combineReducers} from 'redux'
 
 import token from './reducers/token'
-import typeId from './reducers/type'
+import group from './reducers/group'
 import userId from './reducers/userId'
 import userLastName from './reducers/userLastName'
 import numberOffers from './reducers/numberOffers'
@@ -20,7 +20,7 @@ import ReferralsList from './components/ReferralsList';
 import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 
-const store = createStore(combineReducers({ token, typeId, userId, userLastName, numberOffers, numberReferrals }))
+const store = createStore(combineReducers({ token, group, userId, userLastName, numberOffers, numberReferrals }))
 
 function App() {
   return (

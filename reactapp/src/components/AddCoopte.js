@@ -13,13 +13,11 @@ import {
 } from 'reactstrap';
 import NavBar from './NavBar';
 import { useParams, Redirect } from "react-router-dom";
+
 import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
-
-
 import { makeStyles } from '@material-ui/core/styles';
-
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -67,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 const AddCoopte = (props) => {
 
   const [firstName, setFirstName] = useState();
@@ -88,7 +85,14 @@ const AddCoopte = (props) => {
   // State for checkbox
   const [isAgree, setIsAgree] = useState(false);
 
+  // Params
   const { offerId } = useParams();
+
+  // Capitalize function
+  const capitalize = (arg) => {
+    if (typeof arg !== 'string') return ''
+    return arg.charAt(0).toUpperCase() + arg.slice(1)
+  }
 
   /* function fetch to add coopte with file to the back */
   var saveCoopte = async () => {
@@ -104,8 +108,8 @@ const AddCoopte = (props) => {
       setError("Vous devez avoir l'accord préalable du coopté afin de transmettre cette candidature")
       setOpen(true)
     } else {
-      data.append('firstName', firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : '');
-      data.append('lastName', lastName ? lastName.charAt(0).toUpperCase() + lastName.slice(1) : '');
+      data.append('firstName', firstName ? capitalize(firstName) : '');
+      data.append('lastName', lastName ? capitalize(lastName) : '');
       data.append('email', email);
       data.append('reason', reason);
       data.append('creationDate', date);
@@ -166,7 +170,7 @@ const AddCoopte = (props) => {
 
   if (!props.token) {
     return <Redirect to="/login" />;
-  } else if (props.typeId !== 'Coopteur') {
+  } else if (props.group !== 'Coopteur') {
     return <Redirect to="/offersList" />;
   }
 
@@ -247,7 +251,7 @@ const AddCoopte = (props) => {
 function mapStateToProps(state) {
   return {
     token: state.token,
-    typeId: state.typeId,
+    group: state.group,
     userId: state.userId
   }
 }

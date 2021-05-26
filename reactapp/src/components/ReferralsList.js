@@ -24,6 +24,7 @@ const ReferralsList = (props) => {
   const [referralOwner, setReferralOwner] = useState('Filtrer par bénéficiaire')
   const [referralCoopted, setReferralCoopted] = useState('Filtrer par coopté')
   const [referralStatus, setReferralStatus] = useState('filtrer par status')
+  const [offerOwner, setOfferOwner] = useState('Filtrer par recruteur')
 
   // Pagination states
   const [loading, setLoading] = useState(false);
@@ -43,7 +44,7 @@ const ReferralsList = (props) => {
     setLoading(true)
     var rawResponse = await fetch('/referrals/get')
     var response = await rawResponse.json()
-    if (props.typeId === 'Coopteur') {
+    if (props.group === 'Coopteur') {
       let filteredReferrals = response.referrals.filter(referral => referral.userId.token === props.token)
       setReferrals(filteredReferrals)
     } else {
@@ -90,6 +91,12 @@ const ReferralsList = (props) => {
     setReferralsPerPage(event.target.value)
   }
 
+  // Capitalize function
+  const capitalize = (arg) => {
+    if (typeof arg !== 'string') return ''
+    return arg.charAt(0).toUpperCase() + arg.slice(1)
+  }
+
   // Status choice per referral
   const handleSelectStatusChange = async (event, i, referralId) => {
     let newReferrals = [...referrals]
@@ -130,7 +137,7 @@ const ReferralsList = (props) => {
     return recipientArray.indexOf(recipient) === pos;
   }).sort()
   const recipientFilteredList = recipientFilteredArray.map((recipient) => {
-    return (<option value={recipient}>{recipient.charAt(0).toUpperCase() + recipient.slice(1)}</option>)
+    return (<option value={recipient}>{capitalize(recipient)}</option>)
   })
 
   const handleSelectFilteredRecipient = (event) => {
@@ -145,7 +152,7 @@ const ReferralsList = (props) => {
     return referralArray.indexOf(referral) === pos;
   }).sort()
   const referralFilteredList = referralFilteredArray.map((referral) => {
-    return (<option value={referral}>{referral.charAt(0).toUpperCase() + referral.slice(1)}</option>)
+    return (<option value={referral}>{capitalize(referral)}</option>)
   })
 
   const handleSelectFilteredReferral = (event) => {
@@ -170,12 +177,28 @@ const ReferralsList = (props) => {
     setReferrals(referralsPerStatus)
   }
 
+  // Filter per offerOwner
+  const offerOwnerArray = referrals.map((referral) => { return referral.offerId.userId.lastName })
+  const offerOwnerFilteredArray = offerOwnerArray.filter((lastName, pos) => {
+    return offerOwnerArray.indexOf(lastName) === pos;
+  }).sort()
+  const offerOwnerFilteredList = offerOwnerFilteredArray.map((lastName) => {
+    return (<option value={lastName}>{capitalize(lastName)}</option>)
+  })
+
+  const handleSelectFilteredPerOfferOwner = (event) => {
+    setOfferOwner(event.target.value)
+    const offersPerOfferOwner = referrals.filter(referral => referral.offerId.userId.lastName === event.target.value)
+    setReferrals(offersPerOfferOwner)
+  }
+
   // Reset Filters
   const handleSelectResetFilters = () => {
     setReferralDate('Filtrer par date')
     setReferralOwner('Filtrer par bénéficiaire')
     setReferralCoopted('Filtrer par coopté')
     setReferralStatus('filtrer par status')
+    setOfferOwner('Filtrer par recruteur')
     fetchReferrals()
   }
 
@@ -184,10 +207,15 @@ const ReferralsList = (props) => {
   }
 
   let filterPerRecipient
-  if (props.typeId === 'Recruteur') {
+  let filterPerOfferOwner
+  if (props.group === 'Recruteur') {
     filterPerRecipient = <select value={referralOwner} onChange={handleSelectFilteredRecipient} className="custom-form-select mr-2" aria-label="Default select example">
       <option>Filtrer par bénéficiaire</option>
       {recipientFilteredList}
+    </select>
+    filterPerOfferOwner = <select value={offerOwner} onChange={handleSelectFilteredPerOfferOwner} className="custom-form-select mr-2" aria-label="Default select example">
+      <option>Filtrer par recruteur</option>
+      {offerOwnerFilteredList}
     </select>
   }
 
@@ -208,6 +236,7 @@ const ReferralsList = (props) => {
             <option>Filtrer par date</option>
             {addDateFilteredList}
           </select>
+          {filterPerOfferOwner}
           {filterPerRecipient}
           <select value={referralCoopted} onChange={handleSelectFilteredReferral} className="custom-form-select mr-2" aria-label="Default select example">
             <option>Filtrer par coopté</option>
@@ -221,7 +250,12 @@ const ReferralsList = (props) => {
         </div>
 
         <div className='tableContainer'>
-          <Referrals currentReferrals={currentReferrals} loading={loading} handleSelectStatusChange={handleSelectStatusChange} handleDeleteReferral={handleDeleteReferral} />
+          <Referrals
+            currentReferrals={currentReferrals}
+            loading={loading}
+            handleSelectStatusChange={handleSelectStatusChange}
+            handleDeleteReferral={handleDeleteReferral}
+          />
         </div>
 
         <div className='perPageContainer'>
@@ -234,7 +268,17 @@ const ReferralsList = (props) => {
         </div>
 
         <div className='paginationContainer'>
-          <Pagination ItemsPerPage={referralsPerPage} totalItems={referrals.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} items={referrals} />
+          <Pagination
+            ItemsPerPage={referralsPerPage}
+            totalItems={referrals.length}
+            paginate={paginate}
+            handlePrevBtn={handlePrevBtn}
+            handleNextBtn={handleNextBtn}
+            maxPageNumberLimit={maxPageNumberLimit}
+            minPageNumberLimit={minPageNumberLimit}
+            currentPage={currentPage}
+            items={referrals}
+          />
         </div>
 
       </div>
@@ -246,7 +290,7 @@ const ReferralsList = (props) => {
 function mapStateToProps(state) {
   return {
     token: state.token,
-    typeId: state.typeId
+    group: state.group
   };
 }
 

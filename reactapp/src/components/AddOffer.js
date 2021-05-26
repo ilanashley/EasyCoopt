@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import '../App.css';
 import {
-  Form,
   FormGroup,
   Label,
   Input,
@@ -13,14 +12,11 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NavBar from './NavBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
-import { FormHelperText } from '@material-ui/core';
 
 // Background image
 const backgroundImage = {
@@ -172,7 +168,7 @@ function AddOffer(props) {
 
   if (!props.token) {
     return <Redirect to="/login" />;
-  } else if (props.typeId !== 'Recruteur') {
+  } else if (props.group !== 'Recruteur') {
     return <Redirect to="/offersList" />;
   }
 
@@ -249,7 +245,7 @@ function AddOffer(props) {
 function mapStateToProps(state) {
   return {
     token: state.token,
-    typeId: state.typeId
+    group: state.group
   }
 }
 

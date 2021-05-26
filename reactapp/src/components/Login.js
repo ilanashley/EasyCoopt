@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import '../App.css';
@@ -88,22 +88,24 @@ function Login(props) {
     setOpen(false);
   };
 
-  var handleSubmitSignin = async () => {
+  // Capitalize function
+  const capitalize = (arg) => {
+    if (typeof arg !== 'string') return ''
+    return arg.charAt(0).toUpperCase() + arg.slice(1)
+  }
 
+  var handleSubmitSignin = async () => {
     const data = await fetch('/users/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `email=${signInEmail}&password=${signInPassword}`
     })
-
     const body = await data.json();
-
     if (body.result === true) {
       props.addToken(body.user.token)
       props.addProfileType(body.user.group)
       props.addUserId(body.user._id)
-      console.log(body.user.lastName)
-      props.addUserLastName(body.user.lastName ? body.user.lastName.charAt(0).toUpperCase() + body.user.lastName.slice(1) : null)
+      props.addUserLastName(body.user.lastName ? capitalize(body.user.lastName) : null)
       setSignIn(true)
     } else {
       setError(body.error)
@@ -112,15 +114,12 @@ function Login(props) {
   }
 
   var handleSubmitSignup = async () => {
-
     const data = await fetch('/users/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `email=${signUpEmail}&password=${signUpPassword}&confirmPassword=${signUpConfirmationPassword}`
     })
-
     const body = await data.json()
-
     if (body.result === true) {
       props.addToken(body.user.token)
       props.addUserId(body.user._id)
@@ -135,6 +134,19 @@ function Login(props) {
     return <Redirect to='/offerslist' />
   } else  if (signUp) {
     return <Redirect to='/myAccount' />
+  }
+
+  // On Key Press Enter...
+  const handleKeyPressOnSigninPassword = (event) => {
+    if(event.key === 'Enter'){
+      handleSubmitSignin()
+    }
+  }
+
+  const handleKeyPressOnSignupConfirmPassword = (event) => {
+    if(event.key === 'Enter'){
+      handleSubmitSignup()
+    }
   }
 
   return (
@@ -177,7 +189,7 @@ function Login(props) {
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
-                <Input onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password" />
+                <Input onKeyPress={handleKeyPressOnSigninPassword} onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password" />
               </FormGroup>
              
               <div className="d-flex justify-content-end py-4">
@@ -198,7 +210,7 @@ function Login(props) {
               </FormGroup>
               <FormGroup>
                 <Label for="email">Confirm password</Label>
-                <Input onChange={(e) => setSignUpConfirmationPassword(e.target.value)} type="password" name="password" placeholder="password" />
+                <Input onKeyPress={handleKeyPressOnSignupConfirmPassword} onChange={(e) => setSignUpConfirmationPassword(e.target.value)} type="password" name="password" placeholder="password" />
               </FormGroup>
               
               <div className="d-flex justify-content-end py-4">
@@ -210,8 +222,6 @@ function Login(props) {
 
       </Container>
     </div>
-
-
   );
 }
 
@@ -220,8 +230,8 @@ function mapDispatchToProps(dispatch) {
     addToken: function (token) {
       dispatch({ type: 'addToken', token })
     },
-    addProfileType: function (typeId) {
-      dispatch({ type: 'addProfileType', typeId })
+    addProfileType: function (group) {
+      dispatch({ type: 'addProfileGroup', group })
     },
     addUserId: function (userId) {
       dispatch({ type: 'addUserId', userId })

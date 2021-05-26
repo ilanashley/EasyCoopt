@@ -92,7 +92,7 @@ router.post('/add', async (req, res, next) => {
 
 /* Get Referrals*/
 router.get('/get', async (req, res, next) => {
-  var referrals = await referralModel.find().populate('offerId').populate('userId').exec();
+  var referrals = await referralModel.find().populate({ path: 'offerId', populate: { path: 'userId'}}).populate('userId').exec();
   if (!referrals) {
     res.json({ result: false, error: "Il manque des données" });
   } else {

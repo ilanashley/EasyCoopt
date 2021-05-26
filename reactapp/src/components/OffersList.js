@@ -24,7 +24,7 @@ const OffersList = (props) => {
   const [addOffer, setAddOffer] = useState(false)
 
   // Select states
-  const [offerOwner, setOfferOwner] = useState('Filtrer par rédacteur')
+  const [offerOwner, setOfferOwner] = useState('Filtrer par recruteur')
   const [offerDate, setOfferDate] = useState('Filtrer par date')
   const [offerCity, setOfferCity] = useState('Filtrer par ville')
   const [offerContract, setOfferContract] = useState('Filtrer par contrat')
@@ -53,13 +53,13 @@ const OffersList = (props) => {
     let numberReferrals = 0
 
     if (props.token) {
-      if (props.typeId === 'Coopteur') {
+      if (props.group === 'Coopteur') {
         offers = offers.filter(offer => offer.isActive === true)
         numberOffers = offers.length
         for (let i = 0; i < numberOffers; i++) {
           numberReferrals += offers[i].referralsIds.length
         }
-      } else if (props.typeId === 'Recruteur') {
+      } else if (props.group === 'Recruteur') {
         numberOffers = offers.length
         for (let i = 0; i < numberOffers; i++) {
           numberReferrals += offers[i].referralsIds.length
@@ -147,6 +147,12 @@ const OffersList = (props) => {
     return <Redirect to={`/addOffer`} />
   }
 
+  // Capitalize function
+  const capitalize = (arg) => {
+    if (typeof arg !== 'string') return ''
+    return arg.charAt(0).toUpperCase() + arg.slice(1)
+  } 
+
   // Filter per date
   const addDateArray = offers.map((offer) => { return offer.creationDate })
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
@@ -219,7 +225,7 @@ const OffersList = (props) => {
     return offerOwnerArray.indexOf(lastName) === pos;
   }).sort()
   const offerOwnerFilteredList = offerOwnerFilteredArray.map((lastName) => {
-    return (<option value={lastName}>{lastName}</option>)
+    return (<option value={lastName}>{capitalize(lastName)}</option>)
   })
 
   const handleSelectFilteredPerOfferOwner = (event) => {
@@ -230,7 +236,7 @@ const OffersList = (props) => {
 
   // Reset Filters
   const handleSelectResetFilters = () => {
-    setOfferOwner('Filtrer par rédacteur')
+    setOfferOwner('Filtrer par recruteur')
     setOfferDate('Filtrer par date')
     setOfferCity('Filtrer par ville')
     setOfferContract('Filtrer par contrat')
@@ -239,7 +245,7 @@ const OffersList = (props) => {
   }
 
   let addOfferButton
-  if (props.typeId === 'Recruteur') {
+  if (props.group === 'Recruteur') {
     addOfferButton = <div className='perPageContainer w-100'>
       <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large' />
         Ajouter une offre
@@ -248,7 +254,7 @@ const OffersList = (props) => {
   }
 
   let filterPerStatus
-  if (props.typeId === 'Recruteur') {
+  if (props.group === 'Recruteur') {
     filterPerStatus = <select value={offerStatus} onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
       <option>Filtrer par status</option>
       {archivedFilteredList}
@@ -316,7 +322,7 @@ const OffersList = (props) => {
 function mapStateToProps(state) {
   return {
     token: state.token,
-    typeId: state.typeId
+    group: state.group
   };
 }
 

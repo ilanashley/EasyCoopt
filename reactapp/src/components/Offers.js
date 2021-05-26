@@ -42,7 +42,7 @@ const Offers = (props) => {
         }
        
         let offerButton
-        if (props.typeId === 'Recruteur') {
+        if (props.group === 'Recruteur') {
             offerButton = <Container>
                 <Row>
                     <Col  className='d-flex justify-content-center m-2'>
@@ -131,7 +131,7 @@ const Offers = (props) => {
 function mapStateToProps(state) {
     return {
         token: state.token,
-        typeId: state.typeId
+        group: state.group
     };
 }
 

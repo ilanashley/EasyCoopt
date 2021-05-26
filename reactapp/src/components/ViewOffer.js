@@ -18,8 +18,10 @@ const backgroundImage = {
 
 const ViewOffer = (props) => {
 
+    // Params
     const { offerIdView } = useParams();
 
+    // States
     const [title, setTitle] = useState('');
     const [city, setCity] = useState('');
     const [creationDate, setCreationDate] = useState(new Date());

@@ -10,8 +10,7 @@ import {
   Button,
   Container,
   Row,
-  Col,
-  Alert,
+  Col
 } from "reactstrap";
 import NavBar from "./NavBar";
 
@@ -81,10 +80,17 @@ function MyAccount(props) {
   // Modal state
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+
   // Modal function
   const handleClose = () => {
     setOpen(false);
   };
+
+  // Capitalize function
+  const capitalize = (arg) => {
+    if (typeof arg !== 'string') return ''
+    return arg.charAt(0).toUpperCase() + arg.slice(1)
+  }
 
   useEffect(() => {
     async function loadUser() {
@@ -130,7 +136,7 @@ useEffect(() => {
     const data = await fetch("/users/account", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `token=${props.token}&avatarUrl=${avatarUrl}&firstName=${firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : ''}&lastName=${lastName ? lastName.charAt(0).toUpperCase() + lastName.slice(1) : ''}&email=${email}&type=${type}&oldPassword=${oldPassword}&newPassword=${newPassword}&confirmPassword=${confirmPassword}`,
+      body: `token=${props.token}&avatarUrl=${avatarUrl}&firstName=${firstName ? capitalize(firstName) : ''}&lastName=${lastName ? capitalize(lastName) : ''}&email=${email}&type=${type}&oldPassword=${oldPassword}&newPassword=${newPassword}&confirmPassword=${confirmPassword}`,
     });
 
     const body = await data.json();    
@@ -254,7 +260,7 @@ useEffect(() => {
               <Label for="profil">Mon profil d'utilisateur</Label>
               <select
                 class="custom-select"
-                defaultValue={props.typeId}
+                defaultValue={props.group}
                 onChange={(e) => handleTypeChange(e.target.value)}
                 aria-label="Default select example"
               >
@@ -306,19 +312,19 @@ useEffect(() => {
   );
 }
 
-/* recuperation du token et du typeID depuis redux */
+/* recuperation du token et du group depuis redux */
 function mapStateToProps(state) {
   return {
     token: state.token,
-    typeId: state.typeId
+    group: state.group
   };
 }
 
 /* envoi du type de user a redux */
 function mapDispatchToProps(dispatch) {
   return {
-    addProfileType: function (typeId) {
-      dispatch({ type: "addProfileType", typeId: typeId });
+    addProfileType: function (group) {
+      dispatch({ type: "addProfileGroup", group: group });
     },
   };
 }

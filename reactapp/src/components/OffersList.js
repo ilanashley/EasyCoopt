@@ -51,7 +51,6 @@ const OffersList = (props) => {
         let usersToken = []
         for (let i=0; i<offers.length; i++) {
           for(let j=0; j<offers[i].referralsIds.length; j++) {
-            // console.log(offers[i].referralsIds[j])
             if(offers[i].referralsIds[j].userId) {
               usersToken.push(offers[i].referralsIds[j].userId.token)
             }

@@ -95,12 +95,18 @@ const ViewOffer = (props) => {
                 <Col>
                     <div>
                         <p style={{ margin: 1, padding: 1, fontSize: 13 }}>{recruterId.firstName} {recruterId.lastName}  </p>
-                        <p style={{ margin: 1, paddingBottom: 7, lineHeight: 0.8, fontSize: 13 }}></p>
                     </div>
                 </Col>
             </Row>
     }
 
+    let offerLink
+    if (link) {
+        offerLink = <div style={{ marginBottom: 20, padding: 5 }}>
+            <h6>Lien vers l'offre :</h6>
+            <a href={link} target="_blank">{link}</a>
+        </div>
+    }
 
     return (
         <div className="section backgroundImageViewOffer">
@@ -108,7 +114,7 @@ const ViewOffer = (props) => {
             <Container >
 
                 <Row className="d-flex justify-content-center">
-                    <Col sm="12" md={{ size: 10, offset: 1 }}   style={{ maxWidth: 750 }} className="cardBackground mt-4 mb-4 p-5"  >
+                    <Col sm="12" md={{ size: 10, offset: 1 }} style={{ maxWidth: 750 }} className="cardBackground mt-4 mb-4 p-5"  >
                         <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
                         <h3 className="mt-5"> {title} </h3>
                         <div className="d-flex mb-0 font-weight-bold offerSubtitle">
@@ -119,10 +125,7 @@ const ViewOffer = (props) => {
                         </div>
                         <hr />
                         <p className="fs-6 p-4 lh-base">{resume}</p>
-
-                        <div style={{ marginBottom: 20 }}>
-                            <a href={link} target="_blank">{link}</a>
-                        </div>
+                        {offerLink}
                         {recruterCard}
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 40 }}>
                             <button onClick={() => redirectionToAddCoopte(offerIdView)} className="custom-btn-style">Recommander</button>

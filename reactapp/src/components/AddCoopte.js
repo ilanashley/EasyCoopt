@@ -175,11 +175,11 @@ const AddCoopte = (props) => {
           <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: 50 }} className="cardBackground" >
             <Form >
               <FormGroup>
-                <Label for="firstname">Nom</Label>
+                <Label for="firstname">Prénom</Label>
                 <Input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstname" placeholder="john" />
               </FormGroup>
               <FormGroup>
-                <Label for="lastname">Prénom</Label>
+                <Label for="lastname">Nom</Label>
                 <Input onChange={(e) => setLastName(e.target.value)} type="text" name="lastname" placeholder="Doe" />
               </FormGroup>
               <FormGroup>

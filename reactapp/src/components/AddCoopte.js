@@ -21,17 +21,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-// Background image
-const backgroundImage = {
-  backgroundImage: `url(${'/images/image_1.jpeg'})`,
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  minWidth: '60wh',
-  minHeight: '60vw'
-};
-
-// Style
+// Modal style
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -73,7 +63,7 @@ const AddCoopte = (props) => {
   const [reason, setReason] = useState();
   const [cv, setCv] = useState();
 
-  const [offerCompleted, setOfferCompleted] = useState();
+ 
   const [offerTitle, setOfferTitle] = useState();
 
   // State for modal
@@ -81,6 +71,7 @@ const AddCoopte = (props) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
+  const [offerCompleted, setOfferCompleted] = useState();
 
   // State for checkbox
   const [isAgree, setIsAgree] = useState(false);
@@ -175,13 +166,13 @@ const AddCoopte = (props) => {
   }
 
   return (
-    <div className="section" style={backgroundImage}>
+    <div className="section backgroundImageAddCoopte">
       <NavBar />
       <div style={{ display: "flex", flexDirection: 'column', alignItems: 'center', marginTop: 40 }}><h1 style={{ fontSize: 40 }}> Vous recommandez pour le poste de :</h1><h1 style={{ fontSize: 40 }}>{offerTitle}</h1></div>
 
       <Container   >
-        <Row style={{ marginTop: 50, marginBottom: 50 }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
+        <Row style={{ marginTop: 50 }} >
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: 50 }} className="cardBackground" >
             <Form >
               <FormGroup>
                 <Label for="firstname">Nom</Label>

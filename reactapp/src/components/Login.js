@@ -20,16 +20,6 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
-// Background image
-const backgroundImage = {
-      backgroundImage: `url(${'/images/image_4.jpeg'})`,
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      width: '100wh',
-      height: '100vh',
-};
-
 // Modal style
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -82,7 +72,7 @@ function Login(props) {
   // Modal state
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  
+
   // Modal function
   const handleClose = () => {
     setOpen(false);
@@ -132,7 +122,7 @@ function Login(props) {
 
   if (signIn) {
     return <Redirect to='/offerslist' />
-  } else  if (signUp) {
+  } else if (signUp) {
     return <Redirect to='/myAccount' />
   }
 
@@ -150,7 +140,7 @@ function Login(props) {
   }
 
   return (
-    <div style={backgroundImage}>
+    <div className='backgroundImageLogin'>
       <NavBar />
       <div className='d-flex justify-content-center'>
         <Modal
@@ -172,7 +162,7 @@ function Login(props) {
           </Fade>
         </Modal>
       </div>
-      
+
       <Container>
 
         <Row className="cardBackground" style={{ padding: "10px", marginTop: "50px" }} >

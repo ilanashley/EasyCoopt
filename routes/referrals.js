@@ -31,7 +31,6 @@ router.post('/add', async (req, res, next) => {
   let cv = req.files.cv
   let isAgree = req.body.isAgree
 
-  console.log('isAgree --> ', isAgree)
   
   // Condition champs vides
   if(!firstName || !lastName || !reason || !email || !creationDate || !cv ){
@@ -45,9 +44,7 @@ router.post('/add', async (req, res, next) => {
      // envoi du cv vers cloudinary
   var cvPath = './tmp/' + uniqid() + '.jpg';
   var resultCopy = await req.files.cv.mv(cvPath);
-  if(resultCopy) {
-    console.log(resultCopy)
-  }
+ 
   if (!resultCopy) {
     var resultCloudinary = await cloudinary.uploader.upload(cvPath);
      if(!resultCloudinary){

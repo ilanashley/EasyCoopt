@@ -7,15 +7,6 @@ import { Redirect } from 'react-router';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
-
-// Background image
-const backgroundImage = {
-  backgroundImage: `url(${'/images/image_1.jpeg'})`,
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-};
-
 const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
@@ -262,8 +253,7 @@ const OffersList = (props) => {
   }
 
   return (
-
-    <div className='mainContainer' style={backgroundImage}>
+    <div className='mainContainer backgroundImageOffersList'>
 
       <NavBar />
 

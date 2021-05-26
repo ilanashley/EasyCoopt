@@ -18,17 +18,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 
-// Background image
-const backgroundImage = {
-  backgroundImage: `url(${'/images/image_1.jpeg'})`,
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  minWidth: '73wh',
-  minHeight: '73vw',
-};
-
-// Style
+// Modal style
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -72,8 +62,6 @@ function AddOffer(props) {
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
-  const [offerModifiee, setOfferModifiee] = useState(false);
-
   const [offer, setOffer] = useState(false)
   const [stringDate, setStringDate] = useState('')
 
@@ -82,6 +70,7 @@ function AddOffer(props) {
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState();
   const [error, setError] = useState('')
+  const [offerModifiee, setOfferModifiee] = useState(false);
 
   var { id } = useParams();
 
@@ -173,19 +162,19 @@ function AddOffer(props) {
   }
 
   return (
-    <div className="section" style={backgroundImage}>
+    <div className="section backgroundImageAddOffer">
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
       <Container>
-        <Row style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
+        <Row style={{ padding: "10px", marginTop: "20px" }} >
+          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: "50px" }} className="cardBackground" >
             
               <FormGroup>
-                <Label for="title">Job Title</Label>
+                <Label for="title">Intitulé du poste</Label>
                 <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
               </FormGroup>
               <FormGroup>
-                <Label for="city">City</Label>
+                <Label for="city">Ville</Label>
                 <Input defaultValue={city ? city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
               </FormGroup>
               <FormGroup>

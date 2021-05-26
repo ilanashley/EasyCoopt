@@ -7,14 +7,6 @@ import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
 import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
-// Background image
-const backgroundImage = {
-  backgroundImage: `url(${'/images/image_1.jpeg'})`,
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-};
-
 const ReferralsList = (props) => {
 
   const [referrals, setReferrals] = useState([]);
@@ -221,7 +213,7 @@ const ReferralsList = (props) => {
 
   return (
 
-    <div className='mainContainer' style={backgroundImage}>
+    <div className='mainContainer backgroundImageMyAccountAndReferralsList'>
 
       <NavBar />
 

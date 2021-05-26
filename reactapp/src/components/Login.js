@@ -43,6 +43,25 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  btn: {
+    display: 'inline-block',
+    fontWeight: 400,
+    lineHeight: 1.5,
+    color: '#fff',
+    textAlign: 'center',
+    textDecoration: 'none',
+    verticalAlign: 'middle',
+    cursor: 'pointer',
+    backgroundColor:    '#78CFCE',
+    border: '1px solid transparent',
+    padding: '.375rem .75rem',
+    fontSize:' 1rem',
+    borderRadius: '.75rem',
+    '&:hover': {
+      border: '1px solid transparent',
+      backgroundColor: '#6bbbba'
+    }
+  }
 }));
 
 
@@ -161,8 +180,8 @@ function Login(props) {
                 <Input onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password" />
               </FormGroup>
              
-              <div class="btnEnd">
-                <Button onClick={() => handleSubmitSignin()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign In </Button>
+              <div className="d-flex justify-content-end py-4">
+                <Button onClick={() => handleSubmitSignin()} className={classes.btn}> Sign In </Button>
               </div>
             </Form>
           </Col>
@@ -182,8 +201,8 @@ function Login(props) {
                 <Input onChange={(e) => setSignUpConfirmationPassword(e.target.value)} type="password" name="password" placeholder="password" />
               </FormGroup>
               
-              <div class="btnEnd">
-                <Button onClick={() => handleSubmitSignup()} style={{ margin: "10px", backgroundColor: '#254383' }}> Sign Up </Button>
+              <div className="d-flex justify-content-end py-4">
+                <Button onClick={() => handleSubmitSignup()} className={classes.btn}> Sign Up </Button>
               </div>
             </Form>
           </Col>

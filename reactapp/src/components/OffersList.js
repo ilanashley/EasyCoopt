@@ -47,9 +47,17 @@ const OffersList = (props) => {
       if (props.group === 'Coopteur') {
         offers = offers.filter(offer => offer.isActive === true)
         numberOffers = offers.length
-        for (let i = 0; i < numberOffers; i++) {
-          numberReferrals += offers[i].referralsIds.length
+       
+        let usersToken = []
+        for (let i=0; i<offers.length; i++) {
+          for(let j=0; j<offers[i].referralsIds.length; j++) {
+            // console.log(offers[i].referralsIds[j])
+            if(offers[i].referralsIds[j].userId) {
+              usersToken.push(offers[i].referralsIds[j].userId.token)
+            }
+          }
         }
+        numberReferrals = usersToken.filter(token => token === props.token).length
       } else if (props.group === 'Recruteur') {
         numberOffers = offers.length
         for (let i = 0; i < numberOffers; i++) {
@@ -59,9 +67,6 @@ const OffersList = (props) => {
     } else {
       offers = offers.filter(offer => offer.isActive === true)
       numberOffers = offers.length
-      for (let i = 0; i < numberOffers; i++) {
-        numberReferrals += offers[i].referralsIds.length
-      }
     }
 
     props.addNumberOffers(numberOffers)

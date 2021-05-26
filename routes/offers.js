@@ -6,7 +6,7 @@ var userModel = require("../models/users");
 
 
 router.get('/get', async (req, res, next) => {
-  var offers = await offerModel.find().populate('userId').populate('referralsIds').exec();
+  var offers = await offerModel.find().populate('userId').populate({ path: 'referralsIds', populate: { path: 'userId'}}).exec();
   if (!offers) {
     res.json({ result: false, error: "Il n'y a pas d'offre à afficher" })
   } else {

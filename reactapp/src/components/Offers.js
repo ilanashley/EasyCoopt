@@ -63,12 +63,14 @@ const Offers = (props) => {
                 </Row>
             </Container>
         } else {
-            offerButton = <Container className='d-flex justify-content-around align-items-center'>
+            offerButton = <Container>
                 <Row>
-                    <Col >
-                        <button className="custom-btn-style" onClick={() => props.recommend(offer._id)} >Recommander</button>
+                    <Col className='d-flex justify-content-center m-2'>
+                        <button className="custom-btn-style" onClick={() => props.recommend(offer._id)} >
+                            Recommander
+                        </button>
                     </Col>
-                    <Col>
+                    <Col className='d-flex justify-content-center m-2'>
                         <button className="custom-btn-style" onClick={() => props.viewOffer(offer._id)}>
                             Voir
                         </button>
@@ -83,7 +85,7 @@ const Offers = (props) => {
                 <Row className="d-flex align-items-center ">
 
                     <Col lg='4' sm="12"  className="d-flex justify-content-center">
-                        <h5 className="m-2">{offer.title}</h5>
+                        <h5 className="m-2 p-2">{offer.title}</h5>
                     </Col>
                     <Col lg='4' sm="12">
                         <Row  className="bg-light pt-3 m-2 border rounded-3">

@@ -194,6 +194,22 @@ const OffersList = (props) => {
     setOffers(offersPerStatus)
   }
 
+  // Filter per offerOwner
+  const offerOwnerArray = offers.map((offer) => { return offer.userId.lastName })
+
+  const offerOwnerFilteredArray = offerOwnerArray.filter((lastName, pos) => {
+    return offerOwnerArray.indexOf(lastName) === pos;
+  }).sort()
+  console.log(offerOwnerFilteredArray)
+  const offerOwnerFilteredList = offerOwnerFilteredArray.map((lastName) => {
+    return (<option value={lastName}>{lastName}</option>)
+  })
+
+  const handleSelectFilteredPerOfferOwner = (event) => {
+    const offersPerOfferOwner = offers.filter(offer => offer.userId.lastName === event.target.value)
+    setOffers(offersPerOfferOwner)
+  }
+
   // Reset Filters
   const handleSelectResetFilters = () => {
     fetchOffers()
@@ -202,7 +218,9 @@ const OffersList = (props) => {
   let addOfferButton
   if (props.typeId === 'Recruteur') {
     addOfferButton = <div className='perPageContainer w-100'>
-      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large' />Ajouter une Offre</button>
+      <button onClick={() => handleOnAddOffer()} className='custom-btn-style w-100'><PostAddIcon fontSize='large' />
+        Ajouter une offre
+      </button>
     </div>
   }
 
@@ -215,54 +233,58 @@ const OffersList = (props) => {
   }
 
   return (
-      <div className='mainContainer backgroundImageOffersList'>
+    <div className='mainContainer backgroundImageOffersList'>
 
-        <NavBar />
+      <NavBar />
 
-        <div className='container-lg'>
+      <div className='container-lg'>
 
-          <div className='titleContainer'>
-            <h1>Offres en cours</h1>
-          </div>
-
-          <div className='selectContainer'>
-            <select onChange={handleSelectFilteredPerDate} className="custom-form-select mr-2" aria-label="Default select example">
-              <option selected>Filtrer par date</option>
-              {addDateFilteredList}
-            </select>
-            <select onChange={handleSelectFilteredPerCity} className="custom-form-select mr-2" aria-label="Default select example">
-              <option selected>Filtrer par ville</option>
-              {cityFilteredList}
-            </select>
-            <select onChange={handleSelectFilteredPerContract} className="custom-form-select mr-2" aria-label="Default select example">
-              <option selected>Filtrer par contrat</option>
-              {contractFilteredList}
-            </select>
-            {filterPerStatus}
-            <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
-          </div>
-
-          {addOfferButton}
-
-          <div className='tableContainer'>
-            <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />
-          </div>
-
-          <div className='perPageContainer'>
-            <select className="custom-form-select" defaultValue={offersPerPage} onChange={handleSelectPerPage} aria-label="Default select example">
-              <option value="10">10 par page</option>
-              <option value="25">25 par page</option>
-              <option value="50">50 par page</option>
-              <option value="100">100 par page</option>
-            </select>
-          </div>
-
-          <div className='paginationContainer'>
-            <Pagination ItemsPerPage={offersPerPage} totalItems={offers.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} items={offers} />
-          </div>
-
+        <div className='titleContainer'>
+          <h1>Offres en cours</h1>
         </div>
+
+        <div className='selectContainer'>
+          <select onChange={handleSelectFilteredPerDate} className="custom-form-select mr-2" aria-label="Default select example">
+            <option selected>Filtrer par date</option>
+            {addDateFilteredList}
+          </select>
+          <select onChange={handleSelectFilteredPerCity} className="custom-form-select mr-2" aria-label="Default select example">
+            <option selected>Filtrer par ville</option>
+            {cityFilteredList}
+          </select>
+          <select onChange={handleSelectFilteredPerContract} className="custom-form-select mr-2" aria-label="Default select example">
+            <option selected>Filtrer par contrat</option>
+            {contractFilteredList}
+          </select>
+          {filterPerStatus}
+          <select onChange={handleSelectFilteredPerOfferOwner} className="custom-form-select mr-2" aria-label="Default select example">
+            <option selected>Filtrer par rédacteur</option>
+            {offerOwnerFilteredList}
+          </select>
+          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
+        </div>
+
+        {addOfferButton}
+
+        <div className='tableContainer'>
+          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />
+        </div>
+
+        <div className='perPageContainer'>
+          <select className="custom-form-select" defaultValue={offersPerPage} onChange={handleSelectPerPage} aria-label="Default select example">
+            <option value="10">10 lignes par page</option>
+            <option value="25">25 lignes par page</option>
+            <option value="50">50 lignes par page</option>
+            <option value="100">100 lignes par page</option>
+          </select>
+        </div>
+
+        <div className='paginationContainer'>
+          <Pagination ItemsPerPage={offersPerPage} totalItems={offers.length} paginate={paginate} handlePrevBtn={handlePrevBtn} handleNextBtn={handleNextBtn} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} currentPage={currentPage} items={offers} />
+        </div>
+
       </div>
+    </div>
   );
 }
 

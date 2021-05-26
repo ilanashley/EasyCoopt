@@ -10,7 +10,6 @@ import typeId from './reducers/type'
 import userId from './reducers/userId'
 import userLastName from './reducers/userLastName'
 import numberOffers from './reducers/numberOffers'
-import numberReferrals from './reducers/numberReferrals'
 
 import AddOffer from './components/AddOffer';
 import AddCoopte from './components/AddCoopte';
@@ -20,7 +19,7 @@ import ReferralsList from './components/ReferralsList';
 import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 
-const store = createStore(combineReducers({ token, typeId, userId, userLastName, numberOffers, numberReferrals }))
+const store = createStore(combineReducers({ token, typeId, userId, userLastName, numberOffers }))
 
 function App() {
   return (

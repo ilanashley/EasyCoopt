@@ -105,8 +105,8 @@ const ViewOffer = (props) => {
             <NavBar />
             <Container >
 
-                <Row>
-                    <Col sm="12" md={{ size: 10, offset: 1 }} className="cardBackground mt-4 mb-4 p-5"  >
+                <Row className="d-flex justify-content-center">
+                    <Col sm="12" md={{ size: 10, offset: 1 }}   style={{ maxWidth: 750 }} className="cardBackground mt-4 mb-4 p-5"  >
                         <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
                         <h3 className="mt-5"> {title} </h3>
                         <div className="d-flex mb-0 font-weight-bold offerSubtitle">
@@ -116,7 +116,7 @@ const ViewOffer = (props) => {
                             <p className="mb-0 offerSubtitle">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p>
                         </div>
                         <hr />
-                        <p className="fs-6 text-justify p-4">{resume}</p>
+                        <p className="fs-6 p-4 lh-base">{resume}</p>
 
                         <div style={{ marginBottom: 20 }}>
                             <a href={link} target="_blank">{link}</a>

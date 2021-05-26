@@ -57,7 +57,7 @@ const AddCoopte = (props) => {
   const [reason, setReason] = useState();
   const [cv, setCv] = useState();
 
-  const [offerCompleted, setOfferCompleted] = useState();
+ 
   const [offerTitle, setOfferTitle] = useState();
 
   // State for modal
@@ -65,6 +65,7 @@ const AddCoopte = (props) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
+  const [offerCompleted, setOfferCompleted] = useState();
 
   // State for checkbox
   const [isAgree, setIsAgree] = useState(false);

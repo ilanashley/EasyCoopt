@@ -54,8 +54,6 @@ function AddOffer(props) {
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
 
-  const [offerModifiee, setOfferModifiee] = useState(false);
-
   const [offer, setOffer] = useState(false)
   const [stringDate, setStringDate] = useState('')
 
@@ -64,18 +62,8 @@ function AddOffer(props) {
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState();
   const [error, setError] = useState('')
+  const [offerModifiee, setOfferModifiee] = useState(false);
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
 
   var { id } = useParams();
 
@@ -171,15 +159,15 @@ function AddOffer(props) {
       <NavBar />
       <h1 style={{ display: "flex", justifyContent: 'center', padding: 20 }}>{pageTitle}</h1>
       <Container>
-        <Row style={{ padding: "10px", marginTop: "20px", marginBottom: "50px" }} >
+        <Row style={{ padding: "10px", marginTop: "20px" }} >
           <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40 }} className="cardBackground" >
             
               <FormGroup>
-                <Label for="title">Job Title</Label>
+                <Label for="title">Intitulé du poste</Label>
                 <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
               </FormGroup>
               <FormGroup>
-                <Label for="city">City</Label>
+                <Label for="city">Ville</Label>
                 <Input defaultValue={city ? city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
               </FormGroup>
               <FormGroup>

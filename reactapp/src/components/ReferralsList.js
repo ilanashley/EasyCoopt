@@ -11,6 +11,12 @@ const ReferralsList = (props) => {
 
   const [referrals, setReferrals] = useState([]);
 
+  // Select states
+  const [referralDate, setReferralDate] = useState('Filtrer par date')
+  const [referralOwner, setReferralOwner] = useState('Filtrer par bénéficiaire')
+  const [referralCoopted, setReferralCoopted] = useState('Filtrer par coopté')
+  const [referralStatus, setReferralStatus] = useState('filtrer par status')
+
   // Pagination states
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +35,7 @@ const ReferralsList = (props) => {
     setLoading(true)
     var rawResponse = await fetch('/referrals/get')
     var response = await rawResponse.json()
-    if(props.typeId === 'Coopteur') {
+    if (props.typeId === 'Coopteur') {
       let filteredReferrals = response.referrals.filter(referral => referral.userId.token === props.token)
       setReferrals(filteredReferrals)
     } else {
@@ -40,7 +46,7 @@ const ReferralsList = (props) => {
 
   // Fetch backend to delete referral by id
   const handleDeleteReferral = async (referralId, offerId) => {
-    var rawResponse =  await fetch(`/referrals/delete/${referralId}/${offerId}`, {
+    var rawResponse = await fetch(`/referrals/delete/${referralId}/${offerId}`, {
       method: 'DELETE'
     })
     await rawResponse.json()
@@ -99,12 +105,13 @@ const ReferralsList = (props) => {
   const addDateFilteredList = addDateFilteredArray.map((date) => {
     var myDate = new Date(date)
     var myDateString = ('0' + myDate.getDate()).slice(-2) + '/'
-        + ('0' + (myDate.getMonth()+1)).slice(-2) + '/'
-        + myDate.getFullYear();
+      + ('0' + (myDate.getMonth() + 1)).slice(-2) + '/'
+      + myDate.getFullYear();
     return (<option value={date}>{myDateString}</option>)
   })
 
   const handleSelectFilteredDate = (event) => {
+    setReferralDate(event.target.value)
     const referralsPerDate = referrals.filter(referral => referral.creationDate === event.target.value)
     setReferrals(referralsPerDate)
   }
@@ -119,6 +126,7 @@ const ReferralsList = (props) => {
   })
 
   const handleSelectFilteredRecipient = (event) => {
+    setReferralOwner(event.target.value)
     const referralsPerRecipient = referrals.filter(referral => referral.userId.lastName === event.target.value)
     setReferrals(referralsPerRecipient)
   }
@@ -133,6 +141,7 @@ const ReferralsList = (props) => {
   })
 
   const handleSelectFilteredReferral = (event) => {
+    setReferralCoopted(event.target.value)
     const referralsPerReferral = referrals.filter(referral => referral.lastName === event.target.value)
     setReferrals(referralsPerReferral)
   }
@@ -148,25 +157,30 @@ const ReferralsList = (props) => {
   })
 
   const handleSelectFilteredStatus = (event) => {
+    setReferralStatus(event.target.value)
     const referralsPerStatus = referrals.filter(referral => referral.status === event.target.value)
     setReferrals(referralsPerStatus)
   }
 
   // Reset Filters
   const handleSelectResetFilters = () => {
+    setReferralDate('Filtrer par date')
+    setReferralOwner('Filtrer par bénéficiaire')
+    setReferralCoopted('Filtrer par coopté')
+    setReferralStatus('filtrer par status')
     fetchReferrals()
   }
 
-  if(!props.token) {
+  if (!props.token) {
     return <Redirect to="/login" />;
   }
 
   let filterPerRecipient
-  if(props.typeId === 'Recruteur') {
-    filterPerRecipient = <select onChange={handleSelectFilteredRecipient} className="custom-form-select mr-2" aria-label="Default select example">
-                                <option selected>Filtrer par bénéficiaire</option>
-                                {recipientFilteredList}
-                              </select>
+  if (props.typeId === 'Recruteur') {
+    filterPerRecipient = <select value={referralOwner} onChange={handleSelectFilteredRecipient} className="custom-form-select mr-2" aria-label="Default select example">
+      <option>Filtrer par bénéficiaire</option>
+      {recipientFilteredList}
+    </select>
   }
 
   return (
@@ -182,20 +196,20 @@ const ReferralsList = (props) => {
         </div>
 
         <div className='selectContainer'>
-          <select onChange={handleSelectFilteredDate} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par date</option>
+          <select value={referralDate} onChange={handleSelectFilteredDate} className="custom-form-select mr-2" aria-label="Default select example">
+            <option>Filtrer par date</option>
             {addDateFilteredList}
           </select>
           {filterPerRecipient}
-          <select onChange={handleSelectFilteredReferral} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par coopté</option>
+          <select value={referralCoopted} onChange={handleSelectFilteredReferral} className="custom-form-select mr-2" aria-label="Default select example">
+            <option>Filtrer par coopté</option>
             {referralFilteredList}
           </select>
-          <select onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par status</option>
+          <select value={referralStatus} onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
+            <option>Filtrer par status</option>
             {statusFilteredList}
           </select>
-          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon/></button>
+          <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
         </div>
 
         <div className='tableContainer'>
@@ -222,14 +236,14 @@ const ReferralsList = (props) => {
 
 /* recuperation du token depuis redux */
 function mapStateToProps(state) {
-  return { 
+  return {
     token: state.token,
     typeId: state.typeId
   };
 }
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   null
 )(ReferralsList);
 

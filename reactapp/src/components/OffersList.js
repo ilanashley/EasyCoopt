@@ -10,10 +10,16 @@ import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 const OffersList = (props) => {
 
   const [offers, setOffers] = useState([]);
-  const [ajoutId, setAjoutId] = useState([]);
   const [offerId, setOfferId] = useState('');
   const [offerIdView, setOfferIdView] = useState('')
   const [addOffer, setAddOffer] = useState(false)
+
+  // Select states
+  const [offerOwner, setOfferOwner] = useState('Filtrer par rédacteur')
+  const [offerDate, setOfferDate] = useState('Filtrer par date')
+  const [offerCity, setOfferCity] = useState('Filtrer par ville')
+  const [offerContract, setOfferContract] = useState('Filtrer par contrat')
+  const [offerStatus, setOfferStatus] = useState('filtrer par status')
 
   // Pagination states
   const [loading, setLoading] = useState(false);
@@ -146,6 +152,7 @@ const OffersList = (props) => {
   })
 
   const handleSelectFilteredPerDate = (event) => {
+    setOfferDate(event.target.value)
     const offersPerDate = offers.filter(offer => offer.creationDate === event.target.value)
     setOffers(offersPerDate)
   }
@@ -160,6 +167,7 @@ const OffersList = (props) => {
   })
 
   const handleSelectFilteredPerCity = (event) => {
+    setOfferCity(event.target.value)
     const offersPerCity = offers.filter(offer => offer.city === event.target.value)
     setOffers(offersPerCity)
   }
@@ -174,6 +182,7 @@ const OffersList = (props) => {
   })
 
   const handleSelectFilteredPerContract = (event) => {
+    setOfferContract(event.target.value)
     const offersPerContract = offers.filter(offer => offer.contract === event.target.value)
     setOffers(offersPerContract)
   }
@@ -190,28 +199,33 @@ const OffersList = (props) => {
 
   const handleSelectFilteredStatus = (event) => {
     let value = event.target.value === 'true' ? true : false
+    setOfferStatus(value)
     const offersPerStatus = offers.filter(offer => offer.isActive === value)
     setOffers(offersPerStatus)
   }
 
   // Filter per offerOwner
   const offerOwnerArray = offers.map((offer) => { return offer.userId.lastName })
-
   const offerOwnerFilteredArray = offerOwnerArray.filter((lastName, pos) => {
     return offerOwnerArray.indexOf(lastName) === pos;
   }).sort()
-  console.log(offerOwnerFilteredArray)
   const offerOwnerFilteredList = offerOwnerFilteredArray.map((lastName) => {
     return (<option value={lastName}>{lastName}</option>)
   })
 
   const handleSelectFilteredPerOfferOwner = (event) => {
+    setOfferOwner(event.target.value)
     const offersPerOfferOwner = offers.filter(offer => offer.userId.lastName === event.target.value)
     setOffers(offersPerOfferOwner)
   }
 
   // Reset Filters
   const handleSelectResetFilters = () => {
+    setOfferOwner('Filtrer par rédacteur')
+    setOfferDate('Filtrer par date')
+    setOfferCity('Filtrer par ville')
+    setOfferContract('Filtrer par contrat')
+    setOfferStatus('filtrer par status')
     fetchOffers()
   }
 
@@ -226,8 +240,8 @@ const OffersList = (props) => {
 
   let filterPerStatus
   if (props.typeId === 'Recruteur') {
-    filterPerStatus = <select onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
-      <option selected>Filtrer par status</option>
+    filterPerStatus = <select value={offerStatus} onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
+      <option>Filtrer par status</option>
       {archivedFilteredList}
     </select>
   }
@@ -244,21 +258,21 @@ const OffersList = (props) => {
         </div>
 
         <div className='selectContainer'>
-          <select onChange={handleSelectFilteredPerDate} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par date</option>
+          <select value={offerDate} onChange={handleSelectFilteredPerDate} className="custom-form-select mr-2" aria-label="Default select example">
+            <option >Filtrer par date</option>
             {addDateFilteredList}
           </select>
-          <select onChange={handleSelectFilteredPerCity} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par ville</option>
+          <select value={offerCity} onChange={handleSelectFilteredPerCity} className="custom-form-select mr-2" aria-label="Default select example">
+            <option >Filtrer par ville</option>
             {cityFilteredList}
           </select>
-          <select onChange={handleSelectFilteredPerContract} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par contrat</option>
+          <select value={offerContract} onChange={handleSelectFilteredPerContract} className="custom-form-select mr-2" aria-label="Default select example">
+            <option >Filtrer par contrat</option>
             {contractFilteredList}
           </select>
           {filterPerStatus}
-          <select onChange={handleSelectFilteredPerOfferOwner} className="custom-form-select mr-2" aria-label="Default select example">
-            <option selected>Filtrer par rédacteur</option>
+          <select value={offerOwner} onChange={handleSelectFilteredPerOfferOwner} className="custom-form-select mr-2" aria-label="Default select example">
+            <option>Filtrer par rédacteur</option>
             {offerOwnerFilteredList}
           </select>
           <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>
@@ -267,7 +281,7 @@ const OffersList = (props) => {
         {addOfferButton}
 
         <div className='tableContainer'>
-          <Offers currentOffers={currentOffers} loading={loading} ajoutId={ajoutId} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />
+          <Offers currentOffers={currentOffers} loading={loading} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />
         </div>
 
         <div className='perPageContainer'>

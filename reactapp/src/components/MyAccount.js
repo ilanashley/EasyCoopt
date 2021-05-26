@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     verticalAlign: 'middle',
     cursor: 'pointer',
-    backgroundColor:    '#78CFCE',
+    backgroundColor: '#78CFCE',
     border: '1px solid transparent',
     padding: '.375rem .75rem',
-    fontSize:' 1rem',
+    fontSize: ' 1rem',
     borderRadius: '.75rem',
     '&:hover': {
       border: '1px solid transparent',
@@ -99,12 +99,12 @@ function MyAccount(props) {
     loadUser();
   }, []);
 
-// UseEffect afin d'afficher l'avatar de cloudinary
-useEffect(() => {
-  setAvatarUrl(uploadPicture)
-}, [uploadPicture]);
+  // UseEffect afin d'afficher l'avatar de cloudinary
+  useEffect(() => {
+    setAvatarUrl(uploadPicture)
+  }, [uploadPicture]);
 
-  async function loadPicture (PictureData) {
+  async function loadPicture(PictureData) {
     var data = new FormData();
 
     data.append("avatar", PictureData);
@@ -131,9 +131,9 @@ useEffect(() => {
       body: `token=${props.token}&avatarUrl=${avatarUrl}&firstName=${firstName ? capitalize(firstName) : ''}&lastName=${lastName ? capitalize(lastName) : ''}&email=${email}&type=${type}&oldPassword=${oldPassword}&newPassword=${newPassword}&confirmPassword=${confirmPassword}`,
     });
 
-    const body = await data.json();    
+    const body = await data.json();
 
-    if (body.result === true ) {
+    if (body.result === true) {
       props.addProfileType(body.user.group)
       setUserExists(true);
     } else {
@@ -175,36 +175,34 @@ useEffect(() => {
         </Modal>
       </div>
       <NavBar />
-      <Container className='pb-5'>
-        <Row
-          className="cardBackground"
-          style={{ padding: "10px", marginTop: "50px" }}
-        >
+      <Container className='d-flex justify-content-center align-items-center pb-5'>
+        <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
           <Col sm='12' md='12'>
             <div class="col-12 text-center get_started p-4">
               <h3>Mon compte</h3>
             </div>
-          
-          <form className="md-form">
-            <div className="file-field">
-              <div className=" d-flex justify-content-center mb-4 p-4">
-                <img
-                  src={avatarUrl}
-                  className="rounded-circle z-depth-1-half avatar-pic"
-                  alt="Cliquez sur Sauvegarder afin d'enregistrer votre photo"
-                  height="130px"
-                  width="130px"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src =
-                      "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg";
-                  }}
-                />
-              </div>
-            </div>
-          </form>
           </Col>
-          <Col sm="12" md="6">
+          <Col sm="12" md="12">
+            <form className="md-form">
+              <div className="file-field">
+                <div className=" d-flex justify-content-center mb-5">
+                  <img
+                    src={avatarUrl}
+                    className="rounded-circle z-depth-1-half avatar-pic"
+                    alt="Cliquez sur Sauvegarder afin d'enregistrer votre photo"
+                    height="130px"
+                    width="130px"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg";
+                    }}
+                  />
+                </div>
+              </div>
+            </form>
+          </Col>
+          <Col sm="6" md="6">
             <Form>
               <FormGroup>
                 <Label for="firstname">Prénom</Label>
@@ -239,18 +237,16 @@ useEffect(() => {
               <FormGroup>
                 <Label for="avatar">Avatar</Label>
                 <Input
-                    type="file"
-                    onChange={(e) => {
-                      loadPicture(e.target.files[0])
-                    }}
-                    accept="image/png, image/jpeg"
-                    name="avatar"
-                    placeholder="Avatar"
-                  />
+                  type="file"
+                  onChange={(e) => { loadPicture(e.target.files[0]) }}
+                  accept="image/png, image/jpeg"
+                  name="avatar"
+                  placeholder="Avatar"
+                />
               </FormGroup>
             </Form>
           </Col>
-          <Col sm="12" md="6">
+          <Col sm="6" md="6">
             <FormGroup>
               <Label for="profil">Mon profil d'utilisateur</Label>
               <select
@@ -325,6 +321,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(MyAccount);

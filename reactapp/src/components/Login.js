@@ -42,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     verticalAlign: 'middle',
     cursor: 'pointer',
-    backgroundColor:    '#78CFCE',
+    backgroundColor: '#78CFCE',
     border: '1px solid transparent',
     padding: '.375rem .75rem',
-    fontSize:' 1rem',
+    fontSize: ' 1rem',
     borderRadius: '.75rem',
     '&:hover': {
       border: '1px solid transparent',
@@ -128,13 +128,13 @@ function Login(props) {
 
   // On Key Press Enter...
   const handleKeyPressOnSigninPassword = (event) => {
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
       handleSubmitSignin()
     }
   }
 
   const handleKeyPressOnSignupConfirmPassword = (event) => {
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
       handleSubmitSignup()
     }
   }
@@ -142,7 +142,7 @@ function Login(props) {
   return (
     <div className="main-container">
       <div className='d-flex justify-content-center'>
-      <Modal
+        <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           className={classes.modal}
@@ -162,61 +162,77 @@ function Login(props) {
         </Modal>
       </div>
       <NavBar />
-      <Container className='pb-5'>
-        <Row
-          className="cardBackground"
-          style={{ padding: "10px", marginTop: "50px" }}
-        >
-          
+      <Container className='d-flex justify-content-center align-items-center '>
+        <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
           <Col sm='12' md='12'>
             <div class="col-12 text-center get_started p-4">
               <h3>Welcome !</h3>
             </div>
           </Col>
-          
-
           <Col sm="6" md="6">
             <Form>
               <FormGroup>
                 <Label for="email">Your email</Label>
-                <Input onChange={(e) => setSignInEmail(e.target.value)} type="email" name="email" placeholder="email" />
+                <Input
+                  onChange={(e) => setSignInEmail(e.target.value)}
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
-                <Input onKeyPress={handleKeyPressOnSigninPassword} onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password" />
+                <Input
+                  onKeyPress={handleKeyPressOnSigninPassword}
+                  onChange={(e) => setSignInPassword(e.target.value)}
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                />
               </FormGroup>
-             
               <div className="d-flex justify-content-end py-4">
                 <Button onClick={() => handleSubmitSignin()} className={classes.btn}> Sign In </Button>
               </div>
             </Form>
           </Col>
-
           <Col sm="6" md="6">
             <Form>
               <FormGroup>
                 <Label for="email">Your email</Label>
-                <Input onChange={(e) => setSignUpEmail(e.target.value)} type="email" name="email" placeholder="email" />
+                <Input
+                  onChange={(e) => setSignUpEmail(e.target.value)}
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
-                <Input onChange={(e) => setSignUpPassword(e.target.value)} type="password" name="password" placeholder="password" />
+                <Input
+                  onChange={(e) => setSignUpPassword(e.target.value)}
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="email">Confirm password</Label>
-                <Input onKeyPress={handleKeyPressOnSignupConfirmPassword} onChange={(e) => setSignUpConfirmationPassword(e.target.value)} type="password" name="password" placeholder="password" />
+                <Input
+                  onKeyPress={handleKeyPressOnSignupConfirmPassword}
+                  onChange={(e) => setSignUpConfirmationPassword(e.target.value)}
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                />
               </FormGroup>
-              
               <div className="d-flex justify-content-end py-4">
                 <Button onClick={() => handleSubmitSignup()} className={classes.btn}> Sign Up </Button>
               </div>
             </Form>
           </Col>
-          
         </Row>
       </Container>
     </div>
-    
   );
 }
 

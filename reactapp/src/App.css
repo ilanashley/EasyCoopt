@@ -1,7 +1,7 @@
 /* CSS ReferralsList */
 
-.mainContainer {
-  min-height: 100%;
+.mainContainer { 
+  min-height: 100vh;
 }
 .navbarContainer {
   margin-bottom: 10px;
@@ -175,6 +175,7 @@ color:         #ffffff;
 
 /* CSS de Mathieu */ 
 .section {
+  min-height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -378,6 +379,12 @@ span {
   font-size: 15px;
   color: #7785A2;
 
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* Bacgroud root */

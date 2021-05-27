@@ -13,12 +13,15 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import NavBar from './NavBar'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+
+
+import NavBar from './NavBar'
+
 
 // Modal style
 const useStyles = makeStyles((theme) => ({
@@ -179,8 +182,10 @@ function Login(props) {
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
-                <Input onKeyPress={handleKeyPressOnSigninPassword} onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password" />
+                <Input onKeyPress={handleKeyPressOnSigninPassword} onChange={(e) => setSignInPassword(e.target.value)} type="password" name="password" placeholder="password"/>
+                
               </FormGroup>
+
              
               <div className="d-flex justify-content-end py-4">
                 <Button onClick={() => handleSubmitSignin()} className={classes.btn}> Sign In </Button>

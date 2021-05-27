@@ -174,7 +174,7 @@ function Login(props) {
           </Col>
           <Col sm="6" md="6">
             <Form>
-              <h4 className="fs-4">Connexion</h4>
+              <h4 className="fs-5 font-weight-normal">Connexion</h4>
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
@@ -201,7 +201,7 @@ function Login(props) {
           </Col>
           <Col sm="6" md="6">
             <Form>
-            <h4 className="fs-4">Inscription</h4>
+            <h4 className="fs-5 font-weight-normal">Inscription</h4>
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input

@@ -32,7 +32,7 @@ function NavBar(props) {
     if (props.token) {
         toggleLogLink = <Link to="/login" className="navbar-brand" style={{ fontSize: 15 }} onClick={handleLogOut}>Déconnexion</Link>
     } else {
-        toggleLogLink = <Link to="/login" className="navbar-brand" style={{ fontSize: 15 }}>Log-in</Link>
+        toggleLogLink = <Link to="/login" className="navbar-brand" style={{ fontSize: 15 }}>Connexion</Link>
     }
 
     let numberReferralsBadge

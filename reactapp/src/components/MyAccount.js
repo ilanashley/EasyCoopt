@@ -235,30 +235,31 @@ function MyAccount(props) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="profil">Mon profil d'utilisateur</Label>
-                <select
-                  class="custom-select"
-                  defaultValue={props.group}
-                  onChange={(e) => handleTypeChange(e.target.value)}
-                  aria-label="Default select example"
-                >
-                  <option value="Coopteur">Coopteur</option>
-                  <option value="Recruteur">Recruteur</option>
-                </select>
+                <Label for="avatar">Avatar</Label>
+                <Input
+                  type="file"
+                  onChange={(e) => { loadPicture(e.target.files[0]) }}
+                  accept="image/png, image/jpeg"
+                  name="avatar"
+                  placeholder="Avatar"
+                />
               </FormGroup>
             </Form>
           </Col>
           <Col sm="6" md="6">
             <FormGroup>
-              <Label for="avatar">Avatar</Label>
-              <Input
-                type="file"
-                onChange={(e) => { loadPicture(e.target.files[0]) }}
-                accept="image/png, image/jpeg"
-                name="avatar"
-                placeholder="Avatar"
-              />
+              <Label for="profil">Mon profil d'utilisateur</Label>
+              <select
+                class="custom-select"
+                defaultValue={props.group}
+                onChange={(e) => handleTypeChange(e.target.value)}
+                aria-label="Default select example"
+              >
+                <option value="Coopteur">Coopteur</option>
+                <option value="Recruteur">Recruteur</option>
+              </select>
             </FormGroup>
+            
             <FormGroup>
               <Label for="ancien mot de passe">Ancien mot de passe</Label>
               <Input

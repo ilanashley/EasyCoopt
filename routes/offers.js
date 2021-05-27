@@ -90,8 +90,7 @@ router.put('/add', async function (req, res, next) {
           contract: contract,
           link: link,
           resume: resume,
-          isActive: isActive,
-          userId: user._id
+          isActive: isActive
         }
       ); 
       if (modifiedOffer) {

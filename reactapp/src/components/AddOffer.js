@@ -163,7 +163,7 @@ function AddOffer(props) {
   }
 
   if (offerModifiee) {
-    return <Redirect to='/referralsList' />
+    return <Redirect to='/offersList' />
   }
 
   if (!props.token) {

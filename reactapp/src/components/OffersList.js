@@ -251,7 +251,7 @@ const OffersList = (props) => {
   let filterPerStatus
   if (props.group === 'Recruteur') {
     filterPerStatus = <select value={offerStatus} onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
-      <option>Filtrer par status</option>
+      <option>Filtrer par statut</option>
       {archivedFilteredList}
     </select>
   }

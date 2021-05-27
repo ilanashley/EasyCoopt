@@ -40,10 +40,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     verticalAlign: 'middle',
     cursor: 'pointer',
-    backgroundColor:    '#78CFCE',
+    backgroundColor: '#78CFCE',
     border: '1px solid transparent',
     padding: '.375rem .75rem',
-    fontSize:' 1rem',
+    fontSize: ' 1rem',
     borderRadius: '.75rem',
     '&:hover': {
       border: '1px solid transparent',

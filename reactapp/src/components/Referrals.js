@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 const Referrals = (props) => {
 
     if (props.loading) {
-        return <h2>Loading...</h2>
+        return <h2>Chargement...</h2>
     }
 
     // Capitalize function

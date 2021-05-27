@@ -13,12 +13,15 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import NavBar from './NavBar'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+
+
+import NavBar from './NavBar'
+
 
 // Modal style
 const useStyles = makeStyles((theme) => ({
@@ -166,13 +169,14 @@ function Login(props) {
         <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
           <Col sm='12' md='12'>
             <div class="col-12 text-center get_started p-4">
-              <h3>Welcome !</h3>
+              <h3>Bienvenue !</h3>
             </div>
           </Col>
           <Col sm="6" md="6">
             <Form>
+              <h4>Connexion</h4>
               <FormGroup>
-                <Label for="email">Your email</Label>
+                <Label for="email">Email</Label>
                 <Input
                   onChange={(e) => setSignInEmail(e.target.value)}
                   type="email"
@@ -181,24 +185,25 @@ function Login(props) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="password">Password</Label>
+                <Label for="password">Mot de passe</Label>
                 <Input
                   onKeyPress={handleKeyPressOnSigninPassword}
                   onChange={(e) => setSignInPassword(e.target.value)}
                   type="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="mot de passe"
                 />
               </FormGroup>
               <div className="d-flex justify-content-end py-4">
-                <Button onClick={() => handleSubmitSignin()} className={classes.btn}> Sign In </Button>
+                <Button onClick={() => handleSubmitSignin()} className={classes.btn}> Valider </Button>
               </div>
             </Form>
           </Col>
           <Col sm="6" md="6">
             <Form>
+            <h4>Inscription</h4>
               <FormGroup>
-                <Label for="email">Your email</Label>
+                <Label for="email">Email</Label>
                 <Input
                   onChange={(e) => setSignUpEmail(e.target.value)}
                   type="email"
@@ -207,26 +212,26 @@ function Login(props) {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="password">Password</Label>
+                <Label for="password">Mot de passe</Label>
                 <Input
                   onChange={(e) => setSignUpPassword(e.target.value)}
                   type="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="mot de passe"
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="email">Confirm password</Label>
+                <Label for="email">Confirmer mot de passe</Label>
                 <Input
                   onKeyPress={handleKeyPressOnSignupConfirmPassword}
                   onChange={(e) => setSignUpConfirmationPassword(e.target.value)}
                   type="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="mot de passe"
                 />
               </FormGroup>
               <div className="d-flex justify-content-end py-4">
-                <Button onClick={() => handleSubmitSignup()} className={classes.btn}> Sign Up </Button>
+                <Button onClick={() => handleSubmitSignup()} className={classes.btn}>Valider </Button>
               </div>
             </Form>
           </Col>

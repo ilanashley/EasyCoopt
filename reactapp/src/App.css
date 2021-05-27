@@ -163,55 +163,55 @@ table {
 h1 {
   font-family: Poppins;
   color: #254383;
-  font-style: bold;
+  /* font-style: bold;
   font-size: 20px;
   line-height: 20px;
-  letter-spacing: -1.5%;
+  letter-spacing: -1.5%; */
 }
 
 h2 {
   font-family: Poppins;
   color: #254383;
-  font-style: bold;
+  /* font-style: bold;
   font-size: 18px;
   line-height: 20px;
-  letter-spacing: -1.5%;
+  letter-spacing: -1.5%; */
 }
 
 h3 {
   color: #254383;
   font-family: Poppins;
-  font-style: normal;
+  /* font-style: normal;
   font-size: 16px;
   font-weight: bold;
-  line-height: 36px;
+  line-height: 36px; */
 }
 
 h4 {
   color: #254383;
   font-family: Poppins;
-  font-style: normal;
+  /* font-style: normal;
   font-size: 14px;
   font-weight: bold;
-  line-height: 36px;
+  line-height: 36px; */
 }
 
 h5 {
   color: #254383;
   font-family: Poppins;
-  font-style: normal;
+  /* font-style: normal;
   font-size: 12px;
   font-weight: bold;
-  line-height: 36px;
+  line-height: 36px; */
 }
 
 h6 {
   color: #254383;
   font-family: Poppins;
-  font-style: normal;
+  /* font-style: normal;
   font-size: 10px;
   font-weight: bold;
-  line-height: 36px;
+  line-height: 36px; */
 }
 
 p {

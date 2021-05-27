@@ -165,16 +165,16 @@ function Login(props) {
         </Modal>
       </div>
       <NavBar />
-      <Container className='d-flex justify-content-center align-items-center '>
+      <Container className='d-flex flex-column justify-content-center align-items-center'>
         <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
           <Col sm='12' md='12'>
             <div class="col-12 text-center get_started p-4">
-              <h3>Bienvenue !</h3>
+              <h3 className="fs-3">Bienvenue !</h3>
             </div>
           </Col>
           <Col sm="6" md="6">
             <Form>
-              <h4>Connexion</h4>
+              <h4 className="fs-5 font-weight-normal">Connexion</h4>
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
@@ -201,7 +201,7 @@ function Login(props) {
           </Col>
           <Col sm="6" md="6">
             <Form>
-            <h4>Inscription</h4>
+            <h4 className="fs-5 font-weight-normal">Inscription</h4>
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input

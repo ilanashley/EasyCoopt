@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -33,30 +33,30 @@ export default function TransitionsModal(props) {
     setOpen(false);
   };
 
-  let modalIcon 
-  if(props.modalIcon === 'VisibilityOutlinedIcon') {
-    modalIcon = <div><VisibilityOutlinedIcon style={{cursor: 'pointer'}} onClick={handleOpen} /> {props.modalDescription.substring(0,15)}... </div>
+  let modalIcon
+  if (props.modalIcon === 'VisibilityOutlinedIcon') {
+    modalIcon = <div><VisibilityOutlinedIcon style={{ cursor: 'pointer' }} onClick={handleOpen} /> {props.modalDescription.substring(0, 15)}... </div>
   } else if (props.modalIcon === 'AssignmentOutlinedIcon') {
-    modalIcon = <div><AssignmentOutlinedIcon style={{cursor: 'pointer'}} onClick={handleOpen} /></div>
+    modalIcon = <div><AssignmentOutlinedIcon style={{ cursor: 'pointer' }} onClick={handleOpen} /></div>
   }
 
   let modalTitle
-  if(props.modalTitle) {
+  if (props.modalTitle) {
     modalTitle = <h2 id="transition-modal-title">{props.modalTitle}</h2>
   }
 
   let modalDescription
-  if(props.modalDescription) {
+  if (props.modalDescription) {
     modalDescription = <p id="transition-modal-description">{props.modalDescription}</p>
   }
 
   let resumeImage
-  if(props.referralResumeUrl) {
-     resumeImage = <div className='d-flex flex-column'>
-                      <img src={props.referralResumeUrl} height={600} width={400} alt='Resume'></img>
-                      {/* <a href={props.referralResumeUrl} download> Download CV</a>
+  if (props.referralResumeUrl) {
+    resumeImage = <div className='d-flex flex-column'>
+      <img src={props.referralResumeUrl} height={600} width={400} alt='Resume'></img>
+      {/* <a href={props.referralResumeUrl} download> Download CV</a>
                       <button onclick={handleDownloadResume}>Télécharger</button> */}
-                    </div>                  
+    </div>
   }
 
   return (

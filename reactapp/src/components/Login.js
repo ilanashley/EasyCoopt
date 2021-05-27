@@ -143,7 +143,7 @@ function Login(props) {
   }
 
   return (
-    <div className="main-container">
+    <div className="mainContainer">
       <div className='d-flex justify-content-center'>
         <Modal
           aria-labelledby="transition-modal-title"

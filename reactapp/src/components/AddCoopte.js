@@ -20,6 +20,7 @@ import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 // Modal style
 const useStyles = makeStyles((theme) => ({
@@ -64,6 +65,7 @@ const AddCoopte = (props) => {
   const [cv, setCv] = useState();
 
   const [offerTitle, setOfferTitle] = useState();
+  const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
 
   // State for modal
   const classes = useStyles();
@@ -137,6 +139,15 @@ const AddCoopte = (props) => {
     setIsAgree(event.target.checked);
   };
 
+  // Functions de redirection
+  const redirectionToOffersList = () => {
+    setIsRedirectToOffersList(true)
+  }
+
+  if (isRedirectToOffersList) {
+    return <Redirect to="/offersList" />;
+  }
+
   /* function to redirect to offersList */
   const toggleRedirect = () => {
     if (success) {
@@ -165,13 +176,18 @@ const AddCoopte = (props) => {
   }
 
   return (
-    <div className="section">
+    <div className="mainContainer">
       <NavBar />
-      <div className="d-flex justify-content-center my-5"><h1> Vous recommandez pour le poste de :<br/>{offerTitle}</h1></div>
+      <div className="d-flex justify-content-center my-5">
+        <h1> Vous recommandez pour le poste de : <br/> {offerTitle}</h1>
+      </div>
 
       <Container   >
         <Row className="d-flex justify-content-center mt-5">
           <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground" >
+            <div className="mb-5">
+              <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
+            </div>
             <Form >
               <FormGroup>
                 <Label for="firstname">Prénom</Label>

@@ -81,7 +81,7 @@ const Offers = (props) => {
        
         return (
 
-            <div key={offer._id} className="cardBackground mb-2 " style={archivedStyle} >
+            <div key={i} className="cardBackground mb-2 " style={archivedStyle} >
                 <Row className="d-flex align-items-center ">
 
                     <Col lg='4' sm="12"  className="d-flex justify-content-center">

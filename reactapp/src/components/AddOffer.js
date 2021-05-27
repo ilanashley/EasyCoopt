@@ -162,7 +162,7 @@ function AddOffer(props) {
   }
 
   return (
-    <div className="section">
+    <div className="mainContainer">
       <NavBar />
       <div className="d-flex justify-content-center my-5"><h1>{pageTitle}</h1></div>
       <Container>

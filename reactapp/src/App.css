@@ -88,6 +88,7 @@ table {
 .table thead th {
   border-top: 0px;
 }
+
 .table tbody th {
   border-bottom: 0px;
 }
@@ -138,28 +139,12 @@ table {
   margin-right: 20px;
 }
 
-
-
 /* *********** */
 
 .btnEnd {
   display: flex;
   justify-content: flex-end;
 }
-
-/* #largeButton {
-  border-radius: 15px;
-  background: #254383;
-  color:         #ffffff;
-} */
-
-/* #mediumButton {
-height: 70px;
-width: 163px;
-border-radius: 15px;
-background: #254383;
-color:         #ffffff;
-} */
 
 #badge {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -174,10 +159,6 @@ color:         #ffffff;
 }
 
 /* CSS de Mathieu */ 
-.section {
-  min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
-}
 
 h1 {
   font-family: Poppins;
@@ -200,27 +181,34 @@ h3 {
   color: #254383;
   font-family: Poppins;
   font-style: normal;
+  font-size: 16px;
   font-weight: bold;
   line-height: 36px;
 }
+
 h4 {
   color: black;
   font-family: Poppins;
   font-style: normal;
+  font-size: 14px;
   font-weight: bold;
   line-height: 36px;
-}
-label {
-  font-family: Poppins;
-  font-style: normal;
-  font-size: 18px;
-  line-height: 36px;    
 }
 
 h5 {
   color: #254383;
   font-family: Poppins;
   font-style: normal;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 36px;
+}
+
+h6 {
+  color: #254383;
+  font-family: Poppins;
+  font-style: normal;
+  font-size: 10px;
   font-weight: bold;
   line-height: 36px;
 }
@@ -231,6 +219,14 @@ p {
   font-size: 18px;
   line-height: 36px;
 }
+
+label {
+  font-family: Poppins;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 36px;    
+}
+
 span {
   font-weight: bold;
   font-family: Poppins;
@@ -267,11 +263,6 @@ span {
   font-size: 13px;
   line-height: 11px;
   font-weight: 400;
-
-}
-.btnEnd{
-  display: flex;
-  justify-content: flex-end;
 }
 
 /* Style des boutons sign up avec Linkedin et Facebook */
@@ -297,7 +288,6 @@ span {
   font-style: normal;
   font-weight: 400;
   padding: 10px;
-  /* margin: 15px, */
 }
 
 .referralButton:hover {
@@ -318,7 +308,6 @@ span {
   font-style: normal;
   font-weight: 400;
   height: 55px;
-
 }
 
 #modifyButton:hover {
@@ -344,36 +333,6 @@ span {
   outline:0;
 }
 
-/* .onclickButton{
-    background-color: #F9FAFD;
-    height: 48px;
-    width: 150px;
-    left: 0px;
-    top: 4px;
-    border-radius: 15px;
-    border: none;
-    font-family: Poppins;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: center;
-    color: #254383;
-    margin-right: 10px;
-}
-.onclickButton:hover {
-  filter: brightness(90%);
-} */
-
-/* .deleteIcon{
- color: #254383;
-}
-
-.deleteIcon:hover {
-  filter: brightness(90%);
-} */
-
 .offerSubtitle{
   line-height: 18px;
   font-size: 15px;
@@ -396,69 +355,3 @@ body {
   min-width: 100%;
   min-height: 100vh;
 }
-
-/* Fonds d'ecran pour chaque page */
-
-/* Login */
-
-/* .backgroundImageLogin {
-  background-image: url("./images/EnsembleDuSite.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-width: 100%;
-  min-height: 100%;
-} */
-
-/* AddCoopte */
-
-/* .backgroundImageAddCoopte {
-  background-image: url("./images/EnsembleDuSite.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-width: 100%;
-  min-height: 100%;
-} */
-
-/* AddOffer */
-
-/* .backgroundImageAddOffer {
-  background-image: url("./images/EnsembleDuSite.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-width: 100%;
-  min-height: 100%;
-} */
-
-/* MyAccount et ReferralsList */
-
-/* .backgroundImageMyAccountAndReferralsList {
-  background-image: url("./images/EnsembleDuSite.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-} */
-
-/* OffersList */
-
-/* .backgroundImageOffersList {
-  background-image: url("./images/EnsembleDuSite.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-width: 100%;
-  min-height: 100%;
-} */
-
-/* ViewOffer */
-
-/* .backgroundImageViewOffer {
-  background-image: url("./images/EnsembleDuSite.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-width: 100%;
-  min-height: 100%;
-} */

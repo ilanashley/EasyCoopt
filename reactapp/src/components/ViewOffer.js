@@ -82,7 +82,7 @@ const ViewOffer = (props) => {
                         <img
                             src={recruterId.avatarUrl}
                             class="rounded-circle z-depth-1-half avatar-pic"
-                            alt=""
+                            alt="avatar"
                             height="60px"
                             width="60px"
                             onError={(e) => {

@@ -165,7 +165,7 @@ function Login(props) {
         </Modal>
       </div>
       <NavBar />
-      <Container className='d-flex justify-content-center align-items-center '>
+      <Container className='d-flex flex-column justify-content-center align-items-center'>
         <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
           <Col sm='12' md='12'>
             <div class="col-12 text-center get_started p-4">

@@ -111,13 +111,13 @@ const ViewOffer = (props) => {
     return (
         <div className="section">
             <NavBar />
-            <div className="d-flex justify-content-center my-5"><h1>Détail de l'offre</h1></div>
+            <div className="d-flex justify-content-center my-5"><h1 className="fs-1">Détail de l'offre</h1></div>
             <Container >
 
                 <Row className="d-flex justify-content-center mt-5">
                     <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground"  >
                         <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
-                        <h3 className="mt-5"> {title} </h3>
+                        <h3 className="mt-5 fs-3"> {title} </h3>
                         <div className="d-flex mb-0 font-weight-bold offerSubtitle">
                             <p className="mr-2 offerSubtitle" >{contract} - {city} - Prime de {bonusAmount}€</p>
                         </div>

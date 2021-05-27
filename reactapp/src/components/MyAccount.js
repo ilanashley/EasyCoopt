@@ -179,7 +179,7 @@ function MyAccount(props) {
         <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
           <Col sm='12' md='12'>
             <div class="col-12 text-center get_started p-4">
-              <h3>Mon compte</h3>
+              <h3 className="fs-3">Mon compte</h3>
             </div>
           </Col>
           <Col sm="12" md="12">

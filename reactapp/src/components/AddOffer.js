@@ -164,7 +164,7 @@ function AddOffer(props) {
   return (
     <div className="mainContainer">
       <NavBar />
-      <div className="d-flex justify-content-center my-5"><h1>{pageTitle}</h1></div>
+      <div className="d-flex justify-content-center my-5"><h1 className="fs-1">{pageTitle}</h1></div>
       <Container>
         <Row className="d-flex justify-content-center mt-5">
           <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground" >

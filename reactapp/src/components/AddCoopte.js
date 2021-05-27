@@ -179,8 +179,8 @@ const AddCoopte = (props) => {
     <div className="mainContainer">
       <NavBar />
       <div className="text-center my-5">       
-          <h1> Vous recommandez pour le poste de :</h1>        
-          <h2 className="fs-3">{offerTitle}</h2>       
+          <h1 className="fs-1"> Vous recommandez pour le poste de :</h1>        
+          <h2 className="fs-2">{offerTitle}</h2>       
       </div>
 
       <Container   >

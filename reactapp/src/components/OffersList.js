@@ -264,7 +264,7 @@ const OffersList = (props) => {
       <div className='container-lg'>
 
         <div className='titleContainer'>
-          <h1>Offres en cours</h1>
+          <h1 className="fs-1">Offres en cours</h1>
         </div>
 
         <div className='selectContainer'>

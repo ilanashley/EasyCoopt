@@ -219,7 +219,7 @@ const ReferralsList = (props) => {
       <div className='container-lg'>
 
         <div className='titleContainer'>
-          <h1>Cooptations en cours</h1>
+          <h1 className="fs-1">Cooptations en cours</h1>
         </div>
 
         <div className='selectContainer'>

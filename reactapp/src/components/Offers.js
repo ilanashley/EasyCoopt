@@ -85,7 +85,7 @@ const Offers = (props) => {
                 <Row className="d-flex align-items-center ">
 
                     <Col lg='4' sm="12"  className="d-flex justify-content-center">
-                        <h5 className="m-2 p-2">{offer.title}</h5>
+                        <h4 className="m-2 p-2">{offer.title}</h4>
                     </Col>
                     <Col lg='4' sm="12">
                         <Row  className="bg-light pt-3 m-2 border rounded-3">

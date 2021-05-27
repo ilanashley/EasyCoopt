@@ -70,7 +70,7 @@ const OffersList = (props) => {
 
     props.addNumberOffers(numberOffers)
     props.addNumberReferrals(numberReferrals)
-    setOffers(offers.reverse())
+    setOffers(offers)
     setLoading(false)
 
   }
@@ -264,7 +264,7 @@ const OffersList = (props) => {
       <div className='container-lg'>
 
         <div className='titleContainer'>
-          <h1 className="fs-1">Offres en cours</h1>
+          <h1>Offres </h1>
         </div>
 
         <div className='selectContainer'>

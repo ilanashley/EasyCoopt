@@ -96,7 +96,7 @@ const Referrals = (props) => {
                     <th>Récompense</th>
                     <th>Recommandation</th>
                     <th>Cv</th>
-                    <th>Status</th>
+                    <th>Statut</th>
                     {deleteReferralTitle}
                 </tr>
             </thead>

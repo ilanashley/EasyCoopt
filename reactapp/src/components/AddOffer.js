@@ -17,6 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 // Modal style
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +62,7 @@ function AddOffer(props) {
   const [contract, setContract] = useState('');
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
+  const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
 
   const [offer, setOffer] = useState(false)
   const [stringDate, setStringDate] = useState('')
@@ -133,6 +135,15 @@ function AddOffer(props) {
     }
   }
 
+  // Functions de redirection
+  const redirectionToOffersList = () => {
+    setIsRedirectToOffersList(true)
+  }
+
+  if (isRedirectToOffersList) {
+    return <Redirect to="/offersList" />;
+  }
+
   /* function to redirect to offersList */
   const toggleRedirect = () => {
     if (success) {
@@ -168,7 +179,9 @@ function AddOffer(props) {
       <Container>
         <Row className="d-flex justify-content-center mt-5">
           <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground" >
-            
+          <div className="mb-5">
+              <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
+            </div>
               <FormGroup>
                 <Label for="title">Intitulé du poste</Label>
                 <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Marketing Client Manager..." />

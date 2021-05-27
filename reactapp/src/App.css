@@ -1,7 +1,6 @@
 /* CSS ReferralsList */
 
-.mainContainer {
-  background-color: #F3F2F1;
+.mainContainer { 
   min-height: 100vh;
 }
 .navbarContainer {
@@ -176,7 +175,7 @@ color:         #ffffff;
 
 /* CSS de Mathieu */ 
 .section {
-  background-color: #F3F2F1;
+  min-height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -382,68 +381,84 @@ span {
 
 }
 
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Bacgroud root */
+#root {
+  background-image: url("./images/EnsembleDuSite.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-width: 100%;
+  min-height: 100vh;
+}
+
 /* Fonds d'ecran pour chaque page */
 
 /* Login */
 
-.backgroundImageLogin {
+/* .backgroundImageLogin {
   background-image: url("./images/EnsembleDuSite.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-width: 100vw;
-  min-height: 100vh;
-}
+  min-width: 100%;
+  min-height: 100%;
+} */
 
 /* AddCoopte */
 
-.backgroundImageAddCoopte {
+/* .backgroundImageAddCoopte {
   background-image: url("./images/EnsembleDuSite.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-width: 60vw;
-  min-height: 60vh;
-}
+  min-width: 100%;
+  min-height: 100%;
+} */
 
 /* AddOffer */
 
-.backgroundImageAddOffer {
+/* .backgroundImageAddOffer {
   background-image: url("./images/EnsembleDuSite.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-width: 73vw;
-  min-height: 73vh;
-}
+  min-width: 100%;
+  min-height: 100%;
+} */
 
 /* MyAccount et ReferralsList */
 
-.backgroundImageMyAccountAndReferralsList {
+/* .backgroundImageMyAccountAndReferralsList {
   background-image: url("./images/EnsembleDuSite.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 
 /* OffersList */
 
-.backgroundImageOffersList {
+/* .backgroundImageOffersList {
   background-image: url("./images/EnsembleDuSite.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-width: 100vw;
-  min-height: 100vh;
-}
+  min-width: 100%;
+  min-height: 100%;
+} */
 
 /* ViewOffer */
 
-.backgroundImageViewOffer {
+/* .backgroundImageViewOffer {
   background-image: url("./images/EnsembleDuSite.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-width: 50vw;
-  min-height: 50vh;
-}
+  min-width: 100%;
+  min-height: 100%;
+} */

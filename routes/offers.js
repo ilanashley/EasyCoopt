@@ -6,7 +6,7 @@ var userModel = require("../models/users");
 
 
 router.get('/get', async (req, res, next) => {
-  var offers = await offerModel.find().populate('userId').populate('referralsIds').exec();
+  var offers = await offerModel.find().populate('userId').populate({ path: 'referralsIds', populate: { path: 'userId'}}).exec();
   if (!offers) {
     res.json({ result: false, error: "Il n'y a pas d'offre à afficher" })
   } else {
@@ -92,8 +92,8 @@ router.put('/add', async function (req, res, next) {
           resume: resume,
           isActive: isActive,
           userId: user._id
-        });
-  
+        }
+      ); 
       if (modifiedOffer) {
         res.json({ result: true, success: "La modification a bien été prise en compte" });
       } else{
@@ -115,19 +115,15 @@ router.put('/archive', async function (req, res, next) {
       isActive: isActive
     }
   );
-
   if (updatedOffer) {
     res.json({ result: true, success: "L'offre a bien été archivée" })
   } else {
     res.json({ result: false, error: "L'offre n'a pas été archivée, veuillez recommencer" })
-  }
-
-  
+  }  
 })
 
 router.get('/offers', async function (req, res, next) {
   var user = await offerModel.findOne({ id: req.query.token });
-
   if (user != null) {
     password = user.password,
     avatarUrl = user.avatarUrl,
@@ -139,7 +135,6 @@ router.get('/offers', async function (req, res, next) {
   res.json({ password, avatarUrl, email, firstName, lastName, type });
 });
 
-
 // Get Offer By Id 
 router.get('/findById/:offerId', async (req, res, next )=> {
   var offer = await offerModel.findById({ _id: req.params.offerId}) 
@@ -149,6 +144,5 @@ router.get('/findById/:offerId', async (req, res, next )=> {
     res.json({result: true, offer})  
   }
 })
-
 
 module.exports = router;

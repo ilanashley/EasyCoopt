@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import PlaceIcon from '@material-ui/icons/Place';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Container, Row, Col } from "reactstrap";
 
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import BusinessCenterOutlinedIcon from '@material-ui/icons/BusinessCenterOutlined';
+import PlaceOutlinedIcon from '@material-ui/icons/PlaceOutlined';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 import ContactsOutlinedIcon from '@material-ui/icons/ContactsOutlined';
 
@@ -94,11 +94,11 @@ const Offers = (props) => {
                                 <div style={{fontSize: 12}} className="text-center p-2">Il y a {diffDays} jour{diffDays > 1 ? 's' : ''}</div>
                             </Col>
                             <Col className="d-flex flex-column justify-content-start align-items-center">
-                                <BusinessCenterIcon fontSize="small" />
+                                <BusinessCenterOutlinedIcon fontSize="small" />
                                 <div style={{fontSize: 12}} className="text-center p-2">{offer.contract}</div>
                             </Col>
                             <Col className="d-flex flex-column justify-content-start align-items-center">
-                                <PlaceIcon fontSize="small" />
+                                <PlaceOutlinedIcon fontSize="small" />
                                 <div style={{fontSize: 12}} className="text-center p-2">{offer.city}</div>
                             </Col>
                             <Col className="d-flex flex-column justify-content-start align-items-center">

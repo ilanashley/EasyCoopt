@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 const ViewOffer = (props) => {
 
     // Params
-    const { offerIdView } = useParams();
+    const { offerId } = useParams();
 
     // States
     const [title, setTitle] = useState('');
@@ -28,7 +28,7 @@ const ViewOffer = (props) => {
         const loadOffer = async () => {
             var rawResponse = await fetch(`/offers/get`);
             var response = await rawResponse.json();
-            const offer = response.offers.filter(offer => offer._id == offerIdView)
+            const offer = response.offers.filter(offer => offer._id === offerId)
 
             if (offer.length > 0) {
                 setTitle(offer[0].title);
@@ -42,7 +42,7 @@ const ViewOffer = (props) => {
             }
         };
         loadOffer();
-    }, []);
+    }, [offerId]);
 
 
 
@@ -64,7 +64,7 @@ const ViewOffer = (props) => {
     if (isRedirectToOffersList) {
         return <Redirect to="/offersList" />;
     } else if (isRedirectToAddCoopte) {
-        return <Redirect to={`/addCoopte/${offerIdView}`} />
+        return <Redirect to={`/addCoopte/${offerId}`} />
     }
 
     if (!props.token) {
@@ -76,7 +76,7 @@ const ViewOffer = (props) => {
     if (recruterId) {
         recruterCard =
             <Row className="bg-light p-3 m-1 border rounded-3 d-flex ">
-                <h7 className="d-flex justify-content-center mb-2">Recruteur suivant cette annonce :</h7>
+                <h6 className="d-flex justify-content-center mb-2">Recruteur suivant cette annonce :</h6>
                 <Col className="d-flex justify-content-end">
                     <div>
                         <img
@@ -95,20 +95,27 @@ const ViewOffer = (props) => {
                 <Col>
                     <div>
                         <p style={{ margin: 1, padding: 1, fontSize: 13 }}>{recruterId.firstName} {recruterId.lastName}  </p>
-                        <p style={{ margin: 1, paddingBottom: 7, lineHeight: 0.8, fontSize: 13 }}></p>
                     </div>
                 </Col>
             </Row>
     }
 
+    let offerLink
+    if (link) {
+        offerLink = <div style={{ marginBottom: 20, padding: 5 }}>
+            <h6>Lien vers l'offre :</h6>
+            <a href={link} target="_blank" rel="noreferrer">{link}</a>
+        </div>
+    }
 
     return (
-        <div className="section backgroundImageViewOffer">
+        <div className="section">
             <NavBar />
+            <div className="d-flex justify-content-center my-5"><h1>Voir une offre</h1></div>
             <Container >
 
-                <Row className="d-flex justify-content-center">
-                    <Col sm="12" md={{ size: 10, offset: 1 }}   style={{ maxWidth: 750 }} className="cardBackground mt-4 mb-4 p-5"  >
+                <Row className="d-flex justify-content-center mt-5">
+                    <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground"  >
                         <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
                         <h3 className="mt-5"> {title} </h3>
                         <div className="d-flex mb-0 font-weight-bold offerSubtitle">
@@ -119,13 +126,10 @@ const ViewOffer = (props) => {
                         </div>
                         <hr />
                         <p className="fs-6 p-4 lh-base">{resume}</p>
-
-                        <div style={{ marginBottom: 20 }}>
-                            <a href={link} target="_blank">{link}</a>
-                        </div>
+                        {offerLink}
                         {recruterCard}
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 40 }}>
-                            <button onClick={() => redirectionToAddCoopte(offerIdView)} className="custom-btn-style">Recommander</button>
+                            <button onClick={() => redirectionToAddCoopte(offerId)} className="custom-btn-style">Recommander</button>
                         </div>
                     </Col>
                 </Row>

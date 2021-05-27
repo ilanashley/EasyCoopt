@@ -30,10 +30,18 @@ function NavBar(props) {
 
     let toggleLogLink
     if (props.token) {
-        toggleLogLink = <Link to="/login" className="navbar-brand" style={{fontSize: 15}} onClick={handleLogOut}>Log-out</Link>
+        toggleLogLink = <Link to="/login" className="navbar-brand" style={{ fontSize: 15 }} onClick={handleLogOut}>Log-out</Link>
     } else {
-        toggleLogLink = <Link to="/login" className="navbar-brand" style={{fontSize: 15}}>Log-in</Link>
+        toggleLogLink = <Link to="/login" className="navbar-brand" style={{ fontSize: 15 }}>Log-in</Link>
     }
+
+    let numberReferralsBadge
+    if (props.group) {
+        numberReferralsBadge = <Badge style={{ position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE' }} color="secondary">
+            {props.numberReferrals}
+        </Badge>
+    }
+
 
     return (
         <Navbar color="light" light expand="md" className='navbarContainer shadow'>
@@ -44,13 +52,15 @@ function NavBar(props) {
                     <NavItem>
                         <NavLink>
                             <Link to="/" className="navbar-brand" style={{ color: "#254383" }}>Annonces</Link>
-                            <Badge style={{position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE'}} color="secondary">{props.numberOffers}</Badge>
+                            <Badge style={{ position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE' }} color="secondary">
+                                {props.numberOffers}
+                            </Badge>
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink>
                             <Link to="/referralslist" className="navbar-brand" style={{ color: "#254383" }}>Cooptations</Link>
-                            <Badge style={{position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE'}} color="secondary">{props.numberReferrals}</Badge>
+                            {numberReferralsBadge}
                         </NavLink>
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
@@ -59,7 +69,7 @@ function NavBar(props) {
                         </DropdownToggle>
                         <DropdownMenu right>
                             <DropdownItem >
-                                <Link to="/myaccount" className="navbar-brand" style={{fontSize: 15}}>Votre profil</Link>
+                                <Link to="/myaccount" className="navbar-brand" style={{ fontSize: 15 }}>Votre profil</Link>
                             </DropdownItem>
                             <DropdownItem >
                                 {toggleLogLink}
@@ -75,6 +85,7 @@ function NavBar(props) {
 function mapStateToProps(state) {
     return {
         token: state.token,
+        group: state.group,
         userLastName: state.userLastName,
         numberOffers: state.numberOffers,
         numberReferrals: state.numberReferrals

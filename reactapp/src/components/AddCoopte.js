@@ -106,7 +106,7 @@ const AddCoopte = (props) => {
       data.append('offerId', offerId);
       data.append('userId', props.userId);
       data.append('isAgree', isAgree)
-      data.append("cv", cv );
+      data.append("cv", cv, cv.name );
 
       const saveReq = await fetch('/referrals/add', {
         method: 'post',

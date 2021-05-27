@@ -70,7 +70,7 @@ const OffersList = (props) => {
 
     props.addNumberOffers(numberOffers)
     props.addNumberReferrals(numberReferrals)
-    setOffers(offers)
+    setOffers(offers.reverse())
     setLoading(false)
 
   }

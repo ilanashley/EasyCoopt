@@ -98,7 +98,7 @@ function Login(props) {
       props.addToken(body.user.token)
       props.addProfileType(body.user.group)
       props.addUserId(body.user._id)
-      props.addUserLastName(body.user.lastName ? capitalize(body.user.lastName) : null)
+      props.addUserLastName(body.user.firstName ? capitalize(body.user.firstName) : null)
       setSignIn(true)
     } else {
       setError(body.error)

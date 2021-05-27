@@ -178,8 +178,14 @@ const AddCoopte = (props) => {
   return (
     <div className="mainContainer">
       <NavBar />
-      <div className="d-flex justify-content-center my-5">
-        <h1> Vous recommandez pour le poste de : <br/> {offerTitle}</h1>
+      <div className="text-center my-5">
+        <div>
+          <h1> Vous recommandez pour le poste de :</h1>
+        </div>
+        <div>
+          <h2>{offerTitle}</h2>
+        </div>
+        
       </div>
 
       <Container   >

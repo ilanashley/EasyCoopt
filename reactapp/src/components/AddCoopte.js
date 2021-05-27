@@ -182,8 +182,7 @@ const AddCoopte = (props) => {
         <h1 className="fs-1"> Vous recommandez pour le poste de :</h1>
         <h2 className="fs-2">{offerTitle}</h2>
       </div>
-
-      <Container   >
+      <Container>
         <Row className="d-flex justify-content-center mt-5">
           <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground" >
             <div className="mb-5">
@@ -206,7 +205,6 @@ const AddCoopte = (props) => {
                 <Label for="cv">Curriculum Vitae</Label>
                 <Input onChange={(e) => { setCv(e.target.files[0]) }} type="file" name="cv" placeholder="upload cv" />
               </FormGroup>
-
               <FormGroup>
                 <Label for="reason">Raison de la cooptation</Label>
                 <Input onChange={(e) => setReason(e.target.value)} type="textarea" name="reason" />
@@ -224,7 +222,6 @@ const AddCoopte = (props) => {
                   label="Je certifie sur l'honneur avoir l'accord préalable du coopté afin de transmettre cette candidature"
                 />
               </FormGroup>
-
               <div className="d-flex justify-content-end">
                 <Button onClick={() => saveCoopte()} className={classes.btn} > Envoyer </Button>
               </div>

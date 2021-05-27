@@ -15,7 +15,7 @@ const ReferralsList = (props) => {
   const [referralDate, setReferralDate] = useState('Filtrer par date')
   const [referralOwner, setReferralOwner] = useState('Filtrer par bénéficiaire')
   const [referralCoopted, setReferralCoopted] = useState('Filtrer par coopté')
-  const [referralStatus, setReferralStatus] = useState('filtrer par status')
+  const [referralStatus, setReferralStatus] = useState('Filtrer par statut')
   const [offerOwner, setOfferOwner] = useState('Filtrer par recruteur')
 
   // Pagination states
@@ -189,7 +189,7 @@ const ReferralsList = (props) => {
     setReferralDate('Filtrer par date')
     setReferralOwner('Filtrer par bénéficiaire')
     setReferralCoopted('Filtrer par coopté')
-    setReferralStatus('filtrer par status')
+    setReferralStatus('Filtrer par statut')
     setOfferOwner('Filtrer par recruteur')
     fetchReferrals()
   }
@@ -220,7 +220,7 @@ const ReferralsList = (props) => {
       <div className='container-lg'>
 
         <div className='titleContainer'>
-          <h1 className="fs-1">Cooptations en cours</h1>
+          <h1 className="fs-1">Cooptations</h1>
         </div>
 
         <div className='selectContainer'>
@@ -235,7 +235,7 @@ const ReferralsList = (props) => {
             {referralFilteredList}
           </select>
           <select value={referralStatus} onChange={handleSelectFilteredStatus} className="custom-form-select mr-2" aria-label="Default select example">
-            <option>Filtrer par status</option>
+            <option>Filtrer par statut</option>
             {statusFilteredList}
           </select>
           <button onClick={handleSelectResetFilters} className='custom-btn-style'><RotateLeftOutlinedIcon /></button>

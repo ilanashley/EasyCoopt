@@ -13,10 +13,11 @@ const ReferralsList = (props) => {
 
   // Select states
   const [referralDate, setReferralDate] = useState('Filtrer par date')
-  const [referralOwner, setReferralOwner] = useState('Filtrer par bénéficiaire')
+  const [offerOwner, setOfferOwner] = useState('Filtrer par recruteur')
+  const [referralOwner, setReferralOwner] = useState('Filtrer par coopteur')
   const [referralCoopted, setReferralCoopted] = useState('Filtrer par coopté')
   const [referralStatus, setReferralStatus] = useState('Filtrer par statut')
-  const [offerOwner, setOfferOwner] = useState('Filtrer par recruteur')
+ 
 
   // Pagination states
   const [loading, setLoading] = useState(false);
@@ -187,10 +188,10 @@ const ReferralsList = (props) => {
   // Reset Filters
   const handleSelectResetFilters = () => {
     setReferralDate('Filtrer par date')
-    setReferralOwner('Filtrer par bénéficiaire')
+    setOfferOwner('Filtrer par recruteur')
+    setReferralOwner('Filtrer par coopteur')
     setReferralCoopted('Filtrer par coopté')
     setReferralStatus('Filtrer par statut')
-    setOfferOwner('Filtrer par recruteur')
     fetchReferrals()
   }
 
@@ -202,7 +203,7 @@ const ReferralsList = (props) => {
   let filterPerOfferOwner
   if (props.group === 'Recruteur') {
     filterPerRecipient = <select value={referralOwner} onChange={handleSelectFilteredRecipient} className="custom-form-select mr-2" aria-label="Default select example">
-      <option>Filtrer par bénéficiaire</option>
+      <option>Filtrer par coopteur</option>
       {recipientFilteredList}
     </select>
     filterPerOfferOwner = <select value={offerOwner} onChange={handleSelectFilteredPerOfferOwner} className="custom-form-select mr-2" aria-label="Default select example">

@@ -222,7 +222,7 @@ const AddCoopte = (props) => {
                   label="Je certifie sur l'honneur avoir l'accord préalable du coopté afin de transmettre cette candidature"
                 />
               </FormGroup>
-              <div className="d-flex justify-content-end">
+              <div className="d-flex justify-content-end py-4">
                 <Button onClick={() => saveCoopte()} className={classes.btn} > Envoyer </Button>
               </div>
             </Form>

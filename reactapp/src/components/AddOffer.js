@@ -217,7 +217,7 @@ function AddOffer(props) {
               <Label for="resume">Description de l'offre</Label>
               <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
             </FormGroup>
-            <div className="d-flex justify-content-end">
+            <div className="d-flex justify-content-end py-4">
               <Button onClick={() => saveOffer()} className={classes.btn}> {modalButtonText} </Button>
             </div>
           </Col>

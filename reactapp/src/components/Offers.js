@@ -15,7 +15,7 @@ const Offers = (props) => {
     const [offerId, setOfferId] = useState('');
 
     if (props.loading) {
-        return <h2>Loading...</h2>
+        return <h2>Chargement...</h2>
     }
 
     const handleOnClick = (id) => {

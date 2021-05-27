@@ -111,7 +111,7 @@ const ViewOffer = (props) => {
     return (
         <div className="section">
             <NavBar />
-            <div className="d-flex justify-content-center my-5"><h1>Voir une offre</h1></div>
+            <div className="d-flex justify-content-center my-5"><h1>Détail de l'offre</h1></div>
             <Container >
 
                 <Row className="d-flex justify-content-center mt-5">
@@ -119,7 +119,7 @@ const ViewOffer = (props) => {
                         <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
                         <h3 className="mt-5"> {title} </h3>
                         <div className="d-flex mb-0 font-weight-bold offerSubtitle">
-                            <p className="mr-2 offerSubtitle" >{contract} - {city} - {bonusAmount}€</p>
+                            <p className="mr-2 offerSubtitle" >{contract} - {city} - Prime de {bonusAmount}€</p>
                         </div>
                         <div>
                             <p className="mb-0 offerSubtitle">Publiée il y a {diffDays} jour{diffDays > 1 ? 's' : ''} </p>

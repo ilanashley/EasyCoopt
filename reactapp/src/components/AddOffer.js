@@ -166,66 +166,6 @@ function AddOffer(props) {
       <NavBar />
       <div className="d-flex justify-content-center my-5"><h1>{pageTitle}</h1></div>
       <Container>
-<<<<<<< HEAD
-        <Row style={{ padding: "10px", marginTop: "20px" }} >
-          <Col sm="12" md={{ size: 10, offset: 1 }} style={{ padding: 40, marginBottom: "50px" }} className="cardBackground" >
-
-            <FormGroup>
-              <Label for="title">Intitulé du poste</Label>
-              <Input defaultValue={title ? title : ''} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Title" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="city">Ville</Label>
-              <Input defaultValue={city ? city : ''} onChange={(e) => setCity(e.target.value)} type="text" name="city" placeholder="Paris" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="creationDate">Date</Label>
-              <Input defaultValue={stringDate} onChange={(e) => setCreationDate(e.target.value)} type="date" name="creationDate" placeholder="../../...." />
-            </FormGroup>
-            <FormGroup>
-              <Label for="bonusAmount">Bonus</Label>
-              <Input defaultValue={bonusAmount ? bonusAmount : ''} onChange={(e) => setBonusAmount(e.target.value)} min={0} max={1000} type="number" step="10" name="bonusAmount" placeholder="400€" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="exampleSelect">Type de contrat</Label>
-              <Input type="select" name="select" id="exampleSelect" value={contract} onChange={(e) => setContract(e.target.value)}>
-                <option >Choisir une option</option>
-                <option value="CDI">CDI</option>
-                <option value="CDD">CDD</option>
-                <option value="STAGE">STAGE</option>
-              </Input>
-            </FormGroup>
-            <FormGroup>
-              <Label for="link">Lien du contrat</Label>
-              <Input defaultValue={link ? link : ''} onChange={(e) => setLink(e.target.value)} type="url" name="link" placeholder="https://" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="resume">Resume</Label>
-              <Input defaultValue={resume ? resume : ''} onChange={(e) => setResume(e.target.value)} type="textarea" name="resume" />
-            </FormGroup>
-            <div className="d-flex justify-content-end">
-              <Button onClick={() => saveOffer()} className={classes.btn}> {modalButtonText} </Button>
-              <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={toggleRedirect}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={open}>
-                  <div className={classes.paper}>
-                    {message}
-                  </div>
-                </Fade>
-              </Modal>
-            </div>
-
-=======
         <Row className="d-flex justify-content-center mt-5">
           <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground" >
             
@@ -284,7 +224,6 @@ function AddOffer(props) {
                 </Modal>
               </div>
            
->>>>>>> bcc0b6f017ff80c7c833f36178083412136e1b9b
           </Col>
         </Row>
       </Container>

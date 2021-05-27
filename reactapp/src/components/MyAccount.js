@@ -154,26 +154,6 @@ function MyAccount(props) {
 
   return (
     <div className="main-container">
-      <div className='d-flex justify-content-center'>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <div className={classes.paper}>
-              {error}
-            </div>
-          </Fade>
-        </Modal>
-      </div>
       <NavBar />
       <Container className='d-flex justify-content-center align-items-center pb-5'>
         <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
@@ -259,7 +239,7 @@ function MyAccount(props) {
                 <option value="Recruteur">Recruteur</option>
               </select>
             </FormGroup>
-            
+
             <FormGroup>
               <Label for="ancien mot de passe">Ancien mot de passe</Label>
               <Input
@@ -300,6 +280,24 @@ function MyAccount(props) {
           </div>
         </Row>
       </Container>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            {error}
+          </div>
+        </Fade>
+      </Modal>
     </div>
   );
 }

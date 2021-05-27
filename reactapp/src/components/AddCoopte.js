@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     verticalAlign: 'middle',
     cursor: 'pointer',
-    backgroundColor:    '#78CFCE',
+    backgroundColor: '#78CFCE',
     border: '1px solid transparent',
     padding: '.375rem .75rem',
-    fontSize:' 1rem',
+    fontSize: ' 1rem',
     borderRadius: '.75rem',
     '&:hover': {
       border: '1px solid transparent',
@@ -96,7 +96,7 @@ const AddCoopte = (props) => {
     if (!cv) {
       setError('Vous devez joindre un Cv')
       setOpen(true)
-    } else if (isAgree === false){
+    } else if (isAgree === false) {
       setError("Vous devez avoir l'accord préalable du coopté afin de transmettre cette candidature")
       setOpen(true)
     } else {
@@ -108,7 +108,7 @@ const AddCoopte = (props) => {
       data.append('offerId', offerId);
       data.append('userId', props.userId);
       data.append('isAgree', isAgree)
-      data.append("cv", cv, cv.name );
+      data.append("cv", cv, cv.name);
 
       const saveReq = await fetch('/referrals/add', {
         method: 'post',
@@ -178,9 +178,9 @@ const AddCoopte = (props) => {
   return (
     <div className="mainContainer">
       <NavBar />
-      <div className="text-center my-5">       
-          <h1 className="fs-1"> Vous recommandez pour le poste de :</h1>        
-          <h2 className="fs-2">{offerTitle}</h2>       
+      <div className="text-center my-5">
+        <h1 className="fs-1"> Vous recommandez pour le poste de :</h1>
+        <h2 className="fs-2">{offerTitle}</h2>
       </div>
 
       <Container   >
@@ -229,29 +229,28 @@ const AddCoopte = (props) => {
                 <Button onClick={() => saveCoopte()} className={classes.btn} > Envoyer </Button>
               </div>
             </Form>
-            <Modal
-              aria-labelledby="transition-modal-title"
-              aria-describedby="transition-modal-description"
-              className={classes.modal}
-              open={open}
-              onClose={toggleRedirect}
-              closeAfterTransition
-              BackdropComponent={Backdrop}
-              BackdropProps={{
-                timeout: 500,
-              }}
-            >
-              <Fade in={open}>
-                <div className={classes.paper}>
-                  {message}
-                </div>
-              </Fade>
-            </Modal>
           </Col>
         </Row>
       </Container>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={toggleRedirect}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            {message}
+          </div>
+        </Fade>
+      </Modal>
     </div>
-
   );
 }
 

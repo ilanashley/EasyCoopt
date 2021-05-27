@@ -144,26 +144,6 @@ function Login(props) {
 
   return (
     <div className="mainContainer">
-      <div className='d-flex justify-content-center'>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <div className={classes.paper}>
-              {error}
-            </div>
-          </Fade>
-        </Modal>
-      </div>
       <NavBar />
       <Container className='d-flex flex-column justify-content-center align-items-center'>
         <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
@@ -201,7 +181,7 @@ function Login(props) {
           </Col>
           <Col sm="6" md="6">
             <Form>
-            <h4 className="fs-5 font-weight-normal">Inscription</h4>
+              <h4 className="fs-5 font-weight-normal">Inscription</h4>
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
@@ -237,6 +217,24 @@ function Login(props) {
           </Col>
         </Row>
       </Container>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            {error}
+          </div>
+        </Fade>
+      </Modal>
     </div>
   );
 }

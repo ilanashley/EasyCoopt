@@ -23,7 +23,12 @@ router.post('/add', async function (req, res, next) {
   let contract = req.body.contract;
   let link = req.body.link;
   let resume = req.body.resume;
-  let isActive = true; 
+  let isActive
+  if (req.body.isActive === 'false') {
+    isActive = false
+  } else {
+    isActive = true
+  }
 
   var user = await userModel.findOne({ token: req.body.token })
 
@@ -64,6 +69,8 @@ router.post('/add', async function (req, res, next) {
 
 router.put('/add', async function (req, res, next) {
 
+  console.log(typeof req.body.isActive)
+
   let title = req.body.title;
   let city = req.body.city;
   let creationDate = req.body.creationDate;
@@ -71,7 +78,12 @@ router.put('/add', async function (req, res, next) {
   let contract = req.body.contract;
   let link = req.body.link;
   let resume = req.body.resume;
-  let isActive = req.body.isActive;
+  let isActive
+  if (req.body.isActive === 'false') {
+    isActive = false
+  } else {
+    isActive = true
+  }
 
   var user = await userModel.findOne({ token: req.body.token })
 

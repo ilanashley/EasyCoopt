@@ -62,6 +62,7 @@ function AddOffer(props) {
   const [contract, setContract] = useState('');
   const [link, setLink] = useState('');
   const [resume, setResume] = useState('');
+  const [isActive, setIsActive] = useState(true)
   const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
 
   const [offer, setOffer] = useState(false)
@@ -92,6 +93,7 @@ function AddOffer(props) {
           if (offer[0].link) {
             setLink(offer[0].link)
           }
+          setIsActive(offer[0].isActive)
           setOffer(true)
         }
       } else {
@@ -111,12 +113,12 @@ function AddOffer(props) {
     methodOption = 'PUT' // Fetch method option
     modalButtonText = 'Modifier'
     pageTitle = 'Modifier une offre'
-    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&id=${id}&token=${props.token}`
+    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&isActive=${isActive}&id=${id}&token=${props.token}`
   } else {
     methodOption = 'POST' // Fetch method option
     modalButtonText = 'Ajouter'
     pageTitle = 'Ajouter une offre'
-    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&status=${true}&token=${props.token}`
+    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&isActive=${isActive}&token=${props.token}`
   }
 
   var saveOffer = async () => {

@@ -42,7 +42,7 @@ const ReferralsList = (props) => {
       let filteredReferrals = response.referrals.filter(referral => referral.userId.token === props.token)
       setReferrals(filteredReferrals)
     } else {
-      setReferrals(response.referrals)
+      setReferrals(response.referrals.reverse())
     }
     setLoading(false)
   }

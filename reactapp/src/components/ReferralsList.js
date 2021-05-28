@@ -40,7 +40,7 @@ const ReferralsList = (props) => {
     console.log(response)
     if (props.group === 'Coopteur') {
       let filteredReferrals = response.referrals.filter(referral => referral.userId.token === props.token)
-      setReferrals(filteredReferrals)
+      setReferrals(filteredReferrals.reverse())
     } else {
       setReferrals(response.referrals.reverse())
     }

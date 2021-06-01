@@ -103,8 +103,7 @@ const ViewOffer = (props) => {
     let offerLink
     if (link) {
         offerLink = <div style={{ marginBottom: 20, padding: 5 }}>
-            <h6>Lien vers l'offre :</h6>
-            <a href={link} target="_blank" rel="noreferrer">{link}</a>
+            <p>Vous voulez consulter l'offre originale ? C'est par <a href={link} target="_blank" rel="noreferrer">ici</a></p>
         </div>
     }
 

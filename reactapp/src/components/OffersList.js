@@ -40,39 +40,16 @@ const OffersList = (props) => {
     var response = await rawResponse.json()
 
     let offers = [...response.offers]
-    let numberOffers = 0
-    let numberReferrals = 0
-
+    
     if (props.token) {
       if (props.group === 'Coopteur') {
         offers = offers.filter(offer => offer.isActive === true)
-        numberOffers = offers.length
-       
-        let usersToken = []
-        for (let i=0; i<offers.length; i++) {
-          for(let j=0; j<offers[i].referralsIds.length; j++) {
-            if(offers[i].referralsIds[j].userId) {
-              usersToken.push(offers[i].referralsIds[j].userId.token)
-            }
-          }
-        }
-        numberReferrals = usersToken.filter(token => token === props.token).length
-      } else if (props.group === 'Recruteur') {
-        numberOffers = offers.length
-        for (let i = 0; i < numberOffers; i++) {
-          numberReferrals += offers[i].referralsIds.length
-        }
       }
     } else {
       offers = offers.filter(offer => offer.isActive === true)
-      numberOffers = offers.length
     }
-
-    props.addNumberOffers(numberOffers)
-    props.addNumberReferrals(numberReferrals)
     setOffers(offers.reverse())
     setLoading(false)
-
   }
 
   useEffect(() => {
@@ -147,6 +124,8 @@ const OffersList = (props) => {
     if (typeof arg !== 'string') return ''
     return arg.charAt(0).toUpperCase() + arg.slice(1)
   } 
+
+  ///////// Filters //////////////////////////////
 
   // Filter per date
   const addDateArray = offers.map((offer) => { return offer.creationDate })
@@ -320,20 +299,9 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addNumberOffers: function (numberOffers) {
-      dispatch({ type: 'addNumberOffers', numberOffers })
-    },
-    addNumberReferrals: function (numberReferrals) {
-      dispatch({ type: 'addNumberReferrals', numberReferrals })
-    }
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(OffersList);
 
 

@@ -69,8 +69,6 @@ router.post('/add', async function (req, res, next) {
 
 router.put('/add', async function (req, res, next) {
 
-  console.log(typeof req.body.isActive)
-
   let title = req.body.title;
   let city = req.body.city;
   let creationDate = req.body.creationDate;
@@ -133,18 +131,18 @@ router.put('/archive', async function (req, res, next) {
   }  
 })
 
-router.get('/offers', async function (req, res, next) {
-  var user = await offerModel.findOne({ id: req.query.token });
-  if (user != null) {
-    password = user.password,
-    avatarUrl = user.avatarUrl,
-    email = user.email,
-    firstName = user.firstName,
-    lastName = user.lastName,
-    type = user.groupsId
-  }
-  res.json({ password, avatarUrl, email, firstName, lastName, type });
-});
+// router.get('/offers', async function (req, res, next) {
+//   var user = await offerModel.findOne({ id: req.query.token });
+//   if (user != null) {
+//     password = user.password,
+//     avatarUrl = user.avatarUrl,
+//     email = user.email,
+//     firstName = user.firstName,
+//     lastName = user.lastName,
+//     type = user.groupsId
+//   }
+//   res.json({ password, avatarUrl, email, firstName, lastName, type });
+// });
 
 // Get Offer By Id 
 router.get('/findById/:offerId', async (req, res, next )=> {

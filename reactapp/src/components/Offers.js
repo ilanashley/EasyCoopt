@@ -38,7 +38,7 @@ const Offers = (props) => {
         // Archived offer style
         let archivedStyle
         if(offer.isActive === false) {
-            archivedStyle = { filter: 'brightness(95%)'}
+            archivedStyle = { filter: 'brightness(90%)'}
         }
        
         let offerButton

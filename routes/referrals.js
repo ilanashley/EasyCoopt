@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var userModel = require("../models/users");
 var offerModel = require("../models/offers");
 var referralModel = require('../models/referrals');
 
@@ -20,7 +19,7 @@ cloudinary.config({
 });
 
 
-/* Add Referrals */
+// Add Referrals
 router.post('/add', async (req, res, next) => {
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
@@ -81,7 +80,7 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
-/* Get Referrals*/
+// Get Referrals
 router.get('/get', async (req, res, next) => {
   var referrals = await referralModel.find().populate({ path: 'offerId', populate: { path: 'userId'}}).populate('userId').exec();
   if (!referrals) {
@@ -91,6 +90,7 @@ router.get('/get', async (req, res, next) => {
   }
 });
 
+// Update referral
 router.post('/update', async (req, res, next) => {
   var updatedReferral = await referralModel.updateOne({ _id: req.body.referralId }, { status: req.body.referralStatus });
   if(updatedReferral) {
@@ -100,6 +100,7 @@ router.post('/update', async (req, res, next) => {
   }
 })
 
+// Delet referral
 router.delete('/delete/:referralId/:offerId', async (req, res, next) => {
   var deletedReferral = await referralModel.deleteOne({ _id: req.params.referralId })
   var updatedOffer = await offerModel.updateOne(
@@ -113,7 +114,6 @@ router.delete('/delete/:referralId/:offerId', async (req, res, next) => {
   } else {
     res.json({ result: false })
   }
-
 })
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
@@ -20,6 +20,49 @@ import {
 function NavBar(props) {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [numberOffers, setNumberOffers] = useState(0)
+    const [numberReferrals, setNumberReferrals] = useState(0)
+
+    const fetchOffers = async () => {
+        var rawResponse = await fetch('/offers/get')
+        var response = await rawResponse.json()
+    
+        let offers = [...response.offers]
+        let numberOffers = 0
+        let numberReferrals = 0
+    
+        if (props.token) {
+          if (props.group === 'Coopteur') {
+            offers = offers.filter(offer => offer.isActive === true)
+            numberOffers = offers.length
+           
+            let usersToken = []
+            for (let i=0; i<offers.length; i++) {
+              for(let j=0; j<offers[i].referralsIds.length; j++) {
+                if(offers[i].referralsIds[j].userId) {
+                  usersToken.push(offers[i].referralsIds[j].userId.token)
+                }
+              }
+            }
+            numberReferrals = usersToken.filter(token => token === props.token).length
+          } else if (props.group === 'Recruteur') {
+            numberOffers = offers.length
+            for (let i = 0; i < numberOffers; i++) {
+              numberReferrals += offers[i].referralsIds.length
+            }
+          }
+        } else {
+          offers = offers.filter(offer => offer.isActive === true)
+          numberOffers = offers.length
+        }
+    
+        setNumberOffers(numberOffers)
+        setNumberReferrals(numberReferrals)
+      }
+    
+      useEffect(() => {
+        fetchOffers()
+      }, [])
 
     const toggle = () => setIsOpen(!isOpen);
 
@@ -38,7 +81,7 @@ function NavBar(props) {
     let numberReferralsBadge
     if (props.group) {
         numberReferralsBadge = <Badge style={{ position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE' }} color="secondary">
-            {props.numberReferrals}
+            {numberReferrals}
         </Badge>
     }
 
@@ -53,7 +96,7 @@ function NavBar(props) {
                         <NavLink>
                             <Link to="/" className="navbar-brand" style={{ color: "#254383" }}>Annonces</Link>
                             <Badge style={{ position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE' }} color="secondary">
-                                {props.numberOffers}
+                                {numberOffers}
                             </Badge>
                         </NavLink>
                     </NavItem>
@@ -86,9 +129,7 @@ function mapStateToProps(state) {
     return {
         token: state.token,
         group: state.group,
-        userLastName: state.userLastName,
-        numberOffers: state.numberOffers,
-        numberReferrals: state.numberReferrals
+        userLastName: state.userLastName
     }
 }
 

@@ -55,6 +55,8 @@ const useStyles = makeStyles((theme) => ({
 
 function AddOffer(props) {
 
+  const [offer, setOffer] = useState(false)
+
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
   const [creationDate, setCreationDate] = useState('');
@@ -64,8 +66,6 @@ function AddOffer(props) {
   const [resume, setResume] = useState('');
   const [isActive, setIsActive] = useState(true)
   const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
-
-  const [offer, setOffer] = useState(false)
   const [stringDate, setStringDate] = useState('')
 
   // State for model
@@ -73,27 +73,42 @@ function AddOffer(props) {
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState();
   const [error, setError] = useState('')
-  const [offerModifiee, setOfferModifiee] = useState(false);
+  
+  // Params
+  const { offerId } = useParams();
 
-  var { id } = useParams();
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
 
   useEffect(() => {
     async function loadOffer() {
-      const rawResponse = await fetch(`/offers/get`);
+      const rawResponse = await fetch(`/offers/findById/${offerId}`);
       const response = await rawResponse.json();
       if (response.result === true) {
-        const offer = response.offers.filter(offer => offer._id === id)
-        if (offer.length > 0) {
-          setTitle(offer[0].title)
-          setCity(offer[0].city)
-          setCreationDate(offer[0].creationDate)
-          setBonusAmount(offer[0].bonusAmount)
-          setContract(offer[0].contract)
-          setResume(offer[0].resume)
-          if (offer[0].link) {
-            setLink(offer[0].link)
+        const offer = response.offer
+        if (offer) {
+          setTitle(offer.title)
+          setCity(offer.city)
+          setCreationDate(offer.creationDate)
+          setStringDate(formatDate(offer.creationDate))
+          setBonusAmount(offer.bonusAmount)
+          setContract(offer.contract)
+          setResume(offer.resume)
+          if (offer.link) {
+            setLink(offer.link)
           }
-          setIsActive(offer[0].isActive)
+          setIsActive(offer.isActive)
           setOffer(true)
         }
       } else {
@@ -113,7 +128,7 @@ function AddOffer(props) {
     methodOption = 'PUT' // Fetch method option
     modalButtonText = 'Modifier'
     pageTitle = 'Modifier une offre'
-    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&isActive=${isActive}&id=${id}&token=${props.token}`
+    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&isActive=${isActive}&id=${offerId}&token=${props.token}`
   } else {
     methodOption = 'POST' // Fetch method option
     modalButtonText = 'Ajouter'
@@ -137,6 +152,17 @@ function AddOffer(props) {
     }
   }
 
+  /* function to redirect to offersList */
+  const toggleRedirect = () => {
+    if (success) {
+      setOpen(!open)
+      setIsRedirectToOffersList(true)
+      // setOfferModifiee(!offerModifiee)
+    } else {
+      setOpen(!open)
+    }
+  };
+
   // Functions de redirection
   const redirectionToOffersList = () => {
     setIsRedirectToOffersList(true)
@@ -146,26 +172,11 @@ function AddOffer(props) {
     return <Redirect to="/offersList" />;
   }
 
-  /* function to redirect to offersList */
-  const toggleRedirect = () => {
-    if (success) {
-      setOpen(!open)
-      setOfferModifiee(!offerModifiee)
-    } else {
-      setOpen(!open)
-    }
-  };
-
   let message;
   if (!success) {
     message = error;
-  }
-  else {
+  } else {
     message = success
-  }
-
-  if (offerModifiee) {
-    return <Redirect to='/offersList' />
   }
 
   if (!props.token) {

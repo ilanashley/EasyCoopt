@@ -12,6 +12,7 @@ const OffersList = (props) => {
   const [offers, setOffers] = useState([]);
   const [offerIdCoopte, setOfferIdCoopte] = useState('');
   const [offerIdView, setOfferIdView] = useState('')
+  const [offerIdUpdate, setOfferIdUpdate] = useState('')
   const [addOffer, setAddOffer] = useState(false)
 
   // Select states
@@ -104,10 +105,9 @@ const OffersList = (props) => {
     setOfferIdView(offerId)
   }
 
-  if (offerIdCoopte) {
-    return <Redirect to={`/addCoopte/${offerIdCoopte}`} />
-  } else if (offerIdView) {
-    return <Redirect to={`/viewOffer/${offerIdView}`} />
+  // Update offer
+  const updateOffer = (offerId) => {
+    setOfferIdUpdate(offerId)
   }
 
   // Add offer
@@ -117,6 +117,12 @@ const OffersList = (props) => {
 
   if (addOffer) {
     return <Redirect to={`/addOffer`} />
+  } else if (offerIdCoopte) {
+    return <Redirect to={`/addCoopte/${offerIdCoopte}`} />
+  } else if (offerIdView) {
+    return <Redirect to={`/viewOffer/${offerIdView}`} />
+  } else if (offerIdUpdate) {
+    return <Redirect to={`/addoffer/${offerIdUpdate}`} />
   }
 
   // Capitalize function
@@ -270,7 +276,7 @@ const OffersList = (props) => {
         {addOfferButton}
 
         <div className='tableContainer'>
-          <Offers currentOffers={currentOffers} loading={loading} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} />
+          <Offers currentOffers={currentOffers} loading={loading} archiveOffer={archiveOffer} recommend={recommend} viewOffer={viewOffer} updateOffer={updateOffer} />
         </div>
 
         <div className='perPageContainer'>

@@ -37,7 +37,6 @@ const ReferralsList = (props) => {
     setLoading(true)
     var rawResponse = await fetch('/referrals/get')
     var response = await rawResponse.json()
-    console.log(response)
     if (props.group === 'Coopteur') {
       let filteredReferrals = response.referrals.filter(referral => referral.userId.token === props.token)
       setReferrals(filteredReferrals.reverse())

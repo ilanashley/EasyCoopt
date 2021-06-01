@@ -26,8 +26,8 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route component={AddOffer} path="/addOffer/:id" exact />
           <Route component={AddOffer} path="/addOffer" exact />
+          <Route component={AddOffer} path="/addOffer/:offerId" exact />          
           <Route component={AddCoopte} path="/addCoopte/:offerId" exact />
           <Route component={ViewOffer} path="/viewOffer/:offerId" exact />
           <Route component={OffersList} path="/" exact />

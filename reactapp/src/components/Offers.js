@@ -18,14 +18,6 @@ const Offers = (props) => {
         return <h2>Chargement...</h2>
     }
 
-    const handleOnClick = (id) => {
-        setOfferId(id)
-    }
-
-    if (offerId) {
-        return <Redirect to={`/addoffer/${offerId}`}></Redirect>
-    }
-
     // Map pour l'affichage des offres
     const offersList = props.currentOffers.map((offer, i) => {
 
@@ -46,7 +38,7 @@ const Offers = (props) => {
             offerButton = <Container>
                 <Row>
                     <Col  className='d-flex justify-content-center m-2'>
-                        <button className="custom-btn-style" onClick={() => handleOnClick(offer._id)}>
+                        <button className="custom-btn-style" onClick={() => props.updateOffer(offer._id)}>
                             Modifier
                         </button>
                     </Col> 

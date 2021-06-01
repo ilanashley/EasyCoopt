@@ -30,12 +30,11 @@ router.post('/add', async function (req, res, next) {
     isActive = true
   }
 
-  var user = await userModel.findOne({ token: req.body.token })
-
   // Si un des champs est vide, afficher un message d'erreur
   if (!title || !city || !creationDate || !bonusAmount || !contract || !resume) {
     res.json({ result: false, error: "Tous les champs sont requis sauf le lien" });
   } else {
+    var user = await userModel.findOne({ token: req.body.token })
     if (user) {
       var newOffer = new offerModel({
         title: title,
@@ -54,8 +53,7 @@ router.post('/add', async function (req, res, next) {
         {
           $push: { offersId: savedOffer._id }
         }
-      );
-  
+      ); 
       if (savedOffer && updatedUser) {
         res.json({ result: true, success: "L'offre a bien été enregistrée" });
       } else {
@@ -83,12 +81,11 @@ router.put('/add', async function (req, res, next) {
     isActive = true
   }
 
-  var user = await userModel.findOne({ token: req.body.token })
-
   // Si un des champs est vide, afficher un message d'erreur
   if (!title || !city || !creationDate || !bonusAmount || !contract || !resume) {
     res.json({ result: false, error: 'Tous les champs sont requis sauf le lien' });
   } else {
+    var user = await userModel.findOne({ token: req.body.token })
     if (user) {
       var modifiedOffer = await offerModel.updateOne(
         { _id: req.body.id },

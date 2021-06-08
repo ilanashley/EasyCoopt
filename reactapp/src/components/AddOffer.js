@@ -93,28 +93,31 @@ function AddOffer(props) {
 
   useEffect(() => {
     async function loadOffer() {
-      const rawResponse = await fetch(`/offers/findById/${offerId}`);
-      const response = await rawResponse.json();
-      if (response.result === true) {
-        const offer = response.offer
-        if (offer) {
-          setTitle(offer.title)
-          setCity(offer.city)
-          setCreationDate(offer.creationDate)
-          setStringDate(formatDate(offer.creationDate))
-          setBonusAmount(offer.bonusAmount)
-          setContract(offer.contract)
-          setResume(offer.resume)
-          if (offer.link) {
-            setLink(offer.link)
+      if(offerId) {
+        const rawResponse = await fetch(`/offers/findById/${offerId}`);
+        const response = await rawResponse.json();
+        if (response.result) {
+          const offer = response.offer
+          if (offer) {
+            setTitle(offer.title)
+            setCity(offer.city)
+            setCreationDate(offer.creationDate)
+            setStringDate(formatDate(offer.creationDate))
+            setBonusAmount(offer.bonusAmount)
+            setContract(offer.contract)
+            setResume(offer.resume)
+            if (offer.link) {
+              setLink(offer.link)
+            }
+            setIsActive(offer.isActive)
+            setOffer(true)
           }
-          setIsActive(offer.isActive)
-          setOffer(true)
+        } else {
+          setError(response.error)
+          setOpen(!open);
         }
-      } else {
-        setError(response.error)
-        setOpen(!open);
       }
+      
     };
     loadOffer();
   }, []);
@@ -124,11 +127,11 @@ function AddOffer(props) {
   let pageTitle
   let body
 
-  if (offer) {
+  if (offerId) {
     methodOption = 'PUT' // Fetch method option
     modalButtonText = 'Modifier'
     pageTitle = 'Modifier une offre'
-    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&isActive=${isActive}&id=${offerId}&token=${props.token}`
+    body = `title=${title}&city=${city}&creationDate=${creationDate}&bonusAmount=${bonusAmount}&contract=${contract}&link=${link}&resume=${resume}&isActive=${isActive}&offerId=${offerId}&token=${props.token}`
   } else {
     methodOption = 'POST' // Fetch method option
     modalButtonText = 'Ajouter'
@@ -143,7 +146,7 @@ function AddOffer(props) {
       body: body
     })
     const response = await saveReq.json()
-    if (response.result === false) {
+    if (!response.result) {
       setError(response.error)
       setOpen(!open);
     } else {

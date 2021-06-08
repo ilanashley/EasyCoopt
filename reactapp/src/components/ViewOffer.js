@@ -44,8 +44,6 @@ const ViewOffer = (props) => {
         loadOffer();
     }, [offerId]);
 
-
-
     // Days since offer's creation date
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     const firstDate = new Date(creationDate);
@@ -65,10 +63,6 @@ const ViewOffer = (props) => {
         return <Redirect to="/offersList" />;
     } else if (isRedirectToAddCoopte) {
         return <Redirect to={`/addCoopte/${offerId}`} />
-    }
-
-    if (!props.token) {
-        return <Redirect to="/login" />;
     }
 
     // affichage de la card du recruteur en fonction de la présence de l'id du recruteur
@@ -107,6 +101,13 @@ const ViewOffer = (props) => {
         </div>
     }
 
+    let recommendButton
+    if(props.group !== 'Recruteur') {
+        recommendButton = <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 40 }}>
+        <button onClick={() => redirectionToAddCoopte(offerId)} className="custom-btn-style">Recommander</button>
+    </div>
+    }
+    
     return (
         <div className="section">
             <NavBar />
@@ -127,9 +128,7 @@ const ViewOffer = (props) => {
                         <p className="fs-6 p-4 lh-base">{resume}</p>
                         {offerLink}
                         {recruterCard}
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 40 }}>
-                            <button onClick={() => redirectionToAddCoopte(offerId)} className="custom-btn-style">Recommander</button>
-                        </div>
+                        {recommendButton}
                     </Col>
                 </Row>
 
@@ -140,7 +139,9 @@ const ViewOffer = (props) => {
 }
 
 function mapStateToProps(state) {
-    return { token: state.token }
+    return { 
+        group: state.group
+     }
 }
 
 export default connect(

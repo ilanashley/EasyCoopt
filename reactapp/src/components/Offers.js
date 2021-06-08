@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { Container, Row, Col } from "reactstrap";
 
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -11,8 +10,6 @@ import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutline
 import ContactsOutlinedIcon from '@material-ui/icons/ContactsOutlined';
 
 const Offers = (props) => {
-
-    const [offerId, setOfferId] = useState('');
 
     if (props.loading) {
         return <h2>Chargement...</h2>

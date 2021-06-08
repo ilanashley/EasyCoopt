@@ -7,8 +7,7 @@ const userSchema = mongoose.Schema({
     password: String,
     token: String,
     avatarUrl: String,
-    group: String,
-    offersIds: [{type: mongoose.Schema.Types.ObjectId, ref: 'offers'}]
+    group: String
 })
 
 const userModel = mongoose.model('users', userSchema)

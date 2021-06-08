@@ -97,7 +97,7 @@ const ReferralsList = (props) => {
     newReferrals[index].status = event.target.value
     setReferrals(newReferrals)
     var rawResponse = await fetch('/referrals/update', {
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `referralStatus=${event.target.value}&referralId=${referralId}`
     })
@@ -108,7 +108,7 @@ const ReferralsList = (props) => {
   const addDateArray = referrals.map((referral) => { return referral.creationDate })
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
     return addDateArray.indexOf(date) === pos;
-  }).sort()
+  })
   const addDateFilteredList = addDateFilteredArray.map((date) => {
     var myDate = new Date(date)
     var myDateString = ('0' + myDate.getDate()).slice(-2) + '/'

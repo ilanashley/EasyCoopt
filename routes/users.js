@@ -5,7 +5,7 @@ var uid2 = require("uid2");
 var bcrypt = require("bcrypt");
 
 var userModel = require("../models/users");
-const { findOne } = require("../models/users");
+// const { findOne } = require("../models/users");
 
 var uniqid = require('uniqid');
 var fs = require('fs');
@@ -86,7 +86,7 @@ router.post('/sign-up', async (req, res, next) => {
 /*
   Sign-in
   Body: email (string), password (string)
-  Response: result(bool),erro(string), user(object)
+  Response: result(bool),error(string), user(object)
 */
 
 router.post('/sign-in', async (req, res, next) => {
@@ -119,14 +119,17 @@ router.get("/account", async function (req, res, next) {
   var user = await userModel.findOne({ token: req.query.token });
 
   if (user) {
-      password = user.password,
-      avatarUrl = user.avatarUrl,
-      email = user.email,
-      firstName = user.firstName,
-      lastName = user.lastName,
-      type = user.group
+    password = user.password,
+    avatarUrl = user.avatarUrl,
+    email = user.email,
+    firstName = user.firstName,
+    lastName = user.lastName,
+    type = user.group
+    res.json({ result: true, password, avatarUrl, email, firstName, lastName, type });
+  } else {
+    res.json({ result: false, error: "Utilisateur inconnu" });
   }
-  res.json({ password, avatarUrl, email, firstName, lastName, type });
+  
 });
 
 

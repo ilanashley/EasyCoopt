@@ -94,7 +94,7 @@ function NavBar(props) {
                 <Nav className="ml-auto" navbar>
                     <NavItem>
                         <NavLink>
-                            <Link to="/" className="navbar-brand" style={{ color: "#254383" }}>Annonces</Link>
+                            <Link to="/" className="navbar-brand" style={{ color: "#254383" }}>Offres</Link>
                             <Badge style={{ position: 'relative', bottom: 18, right: 18, borderRadius: 20, backgroundColor: '#78CFCE' }} color="secondary">
                                 {numberOffers}
                             </Badge>

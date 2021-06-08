@@ -4,16 +4,7 @@ var router = express.Router();
 var offerModel = require("../models/offers");
 var userModel = require("../models/users");
 
-
-router.get('/get', async (req, res, next) => {
-  var offers = await offerModel.find().populate('userId').populate({ path: 'referralsIds', populate: { path: 'userId'}}).exec();
-  if (!offers) {
-    res.json({ result: false, error: "Il n'y a pas d'offre à afficher" })
-  } else {
-    res.json({ result: true, offers })
-  }
-})
-
+// CREATE
 router.post('/add', async function (req, res, next) {
 
   let title = req.body.title;
@@ -65,6 +56,27 @@ router.post('/add', async function (req, res, next) {
   } 
 })
 
+// READ
+router.get('/get', async (req, res, next) => {
+  var offers = await offerModel.find().populate('userId').populate({ path: 'referralsIds', populate: { path: 'userId'}}).exec();
+  if (!offers) {
+    res.json({ result: false, error: "Il n'y a pas d'offre à afficher" })
+  } else {
+    res.json({ result: true, offers })
+  }
+})
+
+// READ by Id
+router.get('/findById/:offerId', async (req, res, next )=> {
+  var offer = await offerModel.findById({ _id: req.params.offerId}) 
+  if(!offer) {
+    res.json({result: false, error: "L'offre n'existe pas" })
+  } else {
+    res.json({result: true, offer})  
+  }
+})
+
+// UPDATE
 router.put('/add', async function (req, res, next) {
 
   let title = req.body.title;
@@ -88,7 +100,7 @@ router.put('/add', async function (req, res, next) {
     var user = await userModel.findOne({ token: req.body.token })
     if (user) {
       var modifiedOffer = await offerModel.updateOne(
-        { _id: req.body.id },
+        { _id: req.body.offerId },
         {
           title: title,
           city: city,
@@ -111,7 +123,7 @@ router.put('/add', async function (req, res, next) {
   } 
 })
 
-//Update offer 
+// UPDATE STATUS 
 router.put('/archive', async function (req, res, next) {
   var isActive = req.body.isActive
   var offerId = req.body.offerId
@@ -126,29 +138,6 @@ router.put('/archive', async function (req, res, next) {
   } else {
     res.json({ result: false, error: "L'offre n'a pas été archivée, veuillez recommencer" })
   }  
-})
-
-// router.get('/offers', async function (req, res, next) {
-//   var user = await offerModel.findOne({ id: req.query.token });
-//   if (user != null) {
-//     password = user.password,
-//     avatarUrl = user.avatarUrl,
-//     email = user.email,
-//     firstName = user.firstName,
-//     lastName = user.lastName,
-//     type = user.groupsId
-//   }
-//   res.json({ password, avatarUrl, email, firstName, lastName, type });
-// });
-
-// Get Offer By Id 
-router.get('/findById/:offerId', async (req, res, next )=> {
-  var offer = await offerModel.findById({ _id: req.params.offerId}) 
-  if(!offer) {
-    res.json({result: false, error: "L'offre n'existe pas" })
-  } else {
-    res.json({result: true, offer})  
-  }
 })
 
 module.exports = router;

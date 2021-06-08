@@ -19,7 +19,7 @@ cloudinary.config({
 });
 
 
-// Add Referrals
+// Create Referral
 router.post('/add', async (req, res, next) => {
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
@@ -40,7 +40,7 @@ router.post('/add', async (req, res, next) => {
     res.json({result: false, error: 'Le fichier est trop volumineux'})
   } else {
     
-     // envoi du cv vers cloudinary
+  // envoi du cv vers cloudinary
   var cvPath = './tmp/' + uniqid() + '.jpg';
   var resultCopy = await cv.mv(cvPath);
  
@@ -80,7 +80,7 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
-// Get Referrals
+// Read Referrals
 router.get('/get', async (req, res, next) => {
   var referrals = await referralModel.find().populate({ path: 'offerId', populate: { path: 'userId'}}).populate('userId').exec();
   if (!referrals) {
@@ -91,7 +91,7 @@ router.get('/get', async (req, res, next) => {
 });
 
 // Update referral
-router.post('/update', async (req, res, next) => {
+router.put('/update', async (req, res, next) => {
   var updatedReferral = await referralModel.updateOne({ _id: req.body.referralId }, { status: req.body.referralStatus });
   if(updatedReferral) {
     res.json({ result: true })
@@ -100,7 +100,7 @@ router.post('/update', async (req, res, next) => {
   }
 })
 
-// Delet referral
+// Delete referral
 router.delete('/delete/:referralId/:offerId', async (req, res, next) => {
   var deletedReferral = await referralModel.deleteOne({ _id: req.params.referralId })
   var updatedOffer = await offerModel.updateOne(

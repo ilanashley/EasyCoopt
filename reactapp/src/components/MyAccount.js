@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 function MyAccount(props) {
 
+  // Global states
   const [avatarUrl, setAvatarUrl] = useState(
     "https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg "
   );
@@ -135,6 +136,7 @@ function MyAccount(props) {
 
     if (body.result === true) {
       props.addProfileType(body.user.group)
+      props.addUserFirstName(body.user.firstName ? capitalize(body.user.firstName) : null)
       setUserExists(true);
     } else {
       setError(body.error)
@@ -316,6 +318,9 @@ function mapDispatchToProps(dispatch) {
     addProfileType: function (group) {
       dispatch({ type: "addProfileGroup", group: group });
     },
+    addUserFirstName: function (userFirstName) {
+      dispatch({ type: 'addUserFirstName', userFirstName })
+    }
   };
 }
 

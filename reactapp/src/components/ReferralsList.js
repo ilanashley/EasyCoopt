@@ -9,6 +9,7 @@ import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
 const ReferralsList = (props) => {
 
+  // Global state
   const [referrals, setReferrals] = useState([]);
 
   // Select states
@@ -104,6 +105,8 @@ const ReferralsList = (props) => {
     await rawResponse.json()
   }
 
+  ///////// Filters //////////////////////////////
+
   // Filter per date
   const addDateArray = referrals.map((referral) => { return referral.creationDate })
   const addDateFilteredArray = addDateArray.filter((date, pos) => {
@@ -194,6 +197,7 @@ const ReferralsList = (props) => {
     fetchReferrals()
   }
 
+  // Redirection
   if (!props.token) {
     return <Redirect to="/login" />;
   }

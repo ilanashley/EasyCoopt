@@ -19,6 +19,7 @@ import {
 
 function NavBar(props) {
 
+    // Global states
     const [isOpen, setIsOpen] = useState(false);
     const [numberOffers, setNumberOffers] = useState(0)
     const [numberReferrals, setNumberReferrals] = useState(0)
@@ -54,8 +55,7 @@ function NavBar(props) {
         } else {
           offers = offers.filter(offer => offer.isActive === true)
           numberOffers = offers.length
-        }
-    
+        }   
         setNumberOffers(numberOffers)
         setNumberReferrals(numberReferrals)
       }
@@ -68,7 +68,7 @@ function NavBar(props) {
 
     const handleLogOut = () => {
         props.addToken(null)
-        props.addUserLastName(null)
+        props.addUserFirstName(null)
     }
 
     let toggleLogLink
@@ -84,7 +84,6 @@ function NavBar(props) {
             {numberReferrals}
         </Badge>
     }
-
 
     return (
         <Navbar color="light" light expand="md" className='navbarContainer shadow'>
@@ -108,11 +107,11 @@ function NavBar(props) {
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
-                            <div className="navbar-brand">Bonjour{props.userLastName ? ` ${props.userLastName}` : ', identifiez vous'}</div>
+                            <div className="navbar-brand">Bonjour{props.userFirstName ? ` ${props.userFirstName}` : ', identifiez vous'}</div>
                         </DropdownToggle>
                         <DropdownMenu right>
                             <DropdownItem >
-                                <Link to="/myaccount" className="navbar-brand" style={{ fontSize: 15 }}>Votre profil</Link>
+                                <Link to="/myaccount" className="navbar-brand" style={{ fontSize: 15 }}>Mon profil</Link>
                             </DropdownItem>
                             <DropdownItem >
                                 {toggleLogLink}
@@ -129,7 +128,7 @@ function mapStateToProps(state) {
     return {
         token: state.token,
         group: state.group,
-        userLastName: state.userLastName
+        userFirstName: state.userFirstName
     }
 }
 
@@ -138,8 +137,8 @@ function mapDispatchToProps(dispatch) {
         addToken: function (token) {
             dispatch({ type: 'addToken', token })
         },
-        addUserLastName: function (userLastName) {
-            dispatch({ type: 'addUserLastName', userLastName })
+        addUserFirstName: function (userFirstName) {
+            dispatch({ type: 'addUserFirstName', userFirstName })
         }
     }
 }

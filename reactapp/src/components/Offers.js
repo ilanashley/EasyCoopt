@@ -15,7 +15,7 @@ const Offers = (props) => {
         return <h2>Chargement...</h2>
     }
 
-    // Map pour l'affichage des offres
+    // Map to display offers
     const offersList = props.currentOffers.map((offer, i) => {
 
         // Days since offer's creation date

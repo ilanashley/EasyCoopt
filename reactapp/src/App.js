@@ -8,7 +8,7 @@ import {createStore, combineReducers} from 'redux'
 import token from './reducers/token'
 import group from './reducers/group'
 import userId from './reducers/userId'
-import userLastName from './reducers/userLastName'
+import userFirstName from './reducers/userFirstName'
 
 import AddOffer from './components/AddOffer';
 import AddCoopte from './components/AddCoopte';
@@ -18,7 +18,7 @@ import ReferralsList from './components/ReferralsList';
 import Login from './components/Login';
 import MyAccount from './components/MyAccount';
 
-const store = createStore(combineReducers({ token, group, userId, userLastName }))
+const store = createStore(combineReducers({ token, group, userId, userFirstName }))
 
 function App() {
   return (

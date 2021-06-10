@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import '../App.css';
@@ -59,19 +59,18 @@ const useStyles = makeStyles((theme) => ({
 
 function Login(props) {
 
-  const [signInEmail, setSignInEmail] = useState('')
-  const [signInPassword, setSignInPassword] = useState('')
-
-  const [signUpEmail, setSignUpEmail] = useState('')
-  const [signUpPassword, setSignUpPassword] = useState('')
-  const [signUpConfirmationPassword, setSignUpConfirmationPassword] = useState('')
+  // Global states
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const [error, setError] = useState()
 
   const [signIn, setSignIn] = useState(false)
   const [signUp, setSignUp] = useState(false)
+  const [login, setLogin] = useState(false)
 
-  // Modal state
+  // Modal states
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -90,14 +89,14 @@ function Login(props) {
     const data = await fetch('/users/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `email=${signInEmail}&password=${signInPassword}`
+      body: `email=${email}&password=${password}`
     })
     const body = await data.json();
     if (body.result === true) {
       props.addToken(body.user.token)
       props.addProfileType(body.user.group)
       props.addUserId(body.user._id)
-      props.addUserLastName(body.user.firstName ? capitalize(body.user.firstName) : null)
+      props.addUserFirstName(body.user.firstName ? capitalize(body.user.firstName) : null)
       setSignIn(true)
     } else {
       setError(body.error)
@@ -109,7 +108,7 @@ function Login(props) {
     const data = await fetch('/users/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `email=${signUpEmail}&password=${signUpPassword}&confirmPassword=${signUpConfirmationPassword}`
+      body: `email=${email}&password=${password}&confirmPassword=${confirmPassword}`
     })
     const body = await data.json()
     if (body.result === true) {
@@ -122,6 +121,7 @@ function Login(props) {
     }
   }
 
+  // Redirections
   if (signIn) {
     return <Redirect to='/offerslist' />
   } else if (signUp) {
@@ -141,76 +141,80 @@ function Login(props) {
     }
   }
 
+  const toggleSignInSignUp = () => {
+    setLogin(!login)
+  }
+
+  let loginMessage
+  let passwordFormGroup
+  let loginButton
+
+  if (!login) {
+    loginMessage = <div>Vous n'avez pas encore de compte ? <a onClick={() => toggleSignInSignUp()} style={{ color: '#78CFCE', cursor: 'pointer' }}>S'inscrire</a></div>
+    passwordFormGroup = <FormGroup>
+      <Input
+        onKeyPress={handleKeyPressOnSigninPassword}
+        onChange={(e) => setPassword(e.target.value)}
+        type="password"
+        name="password"
+        placeholder="Entrez votre mot de passe"
+      />
+    </FormGroup>
+    loginButton = <Button onClick={() => handleSubmitSignin()} className={classes.btn}> Valider </Button>
+  } else {
+    loginMessage = <div>Vous avez déjà un compte ? <a onClick={() => toggleSignInSignUp()} style={{ color: '#78CFCE', cursor: 'pointer' }}>Connexion</a></div>
+    passwordFormGroup = <div>
+      <FormGroup>
+        <Input
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          name="password"
+          placeholder="Créez votre mot de passe"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Input
+          onKeyPress={handleKeyPressOnSignupConfirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          type="password"
+          name="password"
+          placeholder="Confirmez votre mot de passe"
+        />
+      </FormGroup>
+    </div>
+    loginButton = <Button onClick={() => handleSubmitSignup()} className={classes.btn}>Valider </Button>
+  }
+
   return (
     <div className="mainContainer">
       <NavBar />
       <Container className='d-flex flex-column justify-content-center align-items-center'>
-        <Row style={{ maxWidth: 750 }} className="cardBackground p-1 m-4">
+        <Row style={{ width: 750 }} className="cardBackground p-1 m-4">
           <Col sm='12' md='12'>
-            <div class="col-12 text-center get_started p-4">
+            <div class="text-center p-4">
               <h3 className="fs-3">Bienvenue !</h3>
+
+              {loginMessage}
+
             </div>
           </Col>
-          <Col sm="6" md="6">
+          <Col sm="12" md="12">
             <Form>
-              <h4 className="fs-5 font-weight-normal">Connexion</h4>
               <FormGroup>
-                <Label for="email">Email</Label>
                 <Input
-                  onChange={(e) => setSignInEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   name="email"
-                  placeholder="email"
+                  placeholder="Votre adresse email"
                 />
               </FormGroup>
-              <FormGroup>
-                <Label for="password">Mot de passe</Label>
-                <Input
-                  onKeyPress={handleKeyPressOnSigninPassword}
-                  onChange={(e) => setSignInPassword(e.target.value)}
-                  type="password"
-                  name="password"
-                  placeholder="mot de passe"
-                />
-              </FormGroup>
+
+              {passwordFormGroup}
+
               <div className="d-flex justify-content-end py-4">
-                <Button onClick={() => handleSubmitSignin()} className={classes.btn}> Valider </Button>
-              </div>
-            </Form>
-          </Col>
-          <Col sm="6" md="6">
-            <Form>
-              <h4 className="fs-5 font-weight-normal">Inscription</h4>
-              <FormGroup>
-                <Label for="email">Email</Label>
-                <Input
-                  onChange={(e) => setSignUpEmail(e.target.value)}
-                  type="email"
-                  name="email"
-                  placeholder="email"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="password">Mot de passe</Label>
-                <Input
-                  onChange={(e) => setSignUpPassword(e.target.value)}
-                  type="password"
-                  name="password"
-                  placeholder="mot de passe"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="email">Confirmer mot de passe</Label>
-                <Input
-                  onKeyPress={handleKeyPressOnSignupConfirmPassword}
-                  onChange={(e) => setSignUpConfirmationPassword(e.target.value)}
-                  type="password"
-                  name="password"
-                  placeholder="mot de passe"
-                />
-              </FormGroup>
-              <div className="d-flex justify-content-end py-4">
-                <Button onClick={() => handleSubmitSignup()} className={classes.btn}>Valider </Button>
+
+                {loginButton}
+
               </div>
             </Form>
           </Col>
@@ -230,7 +234,9 @@ function Login(props) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
+
             {error}
+
           </div>
         </Fade>
       </Modal>
@@ -249,8 +255,8 @@ function mapDispatchToProps(dispatch) {
     addUserId: function (userId) {
       dispatch({ type: 'addUserId', userId })
     },
-    addUserLastName: function (userLastName) {
-      dispatch({ type: 'addUserLastName', userLastName })
+    addUserFirstName: function (userFirstName) {
+      dispatch({ type: 'addUserFirstName', userFirstName })
     }
   }
 }

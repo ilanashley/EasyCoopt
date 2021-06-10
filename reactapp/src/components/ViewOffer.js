@@ -11,7 +11,7 @@ const ViewOffer = (props) => {
     // Params
     const { offerId } = useParams();
 
-    // States
+    // Global states
     const [title, setTitle] = useState('');
     const [city, setCity] = useState('');
     const [creationDate, setCreationDate] = useState(new Date());
@@ -20,6 +20,8 @@ const ViewOffer = (props) => {
     const [contract, setContract] = useState('');
     const [link, setLink] = useState('');
     const [resume, setResume] = useState('');
+
+    // Redirection states
     const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
     const [isRedirectToAddCoopte, setIsRedirectToAddCoopte] = useState(false)
 
@@ -50,15 +52,16 @@ const ViewOffer = (props) => {
     const secondDate = new Date();
     const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 
-    // Functions de redirection
+    // Redirection functions
     const redirectionToOffersList = () => {
-        setIsRedirectToOffersList(true)
+        setIsRedirectToOffersList(!isRedirectToOffersList)
     }
 
     const redirectionToAddCoopte = () => {
-        setIsRedirectToAddCoopte(true)
+        setIsRedirectToAddCoopte(!isRedirectToAddCoopte)
     }
 
+    // Redirections
     if (isRedirectToOffersList) {
         return <Redirect to="/offersList" />;
     } else if (isRedirectToAddCoopte) {
@@ -102,18 +105,17 @@ const ViewOffer = (props) => {
     }
 
     let recommendButton
-    if(props.group !== 'Recruteur') {
+    if (props.group !== 'Recruteur') {
         recommendButton = <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 40 }}>
-        <button onClick={() => redirectionToAddCoopte(offerId)} className="custom-btn-style">Recommander</button>
-    </div>
+            <button onClick={() => redirectionToAddCoopte(offerId)} className="custom-btn-style">Recommander</button>
+        </div>
     }
-    
+
     return (
         <div className="section">
             <NavBar />
             <div className="d-flex justify-content-center my-5"><h1 className="fs-1">Détail de l'offre</h1></div>
             <Container >
-
                 <Row className="d-flex justify-content-center mt-5">
                     <Col sm="12" style={{ padding: 40, marginBottom: 50, maxWidth: 750 }} className="cardBackground"  >
                         <button className="custom-btn-style" onClick={redirectionToOffersList}><ArrowBackIcon /></button>
@@ -131,17 +133,15 @@ const ViewOffer = (props) => {
                         {recommendButton}
                     </Col>
                 </Row>
-
             </Container>
         </div>
-
     );
 }
 
 function mapStateToProps(state) {
-    return { 
+    return {
         group: state.group
-     }
+    }
 }
 
 export default connect(

@@ -9,6 +9,7 @@ import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
 const OffersList = (props) => {
 
+  // Gobal states
   const [offers, setOffers] = useState([]);
   const [offerIdCoopte, setOfferIdCoopte] = useState('');
   const [offerIdView, setOfferIdView] = useState('')
@@ -115,6 +116,7 @@ const OffersList = (props) => {
     setAddOffer(true)
   }
 
+  // Redirections
   if (addOffer) {
     return <Redirect to={`/addOffer`} />
   } else if (offerIdCoopte) {

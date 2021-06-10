@@ -54,29 +54,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function AddOffer(props) {
-
-  const [offer, setOffer] = useState(false)
-
-  const [title, setTitle] = useState('');
-  const [city, setCity] = useState('');
-  const [creationDate, setCreationDate] = useState('');
-  const [bonusAmount, setBonusAmount] = useState('');
-  const [contract, setContract] = useState('');
-  const [link, setLink] = useState('');
-  const [resume, setResume] = useState('');
-  const [isActive, setIsActive] = useState(true)
-  const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
-  const [stringDate, setStringDate] = useState('')
-
-  // State for model
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [success, setSuccess] = useState();
-  const [error, setError] = useState('')
   
   // Params
   const { offerId } = useParams();
 
+  // Global states
+  const [title, setTitle] = useState();
+  const [city, setCity] = useState();
+  const [creationDate, setCreationDate] = useState();
+  const [bonusAmount, setBonusAmount] = useState();
+  const [contract, setContract] = useState();
+  const [link, setLink] = useState();
+  const [resume, setResume] = useState();
+  const [isActive, setIsActive] = useState(true)
+  const [stringDate, setStringDate] = useState()
+
+  // Redirection state
+  const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
+
+  // State for modal
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+
+  // Format date function
   function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -110,18 +112,17 @@ function AddOffer(props) {
               setLink(offer.link)
             }
             setIsActive(offer.isActive)
-            setOffer(true)
           }
         } else {
           setError(response.error)
           setOpen(!open);
         }
-      }
-      
+      }      
     };
     loadOffer();
   }, []);
 
+  // Function to add offer
   let modalButtonText
   let methodOption
   let pageTitle
@@ -155,24 +156,19 @@ function AddOffer(props) {
     }
   }
 
-  /* function to redirect to offersList */
+  // Function to redirect to offersList
   const toggleRedirect = () => {
     if (success) {
       setOpen(!open)
-      setIsRedirectToOffersList(true)
-      // setOfferModifiee(!offerModifiee)
+      setIsRedirectToOffersList(!isRedirectToOffersList)
     } else {
       setOpen(!open)
     }
-  };
+  }
 
   // Functions de redirection
   const redirectionToOffersList = () => {
-    setIsRedirectToOffersList(true)
-  }
-
-  if (isRedirectToOffersList) {
-    return <Redirect to="/offersList" />;
+    setIsRedirectToOffersList(!isRedirectToOffersList)
   }
 
   let message;
@@ -182,9 +178,12 @@ function AddOffer(props) {
     message = success
   }
 
+  // Redirections
   if (!props.token) {
     return <Redirect to="/login" />;
   } else if (props.group !== 'Recruteur') {
+    return <Redirect to="/offersList" />;
+  }else if (isRedirectToOffersList) {
     return <Redirect to="/offersList" />;
   }
 

@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TransitionsModal(props) {
 
+  // Modal states
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -54,8 +55,6 @@ export default function TransitionsModal(props) {
   if (props.referralResumeUrl) {
     resumeImage = <div className='d-flex flex-column'>
       <img src={props.referralResumeUrl} height={600} width={400} alt='Resume'></img>
-      {/* <a href={props.referralResumeUrl} download> Download CV</a>
-                      <button onclick={handleDownloadResume}>Télécharger</button> */}
     </div>
   }
 

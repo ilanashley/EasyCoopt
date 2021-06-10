@@ -18,7 +18,7 @@ const Referrals = (props) => {
 
     let deleteReferralTitle
 
-    // Map pour l'affichage des cooptations
+    // Map to display referrals
     const referralsList = props.currentReferrals.map((referral, i) => {
 
         // Manipulation date

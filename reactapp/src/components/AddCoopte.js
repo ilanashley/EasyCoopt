@@ -58,27 +58,29 @@ const useStyles = makeStyles((theme) => ({
 
 const AddCoopte = (props) => {
 
+  // Params
+  const { offerId } = useParams();
+
+  // Global states
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
   const [reason, setReason] = useState();
   const [cv, setCv] = useState();
-
   const [offerTitle, setOfferTitle] = useState();
+
+  // Redirection states
   const [isRedirectToOffersList, setIsRedirectToOffersList] = useState(false)
+  const [isRedirectToReferralsList, setIsRedirectToReferralsList] = useState(false)
 
   // State for modal
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
-  const [offerCompleted, setOfferCompleted] = useState();
 
   // State for checkbox
   const [isAgree, setIsAgree] = useState(false);
-
-  // Params
-  const { offerId } = useParams();
 
   // Capitalize function
   const capitalize = (arg) => {
@@ -86,7 +88,16 @@ const AddCoopte = (props) => {
     return arg.charAt(0).toUpperCase() + arg.slice(1)
   }
 
-  /* function fetch to add coopte with file to the back */
+  useEffect(() => {
+    const getTitle = async () => {
+      let rawResponse = await fetch(`/offers/findById/${offerId}`);
+      let response = await rawResponse.json();
+      setOfferTitle(response.offer.title)
+    };
+    getTitle();
+  }, [offerId]);
+
+  // Function to add coopte with file to the back
   var saveCoopte = async () => {
 
     var date = new Date()
@@ -95,10 +106,10 @@ const AddCoopte = (props) => {
     var data = new FormData();
     if (!cv) {
       setError('Vous devez joindre un Cv')
-      setOpen(true)
+      setOpen(!open)
     } else if (isAgree === false) {
       setError("Vous devez avoir l'accord préalable du coopté afin de transmettre cette candidature")
-      setOpen(true)
+      setOpen(!open)
     } else {
       data.append('firstName', firstName ? capitalize(firstName) : '');
       data.append('lastName', lastName ? capitalize(lastName) : '');
@@ -125,54 +136,42 @@ const AddCoopte = (props) => {
     }
   }
 
-  useEffect(() => {
-    const getTitle = async () => {
-      let rawResponse = await fetch(`/offers/findById/${offerId}`);
-      let response = await rawResponse.json();
-      setOfferTitle(response.offer.title)
-    };
-    getTitle();
-  }, [offerId]);
-
   // Function checkbox
   const handleChange = (event) => {
     setIsAgree(event.target.checked);
   };
 
-  // Functions de redirection
+  // Function to redirect to offersList
   const redirectionToOffersList = () => {
-    setIsRedirectToOffersList(true)
+    setIsRedirectToOffersList(!isRedirectToOffersList)
   }
 
-  if (isRedirectToOffersList) {
-    return <Redirect to="/offersList" />;
-  }
-
-  /* function to redirect to offersList */
+  // Function to redirect to referralsList
   const toggleRedirect = () => {
     if (success) {
       setOpen(!open)
-      setOfferCompleted(!offerCompleted)
+      setIsRedirectToReferralsList(!isRedirectToReferralsList)
     } else {
       setOpen(!open)
     }
-  };
+  }
+
   let message;
   if (!success) {
     message = error;
-  }
-  else {
+  } else {
     message = success
   }
 
-  if (offerCompleted) {
-    return <Redirect to='/referralsList' />
-  }
-
+  // Redirections
   if (!props.token) {
     return <Redirect to="/login" />;
   } else if (props.group !== 'Coopteur') {
     return <Redirect to="/offersList" />;
+  } else if (isRedirectToOffersList) {
+    return <Redirect to="/offersList" />;
+  } else if (isRedirectToReferralsList) {
+    return <Redirect to='/referralsList' />
   }
 
   return (
